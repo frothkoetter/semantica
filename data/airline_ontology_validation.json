@@ -1,0 +1,108 @@
+{
+  "ok": true,
+  "errors": [],
+  "warnings": [
+    "Table 'flights_orc' maps to 'https://w3id.org/demo/airline#/Flight' (expected 'Flight')",
+    "Table 'airlines' maps to 'https://w3id.org/demo/airline#/Airline' (expected 'Airline')",
+    "Table 'airports' maps to 'https://w3id.org/demo/airline#/Airport' (expected 'Airport')",
+    "Table 'planes' maps to 'https://w3id.org/demo/airline#/Plane' (expected 'Plane')"
+  ],
+  "ontology_evaluation": {
+    "coverage_score": 1.0,
+    "completeness_score": 1.0,
+    "gaps": [
+      "Class 'Flight' has no associated properties",
+      "Class 'Plane' has no associated properties",
+      "Class 'Airline' has no associated properties",
+      "Class 'Airport' has no associated properties",
+      "Class 'Route' has no associated properties",
+      "Class 'Hub airport' has no associated properties",
+      "Class 'Time window' has no associated properties",
+      "Class 'Morning peak' has no associated properties",
+      "Class 'Midday' has no associated properties",
+      "Class 'Evening peak' has no associated properties",
+      "Class 'Overnight / redeye' has no associated properties",
+      "Class 'On-time flight' has no associated properties",
+      "Class 'Delayed flight' has no associated properties",
+      "Class 'Cancelled flight' has no associated properties",
+      "Class 'Diverted flight' has no associated properties",
+      "Class 'Delay severity band' has no associated properties",
+      "Class 'Minor delay' has no associated properties",
+      "Class 'Moderate delay' has no associated properties",
+      "Class 'Severe delay' has no associated properties",
+      "Class 'Delay reason (DOT category)' has no associated properties",
+      "Class 'Carrier' has no associated properties",
+      "Class 'Weather' has no associated properties",
+      "Class 'National Aviation System' has no associated properties",
+      "Class 'Security' has no associated properties",
+      "Class 'Late aircraft' has no associated properties",
+      "Class 'Delay breakdown' has no associated properties",
+      "Class 'On-time performance KPI' has no associated properties",
+      "Class 'Average arrival delay KPI' has no associated properties",
+      "Class 'Delay attribution share KPI' has no associated properties"
+    ],
+    "suggestions": [
+      "Consider adding more hierarchical relationships between classes"
+    ],
+    "metrics": {
+      "class_count": 29,
+      "property_count": 67,
+      "object_property_count": 12,
+      "data_property_count": 55,
+      "classes_with_hierarchy": 0,
+      "competency_question_coverage": 1.0
+    },
+    "competency_questions": [
+      "What is the on-time performance of flights by carrier?",
+      "What is the primary delay reason for delayed flights?",
+      "Which time window is a flight scheduled in?",
+      "Which route has the worst on-time performance?",
+      "Which airline operates a given flight?"
+    ]
+  },
+  "mapping_checks": {
+    "mapping_path": "/Users/frothkoetter/se-tools/github/semantica/config/airline_r2rml_db_mapping.yaml",
+    "table_mappings": 12,
+    "errors": [],
+    "warnings": [],
+    "rules": {
+      "rules_path": "/Users/frothkoetter/se-tools/github/semantica/config/airline_business_rules.yaml",
+      "time_windows": [
+        "MorningPeak",
+        "Midday",
+        "EveningPeak",
+        "Overnight"
+      ],
+      "errors": []
+    }
+  },
+  "graph_checks": {
+    "tables_in_graph": [
+      "airlines",
+      "airlinescsv",
+      "airports",
+      "airportscsv",
+      "flightscsv",
+      "flightsorc",
+      "planes",
+      "planescsv"
+    ],
+    "class_by_table": {
+      "airlines": "https://w3id.org/demo/airline#/Airline",
+      "airlinescsv": "https://w3id.org/demo/airline#/Airline",
+      "airports": "https://w3id.org/demo/airline#/Airport",
+      "airportscsv": "https://w3id.org/demo/airline#/Airport",
+      "flightscsv": "https://w3id.org/demo/airline#/Flight",
+      "flightsorc": "https://w3id.org/demo/airline#/Flight",
+      "planes": "https://w3id.org/demo/airline#/Plane",
+      "planescsv": "https://w3id.org/demo/airline#/Plane"
+    },
+    "errors": [],
+    "warnings": [
+      "Table 'flights_orc' maps to 'https://w3id.org/demo/airline#/Flight' (expected 'Flight')",
+      "Table 'airlines' maps to 'https://w3id.org/demo/airline#/Airline' (expected 'Airline')",
+      "Table 'airports' maps to 'https://w3id.org/demo/airline#/Airport' (expected 'Airport')",
+      "Table 'planes' maps to 'https://w3id.org/demo/airline#/Plane' (expected 'Plane')"
+    ]
+  }
+}

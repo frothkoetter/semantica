@@ -1,0 +1,92 @@
+# Derived from data/airline_mapping.ttl (R2RML → Semantica YAML bridge)
+# Keys are normalized: lowercase, no underscores/hyphens (see kdm_db_mapping.yaml).
+# Namespace: https://w3id.org/demo/airline#
+
+ontology_namespace: "https://w3id.org/demo/airline#"
+
+tables:
+  flightscsv: Flight
+  flightsorc: Flight
+  flight: Flight
+  planescsv: Plane
+  planes: Plane
+  aircraft: Plane
+  airlinescsv: Airline
+  airlines: Airline
+  airline: Airline
+  airportscsv: Airport
+  airports: Airport
+  airport: Airport
+
+columns:
+  _global:
+    year: year
+    month: month
+    dayofmonth: dayOfMonth
+    dayofweek: dayOfWeek
+    deptime: depTime
+    crsdeptime: crsDepTime
+    arrtime: arrTime
+    crsarrtime: crsArrTime
+    uniquecarrier: uniqueCarrier
+    flightnum: flightNum
+    tailnum: tailNum
+    actualelapsedtime: actualElapsedTime
+    crselapsedtime: crsElapsedTime
+    airtime: airTime
+    arrdelay: arrDelay
+    depdelay: depDelay
+    distance: distance
+    origin: origin
+    dest: dest
+    taxiin: taxiIn
+    taxiout: taxiOut
+    cancelled: cancelled
+    cancellationcode: cancellationCode
+    diverted: diverted
+    carrierdelay: carrierDelay
+    weatherdelay: weatherDelay
+    nasdelay: nasDelay
+    securitydelay: securityDelay
+    lateaircraftdelay: lateAircraftDelay
+    manufacturer: manufacturer
+    model: model
+    aircrafttype: aircraftType
+    enginetype: engineType
+    ownertype: ownerType
+    issuedate: issueDate
+    status: status
+    code: airlineCode
+    description: description
+    iata: iata
+    airport: airportName
+    city: city
+    state: state
+    country: country
+    lat: lat
+    lon: lon
+    routeid: routeId
+    scheduledinwindow: scheduledInWindowClass
+    flightstatus: flightStatus
+    delayseverity: delaySeverity
+    primarydelayreason: primaryDelayReason
+
+foreign_keys:
+  - source_table: flights_csv
+    target_table: airlines
+    edge_type: operatedBy
+  - source_table: flights_csv
+    target_table: planes
+    edge_type: assignedAircraft
+  - source_table: flights_csv
+    target_table: airports
+    edge_type: originAirport
+  - source_table: flights_orc
+    target_table: airlines
+    edge_type: operatedBy
+  - source_table: flights_orc
+    target_table: planes
+    edge_type: assignedAircraft
+  - source_table: flights_orc
+    target_table: airports
+    edge_type: originAirport

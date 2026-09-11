@@ -1,0 +1,53 @@
+# Forward-chaining rules for manufacturer segment + OTP analysis (2000-2008).
+# Facts are loaded by examples/airline_manufacturer_reasoning.py from Hive results.
+
+analysis:
+  id: manufacturer_otp_2000_2008
+  period: "2000-2008"
+  ontology:
+    flight_class: Flight
+    plane_class: Plane
+    link: assignedAircraft
+    property: manufacturer
+  otp_definition: "FAA 15-min rule: OnTimeFlight / (OnTimeFlight + DelayedFlight)"
+
+rules:
+  - id: r_market_leader
+    rule: "IF segmentRank(?m, 1) THEN marketLeader(?m)"
+    priority: 10
+    description: "Rank-1 manufacturer by segment volume is market leader."
+
+  - id: r_dominant_share
+    rule: "IF marketLeader(?m) AND dominantShare(?m) THEN fleetDominance(?m)"
+    priority: 9
+    description: "Leader with >40% share among top-5 has fleet dominance."
+
+  - id: r_otp_risk
+    rule: "IF otpTrend(?m, declining) THEN punctualityRisk(?m, elevated)"
+    priority: 8
+    description: "OTP drop 2003→2007 signals elevated punctuality risk."
+
+  - id: r_weak_2007
+    rule: "IF weakOtp2007(?m) THEN worstYearCandidate(?m, 2007)"
+    priority: 8
+    description: "OTP below 72% in 2007 marks a weak punctuality year."
+
+  - id: r_industry_stress
+    rule: "IF punctualityRisk(?m, elevated) AND marketLeader(?m) THEN industryWideStress(2000-2008)"
+    priority: 7
+    description: "Declining OTP at the market leader implies industry-wide stress."
+
+  - id: r_review
+    rule: "IF fleetDominance(?m) AND punctualityRisk(?m, elevated) THEN recommendOTPReview(?m)"
+    priority: 6
+    description: "Dominant fleet with declining OTP warrants operational review."
+
+  - id: r_data_quality
+    rule: "IF sparseTailnumMatch(?m) THEN dataQualityCaveat(?m)"
+    priority: 5
+    description: "Few plane matches in early years reduce OTP confidence."
+
+goals:
+  - marketLeader(BOEING)
+  - recommendOTPReview(BOEING)
+  - industryWideStress(2000-2008)

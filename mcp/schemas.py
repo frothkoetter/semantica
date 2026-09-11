@@ -290,3 +290,123 @@ GET_ANALYTICS = {
 }
 
 EMPTY = {"type": "object", "properties": {}}
+
+IMPORT_ONTOLOGY = {
+    "type": "object",
+    "properties": {
+        "file_path": {
+            "type": "string",
+            "description": "Local path to OWL/TTL/RDF/JSON-LD ontology file",
+        },
+        "url": {
+            "type": "string",
+            "description": "HTTP(S) URL to download ontology from",
+        },
+        "include_properties": {
+            "type": "boolean",
+            "description": "Also import properties and domain/range edges (default: true)",
+        },
+        "namespace_filter": {
+            "type": "string",
+            "description": "Only import terms whose URI starts with this prefix",
+        },
+    },
+}
+
+IMPORT_KDM_ONTOLOGY = {
+    "type": "object",
+    "properties": {
+        "file_path": {
+            "type": "string",
+            "description": "Optional local KDM file; defaults to official release URL",
+        },
+        "url": {
+            "type": "string",
+            "description": "Optional KDM download URL",
+        },
+        "format": {
+            "type": "string",
+            "enum": ["ttl", "turtle", "owl", "xml"],
+            "description": "Serialization when using default URL (default: ttl)",
+        },
+        "include_properties": {
+            "type": "boolean",
+            "description": "Import datatype/object properties (default: true)",
+        },
+    },
+}
+
+GET_HIVE_SCHEMA_INFO = {
+    "type": "object",
+    "properties": {
+        "database": {
+            "type": "string",
+            "description": "Hive database name (default: kdm)",
+        },
+        "tables": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Optional subset of tables",
+        },
+    },
+}
+
+MAP_ICEBERG_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "database": {
+            "type": "string",
+            "description": "Hive/Iceberg database (default: kdm)",
+        },
+        "tables": {
+            "type": "array",
+            "items": {"type": "string"},
+        },
+        "import_kdm_if_missing": {
+            "type": "boolean",
+            "description": "Auto-import KDM ontology when graph is empty (default: true)",
+        },
+        "use_kdm_defaults": {
+            "type": "boolean",
+            "description": "Use kdm_db_mapping.yaml (default: true)",
+        },
+        "mapping_config_path": {
+            "type": "string",
+            "description": "Custom KDM mapping YAML",
+        },
+        "apply_mappings": {
+            "type": "boolean",
+            "description": "Write mapping edges to graph (default: true)",
+        },
+    },
+}
+
+MAP_DB_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "connection_string": {
+            "type": "string",
+            "description": "SQLAlchemy DB URL, e.g. postgresql://user:pass@host/db",
+        },
+        "schema": {
+            "type": "string",
+            "description": "Database schema name (optional)",
+        },
+        "schema_info": {
+            "type": "object",
+            "description": "Pre-computed schema dict from DBIngestor.analyze_schema()",
+        },
+        "apply_mappings": {
+            "type": "boolean",
+            "description": "Write table/column/FK mapping edges into the graph (default: false)",
+        },
+        "use_kdm_defaults": {
+            "type": "boolean",
+            "description": "Use bundled config/kdm_db_mapping.yaml (default: false)",
+        },
+        "mapping_config_path": {
+            "type": "string",
+            "description": "Path to custom KDM mapping YAML",
+        },
+    },
+}

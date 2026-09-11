@@ -30,7 +30,7 @@ python -m mcp [--debug]
 
 ---
 
-## Tools (17 total)
+## Tools (20 total)
 
 ### Extraction
 
@@ -59,6 +59,14 @@ python -m mcp [--debug]
 | `search_graph` | Search nodes by label or ID substring |
 | `get_graph_summary` | Node/edge counts, decision count, type breakdown |
 | `get_graph_analytics` | PageRank, betweenness, degree centrality, community detection |
+
+### Ontology (KDM / OWL)
+
+| Tool | Description |
+|---|---|
+| `import_ontology` | Import OWL/TTL/RDF from local file or URL into the graph |
+| `import_kdm_ontology` | Import XUnternehmen.Kerndatenmodell (https://w3id.org/kdm/) |
+| `map_db_schema_to_ontology` | Map SQL tables/columns to ontology classes via `config/kdm_db_mapping.yaml` |
 
 ### Reasoning
 

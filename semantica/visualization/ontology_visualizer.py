@@ -100,6 +100,86 @@ class OntologyVisualizer:
             self.color_scheme = ColorScheme.DEFAULT
         self.node_size = config.get("node_size", 15)
 
+    def _local_name_from_uri(self, uri: str) -> str:
+        if not uri:
+            return ""
+        uri = str(uri)
+        if "#" in uri:
+            return uri.rsplit("#", 1)[-1].lstrip("/")
+        return uri.rstrip("/").rsplit("/", 1)[-1]
+
+    def _normalize_ontology_for_visualization(
+        self,
+        classes: List[Dict[str, Any]],
+        properties: List[Dict[str, Any]],
+    ) -> tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
+        """
+        Align OntologyIngestor output with visualizer node IDs and edge wiring.
+
+        Ingested ontologies use ``parents`` (URI list) and URI-valued domain/range,
+        while the visualizer expects ``parent``/``subClassOf`` and local class names.
+        """
+        uri_to_key: Dict[str, str] = {}
+        for cls in classes:
+            uri = cls.get("uri", "")
+            key = self._local_name_from_uri(uri) if uri else str(cls.get("name") or "")
+            if uri:
+                uri_to_key[str(uri)] = key
+            uri_to_key[key] = key
+            label = cls.get("label")
+            if label:
+                uri_to_key[str(label)] = key
+
+        def resolve_ref(ref: Any) -> Any:
+            if ref is None:
+                return None
+            if isinstance(ref, list):
+                resolved = [resolve_ref(item) for item in ref]
+                return resolved[0] if len(resolved) == 1 else resolved
+            s = str(ref)
+            if s in uri_to_key:
+                return uri_to_key[s]
+            local = self._local_name_from_uri(s)
+            if local in uri_to_key:
+                return uri_to_key[local]
+            return local
+
+        normalized_classes: List[Dict[str, Any]] = []
+        for cls in classes:
+            uri = cls.get("uri", "")
+            key = self._local_name_from_uri(uri) if uri else str(cls.get("name") or "")
+            entry = dict(cls)
+            entry["name"] = key
+            entry["label"] = cls.get("label") or key
+
+            parent_ref = cls.get("parent") or cls.get("subClassOf")
+            if not parent_ref:
+                parents = cls.get("parents")
+                if parents:
+                    parent_ref = parents[0] if isinstance(parents, list) else parents
+            if parent_ref:
+                parent_key = resolve_ref(parent_ref)
+                entry["parent"] = parent_key
+                entry["subClassOf"] = parent_key
+
+            normalized_classes.append(entry)
+
+        normalized_properties: List[Dict[str, Any]] = []
+        for prop in properties:
+            entry = dict(prop)
+            uri = prop.get("uri", "")
+            entry["name"] = (
+                self._local_name_from_uri(uri) if uri else str(prop.get("name") or "")
+            )
+            entry["label"] = prop.get("label") or entry["name"]
+            if prop.get("domain") is not None:
+                entry["domain"] = resolve_ref(prop.get("domain"))
+            if prop.get("range") is not None:
+                entry["range"] = resolve_ref(prop.get("range"))
+            normalized_properties.append(entry)
+
+        return normalized_classes, normalized_properties
+
     def _check_dependencies(self, require_graphviz: bool = False):
         """Check if dependencies are available."""
         if require_graphviz:
@@ -193,6 +273,13 @@ class OntologyVisualizer:
                 raise ProcessingError(
                     "No classes found in ontology. Please provide classes or a semantic network."
                 )
+
+            properties = (
+                ontology.get("properties", ontology.get("property_definitions", []))
+                if isinstance(ontology, dict)
+                else []
+            )
+            classes, _ = self._normalize_ontology_for_visualization(classes, properties)
 
             # Step 2: Data Analysis
             num_classes = len(classes)
@@ -296,6 +383,10 @@ class OntologyVisualizer:
         if not properties:
             raise ProcessingError("No properties found in ontology")
 
+        classes, properties = self._normalize_ontology_for_visualization(
+            classes, properties
+        )
+
         return self._visualize_properties_plotly(
             properties, classes, output, file_path, **options
         )
@@ -324,6 +415,9 @@ class OntologyVisualizer:
 
         classes = ontology.get("classes", [])
         properties = ontology.get("properties", [])
+        classes, properties = self._normalize_ontology_for_visualization(
+            classes, properties
+        )
 
         # Build nodes and edges
         nodes = []
@@ -552,6 +646,12 @@ class OntologyVisualizer:
         for cls in classes:
             cls_name = cls.get("name") or cls.get("uri", "")
             parent = cls.get("parent") or cls.get("subClassOf")
+            if not parent:
+                parents = cls.get("parents")
+                if parents:
+                    parent = parents[0] if isinstance(parents, list) else parents
+            if parent and "#" in str(parent):
+                parent = self._local_name_from_uri(str(parent))
 
             if parent:
                 if parent not in tree:
@@ -906,6 +1006,12 @@ class OntologyVisualizer:
         for cls in classes:
             cls_name = cls.get("name") or cls.get("label", "")
             parent = cls.get("parent") or cls.get("subClassOf")
+            if not parent:
+                parents = cls.get("parents")
+                if parents:
+                    parent = parents[0] if isinstance(parents, list) else parents
+            if parent and "#" in str(parent):
+                parent = self._local_name_from_uri(str(parent))
             if parent:
                 dot.edge(parent, cls_name)
 

@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="https://w3id.org/airline/ontology#"
+     xml:base="https://w3id.org/airline/ontology"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:schema="https://schema.org/"
+     xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#">
+    
+    <owl:Ontology rdf:about="https://w3id.org/airline/ontology">
+        <rdfs:label xml:lang="en">Airline Data Ontology with OWL Rules</rdfs:label>
+        <rdfs:comment xml:lang="de">OWL-Ontologie mit erweiterten logischen Axiomen, Kardinalitäten und abgeleiteten Klassen.</rdfs:comment>
+    </owl:Ontology>
+
+    <!-- 
+    =================================================================
+    // 1. KLASSEN & LOGISCHE EINSCHRÄNKUNGEN (Restrictions)
+    =================================================================
+    -->
+
+    <!-- Basisklasse: Flight -->
+    <owl:Class rdf:about="https://w3id.org/airline/ontology#Flight">
+        <rdfs:subClassOf rdf:resource="https://schema.org/Flight"/>
+        
+        <!-- REGEL 1: Genau 1 Startflughafen -->
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://w3id.org/airline/ontology#originAirport"/>
+                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        
+        <!-- REGEL 2: Genau 1 Zielflughafen -->
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://w3id.org/airline/ontology#destinationAirport"/>
+                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+
+        <!-- REGEL 3: Maximal 1 zugewiesenes Flugzeug -->
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://w3id.org/airline/ontology#assignedAircraft"/>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label xml:lang="de">Flug</rdfs:label>
+    </owl:Class>
+
+    <!-- 
+    REGEL 4: Logisch abgeleitete Klasse (Defined Class)
+    Ein "DelayedFlight" ist automatisch JEDER Flug, der über eine Verspätungsursache verfügt.
+    -->
+    <owl:Class rdf:about="https://w3id.org/airline/ontology#DelayedFlight">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/airline/ontology#Flight"/>
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://w3id.org/airline/ontology#hasDelayBreakdown"/>
+                <owl:someValuesFrom rdf:resource="https://w3id.org/airline/ontology#DelayBreakdown"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:label xml:lang="de">Verspäteter Flug</rdfs:label>
+    </owl:Class>
+
+    <!-- 
+    REGEL 5: Disjunkte Klassen (Disjoint Classes)
+    Ein Flugzeug kann nicht gleichzeitig ein Flughafen sein (verhindert Dateninhalte-Fehler).
+    -->
+    <owl:Class rdf:about="https://w3id.org/airline/ontology#Aircraft">
+        <owl:disjointWith rdf:resource="https://w3id.org/airline/ontology#Airport"/>
+        <owl:disjointWith rdf:resource="https://w3id.org/airline/ontology#Airline"/>
+        <rdfs:label xml:lang="de">Flugzeug</rdfs:label>
+    </owl:Class>
+
+    <owl:Class rdf:about="https://w3id.org/airline/ontology#Airport">
+        <rdfs:label xml:lang="de">Flughafen</rdfs:label>
+    </owl:Class>
+
+    <owl:Class rdf:about="https://w3id.org/airline/ontology#Airline">
+        <rdfs:label xml:lang="de">Fluggesellschaft</rdfs:label>
+    </owl:Class>
+
+    <owl:Class rdf:about="https://w3id.org/airline/ontology#DelayBreakdown">
+        <rdfs:label xml:lang="de">Verspätungsursachen</rdfs:label>
+    </owl:Class>
+
+    <!-- 
+    =================================================================
+    // 2. BEZIEHUNGS-LOGIK (Object Property Characteristics)
+    =================================================================
+    -->
+
+    <!-- REGEL 6: Funktionale Eigenschaft (Eine Instanz kann nur eine Airline haben) -->
+    <owl:ObjectProperty rdf:about="https://w3id.org/airline/ontology#operatedBy">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="https://w3id.org/airline/ontology#Flight"/>
+        <rdfs:range rdf:resource="https://w3id.org/airline/ontology#Airline"/>
+    </owl:ObjectProperty>
+
+    <!-- REGEL 7: Inverse Eigenschaften (Automatische Rückverknüpfung) -->
+    <owl:ObjectProperty rdf:about="https://w3id.org/airline/ontology#assignedAircraft">
+        <owl:inverseOf rdf:resource="https://w3id.org/airline/ontology#carriesFlight"/>
+        <rdfs:domain rdf:resource="https://w3id.org/airline/ontology#Flight"/>
+        <rdfs:range rdf:resource="https://w3id.org/airline/ontology#Aircraft"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/airline/ontology#carriesFlight">
+        <rdfs:domain rdf:resource="https://w3id.org/airline/ontology#Aircraft"/>
+        <rdfs:range rdf:resource="https://w3id.org/airline/ontology#Flight"/>
+        <rdfs:label xml:lang="de">führt Flug aus</rdfs:label>
+    </owl:ObjectProperty>
+
+    <!-- REGEL 8: Irreflexive Eigenschaft (Flug kann nicht von sich selbst starten/landen) -->
+    <owl:ObjectProperty rdf:about="https://w3id.org/airline/ontology#originAirport">
+        <rdfs:domain rdf:resource="https://w3id.org/airline/ontology#Flight"/>
+        <rdfs:range rdf:resource="https://w3id.org/airline/ontology#Airport"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/airline/ontology#destinationAirport">
+        <rdfs:domain rdf:resource="https://w3id.org/airline/ontology#Flight"/>
+        <rdfs:range rdf:resource="https://w3id.org/airline/ontology#Airport"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/airline/ontology#hasDelayBreakdown">
+        <rdfs:domain rdf:resource="https://w3id.org/airline/ontology#Flight"/>
+        <rdfs:range rdf:resource="https://w3id.org/airline/ontology#DelayBreakdown"/>
+    </owl:ObjectProperty>
+
+</rdf:RDF>

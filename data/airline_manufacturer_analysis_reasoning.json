@@ -1,0 +1,245 @@
+{
+  "analysis_id": "manufacturer_otp_2000_2008",
+  "period": "2000-2008",
+  "segment_totals": {
+    "BOEING": 14518058,
+    "EMBRAER": 5176326,
+    "BOMBARDIER_INC": 4735636,
+    "AIRBUS_INDUSTRIE": 3733463,
+    "MCDONNELL_DOUGLAS": 2717289
+  },
+  "otp_snapshot_2003_2007": {
+    "BOEING": {
+      "2003": 81.7,
+      "2007": 74.8
+    },
+    "EMBRAER": {
+      "2003": 84.1,
+      "2007": 73.3
+    },
+    "BOMBARDIER_INC": {
+      "2003": 81.4,
+      "2007": 70.9
+    },
+    "AIRBUS_INDUSTRIE": {
+      "2003": 81.6,
+      "2007": 69.4
+    },
+    "MCDONNELL_DOUGLAS": {
+      "2003": 83.0,
+      "2007": 70.5
+    }
+  },
+  "initial_facts": [
+    "analysisPeriod(2000-2008)",
+    "ontologyLink(Flight, assignedAircraft, Plane)",
+    "ontologyProperty(Plane, manufacturer)",
+    "otpMetric(OnTimePerformance)",
+    "segmentTotal(BOEING, 14518058)",
+    "segmentRank(BOEING, 1)",
+    "dominantShare(BOEING)",
+    "otpYear(BOEING, 2003, 81.7)",
+    "otpYear(BOEING, 2007, 74.8)",
+    "otpTrend(BOEING, declining)",
+    "segmentTotal(EMBRAER, 5176326)",
+    "segmentRank(EMBRAER, 2)",
+    "otpYear(EMBRAER, 2003, 84.1)",
+    "otpYear(EMBRAER, 2007, 73.3)",
+    "otpTrend(EMBRAER, declining)",
+    "sparseTailnumMatch(EMBRAER)",
+    "segmentTotal(BOMBARDIER_INC, 4735636)",
+    "segmentRank(BOMBARDIER_INC, 3)",
+    "otpYear(BOMBARDIER_INC, 2003, 81.4)",
+    "otpYear(BOMBARDIER_INC, 2007, 70.9)",
+    "otpTrend(BOMBARDIER_INC, declining)",
+    "weakOtp2007(BOMBARDIER_INC)",
+    "sparseTailnumMatch(BOMBARDIER_INC)",
+    "segmentTotal(AIRBUS_INDUSTRIE, 3733463)",
+    "segmentRank(AIRBUS_INDUSTRIE, 4)",
+    "otpYear(AIRBUS_INDUSTRIE, 2003, 81.6)",
+    "otpYear(AIRBUS_INDUSTRIE, 2007, 69.4)",
+    "otpTrend(AIRBUS_INDUSTRIE, declining)",
+    "weakOtp2007(AIRBUS_INDUSTRIE)",
+    "segmentTotal(MCDONNELL_DOUGLAS, 2717289)",
+    "segmentRank(MCDONNELL_DOUGLAS, 5)",
+    "otpYear(MCDONNELL_DOUGLAS, 2003, 83.0)",
+    "otpYear(MCDONNELL_DOUGLAS, 2007, 70.5)",
+    "otpTrend(MCDONNELL_DOUGLAS, declining)",
+    "weakOtp2007(MCDONNELL_DOUGLAS)"
+  ],
+  "rules": [
+    "IF segmentRank(?m, 1) THEN marketLeader(?m)",
+    "IF marketLeader(?m) AND dominantShare(?m) THEN fleetDominance(?m)",
+    "IF otpTrend(?m, declining) THEN punctualityRisk(?m, elevated)",
+    "IF weakOtp2007(?m) THEN worstYearCandidate(?m, 2007)",
+    "IF punctualityRisk(?m, elevated) AND marketLeader(?m) THEN industryWideStress(2000-2008)",
+    "IF fleetDominance(?m) AND punctualityRisk(?m, elevated) THEN recommendOTPReview(?m)",
+    "IF sparseTailnumMatch(?m) THEN dataQualityCaveat(?m)"
+  ],
+  "reasoning": {
+    "initial_fact_count": 35,
+    "rule_count": 7,
+    "derived_facts": [
+      {
+        "conclusion": "marketLeader(BOEING)",
+        "rule": "rule_1",
+        "premises": [
+          "segmentRank(BOEING, 1)"
+        ],
+        "confidence": 1.0
+      },
+      {
+        "conclusion": "fleetDominance(BOEING)",
+        "rule": "rule_2",
+        "premises": [
+          "marketLeader(BOEING)",
+          "dominantShare(BOEING)"
+        ],
+        "confidence": 1.0
+      },
+      {
+        "conclusion": "punctualityRisk(AIRBUS_INDUSTRIE, elevated)",
+        "rule": "rule_3",
+        "premises": [
+          "otpTrend(AIRBUS_INDUSTRIE, declining)"
+        ],
+        "confidence": 1.0
+      },
+      {
+        "conclusion": "punctualityRisk(BOEING, elevated)",
+        "rule": "rule_3",
+        "premises": [
+          "otpTrend(BOEING, declining)"
+        ],
+        "confidence": 1.0
+      },
+      {
+        "conclusion": "punctualityRisk(BOMBARDIER_INC, elevated)",
+        "rule": "rule_3",
+        "premises": [
+          "otpTrend(BOMBARDIER_INC, declining)"
+        ],
+        "confidence": 1.0
+      },
+      {
+        "conclusion": "punctualityRisk(EMBRAER, elevated)",
+        "rule": "rule_3",
+        "premises": [
+          "otpTrend(EMBRAER, declining)"
+        ],
+        "confidence": 1.0
+      },
+      {
+        "conclusion": "punctualityRisk(MCDONNELL_DOUGLAS, elevated)",
+        "rule": "rule_3",
+        "premises": [
+          "otpTrend(MCDONNELL_DOUGLAS, declining)"
+        ],
+        "confidence": 1.0
+      },
+      {
+        "conclusion": "worstYearCandidate(AIRBUS_INDUSTRIE, 2007)",
+        "rule": "rule_4",
+        "premises": [
+          "weakOtp2007(AIRBUS_INDUSTRIE)"
+        ],
+        "confidence": 1.0
+      },
+      {
+        "conclusion": "worstYearCandidate(BOMBARDIER_INC, 2007)",
+        "rule": "rule_4",
+        "premises": [
+          "weakOtp2007(BOMBARDIER_INC)"
+        ],
+        "confidence": 1.0
+      },
+      {
+        "conclusion": "worstYearCandidate(MCDONNELL_DOUGLAS, 2007)",
+        "rule": "rule_4",
+        "premises": [
+          "weakOtp2007(MCDONNELL_DOUGLAS)"
+        ],
+        "confidence": 1.0
+      },
+      {
+        "conclusion": "industryWideStress(2000-2008)",
+        "rule": "rule_5",
+        "premises": [
+          "punctualityRisk(BOEING, elevated)",
+          "marketLeader(BOEING)"
+        ],
+        "confidence": 1.0
+      },
+      {
+        "conclusion": "recommendOTPReview(BOEING)",
+        "rule": "rule_6",
+        "premises": [
+          "fleetDominance(BOEING)",
+          "punctualityRisk(BOEING, elevated)"
+        ],
+        "confidence": 1.0
+      },
+      {
+        "conclusion": "dataQualityCaveat(BOMBARDIER_INC)",
+        "rule": "rule_7",
+        "premises": [
+          "sparseTailnumMatch(BOMBARDIER_INC)"
+        ],
+        "confidence": 1.0
+      },
+      {
+        "conclusion": "dataQualityCaveat(EMBRAER)",
+        "rule": "rule_7",
+        "premises": [
+          "sparseTailnumMatch(EMBRAER)"
+        ],
+        "confidence": 1.0
+      }
+    ],
+    "derived_conclusions": [
+      "marketLeader(BOEING)",
+      "fleetDominance(BOEING)",
+      "punctualityRisk(AIRBUS_INDUSTRIE, elevated)",
+      "punctualityRisk(BOEING, elevated)",
+      "punctualityRisk(BOMBARDIER_INC, elevated)",
+      "punctualityRisk(EMBRAER, elevated)",
+      "punctualityRisk(MCDONNELL_DOUGLAS, elevated)",
+      "worstYearCandidate(AIRBUS_INDUSTRIE, 2007)",
+      "worstYearCandidate(BOMBARDIER_INC, 2007)",
+      "worstYearCandidate(MCDONNELL_DOUGLAS, 2007)",
+      "industryWideStress(2000-2008)",
+      "recommendOTPReview(BOEING)",
+      "dataQualityCaveat(BOMBARDIER_INC)",
+      "dataQualityCaveat(EMBRAER)"
+    ],
+    "goals": [
+      {
+        "goal": "marketLeader(BOEING)",
+        "proven": true,
+        "premises": [
+          "marketLeader(BOEING)"
+        ],
+        "rule": null
+      },
+      {
+        "goal": "recommendOTPReview(BOEING)",
+        "proven": true,
+        "premises": [
+          "recommendOTPReview(BOEING)"
+        ],
+        "rule": null
+      },
+      {
+        "goal": "industryWideStress(2000-2008)",
+        "proven": true,
+        "premises": [
+          "industryWideStress(2000-2008)"
+        ],
+        "rule": null
+      }
+    ]
+  },
+  "narrative_de": "1. Ontologie-Auflösung: Flight → assignedAircraft → Plane.manufacturer auf flights_orc + planes.\n2. Aggregation 2000–2008: Boeing führt mit 14,5 Mio. Segmenten (segmentRank=1 → marketLeader).\n3. OTP-Klassifikation: FAA 15-min-Regel (OnTimeFlight) pro Jahr und Hersteller.\n4. Trend 2003→2007: otpTrend(declining) bei allen Top-5 → punctualityRisk(elevated).\n5. Schwachjahr 2007: weakOtp2007 für Airbus, Bombardier, McDonnell Douglas.\n6. Boeing >40% Top-5-Anteil → fleetDominance(BOEING).\n7. Marktführer + sinkende OTP → industryWideStress(2000-2008).\n8. Empfehlung: recommendOTPReview(BOEING) — dominante Flotte, fallende Pünktlichkeit.",
+  "decision_id": "dbc6a178-b5f0-4cef-b29c-6283965b8b57",
+  "graph_path": "/Users/frothkoetter/se-tools/github/semantica/data/airline_graph.json"
+}

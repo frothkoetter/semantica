@@ -1,0 +1,253 @@
+@prefix : <https://w3id.org/demo/airline#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+# Extension module: business / operational semantics on top of airline_demo_ontology.ttl
+# Import or merge before map_iceberg_schema_to_ontology / import_ontology.
+
+<https://w3id.org/demo/airline#business> a owl:Ontology ;
+    rdfs:label "Airline business logic extension" ;
+    owl:imports <https://w3id.org/demo/airline#> .
+
+# ---------------------------------------------------------------------------
+# Logistics & network
+# ---------------------------------------------------------------------------
+
+:Route a owl:Class ;
+    rdfs:label "Route" ;
+    rdfs:comment "Directed origin–destination pair; aggregate key for network logistics." .
+
+:HubAirport a owl:Class ;
+    rdfs:subClassOf :Airport ;
+    rdfs:label "Hub airport" ;
+    rdfs:comment "Airport with high outbound connection volume (derived by analytics threshold)." .
+
+:operatesOnRoute a owl:ObjectProperty ;
+    rdfs:domain :Flight ;
+    rdfs:range :Route ;
+    rdfs:label "operates on route" .
+
+:routeOrigin a owl:ObjectProperty ;
+    rdfs:domain :Route ;
+    rdfs:range :Airport .
+
+:routeDestination a owl:ObjectProperty ;
+    rdfs:domain :Route ;
+    rdfs:range :Airport .
+
+:routeDistanceMiles a owl:DatatypeProperty ;
+    rdfs:domain :Route ;
+    rdfs:range xsd:integer .
+
+:isHub a owl:DatatypeProperty ;
+    rdfs:domain :Airport ;
+    rdfs:range xsd:boolean ;
+    rdfs:comment "True when airport exceeds hub traffic threshold in a reference period." .
+
+# ---------------------------------------------------------------------------
+# Time windows & peak business hours
+# ---------------------------------------------------------------------------
+
+:TimeWindow a owl:Class ;
+    rdfs:label "Time window" ;
+    rdfs:comment "Named local-time band for scheduling analytics (HHMM on airport clock)." .
+
+:MorningPeak a owl:Class ;
+    rdfs:subClassOf :TimeWindow ;
+    rdfs:label "Morning peak" ;
+    rdfs:comment "Typical business travel band 06:00–09:59 local (crsDepTime 600–959)." .
+
+:Midday a owl:Class ;
+    rdfs:subClassOf :TimeWindow ;
+    rdfs:label "Midday" ;
+    rdfs:comment "10:00–16:59 local (crsDepTime 1000–1659)." .
+
+:EveningPeak a owl:Class ;
+    rdfs:subClassOf :TimeWindow ;
+    rdfs:label "Evening peak" ;
+    rdfs:comment "17:00–20:59 local (crsDepTime 1700–2059)." .
+
+:Overnight a owl:Class ;
+    rdfs:subClassOf :TimeWindow ;
+    rdfs:label "Overnight / redeye" ;
+    rdfs:comment "21:00–05:59 local." .
+
+:scheduledInWindow a owl:ObjectProperty ;
+    rdfs:domain :Flight ;
+    rdfs:range :TimeWindow ;
+    rdfs:label "scheduled in time window" .
+
+:windowStartHHMM a owl:DatatypeProperty ;
+    rdfs:domain :TimeWindow ;
+    rdfs:range xsd:integer .
+
+:windowEndHHMM a owl:DatatypeProperty ;
+    rdfs:domain :TimeWindow ;
+    rdfs:range xsd:integer .
+
+# ---------------------------------------------------------------------------
+# Flight status & delay taxonomy (DOT / FAA aligned)
+# ---------------------------------------------------------------------------
+
+:OnTimeFlight a owl:Class ;
+    rdfs:subClassOf :Flight ;
+    rdfs:label "On-time flight" ;
+    rdfs:comment "FAA on-time: arrDelay <= 15 AND depDelay <= 15 AND not cancelled." .
+
+:DelayedFlight a owl:Class ;
+    rdfs:subClassOf :Flight ;
+    rdfs:label "Delayed flight" ;
+    rdfs:comment "arrDelay > 15 OR depDelay > 15 (FAA delay threshold, minutes)." .
+
+:CancelledFlight a owl:Class ;
+    rdfs:subClassOf :Flight ;
+    rdfs:label "Cancelled flight" .
+
+:DivertedFlight a owl:Class ;
+    rdfs:subClassOf :Flight ;
+    rdfs:label "Diverted flight" .
+
+:DelaySeverity a owl:Class ;
+    rdfs:label "Delay severity band" .
+
+:MinorDelay a owl:Class ;
+    rdfs:subClassOf :DelaySeverity ;
+    rdfs:label "Minor delay" ;
+    rdfs:comment "16–30 minutes past FAA on-time threshold." .
+
+:ModerateDelay a owl:Class ;
+    rdfs:subClassOf :DelaySeverity ;
+    rdfs:label "Moderate delay" ;
+    rdfs:comment "31–60 minutes." .
+
+:SevereDelay a owl:Class ;
+    rdfs:subClassOf :DelaySeverity ;
+    rdfs:label "Severe delay" ;
+    rdfs:comment "More than 60 minutes." .
+
+:hasDelaySeverity a owl:ObjectProperty ;
+    rdfs:domain :DelayedFlight ;
+    rdfs:range :DelaySeverity .
+
+:DelayReason a owl:Class ;
+    rdfs:label "Delay reason (DOT category)" .
+
+:CarrierDelayReason a owl:Class ;
+    rdfs:subClassOf :DelayReason ;
+    rdfs:label "Carrier" ;
+    skos:notation "carrier" .
+
+:WeatherDelayReason a owl:Class ;
+    rdfs:subClassOf :DelayReason ;
+    rdfs:label "Weather" ;
+    skos:notation "weather" .
+
+:NASDelayReason a owl:Class ;
+    rdfs:subClassOf :DelayReason ;
+    rdfs:label "National Aviation System" ;
+    skos:notation "nas" .
+
+:SecurityDelayReason a owl:Class ;
+    rdfs:subClassOf :DelayReason ;
+    rdfs:label "Security" ;
+    skos:notation "security" .
+
+:LateAircraftDelayReason a owl:Class ;
+    rdfs:subClassOf :DelayReason ;
+    rdfs:label "Late aircraft" ;
+    skos:notation "late_aircraft" .
+
+:primaryDelayReason a owl:ObjectProperty ;
+    rdfs:domain :DelayedFlight ;
+    rdfs:range :DelayReason ;
+    rdfs:label "primary delay reason" ;
+    rdfs:comment "Argmax of carrierDelay, weatherDelay, nasDelay, securityDelay, lateAircraftDelay (non-null)." .
+
+:hasDelayBreakdown a owl:ObjectProperty ;
+    rdfs:domain :Flight ;
+    rdfs:range :DelayBreakdown .
+
+:DelayBreakdown a owl:Class ;
+    rdfs:label "Delay breakdown" ;
+    rdfs:comment "Attributed delay minutes per DOT cause on a single flight." .
+
+:breakdownCarrierMinutes a owl:DatatypeProperty ;
+    rdfs:domain :DelayBreakdown ;
+    rdfs:range xsd:integer .
+
+:breakdownWeatherMinutes a owl:DatatypeProperty ;
+    rdfs:domain :DelayBreakdown ;
+    rdfs:range xsd:integer .
+
+:breakdownNASMinutes a owl:DatatypeProperty ;
+    rdfs:domain :DelayBreakdown ;
+    rdfs:range xsd:integer .
+
+:breakdownSecurityMinutes a owl:DatatypeProperty ;
+    rdfs:domain :DelayBreakdown ;
+    rdfs:range xsd:integer .
+
+:breakdownLateAircraftMinutes a owl:DatatypeProperty ;
+    rdfs:domain :DelayBreakdown ;
+    rdfs:range xsd:integer .
+
+# Datatype properties already mapped from flights_orc (add to demo ontology import)
+:carrierDelay a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:integer .
+:weatherDelay a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:integer .
+:nasDelay a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:integer .
+:securityDelay a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:integer .
+:lateAircraftDelay a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:integer .
+:cancelled a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:integer .
+:cancellationCode a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:string .
+:diverted a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:string .
+:taxiIn a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:integer .
+:taxiOut a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:integer .
+:actualElapsedTime a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:integer .
+:crsElapsedTime a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:integer .
+:airTime a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:integer .
+
+# ---------------------------------------------------------------------------
+# KPIs & service levels (ontology terms for analytics queries)
+# ---------------------------------------------------------------------------
+
+:OnTimePerformance a owl:Class ;
+    rdfs:label "On-time performance KPI" ;
+    rdfs:comment "Ratio of OnTimeFlight to completed Flight in a scope (carrier, route, window)." .
+
+:AverageArrivalDelay a owl:Class ;
+    rdfs:label "Average arrival delay KPI" .
+
+:DelayAttributionShare a owl:Class ;
+    rdfs:label "Delay attribution share KPI" ;
+    rdfs:comment "Share of total delay minutes by DelayReason in a scope." .
+
+:measuresKPI a owl:ObjectProperty ;
+    rdfs:domain :Flight ;
+    rdfs:range owl:Thing ;
+    rdfs:comment "Links aggregated KPI instances to contributing flights (materialized in analytics layer)." .
+
+# Compiled at query time from airline_business_rules.yaml (not stored in Hive)
+:routeId a owl:DatatypeProperty ;
+    rdfs:domain :Flight ;
+    rdfs:range xsd:string .
+
+:scheduledInWindowClass a owl:DatatypeProperty ;
+    rdfs:domain :Flight ;
+    rdfs:range xsd:string ;
+    rdfs:comment "TimeWindow class name from business rules (MorningPeak, EveningPeak, …)." .
+
+:flightStatus a owl:DatatypeProperty ;
+    rdfs:domain :Flight ;
+    rdfs:range xsd:string ;
+    rdfs:comment "OnTimeFlight, DelayedFlight, CancelledFlight, DivertedFlight." .
+
+:delaySeverity a owl:DatatypeProperty ;
+    rdfs:domain :Flight ;
+    rdfs:range xsd:string .
+
+:primaryDelayReason a owl:DatatypeProperty ;
+    rdfs:domain :Flight ;
+    rdfs:range xsd:string ;
+    rdfs:comment "CarrierDelayReason, WeatherDelayReason, … (DOT attribution)." .

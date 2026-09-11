@@ -1,0 +1,127 @@
+# R2RML Mapping File for Airline Data Schema
+@prefix rr: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <https://w3id.org/demo/airline#> .
+
+# =============================================================================
+# 1. FLIGHTS MAPPING
+# =============================================================================
+ex:TriplesMap_Flights a rr:TriplesMap ;
+    rr:logicalTable [ rr:tableName "flights_csv" ] ;
+    
+    rr:subjectMap [
+        rr:template "https://w3id.org/demo/airline#Flight_{year}_{month}_{dayofmonth}_{uniquecarrier}_{flightnum}" ;
+        rr:class ex:Flight ;
+    ] ;
+
+    # Object Properties (Joins)
+    rr:predicateObjectMap [
+        rr:predicate ex:assignedAircraft ;
+        rr:objectMap [ rr:template "https://w3id.org/demo/airline#Plane_{tailnum}" ] ;
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ex:operatedBy ;
+        rr:objectMap [ rr:template "https://w3id.org/demo/airline#Airline_{uniquecarrier}" ] ;
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ex:originAirport ;
+        rr:objectMap [ rr:template "https://w3id.org/demo/airline#Airport_{origin}" ] ;
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ex:destinationAirport ;
+        rr:objectMap [ rr:template "https://w3id.org/demo/airline#Airport_{dest}" ] ;
+    ] ;
+
+    # Datatype Properties (Date & Time Fields)
+    rr:predicateObjectMap [ rr:predicate ex:year ; rr:objectMap [ rr:column "year" ; rr:datatype xsd:integer ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:month ; rr:objectMap [ rr:column "month" ; rr:datatype xsd:integer ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:dayOfMonth ; rr:objectMap [ rr:column "dayofmonth" ; rr:datatype xsd:integer ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:dayOfWeek ; rr:objectMap [ rr:column "dayofweek" ; rr:datatype xsd:integer ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:depTime ; rr:objectMap [ rr:column "deptime" ; rr:datatype xsd:integer ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:crsDepTime ; rr:objectMap [ rr:column "crsdeptime" ; rr:datatype xsd:integer ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:arrTime ; rr:objectMap [ rr:column "arrtime" ; rr:datatype xsd:integer ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:crsArrTime ; rr:objectMap [ rr:column "crsarrtime" ; rr:datatype xsd:integer ] ] ;
+
+    # Identifiers
+    rr:predicateObjectMap [ rr:predicate ex:uniqueCarrier ; rr:objectMap [ rr:column "uniquecarrier" ; rr:datatype xsd:string ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:flightNum ; rr:objectMap [ rr:column "flightnum" ; rr:datatype xsd:integer ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:tailNum ; rr:objectMap [ rr:column "tailnum" ; rr:datatype xsd:string ] ] ;
+
+    # Performance Metrics
+    rr:predicateObjectMap [ rr:predicate ex:actualElapsedTime ; rr:objectMap [ rr:column "actualelapsedtime" ; rr:datatype xsd:integer ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:crsElapsedTime ; rr:objectMap [ rr:column "crselapsedtime" ; rr:datatype xsd:integer ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:airTime ; rr:objectMap [ rr:column "airtime" ; rr:datatype xsd:integer ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:distance ; rr:objectMap [ rr:column "distance" ; rr:datatype xsd:integer ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:origin ; rr:objectMap [ rr:column "origin" ; rr:datatype xsd:string ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:dest ; rr:objectMap [ rr:column "dest" ; rr:datatype xsd:string ] ] ;
+
+    # Delays & Runway Info
+    rr:predicateObjectMap [ rr:predicate ex:arrDelay ; rr:objectMap [ rr:column "arrdelay" ; rr:datatype xsd:integer ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:depDelay ; rr:objectMap [ rr:column "depdelay" ; rr:datatype xsd:integer ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:taxiIn ; rr:objectMap [ rr:column "taxiin" ; rr:datatype xsd:integer ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:taxiOut ; rr:objectMap [ rr:column "taxiout" ; rr:datatype xsd:integer ] ] ;
+
+    # Cancellations & Diversions
+    rr:predicateObjectMap [ rr:predicate ex:cancelled ; rr:objectMap [ rr:column "cancelled" ; rr:datatype xsd:integer ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:cancellationCode ; rr:objectMap [ rr:column "cancellationcode" ; rr:datatype xsd:string ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:diverted ; rr:objectMap [ rr:column "diverted" ; rr:datatype xsd:string ] ] ;
+
+    # Delay Reasons
+    rr:predicateObjectMap [ rr:predicate ex:carrierDelay ; rr:objectMap [ rr:column "carrierdelay" ; rr:datatype xsd:integer ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:weatherDelay ; rr:objectMap [ rr:column "weatherdelay" ; rr:datatype xsd:integer ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:nasDelay ; rr:objectMap [ rr:column "nasdelay" ; rr:datatype xsd:integer ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:securityDelay ; rr:objectMap [ rr:column "securitydelay" ; rr:datatype xsd:integer ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:lateAircraftDelay ; rr:objectMap [ rr:column "lateaircraftdelay" ; rr:datatype xsd:integer ] ] .
+
+# =============================================================================
+# 2. PLANES MAPPING
+# =============================================================================
+ex:TriplesMap_Planes a rr:TriplesMap ;
+    rr:logicalTable [ rr:tableName "planes_csv" ] ;
+    
+    rr:subjectMap [
+        rr:template "https://w3id.org/demo/airline#Plane_{tailnum}" ;
+        rr:class ex:Plane ;
+    ] ;
+
+    rr:predicateObjectMap [ rr:predicate ex:ownerType ; rr:objectMap [ rr:column "owner_type" ; rr:datatype xsd:string ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:manufacturer ; rr:objectMap [ rr:column "manufacturer" ; rr:datatype xsd:string ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:issueDate ; rr:objectMap [ rr:column "issue_date" ; rr:datatype xsd:string ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:model ; rr:objectMap [ rr:column "model" ; rr:datatype xsd:string ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:status ; rr:objectMap [ rr:column "status" ; rr:datatype xsd:string ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:aircraftType ; rr:objectMap [ rr:column "aircraft_type" ; rr:datatype xsd:string ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:engineType ; rr:objectMap [ rr:column "engine_type" ; rr:datatype xsd:string ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:planeYear ; rr:objectMap [ rr:column "year" ; rr:datatype xsd:integer ] ] .
+
+# =============================================================================
+# 3. AIRLINES MAPPING
+# =============================================================================
+ex:TriplesMap_Airlines a rr:TriplesMap ;
+    rr:logicalTable [ rr:tableName "airlines_csv" ] ;
+    
+    rr:subjectMap [
+        rr:template "https://w3id.org/demo/airline#Airline_{code}" ;
+        rr:class ex:Airline ;
+    ] ;
+
+    rr:predicateObjectMap [ rr:predicate ex:airlineCode ; rr:objectMap [ rr:column "code" ; rr:datatype xsd:string ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:description ; rr:objectMap [ rr:column "description" ; rr:datatype xsd:string ] ] .
+
+# =============================================================================
+# 4. AIRPORTS MAPPING
+# =============================================================================
+ex:TriplesMap_Airports a rr:TriplesMap ;
+    rr:logicalTable [ rr:tableName "airports_csv" ] ;
+    
+    rr:subjectMap [
+        rr:template "https://w3id.org/demo/airline#Airport_{iata}" ;
+        rr:class ex:Airport ;
+    ] ;
+
+    rr:predicateObjectMap [ rr:predicate ex:iata ; rr:objectMap [ rr:column "iata" ; rr:datatype xsd:string ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:airportName ; rr:objectMap [ rr:column "airport" ; rr:datatype xsd:string ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:city ; rr:objectMap [ rr:column "city" ; rr:datatype xsd:string ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:state ; rr:objectMap [ rr:column "state" ; rr:datatype xsd:string ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:country ; rr:objectMap [ rr:column "country" ; rr:datatype xsd:string ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:lat ; rr:objectMap [ rr:column "lat" ; rr:datatype xsd:double ] ] ;
+    rr:predicateObjectMap [ rr:predicate ex:lon ; rr:objectMap [ rr:column "lon" ; rr:datatype xsd:double ] ] .

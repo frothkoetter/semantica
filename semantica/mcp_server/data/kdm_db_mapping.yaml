@@ -1,0 +1,138 @@
+# XUnternehmen.Kerndatenmodell (KDM) — explicit DB table/column mapping
+# Ontology: https://w3id.org/kdm/  (Version 1.2)
+#
+# Edit this file to match your database schema. Keys under `tables` and `columns`
+# are normalized (lowercase, no underscores/hyphens, umlauts → ae/oe/ue).
+#
+# Used by MCP tool `map_db_schema_to_ontology` with:
+#   mapping_config_path: "/path/to/kdm_db_mapping.yaml"
+#   use_kdm_defaults: true
+
+ontology_namespace: "https://w3id.org/kdm/"
+
+# table_name_token → KDM class local name (URI = ontology_namespace + class)
+tables:
+  # Natürliche Person
+  natuerlicheperson: NatuerlichePerson
+  natuerlichepersonen: NatuerlichePerson
+  person: NatuerlichePerson
+  personen: NatuerlichePerson
+
+  # Juristische Person / Unternehmen
+  juristischeperson: JuristischePerson
+  juristischepersonen: JuristischePerson
+  unternehmen: JuristischePerson
+  firma: JuristischePerson
+  organisation: JuristischePerson
+  organisationen: JuristischePerson
+
+  # Adressen
+  anschrift: Anschrift
+  anschriften: Anschrift
+  adresse: Anschrift
+  adressen: Anschrift
+  anschriftinland: AnschriftInland
+  anschriftausland: AnschriftAusland
+  strassenanschrift: AnschriftInlandStrassenanschrift
+  postfachanschrift: AnschriftInlandPostfachanschrift
+
+  # Betrieb & Tätigkeit
+  betriebsstaette: Betriebsstaette
+  betriebsstaetten: Betriebsstaette
+  wirtschaftlichetaetigkeit: WirtschaftlicheTaetigkeit
+  wirtschaftszweig: Wirtschaftszweig
+
+  # Rollen & Beteiligung
+  gesellschafter: Gesellschafter
+  gesetzlichervertreter: GesetzlicherVertreter
+  ansprechpartner: Ansprechpartner
+  handelndeperson: HandelndePerson
+  wirtschaftlichtaetiger: WirtschaftlichTaetiger
+
+  # Register & Sitz
+  eintragung: Eintragung
+  sitz: Sitz
+  effektiververwaltungssitz: EffektiverVerwaltungssitz
+  geburt: Geburt
+
+  # Kommunikation
+  kommunikation: Kommunikation
+  email: Email
+  telefon: Telefon
+  telefax: Telefax
+  demail: Demail
+  webadresse: WebAdresse
+
+  # Sonstige
+  staat: Staat
+  antrag: Antrag
+  antragsteller: Antragsteller
+  anzeige: Anzeige
+  anzeigender: Anzeigender
+  rechtsfaehigepersonengesellschaft: RechtsfaehigePersonengesellschaft
+  sonstigepersonenvereinigung: SonstigePersonenvereinigung
+
+# Per-table column tokens → KDM DatatypeProperty local name
+# Global fallbacks under `_global` apply when no table-specific entry exists.
+columns:
+  _global:
+    familienname: familienname
+    nachname: familienname
+    vornamen: vornamen
+    vorname: vornamen
+    geburtsdatum: geburtsdatum
+    geburtsort: ortDerGeburt
+    geschlecht: geschlechtCode
+    staatsangehoerigkeit: staatsangehoerigkeitCode
+    identifikationsnummer: identifikationsnummer
+    steuerid: identifikationsnummer
+    postleitzahl: postleitzahl
+    plz: postleitzahl
+    ort: ort
+    strasse: strasse
+    hausnummer: hausnummer
+    postfach: postfach
+    email: emailadresse
+    emailadresse: emailadresse
+    telefon: telefonnummer
+    telefonnummer: telefonnummer
+    telefax: telefaxnummer
+    webadresse: webadresse
+    url: webadresse
+    registergericht: registergerichtCode
+    eintragungsnummer: eintragungsnummer
+    rechtsform: rechtsformenCode
+    wirtschaftsnummer: bundeseinheitlicheWirtschaftsnummer
+    taetigkeit: taetigkeit
+    geschaeftsbezeichnung: geschaeftsbezeichnung
+
+  natuerlicheperson:
+    familienname: familienname
+    vornamen: vornamen
+    geburtsdatum: geburtsdatum
+    geschlecht: geschlechtCode
+
+  juristischeperson:
+    eingetragenername: eingetragenerName
+    firmenname: eingetragenerName
+    rechtsform: rechtsformenCode
+
+  eintragung:
+    art: artEintragungCode
+    registergericht: registergerichtCode
+    eintragungsnummer: eintragungsnummer
+
+  betriebsstaette:
+    art: artBetriebsstaetteCode
+
+# Optional: foreign-key → object property edge (for graph materialization)
+foreign_keys:
+  - source_table: gesellschafter
+    target_table: natuerlicheperson
+    edge_type: hatGesellschafter
+  - source_table: gesellschafter
+    target_table: juristischeperson
+    edge_type: hatGesellschafter
+  - source_table: betriebsstaette
+    target_table: juristischeperson
+    edge_type: gehoertZu

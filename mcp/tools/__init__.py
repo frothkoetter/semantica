@@ -8,6 +8,7 @@ from .decisions import DECISION_TOOLS
 from .export import EXPORT_TOOLS
 from .extraction import EXTRACTION_TOOLS
 from .graph import GRAPH_TOOLS
+from .ontology import ONTOLOGY_TOOLS
 from .reasoning import REASONING_TOOLS
 
 # Ordered list — exposed to the MCP client via tools/list
@@ -15,6 +16,7 @@ TOOL_DEFINITIONS = (
     EXTRACTION_TOOLS
     + DECISION_TOOLS
     + GRAPH_TOOLS
+    + ONTOLOGY_TOOLS
     + REASONING_TOOLS
     + EXPORT_TOOLS
 )

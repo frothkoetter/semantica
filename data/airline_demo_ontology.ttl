@@ -1,0 +1,68 @@
+@prefix : <https://w3id.org/demo/airline#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/demo/airline#> a owl:Ontology ;
+    rdfs:label "Airline demo ontology (R2RML-aligned)" .
+
+:Flight a owl:Class ;
+    rdfs:label "Flight" .
+
+:Plane a owl:Class ;
+    rdfs:label "Plane" .
+
+:Airline a owl:Class ;
+    rdfs:label "Airline" .
+
+:Airport a owl:Class ;
+    rdfs:label "Airport" .
+
+:operatedBy a owl:ObjectProperty ;
+    rdfs:domain :Flight ;
+    rdfs:range :Airline .
+
+:assignedAircraft a owl:ObjectProperty ;
+    rdfs:domain :Flight ;
+    rdfs:range :Plane .
+
+:originAirport a owl:ObjectProperty ;
+    rdfs:domain :Flight ;
+    rdfs:range :Airport .
+
+:destinationAirport a owl:ObjectProperty ;
+    rdfs:domain :Flight ;
+    rdfs:range :Airport .
+
+:year a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:integer .
+:month a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:integer .
+:dayOfMonth a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:integer .
+:dayOfWeek a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:integer .
+:depTime a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:integer .
+:crsDepTime a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:integer .
+:arrTime a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:integer .
+:crsArrTime a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:integer .
+:uniqueCarrier a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:string .
+:flightNum a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:integer .
+:tailNum a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:string .
+:arrDelay a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:integer .
+:depDelay a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:integer .
+:distance a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:integer .
+:origin a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:string .
+:dest a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:string .
+
+:airlineCode a owl:DatatypeProperty ; rdfs:domain :Airline ; rdfs:range xsd:string .
+:description a owl:DatatypeProperty ; rdfs:domain :Airline ; rdfs:range xsd:string .
+
+:iata a owl:DatatypeProperty ; rdfs:domain :Airport ; rdfs:range xsd:string .
+:airportName a owl:DatatypeProperty ; rdfs:domain :Airport ; rdfs:range xsd:string .
+:city a owl:DatatypeProperty ; rdfs:domain :Airport ; rdfs:range xsd:string .
+:state a owl:DatatypeProperty ; rdfs:domain :Airport ; rdfs:range xsd:string .
+:country a owl:DatatypeProperty ; rdfs:domain :Airport ; rdfs:range xsd:string .
+:lat a owl:DatatypeProperty ; rdfs:domain :Airport ; rdfs:range xsd:double .
+:lon a owl:DatatypeProperty ; rdfs:domain :Airport ; rdfs:range xsd:double .
+
+:manufacturer a owl:DatatypeProperty ; rdfs:domain :Plane ; rdfs:range xsd:string .
+:model a owl:DatatypeProperty ; rdfs:domain :Plane ; rdfs:range xsd:string .
+:aircraftType a owl:DatatypeProperty ; rdfs:domain :Plane ; rdfs:range xsd:string .
+:engineType a owl:DatatypeProperty ; rdfs:domain :Plane ; rdfs:range xsd:string .

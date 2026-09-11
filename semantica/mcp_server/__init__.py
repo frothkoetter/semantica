@@ -74,7 +74,7 @@ def _get_graph():
         kg_path = os.environ.get("SEMANTICA_KG_PATH")
         if kg_path and os.path.exists(kg_path):
             try:
-                _graph.load(kg_path)
+                _graph.load_from_file(kg_path)
                 log.info("Loaded graph from %s", kg_path)
             except Exception as exc:
                 log.warning("Could not load graph from %s: %s", kg_path, exc)
@@ -290,6 +290,36 @@ def _tool_get_graph_summary(args: dict) -> dict:
         return {"error": str(exc), "graph_ready": False}
 
 
+def _tool_import_ontology(args: dict) -> dict:
+    from semantica.mcp_server.ontology_tools import handle_import_ontology
+
+    return handle_import_ontology(args, _get_graph)
+
+
+def _tool_import_kdm_ontology(args: dict) -> dict:
+    from semantica.mcp_server.ontology_tools import handle_import_kdm_ontology
+
+    return handle_import_kdm_ontology(args, _get_graph)
+
+
+def _tool_map_db_schema_to_ontology(args: dict) -> dict:
+    from semantica.mcp_server.ontology_tools import handle_map_db_schema_to_ontology
+
+    return handle_map_db_schema_to_ontology(args, _get_graph)
+
+
+def _tool_get_hive_schema_info(args: dict) -> dict:
+    from semantica.mcp_server.ontology_tools import handle_get_hive_schema_info
+
+    return handle_get_hive_schema_info(args)
+
+
+def _tool_map_iceberg_schema_to_ontology(args: dict) -> dict:
+    from semantica.mcp_server.ontology_tools import handle_map_iceberg_schema_to_ontology
+
+    return handle_map_iceberg_schema_to_ontology(args, _get_graph)
+
+
 # ══════════════════════════════════════════════════════════════════════════════
 # MCP protocol tables
 # ══════════════════════════════════════════════════════════════════════════════
@@ -453,6 +483,135 @@ TOOLS = [
         "description": "Return a high-level summary of the current knowledge graph: node count, decision count, status.",
         "inputSchema": {"type": "object", "properties": {}},
         "_handler": _tool_get_graph_summary,
+    },
+    {
+        "name": "import_ontology",
+        "description": (
+            "Import an OWL/RDF/TTL ontology from a local file or URL into the "
+            "knowledge graph as OntologyClass and property nodes with subClassOf hierarchy."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "file_path": {
+                    "type": "string",
+                    "description": "Local path to OWL/TTL/RDF/JSON-LD ontology file",
+                },
+                "url": {
+                    "type": "string",
+                    "description": "HTTP(S) URL to download ontology from",
+                },
+                "include_properties": {
+                    "type": "boolean",
+                    "description": "Also import properties (default: true)",
+                },
+                "namespace_filter": {
+                    "type": "string",
+                    "description": "Only import terms with URIs under this prefix",
+                },
+            },
+        },
+        "_handler": _tool_import_ontology,
+    },
+    {
+        "name": "import_kdm_ontology",
+        "description": (
+            "Import the XUnternehmen.Kerndatenmodell (KDM) ontology "
+            "(https://w3id.org/kdm/) into the graph from the official release URL "
+            "or a local file."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "file_path": {"type": "string", "description": "Optional local KDM file"},
+                "url": {"type": "string", "description": "Optional KDM download URL"},
+                "format": {
+                    "type": "string",
+                    "enum": ["ttl", "turtle", "owl", "xml"],
+                    "description": "Serialization when using default URL (default: ttl)",
+                },
+                "include_properties": {
+                    "type": "boolean",
+                    "description": "Import datatype/object properties (default: true)",
+                },
+            },
+        },
+        "_handler": _tool_import_kdm_ontology,
+    },
+    {
+        "name": "map_db_schema_to_ontology",
+        "description": (
+            "Analyze a SQL database schema and suggest mappings from tables to "
+            "OntologyClass nodes in the graph (e.g. after import_kdm_ontology)."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "connection_string": {
+                    "type": "string",
+                    "description": "SQLAlchemy DB URL",
+                },
+                "schema": {"type": "string", "description": "Database schema name"},
+                "schema_info": {
+                    "type": "object",
+                    "description": "Pre-computed schema from DBIngestor.analyze_schema()",
+                },
+                "apply_mappings": {
+                    "type": "boolean",
+                    "description": "Write mapping edges into the graph (default: false)",
+                },
+                "use_kdm_defaults": {
+                    "type": "boolean",
+                    "description": "Use bundled config/kdm_db_mapping.yaml",
+                },
+                "mapping_config_path": {
+                    "type": "string",
+                    "description": "Path to custom KDM mapping YAML",
+                },
+            },
+        },
+        "_handler": _tool_map_db_schema_to_ontology,
+    },
+    {
+        "name": "get_hive_schema_info",
+        "description": (
+            "Introspect Hive/Iceberg (SHOW TABLES + DESCRIBE) and return schema_info "
+            "for map_db_schema_to_ontology. Requires HIVE_* env and impyla."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "database": {"type": "string", "description": "Hive database (default: kdm)"},
+                "tables": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "description": "Optional table subset",
+                },
+            },
+        },
+        "_handler": _tool_get_hive_schema_info,
+    },
+    {
+        "name": "map_iceberg_schema_to_ontology",
+        "description": (
+            "One-shot: introspect Hive/Iceberg kdm database, import KDM ontology if needed, "
+            "map tables/columns to KDM classes, apply graph edges."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "database": {"type": "string", "description": "Hive database (default: kdm)"},
+                "tables": {"type": "array", "items": {"type": "string"}},
+                "import_kdm_if_missing": {
+                    "type": "boolean",
+                    "description": "Auto-import KDM when graph has no ontology classes",
+                },
+                "use_kdm_defaults": {"type": "boolean"},
+                "mapping_config_path": {"type": "string"},
+                "apply_mappings": {"type": "boolean"},
+            },
+        },
+        "_handler": _tool_map_iceberg_schema_to_ontology,
     },
 ]
 

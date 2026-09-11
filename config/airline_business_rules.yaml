@@ -1,0 +1,99 @@
+# Declarative business rules for airline ontology analytics.
+# Agents resolve ontology terms → flights_orc columns via airline_graph.json,
+# then apply these rules as SQL CASE/WHERE or post-query classification.
+#
+# Namespace: https://w3id.org/demo/airline#
+
+ontology_namespace: "https://w3id.org/demo/airline#"
+
+# FAA / DOT thresholds (minutes)
+thresholds:
+  on_time_max_delay: 15
+  minor_delay_max: 30
+  moderate_delay_max: 60
+
+# Peak business hours on scheduled departure (crsDepTime, local airport HHMM integer)
+time_windows:
+  MorningPeak:
+    class: MorningPeak
+    crs_deptime_min: 600
+    crs_deptime_max: 959
+    label: "06:00–09:59"
+  Midday:
+    class: Midday
+    crs_deptime_min: 1000
+    crs_deptime_max: 1659
+    label: "10:00–16:59"
+  EveningPeak:
+    class: EveningPeak
+    crs_deptime_min: 1700
+    crs_deptime_max: 2059
+    label: "17:00–20:59"
+  Overnight:
+    class: Overnight
+    crs_deptime_min: 2100
+    crs_deptime_max: 559
+    label: "21:00–05:59"
+    wrap_midnight: true
+
+# Flight status classification (maps to owl:OnTimeFlight, etc.)
+flight_status_rules:
+  - class: CancelledFlight
+    when: "cancelled = 1"
+  - class: DivertedFlight
+    when: "diverted = '1' OR diverted = 'Y'"
+  - class: OnTimeFlight
+    when: "cancelled = 0 AND COALESCE(arrdelay,0) <= 15 AND COALESCE(depdelay,0) <= 15"
+  - class: DelayedFlight
+    when: "cancelled = 0 AND (COALESCE(arrdelay,0) > 15 OR COALESCE(depdelay,0) > 15)"
+
+delay_severity_rules:
+  - class: MinorDelay
+    when: "GREATEST(COALESCE(arrdelay,0), COALESCE(depdelay,0)) BETWEEN 16 AND 30"
+  - class: ModerateDelay
+    when: "GREATEST(COALESCE(arrdelay,0), COALESCE(depdelay,0)) BETWEEN 31 AND 60"
+  - class: SevereDelay
+    when: "GREATEST(COALESCE(arrdelay,0), COALESCE(depdelay,0)) > 60"
+
+# Primary delay reason = DOT cause with maximum attributed minutes (ties: priority order)
+delay_reason_priority:
+  - CarrierDelayReason
+  - WeatherDelayReason
+  - NASDelayReason
+  - SecurityDelayReason
+  - LateAircraftDelayReason
+
+delay_reason_columns:
+  CarrierDelayReason: carrierdelay
+  WeatherDelayReason: weatherdelay
+  NASDelayReason: nasdelay
+  SecurityDelayReason: securitydelay
+  LateAircraftDelayReason: lateaircraftdelay
+
+# Logistics
+logistics:
+  route:
+    class: Route
+    key_columns: [origin, dest]
+    distance_column: distance
+  hub_airport:
+    class: HubAirport
+    # Derived: airports in top N by departures in reference year
+    metric: "COUNT(*) departures WHERE origin = airport.iata"
+    default_top_n: 20
+    default_reference_year: 2008
+
+# Example ontology-first analytics (agent playbook)
+analytics_templates:
+  on_time_performance:
+    question: "OTP by carrier in peak hours"
+    classes: [OnTimeFlight, Flight, Airline, EveningPeak]
+    kpi: "COUNT(OnTimeFlight) / COUNT(Flight WHERE cancelled=0)"
+  delay_attribution:
+    question: "Which delay reason dominates for a carrier?"
+    classes: [DelayReason, DelayedFlight, Airline]
+    kpi: "SUM per delay_reason_columns / SUM(arrdelay)"
+  peak_hour_volume:
+    question: "Busiest business hour band by departure count"
+    classes: [TimeWindow, Flight]
+    group_by: scheduledInWindow

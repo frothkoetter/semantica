@@ -1,0 +1,1463 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix semantica: <https://semantica.dev/ns#> .
+
+<https://w3id.org/demo/airline#> a <Ontology> ;
+    semantica:text "Airline demo ontology (R2RML-aligned)" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#Flight> a <OntologyClass> ;
+    semantica:text "Flight" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#Plane> a <OntologyClass> ;
+    semantica:text "Plane" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#Airline> a <OntologyClass> ;
+    semantica:text "Airline" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#Airport> a <OntologyClass> ;
+    semantica:text "Airport" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#operatedBy> a <ObjectProperty> ;
+    semantica:text "operatedBy" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#assignedAircraft> a <ObjectProperty> ;
+    semantica:text "assignedAircraft" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#originAirport> a <ObjectProperty> ;
+    semantica:text "originAirport" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#destinationAirport> a <ObjectProperty> ;
+    semantica:text "destinationAirport" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#year> a <DatatypeProperty> ;
+    semantica:text "year" ;
+    semantica:confidence 1.0 .
+
+<http://www.w3.org/2001/XMLSchema#integer> a <entity> ;
+    semantica:text "http://www.w3.org/2001/XMLSchema#integer" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#month> a <DatatypeProperty> ;
+    semantica:text "month" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#dayOfMonth> a <DatatypeProperty> ;
+    semantica:text "dayOfMonth" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#dayOfWeek> a <DatatypeProperty> ;
+    semantica:text "dayOfWeek" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#depTime> a <DatatypeProperty> ;
+    semantica:text "depTime" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#crsDepTime> a <DatatypeProperty> ;
+    semantica:text "crsDepTime" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#arrTime> a <DatatypeProperty> ;
+    semantica:text "arrTime" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#crsArrTime> a <DatatypeProperty> ;
+    semantica:text "crsArrTime" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#uniqueCarrier> a <DatatypeProperty> ;
+    semantica:text "uniqueCarrier" ;
+    semantica:confidence 1.0 .
+
+<http://www.w3.org/2001/XMLSchema#string> a <entity> ;
+    semantica:text "http://www.w3.org/2001/XMLSchema#string" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#flightNum> a <DatatypeProperty> ;
+    semantica:text "flightNum" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#tailNum> a <DatatypeProperty> ;
+    semantica:text "tailNum" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#arrDelay> a <DatatypeProperty> ;
+    semantica:text "arrDelay" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#depDelay> a <DatatypeProperty> ;
+    semantica:text "depDelay" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#distance> a <DatatypeProperty> ;
+    semantica:text "distance" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#origin> a <DatatypeProperty> ;
+    semantica:text "origin" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#dest> a <DatatypeProperty> ;
+    semantica:text "dest" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#airlineCode> a <DatatypeProperty> ;
+    semantica:text "airlineCode" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#description> a <DatatypeProperty> ;
+    semantica:text "description" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#iata> a <DatatypeProperty> ;
+    semantica:text "iata" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#airportName> a <DatatypeProperty> ;
+    semantica:text "airportName" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#city> a <DatatypeProperty> ;
+    semantica:text "city" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#state> a <DatatypeProperty> ;
+    semantica:text "state" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#country> a <DatatypeProperty> ;
+    semantica:text "country" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#lat> a <DatatypeProperty> ;
+    semantica:text "lat" ;
+    semantica:confidence 1.0 .
+
+<http://www.w3.org/2001/XMLSchema#double> a <entity> ;
+    semantica:text "http://www.w3.org/2001/XMLSchema#double" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#lon> a <DatatypeProperty> ;
+    semantica:text "lon" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#manufacturer> a <DatatypeProperty> ;
+    semantica:text "manufacturer" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#model> a <DatatypeProperty> ;
+    semantica:text "model" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#aircraftType> a <DatatypeProperty> ;
+    semantica:text "aircraftType" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#engineType> a <DatatypeProperty> ;
+    semantica:text "engineType" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#business> a <Ontology> ;
+    semantica:text "Airline business logic extension" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#Route> a <OntologyClass> ;
+    semantica:text "Route" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#HubAirport> a <OntologyClass> ;
+    semantica:text "Hub airport" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#TimeWindow> a <OntologyClass> ;
+    semantica:text "Time window" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#MorningPeak> a <OntologyClass> ;
+    semantica:text "Morning peak" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#Midday> a <OntologyClass> ;
+    semantica:text "Midday" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#EveningPeak> a <OntologyClass> ;
+    semantica:text "Evening peak" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#Overnight> a <OntologyClass> ;
+    semantica:text "Overnight / redeye" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#OnTimeFlight> a <OntologyClass> ;
+    semantica:text "On-time flight" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#DelayedFlight> a <OntologyClass> ;
+    semantica:text "Delayed flight" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#CancelledFlight> a <OntologyClass> ;
+    semantica:text "Cancelled flight" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#DivertedFlight> a <OntologyClass> ;
+    semantica:text "Diverted flight" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#DelaySeverity> a <OntologyClass> ;
+    semantica:text "Delay severity band" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#MinorDelay> a <OntologyClass> ;
+    semantica:text "Minor delay" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#ModerateDelay> a <OntologyClass> ;
+    semantica:text "Moderate delay" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#SevereDelay> a <OntologyClass> ;
+    semantica:text "Severe delay" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#DelayReason> a <OntologyClass> ;
+    semantica:text "Delay reason (DOT category)" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#CarrierDelayReason> a <OntologyClass> ;
+    semantica:text "Carrier" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#WeatherDelayReason> a <OntologyClass> ;
+    semantica:text "Weather" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#NASDelayReason> a <OntologyClass> ;
+    semantica:text "National Aviation System" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#SecurityDelayReason> a <OntologyClass> ;
+    semantica:text "Security" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#LateAircraftDelayReason> a <OntologyClass> ;
+    semantica:text "Late aircraft" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#DelayBreakdown> a <OntologyClass> ;
+    semantica:text "Delay breakdown" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#OnTimePerformance> a <OntologyClass> ;
+    semantica:text "On-time performance KPI" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#AverageArrivalDelay> a <OntologyClass> ;
+    semantica:text "Average arrival delay KPI" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#DelayAttributionShare> a <OntologyClass> ;
+    semantica:text "Delay attribution share KPI" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#operatesOnRoute> a <ObjectProperty> ;
+    semantica:text "operates on route" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#routeOrigin> a <ObjectProperty> ;
+    semantica:text "routeOrigin" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#routeDestination> a <ObjectProperty> ;
+    semantica:text "routeDestination" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#scheduledInWindow> a <ObjectProperty> ;
+    semantica:text "scheduled in time window" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#hasDelaySeverity> a <ObjectProperty> ;
+    semantica:text "hasDelaySeverity" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#primaryDelayReason> a <ObjectProperty> ;
+    semantica:text "primary delay reason" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#hasDelayBreakdown> a <ObjectProperty> ;
+    semantica:text "hasDelayBreakdown" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#measuresKPI> a <ObjectProperty> ;
+    semantica:text "measuresKPI" ;
+    semantica:confidence 1.0 .
+
+<http://www.w3.org/2002/07/owl#Thing> a <entity> ;
+    semantica:text "http://www.w3.org/2002/07/owl#Thing" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#routeDistanceMiles> a <DatatypeProperty> ;
+    semantica:text "routeDistanceMiles" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#isHub> a <DatatypeProperty> ;
+    semantica:text "isHub" ;
+    semantica:confidence 1.0 .
+
+<http://www.w3.org/2001/XMLSchema#boolean> a <entity> ;
+    semantica:text "http://www.w3.org/2001/XMLSchema#boolean" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#windowStartHHMM> a <DatatypeProperty> ;
+    semantica:text "windowStartHHMM" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#windowEndHHMM> a <DatatypeProperty> ;
+    semantica:text "windowEndHHMM" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#breakdownCarrierMinutes> a <DatatypeProperty> ;
+    semantica:text "breakdownCarrierMinutes" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#breakdownWeatherMinutes> a <DatatypeProperty> ;
+    semantica:text "breakdownWeatherMinutes" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#breakdownNASMinutes> a <DatatypeProperty> ;
+    semantica:text "breakdownNASMinutes" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#breakdownSecurityMinutes> a <DatatypeProperty> ;
+    semantica:text "breakdownSecurityMinutes" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#breakdownLateAircraftMinutes> a <DatatypeProperty> ;
+    semantica:text "breakdownLateAircraftMinutes" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#carrierDelay> a <DatatypeProperty> ;
+    semantica:text "carrierDelay" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#weatherDelay> a <DatatypeProperty> ;
+    semantica:text "weatherDelay" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#nasDelay> a <DatatypeProperty> ;
+    semantica:text "nasDelay" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#securityDelay> a <DatatypeProperty> ;
+    semantica:text "securityDelay" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#lateAircraftDelay> a <DatatypeProperty> ;
+    semantica:text "lateAircraftDelay" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#cancelled> a <DatatypeProperty> ;
+    semantica:text "cancelled" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#cancellationCode> a <DatatypeProperty> ;
+    semantica:text "cancellationCode" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#diverted> a <DatatypeProperty> ;
+    semantica:text "diverted" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#taxiIn> a <DatatypeProperty> ;
+    semantica:text "taxiIn" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#taxiOut> a <DatatypeProperty> ;
+    semantica:text "taxiOut" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#actualElapsedTime> a <DatatypeProperty> ;
+    semantica:text "actualElapsedTime" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#crsElapsedTime> a <DatatypeProperty> ;
+    semantica:text "crsElapsedTime" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#airTime> a <DatatypeProperty> ;
+    semantica:text "airTime" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#routeId> a <DatatypeProperty> ;
+    semantica:text "routeId" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#scheduledInWindowClass> a <DatatypeProperty> ;
+    semantica:text "scheduledInWindowClass" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#flightStatus> a <DatatypeProperty> ;
+    semantica:text "flightStatus" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#delaySeverity> a <DatatypeProperty> ;
+    semantica:text "delaySeverity" ;
+    semantica:confidence 1.0 .
+
+<db:table:airlines> a <DatabaseTable> ;
+    semantica:text "airlines" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/Airline> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/Airline" ;
+    semantica:confidence 1.0 .
+
+<db:table:airlines_csv> a <DatabaseTable> ;
+    semantica:text "airlines_csv" ;
+    semantica:confidence 1.0 .
+
+<db:table:airports> a <DatabaseTable> ;
+    semantica:text "airports" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/Airport> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/Airport" ;
+    semantica:confidence 1.0 .
+
+<db:table:airports_csv> a <DatabaseTable> ;
+    semantica:text "airports_csv" ;
+    semantica:confidence 1.0 .
+
+<db:table:flights_csv> a <DatabaseTable> ;
+    semantica:text "flights_csv" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/Flight> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/Flight" ;
+    semantica:confidence 1.0 .
+
+<db:table:flights_orc> a <DatabaseTable> ;
+    semantica:text "flights_orc" ;
+    semantica:confidence 1.0 .
+
+<db:table:planes> a <DatabaseTable> ;
+    semantica:text "planes" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/Plane> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/Plane" ;
+    semantica:confidence 1.0 .
+
+<db:table:planes_csv> a <DatabaseTable> ;
+    semantica:text "planes_csv" ;
+    semantica:confidence 1.0 .
+
+<db:column:airlines.code> a <DatabaseColumn> ;
+    semantica:text "code" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/airlineCode> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/airlineCode" ;
+    semantica:confidence 1.0 .
+
+<db:column:airlines.description> a <DatabaseColumn> ;
+    semantica:text "description" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/description> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/description" ;
+    semantica:confidence 1.0 .
+
+<db:column:airlines_csv.code> a <DatabaseColumn> ;
+    semantica:text "code" ;
+    semantica:confidence 1.0 .
+
+<db:column:airlines_csv.description> a <DatabaseColumn> ;
+    semantica:text "description" ;
+    semantica:confidence 1.0 .
+
+<db:column:airports.iata> a <DatabaseColumn> ;
+    semantica:text "iata" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/iata> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/iata" ;
+    semantica:confidence 1.0 .
+
+<db:column:airports.airport> a <DatabaseColumn> ;
+    semantica:text "airport" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/airportName> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/airportName" ;
+    semantica:confidence 1.0 .
+
+<db:column:airports.city> a <DatabaseColumn> ;
+    semantica:text "city" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/city> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/city" ;
+    semantica:confidence 1.0 .
+
+<db:column:airports.state> a <DatabaseColumn> ;
+    semantica:text "state" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/state> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/state" ;
+    semantica:confidence 1.0 .
+
+<db:column:airports.country> a <DatabaseColumn> ;
+    semantica:text "country" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/country> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/country" ;
+    semantica:confidence 1.0 .
+
+<db:column:airports.lat> a <DatabaseColumn> ;
+    semantica:text "lat" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/lat> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/lat" ;
+    semantica:confidence 1.0 .
+
+<db:column:airports.lon> a <DatabaseColumn> ;
+    semantica:text "lon" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/lon> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/lon" ;
+    semantica:confidence 1.0 .
+
+<db:column:airports_csv.iata> a <DatabaseColumn> ;
+    semantica:text "iata" ;
+    semantica:confidence 1.0 .
+
+<db:column:airports_csv.airport> a <DatabaseColumn> ;
+    semantica:text "airport" ;
+    semantica:confidence 1.0 .
+
+<db:column:airports_csv.city> a <DatabaseColumn> ;
+    semantica:text "city" ;
+    semantica:confidence 1.0 .
+
+<db:column:airports_csv.state> a <DatabaseColumn> ;
+    semantica:text "state" ;
+    semantica:confidence 1.0 .
+
+<db:column:airports_csv.country> a <DatabaseColumn> ;
+    semantica:text "country" ;
+    semantica:confidence 1.0 .
+
+<db:column:airports_csv.lat> a <DatabaseColumn> ;
+    semantica:text "lat" ;
+    semantica:confidence 1.0 .
+
+<db:column:airports_csv.lon> a <DatabaseColumn> ;
+    semantica:text "lon" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_csv.month> a <DatabaseColumn> ;
+    semantica:text "month" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/month> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/month" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_csv.dayofmonth> a <DatabaseColumn> ;
+    semantica:text "dayofmonth" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/dayOfMonth> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/dayOfMonth" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_csv.dayofweek> a <DatabaseColumn> ;
+    semantica:text "dayofweek" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/dayOfWeek> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/dayOfWeek" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_csv.deptime> a <DatabaseColumn> ;
+    semantica:text "deptime" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/depTime> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/depTime" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_csv.crsdeptime> a <DatabaseColumn> ;
+    semantica:text "crsdeptime" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/crsDepTime> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/crsDepTime" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_csv.arrtime> a <DatabaseColumn> ;
+    semantica:text "arrtime" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/arrTime> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/arrTime" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_csv.crsarrtime> a <DatabaseColumn> ;
+    semantica:text "crsarrtime" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/crsArrTime> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/crsArrTime" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_csv.uniquecarrier> a <DatabaseColumn> ;
+    semantica:text "uniquecarrier" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/uniqueCarrier> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/uniqueCarrier" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_csv.flightnum> a <DatabaseColumn> ;
+    semantica:text "flightnum" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/flightNum> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/flightNum" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_csv.tailnum> a <DatabaseColumn> ;
+    semantica:text "tailnum" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/tailNum> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/tailNum" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_csv.actualelapsedtime> a <DatabaseColumn> ;
+    semantica:text "actualelapsedtime" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/actualElapsedTime> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/actualElapsedTime" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_csv.crselapsedtime> a <DatabaseColumn> ;
+    semantica:text "crselapsedtime" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/crsElapsedTime> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/crsElapsedTime" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_csv.airtime> a <DatabaseColumn> ;
+    semantica:text "airtime" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/airTime> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/airTime" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_csv.arrdelay> a <DatabaseColumn> ;
+    semantica:text "arrdelay" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/arrDelay> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/arrDelay" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_csv.depdelay> a <DatabaseColumn> ;
+    semantica:text "depdelay" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/depDelay> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/depDelay" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_csv.origin> a <DatabaseColumn> ;
+    semantica:text "origin" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/origin> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/origin" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_csv.dest> a <DatabaseColumn> ;
+    semantica:text "dest" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/dest> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/dest" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_csv.distance> a <DatabaseColumn> ;
+    semantica:text "distance" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/distance> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/distance" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_csv.taxiin> a <DatabaseColumn> ;
+    semantica:text "taxiin" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/taxiIn> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/taxiIn" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_csv.taxiout> a <DatabaseColumn> ;
+    semantica:text "taxiout" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/taxiOut> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/taxiOut" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_csv.cancelled> a <DatabaseColumn> ;
+    semantica:text "cancelled" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/cancelled> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/cancelled" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_csv.cancellationcode> a <DatabaseColumn> ;
+    semantica:text "cancellationcode" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/cancellationCode> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/cancellationCode" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_csv.diverted> a <DatabaseColumn> ;
+    semantica:text "diverted" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/diverted> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/diverted" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_csv.carrierdelay> a <DatabaseColumn> ;
+    semantica:text "carrierdelay" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/carrierDelay> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/carrierDelay" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_csv.weatherdelay> a <DatabaseColumn> ;
+    semantica:text "weatherdelay" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/weatherDelay> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/weatherDelay" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_csv.nasdelay> a <DatabaseColumn> ;
+    semantica:text "nasdelay" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/nasDelay> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/nasDelay" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_csv.securitydelay> a <DatabaseColumn> ;
+    semantica:text "securitydelay" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/securityDelay> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/securityDelay" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_csv.lateaircraftdelay> a <DatabaseColumn> ;
+    semantica:text "lateaircraftdelay" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/lateAircraftDelay> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/lateAircraftDelay" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_csv.year> a <DatabaseColumn> ;
+    semantica:text "year" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/year> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/year" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_orc.month> a <DatabaseColumn> ;
+    semantica:text "month" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_orc.dayofmonth> a <DatabaseColumn> ;
+    semantica:text "dayofmonth" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_orc.dayofweek> a <DatabaseColumn> ;
+    semantica:text "dayofweek" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_orc.deptime> a <DatabaseColumn> ;
+    semantica:text "deptime" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_orc.crsdeptime> a <DatabaseColumn> ;
+    semantica:text "crsdeptime" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_orc.arrtime> a <DatabaseColumn> ;
+    semantica:text "arrtime" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_orc.crsarrtime> a <DatabaseColumn> ;
+    semantica:text "crsarrtime" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_orc.uniquecarrier> a <DatabaseColumn> ;
+    semantica:text "uniquecarrier" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_orc.flightnum> a <DatabaseColumn> ;
+    semantica:text "flightnum" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_orc.tailnum> a <DatabaseColumn> ;
+    semantica:text "tailnum" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_orc.actualelapsedtime> a <DatabaseColumn> ;
+    semantica:text "actualelapsedtime" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_orc.crselapsedtime> a <DatabaseColumn> ;
+    semantica:text "crselapsedtime" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_orc.airtime> a <DatabaseColumn> ;
+    semantica:text "airtime" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_orc.arrdelay> a <DatabaseColumn> ;
+    semantica:text "arrdelay" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_orc.depdelay> a <DatabaseColumn> ;
+    semantica:text "depdelay" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_orc.origin> a <DatabaseColumn> ;
+    semantica:text "origin" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_orc.dest> a <DatabaseColumn> ;
+    semantica:text "dest" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_orc.distance> a <DatabaseColumn> ;
+    semantica:text "distance" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_orc.taxiin> a <DatabaseColumn> ;
+    semantica:text "taxiin" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_orc.taxiout> a <DatabaseColumn> ;
+    semantica:text "taxiout" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_orc.cancelled> a <DatabaseColumn> ;
+    semantica:text "cancelled" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_orc.cancellationcode> a <DatabaseColumn> ;
+    semantica:text "cancellationcode" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_orc.diverted> a <DatabaseColumn> ;
+    semantica:text "diverted" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_orc.carrierdelay> a <DatabaseColumn> ;
+    semantica:text "carrierdelay" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_orc.weatherdelay> a <DatabaseColumn> ;
+    semantica:text "weatherdelay" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_orc.nasdelay> a <DatabaseColumn> ;
+    semantica:text "nasdelay" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_orc.securitydelay> a <DatabaseColumn> ;
+    semantica:text "securitydelay" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_orc.lateaircraftdelay> a <DatabaseColumn> ;
+    semantica:text "lateaircraftdelay" ;
+    semantica:confidence 1.0 .
+
+<db:column:flights_orc.year> a <DatabaseColumn> ;
+    semantica:text "year" ;
+    semantica:confidence 1.0 .
+
+<db:column:planes.tailnum> a <DatabaseColumn> ;
+    semantica:text "tailnum" ;
+    semantica:confidence 1.0 .
+
+<db:column:planes.owner_type> a <DatabaseColumn> ;
+    semantica:text "owner_type" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/ownerType> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/ownerType" ;
+    semantica:confidence 1.0 .
+
+<db:column:planes.manufacturer> a <DatabaseColumn> ;
+    semantica:text "manufacturer" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/manufacturer> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/manufacturer" ;
+    semantica:confidence 1.0 .
+
+<db:column:planes.issue_date> a <DatabaseColumn> ;
+    semantica:text "issue_date" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/issueDate> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/issueDate" ;
+    semantica:confidence 1.0 .
+
+<db:column:planes.model> a <DatabaseColumn> ;
+    semantica:text "model" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/model> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/model" ;
+    semantica:confidence 1.0 .
+
+<db:column:planes.status> a <DatabaseColumn> ;
+    semantica:text "status" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/status> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/status" ;
+    semantica:confidence 1.0 .
+
+<db:column:planes.aircraft_type> a <DatabaseColumn> ;
+    semantica:text "aircraft_type" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/aircraftType> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/aircraftType" ;
+    semantica:confidence 1.0 .
+
+<db:column:planes.engine_type> a <DatabaseColumn> ;
+    semantica:text "engine_type" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#/engineType> a <entity> ;
+    semantica:text "https://w3id.org/demo/airline#/engineType" ;
+    semantica:confidence 1.0 .
+
+<db:column:planes.year> a <DatabaseColumn> ;
+    semantica:text "year" ;
+    semantica:confidence 1.0 .
+
+<db:column:planes_csv.tailnum> a <DatabaseColumn> ;
+    semantica:text "tailnum" ;
+    semantica:confidence 1.0 .
+
+<db:column:planes_csv.owner_type> a <DatabaseColumn> ;
+    semantica:text "owner_type" ;
+    semantica:confidence 1.0 .
+
+<db:column:planes_csv.manufacturer> a <DatabaseColumn> ;
+    semantica:text "manufacturer" ;
+    semantica:confidence 1.0 .
+
+<db:column:planes_csv.issue_date> a <DatabaseColumn> ;
+    semantica:text "issue_date" ;
+    semantica:confidence 1.0 .
+
+<db:column:planes_csv.model> a <DatabaseColumn> ;
+    semantica:text "model" ;
+    semantica:confidence 1.0 .
+
+<db:column:planes_csv.status> a <DatabaseColumn> ;
+    semantica:text "status" ;
+    semantica:confidence 1.0 .
+
+<db:column:planes_csv.aircraft_type> a <DatabaseColumn> ;
+    semantica:text "aircraft_type" ;
+    semantica:confidence 1.0 .
+
+<db:column:planes_csv.engine_type> a <DatabaseColumn> ;
+    semantica:text "engine_type" ;
+    semantica:confidence 1.0 .
+
+<db:column:planes_csv.year> a <DatabaseColumn> ;
+    semantica:text "year" ;
+    semantica:confidence 1.0 .
+
+<https://w3id.org/demo/airline#Flight> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#Plane> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#Airline> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#Airport> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#operatedBy> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#operatedBy> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#operatedBy> <range> <https://w3id.org/demo/airline#Airline> .
+<https://w3id.org/demo/airline#assignedAircraft> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#assignedAircraft> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#assignedAircraft> <range> <https://w3id.org/demo/airline#Plane> .
+<https://w3id.org/demo/airline#originAirport> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#originAirport> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#originAirport> <range> <https://w3id.org/demo/airline#Airport> .
+<https://w3id.org/demo/airline#destinationAirport> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#destinationAirport> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#destinationAirport> <range> <https://w3id.org/demo/airline#Airport> .
+<https://w3id.org/demo/airline#year> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#year> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#year> <range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/demo/airline#month> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#month> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#month> <range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/demo/airline#dayOfMonth> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#dayOfMonth> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#dayOfMonth> <range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/demo/airline#dayOfWeek> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#dayOfWeek> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#dayOfWeek> <range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/demo/airline#depTime> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#depTime> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#depTime> <range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/demo/airline#crsDepTime> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#crsDepTime> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#crsDepTime> <range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/demo/airline#arrTime> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#arrTime> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#arrTime> <range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/demo/airline#crsArrTime> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#crsArrTime> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#crsArrTime> <range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/demo/airline#uniqueCarrier> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#uniqueCarrier> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#uniqueCarrier> <range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/demo/airline#flightNum> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#flightNum> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#flightNum> <range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/demo/airline#tailNum> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#tailNum> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#tailNum> <range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/demo/airline#arrDelay> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#arrDelay> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#arrDelay> <range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/demo/airline#depDelay> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#depDelay> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#depDelay> <range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/demo/airline#distance> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#distance> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#distance> <range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/demo/airline#origin> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#origin> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#origin> <range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/demo/airline#dest> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#dest> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#dest> <range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/demo/airline#airlineCode> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#airlineCode> <domain> <https://w3id.org/demo/airline#Airline> .
+<https://w3id.org/demo/airline#airlineCode> <range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/demo/airline#description> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#description> <domain> <https://w3id.org/demo/airline#Airline> .
+<https://w3id.org/demo/airline#description> <range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/demo/airline#iata> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#iata> <domain> <https://w3id.org/demo/airline#Airport> .
+<https://w3id.org/demo/airline#iata> <range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/demo/airline#airportName> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#airportName> <domain> <https://w3id.org/demo/airline#Airport> .
+<https://w3id.org/demo/airline#airportName> <range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/demo/airline#city> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#city> <domain> <https://w3id.org/demo/airline#Airport> .
+<https://w3id.org/demo/airline#city> <range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/demo/airline#state> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#state> <domain> <https://w3id.org/demo/airline#Airport> .
+<https://w3id.org/demo/airline#state> <range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/demo/airline#country> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#country> <domain> <https://w3id.org/demo/airline#Airport> .
+<https://w3id.org/demo/airline#country> <range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/demo/airline#lat> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#lat> <domain> <https://w3id.org/demo/airline#Airport> .
+<https://w3id.org/demo/airline#lat> <range> <http://www.w3.org/2001/XMLSchema#double> .
+<https://w3id.org/demo/airline#lon> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#lon> <domain> <https://w3id.org/demo/airline#Airport> .
+<https://w3id.org/demo/airline#lon> <range> <http://www.w3.org/2001/XMLSchema#double> .
+<https://w3id.org/demo/airline#manufacturer> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#manufacturer> <domain> <https://w3id.org/demo/airline#Plane> .
+<https://w3id.org/demo/airline#manufacturer> <range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/demo/airline#model> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#model> <domain> <https://w3id.org/demo/airline#Plane> .
+<https://w3id.org/demo/airline#model> <range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/demo/airline#aircraftType> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#aircraftType> <domain> <https://w3id.org/demo/airline#Plane> .
+<https://w3id.org/demo/airline#aircraftType> <range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/demo/airline#engineType> <definedIn> <https://w3id.org/demo/airline#> .
+<https://w3id.org/demo/airline#engineType> <domain> <https://w3id.org/demo/airline#Plane> .
+<https://w3id.org/demo/airline#engineType> <range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/demo/airline#Route> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#HubAirport> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#HubAirport> <subClassOf> <https://w3id.org/demo/airline#Airport> .
+<https://w3id.org/demo/airline#TimeWindow> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#MorningPeak> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#MorningPeak> <subClassOf> <https://w3id.org/demo/airline#TimeWindow> .
+<https://w3id.org/demo/airline#Midday> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#Midday> <subClassOf> <https://w3id.org/demo/airline#TimeWindow> .
+<https://w3id.org/demo/airline#EveningPeak> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#EveningPeak> <subClassOf> <https://w3id.org/demo/airline#TimeWindow> .
+<https://w3id.org/demo/airline#Overnight> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#Overnight> <subClassOf> <https://w3id.org/demo/airline#TimeWindow> .
+<https://w3id.org/demo/airline#OnTimeFlight> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#OnTimeFlight> <subClassOf> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#DelayedFlight> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#DelayedFlight> <subClassOf> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#CancelledFlight> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#CancelledFlight> <subClassOf> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#DivertedFlight> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#DivertedFlight> <subClassOf> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#DelaySeverity> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#MinorDelay> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#MinorDelay> <subClassOf> <https://w3id.org/demo/airline#DelaySeverity> .
+<https://w3id.org/demo/airline#ModerateDelay> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#ModerateDelay> <subClassOf> <https://w3id.org/demo/airline#DelaySeverity> .
+<https://w3id.org/demo/airline#SevereDelay> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#SevereDelay> <subClassOf> <https://w3id.org/demo/airline#DelaySeverity> .
+<https://w3id.org/demo/airline#DelayReason> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#CarrierDelayReason> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#CarrierDelayReason> <subClassOf> <https://w3id.org/demo/airline#DelayReason> .
+<https://w3id.org/demo/airline#WeatherDelayReason> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#WeatherDelayReason> <subClassOf> <https://w3id.org/demo/airline#DelayReason> .
+<https://w3id.org/demo/airline#NASDelayReason> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#NASDelayReason> <subClassOf> <https://w3id.org/demo/airline#DelayReason> .
+<https://w3id.org/demo/airline#SecurityDelayReason> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#SecurityDelayReason> <subClassOf> <https://w3id.org/demo/airline#DelayReason> .
+<https://w3id.org/demo/airline#LateAircraftDelayReason> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#LateAircraftDelayReason> <subClassOf> <https://w3id.org/demo/airline#DelayReason> .
+<https://w3id.org/demo/airline#DelayBreakdown> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#OnTimePerformance> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#AverageArrivalDelay> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#DelayAttributionShare> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#operatesOnRoute> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#operatesOnRoute> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#operatesOnRoute> <range> <https://w3id.org/demo/airline#Route> .
+<https://w3id.org/demo/airline#routeOrigin> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#routeOrigin> <domain> <https://w3id.org/demo/airline#Route> .
+<https://w3id.org/demo/airline#routeOrigin> <range> <https://w3id.org/demo/airline#Airport> .
+<https://w3id.org/demo/airline#routeDestination> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#routeDestination> <domain> <https://w3id.org/demo/airline#Route> .
+<https://w3id.org/demo/airline#routeDestination> <range> <https://w3id.org/demo/airline#Airport> .
+<https://w3id.org/demo/airline#scheduledInWindow> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#scheduledInWindow> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#scheduledInWindow> <range> <https://w3id.org/demo/airline#TimeWindow> .
+<https://w3id.org/demo/airline#hasDelaySeverity> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#hasDelaySeverity> <domain> <https://w3id.org/demo/airline#DelayedFlight> .
+<https://w3id.org/demo/airline#hasDelaySeverity> <range> <https://w3id.org/demo/airline#DelaySeverity> .
+<https://w3id.org/demo/airline#primaryDelayReason> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#primaryDelayReason> <domain> <https://w3id.org/demo/airline#DelayedFlight> .
+<https://w3id.org/demo/airline#primaryDelayReason> <range> <https://w3id.org/demo/airline#DelayReason> .
+<https://w3id.org/demo/airline#hasDelayBreakdown> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#hasDelayBreakdown> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#hasDelayBreakdown> <range> <https://w3id.org/demo/airline#DelayBreakdown> .
+<https://w3id.org/demo/airline#measuresKPI> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#measuresKPI> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#measuresKPI> <range> <http://www.w3.org/2002/07/owl#Thing> .
+<https://w3id.org/demo/airline#routeDistanceMiles> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#routeDistanceMiles> <domain> <https://w3id.org/demo/airline#Route> .
+<https://w3id.org/demo/airline#routeDistanceMiles> <range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/demo/airline#isHub> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#isHub> <domain> <https://w3id.org/demo/airline#Airport> .
+<https://w3id.org/demo/airline#isHub> <range> <http://www.w3.org/2001/XMLSchema#boolean> .
+<https://w3id.org/demo/airline#windowStartHHMM> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#windowStartHHMM> <domain> <https://w3id.org/demo/airline#TimeWindow> .
+<https://w3id.org/demo/airline#windowStartHHMM> <range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/demo/airline#windowEndHHMM> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#windowEndHHMM> <domain> <https://w3id.org/demo/airline#TimeWindow> .
+<https://w3id.org/demo/airline#windowEndHHMM> <range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/demo/airline#breakdownCarrierMinutes> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#breakdownCarrierMinutes> <domain> <https://w3id.org/demo/airline#DelayBreakdown> .
+<https://w3id.org/demo/airline#breakdownCarrierMinutes> <range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/demo/airline#breakdownWeatherMinutes> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#breakdownWeatherMinutes> <domain> <https://w3id.org/demo/airline#DelayBreakdown> .
+<https://w3id.org/demo/airline#breakdownWeatherMinutes> <range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/demo/airline#breakdownNASMinutes> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#breakdownNASMinutes> <domain> <https://w3id.org/demo/airline#DelayBreakdown> .
+<https://w3id.org/demo/airline#breakdownNASMinutes> <range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/demo/airline#breakdownSecurityMinutes> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#breakdownSecurityMinutes> <domain> <https://w3id.org/demo/airline#DelayBreakdown> .
+<https://w3id.org/demo/airline#breakdownSecurityMinutes> <range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/demo/airline#breakdownLateAircraftMinutes> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#breakdownLateAircraftMinutes> <domain> <https://w3id.org/demo/airline#DelayBreakdown> .
+<https://w3id.org/demo/airline#breakdownLateAircraftMinutes> <range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/demo/airline#carrierDelay> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#carrierDelay> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#carrierDelay> <range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/demo/airline#weatherDelay> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#weatherDelay> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#weatherDelay> <range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/demo/airline#nasDelay> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#nasDelay> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#nasDelay> <range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/demo/airline#securityDelay> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#securityDelay> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#securityDelay> <range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/demo/airline#lateAircraftDelay> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#lateAircraftDelay> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#lateAircraftDelay> <range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/demo/airline#cancelled> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#cancelled> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#cancelled> <range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/demo/airline#cancellationCode> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#cancellationCode> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#cancellationCode> <range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/demo/airline#diverted> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#diverted> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#diverted> <range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/demo/airline#taxiIn> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#taxiIn> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#taxiIn> <range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/demo/airline#taxiOut> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#taxiOut> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#taxiOut> <range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/demo/airline#actualElapsedTime> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#actualElapsedTime> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#actualElapsedTime> <range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/demo/airline#crsElapsedTime> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#crsElapsedTime> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#crsElapsedTime> <range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/demo/airline#airTime> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#airTime> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#airTime> <range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/demo/airline#routeId> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#routeId> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#routeId> <range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/demo/airline#scheduledInWindowClass> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#scheduledInWindowClass> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#scheduledInWindowClass> <range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/demo/airline#flightStatus> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#flightStatus> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#flightStatus> <range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/demo/airline#delaySeverity> <definedIn> <https://w3id.org/demo/airline#business> .
+<https://w3id.org/demo/airline#delaySeverity> <domain> <https://w3id.org/demo/airline#Flight> .
+<https://w3id.org/demo/airline#delaySeverity> <range> <http://www.w3.org/2001/XMLSchema#string> .
+<db:table:airlines> <mapsToClass> <https://w3id.org/demo/airline#/Airline> .
+<db:table:airlines_csv> <mapsToClass> <https://w3id.org/demo/airline#/Airline> .
+<db:table:airports> <mapsToClass> <https://w3id.org/demo/airline#/Airport> .
+<db:table:airports_csv> <mapsToClass> <https://w3id.org/demo/airline#/Airport> .
+<db:table:flights_csv> <mapsToClass> <https://w3id.org/demo/airline#/Flight> .
+<db:table:flights_orc> <mapsToClass> <https://w3id.org/demo/airline#/Flight> .
+<db:table:planes> <mapsToClass> <https://w3id.org/demo/airline#/Plane> .
+<db:table:planes_csv> <mapsToClass> <https://w3id.org/demo/airline#/Plane> .
+<db:table:airlines> <hasColumn> <db:column:airlines.code> .
+<db:column:airlines.code> <mapsToProperty> <https://w3id.org/demo/airline#/airlineCode> .
+<db:table:airlines> <hasColumn> <db:column:airlines.description> .
+<db:column:airlines.description> <mapsToProperty> <https://w3id.org/demo/airline#/description> .
+<db:table:airlines_csv> <hasColumn> <db:column:airlines_csv.code> .
+<db:column:airlines_csv.code> <mapsToProperty> <https://w3id.org/demo/airline#/airlineCode> .
+<db:table:airlines_csv> <hasColumn> <db:column:airlines_csv.description> .
+<db:column:airlines_csv.description> <mapsToProperty> <https://w3id.org/demo/airline#/description> .
+<db:table:airports> <hasColumn> <db:column:airports.iata> .
+<db:column:airports.iata> <mapsToProperty> <https://w3id.org/demo/airline#/iata> .
+<db:table:airports> <hasColumn> <db:column:airports.airport> .
+<db:column:airports.airport> <mapsToProperty> <https://w3id.org/demo/airline#/airportName> .
+<db:table:airports> <hasColumn> <db:column:airports.city> .
+<db:column:airports.city> <mapsToProperty> <https://w3id.org/demo/airline#/city> .
+<db:table:airports> <hasColumn> <db:column:airports.state> .
+<db:column:airports.state> <mapsToProperty> <https://w3id.org/demo/airline#/state> .
+<db:table:airports> <hasColumn> <db:column:airports.country> .
+<db:column:airports.country> <mapsToProperty> <https://w3id.org/demo/airline#/country> .
+<db:table:airports> <hasColumn> <db:column:airports.lat> .
+<db:column:airports.lat> <mapsToProperty> <https://w3id.org/demo/airline#/lat> .
+<db:table:airports> <hasColumn> <db:column:airports.lon> .
+<db:column:airports.lon> <mapsToProperty> <https://w3id.org/demo/airline#/lon> .
+<db:table:airports_csv> <hasColumn> <db:column:airports_csv.iata> .
+<db:column:airports_csv.iata> <mapsToProperty> <https://w3id.org/demo/airline#/iata> .
+<db:table:airports_csv> <hasColumn> <db:column:airports_csv.airport> .
+<db:column:airports_csv.airport> <mapsToProperty> <https://w3id.org/demo/airline#/airportName> .
+<db:table:airports_csv> <hasColumn> <db:column:airports_csv.city> .
+<db:column:airports_csv.city> <mapsToProperty> <https://w3id.org/demo/airline#/city> .
+<db:table:airports_csv> <hasColumn> <db:column:airports_csv.state> .
+<db:column:airports_csv.state> <mapsToProperty> <https://w3id.org/demo/airline#/state> .
+<db:table:airports_csv> <hasColumn> <db:column:airports_csv.country> .
+<db:column:airports_csv.country> <mapsToProperty> <https://w3id.org/demo/airline#/country> .
+<db:table:airports_csv> <hasColumn> <db:column:airports_csv.lat> .
+<db:column:airports_csv.lat> <mapsToProperty> <https://w3id.org/demo/airline#/lat> .
+<db:table:airports_csv> <hasColumn> <db:column:airports_csv.lon> .
+<db:column:airports_csv.lon> <mapsToProperty> <https://w3id.org/demo/airline#/lon> .
+<db:table:flights_csv> <hasColumn> <db:column:flights_csv.month> .
+<db:column:flights_csv.month> <mapsToProperty> <https://w3id.org/demo/airline#/month> .
+<db:table:flights_csv> <hasColumn> <db:column:flights_csv.dayofmonth> .
+<db:column:flights_csv.dayofmonth> <mapsToProperty> <https://w3id.org/demo/airline#/dayOfMonth> .
+<db:table:flights_csv> <hasColumn> <db:column:flights_csv.dayofweek> .
+<db:column:flights_csv.dayofweek> <mapsToProperty> <https://w3id.org/demo/airline#/dayOfWeek> .
+<db:table:flights_csv> <hasColumn> <db:column:flights_csv.deptime> .
+<db:column:flights_csv.deptime> <mapsToProperty> <https://w3id.org/demo/airline#/depTime> .
+<db:table:flights_csv> <hasColumn> <db:column:flights_csv.crsdeptime> .
+<db:column:flights_csv.crsdeptime> <mapsToProperty> <https://w3id.org/demo/airline#/crsDepTime> .
+<db:table:flights_csv> <hasColumn> <db:column:flights_csv.arrtime> .
+<db:column:flights_csv.arrtime> <mapsToProperty> <https://w3id.org/demo/airline#/arrTime> .
+<db:table:flights_csv> <hasColumn> <db:column:flights_csv.crsarrtime> .
+<db:column:flights_csv.crsarrtime> <mapsToProperty> <https://w3id.org/demo/airline#/crsArrTime> .
+<db:table:flights_csv> <hasColumn> <db:column:flights_csv.uniquecarrier> .
+<db:column:flights_csv.uniquecarrier> <mapsToProperty> <https://w3id.org/demo/airline#/uniqueCarrier> .
+<db:table:flights_csv> <hasColumn> <db:column:flights_csv.flightnum> .
+<db:column:flights_csv.flightnum> <mapsToProperty> <https://w3id.org/demo/airline#/flightNum> .
+<db:table:flights_csv> <hasColumn> <db:column:flights_csv.tailnum> .
+<db:column:flights_csv.tailnum> <mapsToProperty> <https://w3id.org/demo/airline#/tailNum> .
+<db:table:flights_csv> <hasColumn> <db:column:flights_csv.actualelapsedtime> .
+<db:column:flights_csv.actualelapsedtime> <mapsToProperty> <https://w3id.org/demo/airline#/actualElapsedTime> .
+<db:table:flights_csv> <hasColumn> <db:column:flights_csv.crselapsedtime> .
+<db:column:flights_csv.crselapsedtime> <mapsToProperty> <https://w3id.org/demo/airline#/crsElapsedTime> .
+<db:table:flights_csv> <hasColumn> <db:column:flights_csv.airtime> .
+<db:column:flights_csv.airtime> <mapsToProperty> <https://w3id.org/demo/airline#/airTime> .
+<db:table:flights_csv> <hasColumn> <db:column:flights_csv.arrdelay> .
+<db:column:flights_csv.arrdelay> <mapsToProperty> <https://w3id.org/demo/airline#/arrDelay> .
+<db:table:flights_csv> <hasColumn> <db:column:flights_csv.depdelay> .
+<db:column:flights_csv.depdelay> <mapsToProperty> <https://w3id.org/demo/airline#/depDelay> .
+<db:table:flights_csv> <hasColumn> <db:column:flights_csv.origin> .
+<db:column:flights_csv.origin> <mapsToProperty> <https://w3id.org/demo/airline#/origin> .
+<db:table:flights_csv> <hasColumn> <db:column:flights_csv.dest> .
+<db:column:flights_csv.dest> <mapsToProperty> <https://w3id.org/demo/airline#/dest> .
+<db:table:flights_csv> <hasColumn> <db:column:flights_csv.distance> .
+<db:column:flights_csv.distance> <mapsToProperty> <https://w3id.org/demo/airline#/distance> .
+<db:table:flights_csv> <hasColumn> <db:column:flights_csv.taxiin> .
+<db:column:flights_csv.taxiin> <mapsToProperty> <https://w3id.org/demo/airline#/taxiIn> .
+<db:table:flights_csv> <hasColumn> <db:column:flights_csv.taxiout> .
+<db:column:flights_csv.taxiout> <mapsToProperty> <https://w3id.org/demo/airline#/taxiOut> .
+<db:table:flights_csv> <hasColumn> <db:column:flights_csv.cancelled> .
+<db:column:flights_csv.cancelled> <mapsToProperty> <https://w3id.org/demo/airline#/cancelled> .
+<db:table:flights_csv> <hasColumn> <db:column:flights_csv.cancellationcode> .
+<db:column:flights_csv.cancellationcode> <mapsToProperty> <https://w3id.org/demo/airline#/cancellationCode> .
+<db:table:flights_csv> <hasColumn> <db:column:flights_csv.diverted> .
+<db:column:flights_csv.diverted> <mapsToProperty> <https://w3id.org/demo/airline#/diverted> .
+<db:table:flights_csv> <hasColumn> <db:column:flights_csv.carrierdelay> .
+<db:column:flights_csv.carrierdelay> <mapsToProperty> <https://w3id.org/demo/airline#/carrierDelay> .
+<db:table:flights_csv> <hasColumn> <db:column:flights_csv.weatherdelay> .
+<db:column:flights_csv.weatherdelay> <mapsToProperty> <https://w3id.org/demo/airline#/weatherDelay> .
+<db:table:flights_csv> <hasColumn> <db:column:flights_csv.nasdelay> .
+<db:column:flights_csv.nasdelay> <mapsToProperty> <https://w3id.org/demo/airline#/nasDelay> .
+<db:table:flights_csv> <hasColumn> <db:column:flights_csv.securitydelay> .
+<db:column:flights_csv.securitydelay> <mapsToProperty> <https://w3id.org/demo/airline#/securityDelay> .
+<db:table:flights_csv> <hasColumn> <db:column:flights_csv.lateaircraftdelay> .
+<db:column:flights_csv.lateaircraftdelay> <mapsToProperty> <https://w3id.org/demo/airline#/lateAircraftDelay> .
+<db:table:flights_csv> <hasColumn> <db:column:flights_csv.year> .
+<db:column:flights_csv.year> <mapsToProperty> <https://w3id.org/demo/airline#/year> .
+<db:table:flights_orc> <hasColumn> <db:column:flights_orc.month> .
+<db:column:flights_orc.month> <mapsToProperty> <https://w3id.org/demo/airline#/month> .
+<db:table:flights_orc> <hasColumn> <db:column:flights_orc.dayofmonth> .
+<db:column:flights_orc.dayofmonth> <mapsToProperty> <https://w3id.org/demo/airline#/dayOfMonth> .
+<db:table:flights_orc> <hasColumn> <db:column:flights_orc.dayofweek> .
+<db:column:flights_orc.dayofweek> <mapsToProperty> <https://w3id.org/demo/airline#/dayOfWeek> .
+<db:table:flights_orc> <hasColumn> <db:column:flights_orc.deptime> .
+<db:column:flights_orc.deptime> <mapsToProperty> <https://w3id.org/demo/airline#/depTime> .
+<db:table:flights_orc> <hasColumn> <db:column:flights_orc.crsdeptime> .
+<db:column:flights_orc.crsdeptime> <mapsToProperty> <https://w3id.org/demo/airline#/crsDepTime> .
+<db:table:flights_orc> <hasColumn> <db:column:flights_orc.arrtime> .
+<db:column:flights_orc.arrtime> <mapsToProperty> <https://w3id.org/demo/airline#/arrTime> .
+<db:table:flights_orc> <hasColumn> <db:column:flights_orc.crsarrtime> .
+<db:column:flights_orc.crsarrtime> <mapsToProperty> <https://w3id.org/demo/airline#/crsArrTime> .
+<db:table:flights_orc> <hasColumn> <db:column:flights_orc.uniquecarrier> .
+<db:column:flights_orc.uniquecarrier> <mapsToProperty> <https://w3id.org/demo/airline#/uniqueCarrier> .
+<db:table:flights_orc> <hasColumn> <db:column:flights_orc.flightnum> .
+<db:column:flights_orc.flightnum> <mapsToProperty> <https://w3id.org/demo/airline#/flightNum> .
+<db:table:flights_orc> <hasColumn> <db:column:flights_orc.tailnum> .
+<db:column:flights_orc.tailnum> <mapsToProperty> <https://w3id.org/demo/airline#/tailNum> .
+<db:table:flights_orc> <hasColumn> <db:column:flights_orc.actualelapsedtime> .
+<db:column:flights_orc.actualelapsedtime> <mapsToProperty> <https://w3id.org/demo/airline#/actualElapsedTime> .
+<db:table:flights_orc> <hasColumn> <db:column:flights_orc.crselapsedtime> .
+<db:column:flights_orc.crselapsedtime> <mapsToProperty> <https://w3id.org/demo/airline#/crsElapsedTime> .
+<db:table:flights_orc> <hasColumn> <db:column:flights_orc.airtime> .
+<db:column:flights_orc.airtime> <mapsToProperty> <https://w3id.org/demo/airline#/airTime> .
+<db:table:flights_orc> <hasColumn> <db:column:flights_orc.arrdelay> .
+<db:column:flights_orc.arrdelay> <mapsToProperty> <https://w3id.org/demo/airline#/arrDelay> .
+<db:table:flights_orc> <hasColumn> <db:column:flights_orc.depdelay> .
+<db:column:flights_orc.depdelay> <mapsToProperty> <https://w3id.org/demo/airline#/depDelay> .
+<db:table:flights_orc> <hasColumn> <db:column:flights_orc.origin> .
+<db:column:flights_orc.origin> <mapsToProperty> <https://w3id.org/demo/airline#/origin> .
+<db:table:flights_orc> <hasColumn> <db:column:flights_orc.dest> .
+<db:column:flights_orc.dest> <mapsToProperty> <https://w3id.org/demo/airline#/dest> .
+<db:table:flights_orc> <hasColumn> <db:column:flights_orc.distance> .
+<db:column:flights_orc.distance> <mapsToProperty> <https://w3id.org/demo/airline#/distance> .
+<db:table:flights_orc> <hasColumn> <db:column:flights_orc.taxiin> .
+<db:column:flights_orc.taxiin> <mapsToProperty> <https://w3id.org/demo/airline#/taxiIn> .
+<db:table:flights_orc> <hasColumn> <db:column:flights_orc.taxiout> .
+<db:column:flights_orc.taxiout> <mapsToProperty> <https://w3id.org/demo/airline#/taxiOut> .
+<db:table:flights_orc> <hasColumn> <db:column:flights_orc.cancelled> .
+<db:column:flights_orc.cancelled> <mapsToProperty> <https://w3id.org/demo/airline#/cancelled> .
+<db:table:flights_orc> <hasColumn> <db:column:flights_orc.cancellationcode> .
+<db:column:flights_orc.cancellationcode> <mapsToProperty> <https://w3id.org/demo/airline#/cancellationCode> .
+<db:table:flights_orc> <hasColumn> <db:column:flights_orc.diverted> .
+<db:column:flights_orc.diverted> <mapsToProperty> <https://w3id.org/demo/airline#/diverted> .
+<db:table:flights_orc> <hasColumn> <db:column:flights_orc.carrierdelay> .
+<db:column:flights_orc.carrierdelay> <mapsToProperty> <https://w3id.org/demo/airline#/carrierDelay> .
+<db:table:flights_orc> <hasColumn> <db:column:flights_orc.weatherdelay> .
+<db:column:flights_orc.weatherdelay> <mapsToProperty> <https://w3id.org/demo/airline#/weatherDelay> .
+<db:table:flights_orc> <hasColumn> <db:column:flights_orc.nasdelay> .
+<db:column:flights_orc.nasdelay> <mapsToProperty> <https://w3id.org/demo/airline#/nasDelay> .
+<db:table:flights_orc> <hasColumn> <db:column:flights_orc.securitydelay> .
+<db:column:flights_orc.securitydelay> <mapsToProperty> <https://w3id.org/demo/airline#/securityDelay> .
+<db:table:flights_orc> <hasColumn> <db:column:flights_orc.lateaircraftdelay> .
+<db:column:flights_orc.lateaircraftdelay> <mapsToProperty> <https://w3id.org/demo/airline#/lateAircraftDelay> .
+<db:table:flights_orc> <hasColumn> <db:column:flights_orc.year> .
+<db:column:flights_orc.year> <mapsToProperty> <https://w3id.org/demo/airline#/year> .
+<db:table:planes> <hasColumn> <db:column:planes.tailnum> .
+<db:column:planes.tailnum> <mapsToProperty> <https://w3id.org/demo/airline#/tailNum> .
+<db:table:planes> <hasColumn> <db:column:planes.owner_type> .
+<db:column:planes.owner_type> <mapsToProperty> <https://w3id.org/demo/airline#/ownerType> .
+<db:table:planes> <hasColumn> <db:column:planes.manufacturer> .
+<db:column:planes.manufacturer> <mapsToProperty> <https://w3id.org/demo/airline#/manufacturer> .
+<db:table:planes> <hasColumn> <db:column:planes.issue_date> .
+<db:column:planes.issue_date> <mapsToProperty> <https://w3id.org/demo/airline#/issueDate> .
+<db:table:planes> <hasColumn> <db:column:planes.model> .
+<db:column:planes.model> <mapsToProperty> <https://w3id.org/demo/airline#/model> .
+<db:table:planes> <hasColumn> <db:column:planes.status> .
+<db:column:planes.status> <mapsToProperty> <https://w3id.org/demo/airline#/status> .
+<db:table:planes> <hasColumn> <db:column:planes.aircraft_type> .
+<db:column:planes.aircraft_type> <mapsToProperty> <https://w3id.org/demo/airline#/aircraftType> .
+<db:table:planes> <hasColumn> <db:column:planes.engine_type> .
+<db:column:planes.engine_type> <mapsToProperty> <https://w3id.org/demo/airline#/engineType> .
+<db:table:planes> <hasColumn> <db:column:planes.year> .
+<db:column:planes.year> <mapsToProperty> <https://w3id.org/demo/airline#/year> .
+<db:table:planes_csv> <hasColumn> <db:column:planes_csv.tailnum> .
+<db:column:planes_csv.tailnum> <mapsToProperty> <https://w3id.org/demo/airline#/tailNum> .
+<db:table:planes_csv> <hasColumn> <db:column:planes_csv.owner_type> .
+<db:column:planes_csv.owner_type> <mapsToProperty> <https://w3id.org/demo/airline#/ownerType> .
+<db:table:planes_csv> <hasColumn> <db:column:planes_csv.manufacturer> .
+<db:column:planes_csv.manufacturer> <mapsToProperty> <https://w3id.org/demo/airline#/manufacturer> .
+<db:table:planes_csv> <hasColumn> <db:column:planes_csv.issue_date> .
+<db:column:planes_csv.issue_date> <mapsToProperty> <https://w3id.org/demo/airline#/issueDate> .
+<db:table:planes_csv> <hasColumn> <db:column:planes_csv.model> .
+<db:column:planes_csv.model> <mapsToProperty> <https://w3id.org/demo/airline#/model> .
+<db:table:planes_csv> <hasColumn> <db:column:planes_csv.status> .
+<db:column:planes_csv.status> <mapsToProperty> <https://w3id.org/demo/airline#/status> .
+<db:table:planes_csv> <hasColumn> <db:column:planes_csv.aircraft_type> .
+<db:column:planes_csv.aircraft_type> <mapsToProperty> <https://w3id.org/demo/airline#/aircraftType> .
+<db:table:planes_csv> <hasColumn> <db:column:planes_csv.engine_type> .
+<db:column:planes_csv.engine_type> <mapsToProperty> <https://w3id.org/demo/airline#/engineType> .
+<db:table:planes_csv> <hasColumn> <db:column:planes_csv.year> .
+<db:column:planes_csv.year> <mapsToProperty> <https://w3id.org/demo/airline#/year> .

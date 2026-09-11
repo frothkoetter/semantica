@@ -1,0 +1,46 @@
+# Bundled copy — source of truth: config/airline_db_mapping.yaml
+ontology_namespace: "https://w3id.org/airline/ontology#"
+
+tables:
+  flight: Flight
+  flights: Flight
+  aircraft: Aircraft
+  airport: Airport
+  airports: Airport
+  airline: Airline
+  airlines: Airline
+  delaybreakdown: DelayBreakdown
+  delay_breakdown: DelayBreakdown
+
+columns:
+  _global:
+    flightnumber: flightNumber
+    flight_number: flightNumber
+    registration: registration
+    aircrafttype: aircraftType
+    aircraft_type: aircraftType
+    iata_code: iataCode
+    icao_code: icaoCode
+    name: name
+    city: city
+    country_code: countryCode
+    scheduled_departure: scheduledDeparture
+    scheduled_arrival: scheduledArrival
+    status: status
+    cause_code: causeCode
+    cause_description: causeDescription
+    delay_minutes: delayMinutes
+
+foreign_keys:
+  - source_table: flight
+    target_table: airline
+    edge_type: operatedBy
+  - source_table: flight
+    target_table: airport
+    edge_type: originAirport
+  - source_table: flight
+    target_table: aircraft
+    edge_type: assignedAircraft
+  - source_table: delay_breakdown
+    target_table: flight
+    edge_type: hasDelayBreakdown
