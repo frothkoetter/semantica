@@ -73,7 +73,7 @@ def _get_graph():
     global _graph
     if _graph is None:
         from semantica.context import ContextGraph
-        _graph = ContextGraph(advanced_analytics=True)
+        _graph = ContextGraph(advanced_analytics=False)
         kg_path = os.environ.get("SEMANTICA_KG_PATH")
         if kg_path and os.path.exists(kg_path):
             try:
@@ -263,18 +263,142 @@ def _tool_get_graph_analytics(args: dict) -> dict:
         return {"error": str(exc)}
 
 
+_ONTOLOGY_EXPORT_TYPES = frozenset({
+    "OntologyClass",
+    "DatabaseTable",
+    "DatabaseColumn",
+    "PropertyMapping",
+    "BusinessRule",
+})
+
+_FORMAT_ALIASES = {
+    "ttl": "turtle",
+    "turtle": "turtle",
+    "nt": "ntriples",
+    "ntriples": "ntriples",
+    "xml": "rdfxml",
+    "rdfxml": "rdfxml",
+    "json-ld": "jsonld",
+    "jsonld": "jsonld",
+}
+
+
+def _graph_export_payload(graph: Any, subset: str = "full") -> dict[str, Any]:
+    """Build a JSON-serialisable graph payload for MCP export tools."""
+    if hasattr(graph, "to_dict"):
+        data = graph.to_dict()
+        nodes = data.get("nodes", [])
+        edges = data.get("edges", [])
+    else:
+        nodes = list(graph.find_nodes())
+        edges = []
+        if hasattr(graph, "find_edges"):
+            try:
+                edges = list(graph.find_edges())
+            except Exception as exc:
+                log.debug("find_edges failed during export: %s", exc)
+
+    if subset == "ontology":
+        nodes = [n for n in nodes if n.get("type") in _ONTOLOGY_EXPORT_TYPES]
+        node_ids = {n.get("id") for n in nodes}
+        edges = [
+            e for e in edges
+            if e.get("source") in node_ids and e.get("target") in node_ids
+        ]
+
+    return {"nodes": nodes, "edges": edges}
+
+
+def _graph_to_rdf_data(graph_payload: dict[str, Any]) -> dict[str, Any]:
+    """Convert ContextGraph node/edge dicts to RDFExporter entity/relationship shape."""
+    entities: list[dict[str, Any]] = []
+    for node in graph_payload.get("nodes", []):
+        props = node.get("properties") or {}
+        label = (
+            node.get("content")
+            or node.get("label")
+            or props.get("label")
+            or props.get("table_name")
+            or props.get("column_name")
+            or str(node.get("id", "")).rsplit("/", 1)[-1]
+        )
+        entity = {
+            "id": node.get("id"),
+            "type": node.get("type"),
+            "label": label,
+            "text": label,
+        }
+        for key in ("uri", "table_name", "column_name", "data_type", "mapped_class"):
+            if props.get(key) is not None:
+                entity[key] = props[key]
+        entities.append(entity)
+
+    relationships: list[dict[str, Any]] = []
+    for edge in graph_payload.get("edges", []):
+        relationships.append({
+            "source_id": edge.get("source"),
+            "target_id": edge.get("target"),
+            "type": edge.get("type"),
+        })
+
+    return {
+        "entities": entities,
+        "relationships": relationships,
+        "metadata": {
+            "node_count": len(entities),
+            "edge_count": len(relationships),
+        },
+    }
+
+
 def _tool_export_graph(args: dict) -> dict:
     """Export the current knowledge graph to a serialised format."""
-    fmt = args.get("format", "json-ld")
+    fmt = str(args.get("format", "json")).lower().strip()
+    subset = str(args.get("subset", "ontology")).lower().strip()
+    if subset not in ("full", "ontology"):
+        return {"error": f"Unsupported subset '{subset}'. Use 'full' or 'ontology'."}
+
     graph = _get_graph()
     try:
-        from semantica.export import RDFExporter, JSONExporter
-        if fmt in ("turtle", "ttl", "nt", "xml", "json-ld"):
-            result = RDFExporter().export_to_rdf(graph, format=fmt)
-        else:
-            result = JSONExporter().export(graph)
-        return {"format": fmt, "data": result}
+        payload = _graph_export_payload(graph, subset=subset)
+        node_count = len(payload["nodes"])
+        edge_count = len(payload["edges"])
+
+        if fmt == "json":
+            return {
+                "format": "json",
+                "subset": subset,
+                "data": payload,
+                "meta": {
+                    "node_count": node_count,
+                    "edge_count": edge_count,
+                },
+            }
+
+        rdf_fmt = _FORMAT_ALIASES.get(fmt)
+        if rdf_fmt:
+            from semantica.export import RDFExporter
+            rdf_data = _graph_to_rdf_data(payload)
+            result = RDFExporter().export_to_rdf(rdf_data, format=rdf_fmt)
+            return {
+                "format": rdf_fmt,
+                "subset": subset,
+                "data": result,
+                "meta": {
+                    "node_count": node_count,
+                    "edge_count": edge_count,
+                },
+            }
+
+        return {
+            "error": (
+                f"Unsupported format '{fmt}'. "
+                "Supported: json, turtle, ttl, nt, xml, json-ld. "
+                "Prefer get_graph_summary for counts; export_graph subset=ontology for mappings."
+            )
+        }
     except Exception as exc:
+        log.exception("export_graph failed")
         return {"error": str(exc)}
 
 
@@ -474,15 +598,27 @@ TOOLS = [
     },
     {
         "name": "export_graph",
-        "description": "Export the current knowledge graph. Formats: turtle, ttl, nt, xml, json-ld, json.",
+        "description": (
+            "Export ontology/DB mappings from the knowledge graph. "
+            "Default: format=json, subset=ontology (lightweight). "
+            "Use get_graph_summary first for counts."
+        ),
         "inputSchema": {
             "type": "object",
             "properties": {
                 "format": {
                     "type": "string",
-                    "enum": ["turtle", "ttl", "nt", "xml", "json-ld", "json"],
-                    "description": "Export format (default: json-ld)",
-                }
+                    "enum": ["json", "turtle", "ttl", "nt", "xml", "json-ld"],
+                    "description": "Export format (default: json)",
+                },
+                "subset": {
+                    "type": "string",
+                    "enum": ["ontology", "full"],
+                    "description": (
+                        "ontology: mapping nodes only (default, fast). "
+                        "full: entire graph (~250KB JSON)."
+                    ),
+                },
             },
         },
         "_handler": _tool_export_graph,

@@ -13,7 +13,7 @@ One MCP server per agent. Semantica has **no** `HIVE_*` credentials.
 | Role | `ontology_mapper` |
 | Goal | Resolve user questions into ontology terms and a SQL mapping plan. Never execute SQL. |
 | MCP | `semantica` |
-| Tools | `get_graph_summary`, `export_graph`, `run_reasoning` |
+| Tools | `get_graph_summary`, `run_reasoning` (optional: `export_graph` with `subset: ontology`) |
 
 **Env:** `SEMANTICA_KG_PATH`, `SEMANTICA_MAPPING_CONFIG` only.
 
@@ -21,6 +21,7 @@ One MCP server per agent. Semantica has **no** `HIVE_*` credentials.
 - If `get_graph_summary.node_count < 50` → `ready_for_sql: false`, STOP
 - If `ontology_class_count == 0` → STOP
 - Never call `import_ontology` when graph is pre-loaded
+- **Do not call `export_graph` unless column-level mappings are required** — use `get_graph_summary` first; if needed, `export_graph({format: "json", subset: "ontology"})` only
 - Output JSON mapping plan; never write SQL
 
 ### 2. `sql_executor` — iceberg-hive only
