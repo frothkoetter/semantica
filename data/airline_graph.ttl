@@ -446,8 +446,8 @@
     semantica:text "https://w3id.org/demo/airline#/Flight" ;
     semantica:confidence 1.0 .
 
-<db:table:flights_orc> a <DatabaseTable> ;
-    semantica:text "flights_orc" ;
+<db:table:flights> a <DatabaseTable> ;
+    semantica:text "flights" ;
     semantica:confidence 1.0 .
 
 <db:table:planes> a <DatabaseTable> ;
@@ -802,119 +802,119 @@
     semantica:text "https://w3id.org/demo/airline#/year" ;
     semantica:confidence 1.0 .
 
-<db:column:flights_orc.month> a <DatabaseColumn> ;
+<db:column:flights.month> a <DatabaseColumn> ;
     semantica:text "month" ;
     semantica:confidence 1.0 .
 
-<db:column:flights_orc.dayofmonth> a <DatabaseColumn> ;
+<db:column:flights.dayofmonth> a <DatabaseColumn> ;
     semantica:text "dayofmonth" ;
     semantica:confidence 1.0 .
 
-<db:column:flights_orc.dayofweek> a <DatabaseColumn> ;
+<db:column:flights.dayofweek> a <DatabaseColumn> ;
     semantica:text "dayofweek" ;
     semantica:confidence 1.0 .
 
-<db:column:flights_orc.deptime> a <DatabaseColumn> ;
+<db:column:flights.deptime> a <DatabaseColumn> ;
     semantica:text "deptime" ;
     semantica:confidence 1.0 .
 
-<db:column:flights_orc.crsdeptime> a <DatabaseColumn> ;
+<db:column:flights.crsdeptime> a <DatabaseColumn> ;
     semantica:text "crsdeptime" ;
     semantica:confidence 1.0 .
 
-<db:column:flights_orc.arrtime> a <DatabaseColumn> ;
+<db:column:flights.arrtime> a <DatabaseColumn> ;
     semantica:text "arrtime" ;
     semantica:confidence 1.0 .
 
-<db:column:flights_orc.crsarrtime> a <DatabaseColumn> ;
+<db:column:flights.crsarrtime> a <DatabaseColumn> ;
     semantica:text "crsarrtime" ;
     semantica:confidence 1.0 .
 
-<db:column:flights_orc.uniquecarrier> a <DatabaseColumn> ;
+<db:column:flights.uniquecarrier> a <DatabaseColumn> ;
     semantica:text "uniquecarrier" ;
     semantica:confidence 1.0 .
 
-<db:column:flights_orc.flightnum> a <DatabaseColumn> ;
+<db:column:flights.flightnum> a <DatabaseColumn> ;
     semantica:text "flightnum" ;
     semantica:confidence 1.0 .
 
-<db:column:flights_orc.tailnum> a <DatabaseColumn> ;
+<db:column:flights.tailnum> a <DatabaseColumn> ;
     semantica:text "tailnum" ;
     semantica:confidence 1.0 .
 
-<db:column:flights_orc.actualelapsedtime> a <DatabaseColumn> ;
+<db:column:flights.actualelapsedtime> a <DatabaseColumn> ;
     semantica:text "actualelapsedtime" ;
     semantica:confidence 1.0 .
 
-<db:column:flights_orc.crselapsedtime> a <DatabaseColumn> ;
+<db:column:flights.crselapsedtime> a <DatabaseColumn> ;
     semantica:text "crselapsedtime" ;
     semantica:confidence 1.0 .
 
-<db:column:flights_orc.airtime> a <DatabaseColumn> ;
+<db:column:flights.airtime> a <DatabaseColumn> ;
     semantica:text "airtime" ;
     semantica:confidence 1.0 .
 
-<db:column:flights_orc.arrdelay> a <DatabaseColumn> ;
+<db:column:flights.arrdelay> a <DatabaseColumn> ;
     semantica:text "arrdelay" ;
     semantica:confidence 1.0 .
 
-<db:column:flights_orc.depdelay> a <DatabaseColumn> ;
+<db:column:flights.depdelay> a <DatabaseColumn> ;
     semantica:text "depdelay" ;
     semantica:confidence 1.0 .
 
-<db:column:flights_orc.origin> a <DatabaseColumn> ;
+<db:column:flights.origin> a <DatabaseColumn> ;
     semantica:text "origin" ;
     semantica:confidence 1.0 .
 
-<db:column:flights_orc.dest> a <DatabaseColumn> ;
+<db:column:flights.dest> a <DatabaseColumn> ;
     semantica:text "dest" ;
     semantica:confidence 1.0 .
 
-<db:column:flights_orc.distance> a <DatabaseColumn> ;
+<db:column:flights.distance> a <DatabaseColumn> ;
     semantica:text "distance" ;
     semantica:confidence 1.0 .
 
-<db:column:flights_orc.taxiin> a <DatabaseColumn> ;
+<db:column:flights.taxiin> a <DatabaseColumn> ;
     semantica:text "taxiin" ;
     semantica:confidence 1.0 .
 
-<db:column:flights_orc.taxiout> a <DatabaseColumn> ;
+<db:column:flights.taxiout> a <DatabaseColumn> ;
     semantica:text "taxiout" ;
     semantica:confidence 1.0 .
 
-<db:column:flights_orc.cancelled> a <DatabaseColumn> ;
+<db:column:flights.cancelled> a <DatabaseColumn> ;
     semantica:text "cancelled" ;
     semantica:confidence 1.0 .
 
-<db:column:flights_orc.cancellationcode> a <DatabaseColumn> ;
+<db:column:flights.cancellationcode> a <DatabaseColumn> ;
     semantica:text "cancellationcode" ;
     semantica:confidence 1.0 .
 
-<db:column:flights_orc.diverted> a <DatabaseColumn> ;
+<db:column:flights.diverted> a <DatabaseColumn> ;
     semantica:text "diverted" ;
     semantica:confidence 1.0 .
 
-<db:column:flights_orc.carrierdelay> a <DatabaseColumn> ;
+<db:column:flights.carrierdelay> a <DatabaseColumn> ;
     semantica:text "carrierdelay" ;
     semantica:confidence 1.0 .
 
-<db:column:flights_orc.weatherdelay> a <DatabaseColumn> ;
+<db:column:flights.weatherdelay> a <DatabaseColumn> ;
     semantica:text "weatherdelay" ;
     semantica:confidence 1.0 .
 
-<db:column:flights_orc.nasdelay> a <DatabaseColumn> ;
+<db:column:flights.nasdelay> a <DatabaseColumn> ;
     semantica:text "nasdelay" ;
     semantica:confidence 1.0 .
 
-<db:column:flights_orc.securitydelay> a <DatabaseColumn> ;
+<db:column:flights.securitydelay> a <DatabaseColumn> ;
     semantica:text "securitydelay" ;
     semantica:confidence 1.0 .
 
-<db:column:flights_orc.lateaircraftdelay> a <DatabaseColumn> ;
+<db:column:flights.lateaircraftdelay> a <DatabaseColumn> ;
     semantica:text "lateaircraftdelay" ;
     semantica:confidence 1.0 .
 
-<db:column:flights_orc.year> a <DatabaseColumn> ;
+<db:column:flights.year> a <DatabaseColumn> ;
     semantica:text "year" ;
     semantica:confidence 1.0 .
 
@@ -1270,7 +1270,7 @@
 <db:table:airports> <mapsToClass> <https://w3id.org/demo/airline#/Airport> .
 <db:table:airports_csv> <mapsToClass> <https://w3id.org/demo/airline#/Airport> .
 <db:table:flights_csv> <mapsToClass> <https://w3id.org/demo/airline#/Flight> .
-<db:table:flights_orc> <mapsToClass> <https://w3id.org/demo/airline#/Flight> .
+<db:table:flights> <mapsToClass> <https://w3id.org/demo/airline#/Flight> .
 <db:table:planes> <mapsToClass> <https://w3id.org/demo/airline#/Plane> .
 <db:table:planes_csv> <mapsToClass> <https://w3id.org/demo/airline#/Plane> .
 <db:table:airlines> <hasColumn> <db:column:airlines.code> .
@@ -1367,64 +1367,64 @@
 <db:column:flights_csv.lateaircraftdelay> <mapsToProperty> <https://w3id.org/demo/airline#/lateAircraftDelay> .
 <db:table:flights_csv> <hasColumn> <db:column:flights_csv.year> .
 <db:column:flights_csv.year> <mapsToProperty> <https://w3id.org/demo/airline#/year> .
-<db:table:flights_orc> <hasColumn> <db:column:flights_orc.month> .
-<db:column:flights_orc.month> <mapsToProperty> <https://w3id.org/demo/airline#/month> .
-<db:table:flights_orc> <hasColumn> <db:column:flights_orc.dayofmonth> .
-<db:column:flights_orc.dayofmonth> <mapsToProperty> <https://w3id.org/demo/airline#/dayOfMonth> .
-<db:table:flights_orc> <hasColumn> <db:column:flights_orc.dayofweek> .
-<db:column:flights_orc.dayofweek> <mapsToProperty> <https://w3id.org/demo/airline#/dayOfWeek> .
-<db:table:flights_orc> <hasColumn> <db:column:flights_orc.deptime> .
-<db:column:flights_orc.deptime> <mapsToProperty> <https://w3id.org/demo/airline#/depTime> .
-<db:table:flights_orc> <hasColumn> <db:column:flights_orc.crsdeptime> .
-<db:column:flights_orc.crsdeptime> <mapsToProperty> <https://w3id.org/demo/airline#/crsDepTime> .
-<db:table:flights_orc> <hasColumn> <db:column:flights_orc.arrtime> .
-<db:column:flights_orc.arrtime> <mapsToProperty> <https://w3id.org/demo/airline#/arrTime> .
-<db:table:flights_orc> <hasColumn> <db:column:flights_orc.crsarrtime> .
-<db:column:flights_orc.crsarrtime> <mapsToProperty> <https://w3id.org/demo/airline#/crsArrTime> .
-<db:table:flights_orc> <hasColumn> <db:column:flights_orc.uniquecarrier> .
-<db:column:flights_orc.uniquecarrier> <mapsToProperty> <https://w3id.org/demo/airline#/uniqueCarrier> .
-<db:table:flights_orc> <hasColumn> <db:column:flights_orc.flightnum> .
-<db:column:flights_orc.flightnum> <mapsToProperty> <https://w3id.org/demo/airline#/flightNum> .
-<db:table:flights_orc> <hasColumn> <db:column:flights_orc.tailnum> .
-<db:column:flights_orc.tailnum> <mapsToProperty> <https://w3id.org/demo/airline#/tailNum> .
-<db:table:flights_orc> <hasColumn> <db:column:flights_orc.actualelapsedtime> .
-<db:column:flights_orc.actualelapsedtime> <mapsToProperty> <https://w3id.org/demo/airline#/actualElapsedTime> .
-<db:table:flights_orc> <hasColumn> <db:column:flights_orc.crselapsedtime> .
-<db:column:flights_orc.crselapsedtime> <mapsToProperty> <https://w3id.org/demo/airline#/crsElapsedTime> .
-<db:table:flights_orc> <hasColumn> <db:column:flights_orc.airtime> .
-<db:column:flights_orc.airtime> <mapsToProperty> <https://w3id.org/demo/airline#/airTime> .
-<db:table:flights_orc> <hasColumn> <db:column:flights_orc.arrdelay> .
-<db:column:flights_orc.arrdelay> <mapsToProperty> <https://w3id.org/demo/airline#/arrDelay> .
-<db:table:flights_orc> <hasColumn> <db:column:flights_orc.depdelay> .
-<db:column:flights_orc.depdelay> <mapsToProperty> <https://w3id.org/demo/airline#/depDelay> .
-<db:table:flights_orc> <hasColumn> <db:column:flights_orc.origin> .
-<db:column:flights_orc.origin> <mapsToProperty> <https://w3id.org/demo/airline#/origin> .
-<db:table:flights_orc> <hasColumn> <db:column:flights_orc.dest> .
-<db:column:flights_orc.dest> <mapsToProperty> <https://w3id.org/demo/airline#/dest> .
-<db:table:flights_orc> <hasColumn> <db:column:flights_orc.distance> .
-<db:column:flights_orc.distance> <mapsToProperty> <https://w3id.org/demo/airline#/distance> .
-<db:table:flights_orc> <hasColumn> <db:column:flights_orc.taxiin> .
-<db:column:flights_orc.taxiin> <mapsToProperty> <https://w3id.org/demo/airline#/taxiIn> .
-<db:table:flights_orc> <hasColumn> <db:column:flights_orc.taxiout> .
-<db:column:flights_orc.taxiout> <mapsToProperty> <https://w3id.org/demo/airline#/taxiOut> .
-<db:table:flights_orc> <hasColumn> <db:column:flights_orc.cancelled> .
-<db:column:flights_orc.cancelled> <mapsToProperty> <https://w3id.org/demo/airline#/cancelled> .
-<db:table:flights_orc> <hasColumn> <db:column:flights_orc.cancellationcode> .
-<db:column:flights_orc.cancellationcode> <mapsToProperty> <https://w3id.org/demo/airline#/cancellationCode> .
-<db:table:flights_orc> <hasColumn> <db:column:flights_orc.diverted> .
-<db:column:flights_orc.diverted> <mapsToProperty> <https://w3id.org/demo/airline#/diverted> .
-<db:table:flights_orc> <hasColumn> <db:column:flights_orc.carrierdelay> .
-<db:column:flights_orc.carrierdelay> <mapsToProperty> <https://w3id.org/demo/airline#/carrierDelay> .
-<db:table:flights_orc> <hasColumn> <db:column:flights_orc.weatherdelay> .
-<db:column:flights_orc.weatherdelay> <mapsToProperty> <https://w3id.org/demo/airline#/weatherDelay> .
-<db:table:flights_orc> <hasColumn> <db:column:flights_orc.nasdelay> .
-<db:column:flights_orc.nasdelay> <mapsToProperty> <https://w3id.org/demo/airline#/nasDelay> .
-<db:table:flights_orc> <hasColumn> <db:column:flights_orc.securitydelay> .
-<db:column:flights_orc.securitydelay> <mapsToProperty> <https://w3id.org/demo/airline#/securityDelay> .
-<db:table:flights_orc> <hasColumn> <db:column:flights_orc.lateaircraftdelay> .
-<db:column:flights_orc.lateaircraftdelay> <mapsToProperty> <https://w3id.org/demo/airline#/lateAircraftDelay> .
-<db:table:flights_orc> <hasColumn> <db:column:flights_orc.year> .
-<db:column:flights_orc.year> <mapsToProperty> <https://w3id.org/demo/airline#/year> .
+<db:table:flights> <hasColumn> <db:column:flights.month> .
+<db:column:flights.month> <mapsToProperty> <https://w3id.org/demo/airline#/month> .
+<db:table:flights> <hasColumn> <db:column:flights.dayofmonth> .
+<db:column:flights.dayofmonth> <mapsToProperty> <https://w3id.org/demo/airline#/dayOfMonth> .
+<db:table:flights> <hasColumn> <db:column:flights.dayofweek> .
+<db:column:flights.dayofweek> <mapsToProperty> <https://w3id.org/demo/airline#/dayOfWeek> .
+<db:table:flights> <hasColumn> <db:column:flights.deptime> .
+<db:column:flights.deptime> <mapsToProperty> <https://w3id.org/demo/airline#/depTime> .
+<db:table:flights> <hasColumn> <db:column:flights.crsdeptime> .
+<db:column:flights.crsdeptime> <mapsToProperty> <https://w3id.org/demo/airline#/crsDepTime> .
+<db:table:flights> <hasColumn> <db:column:flights.arrtime> .
+<db:column:flights.arrtime> <mapsToProperty> <https://w3id.org/demo/airline#/arrTime> .
+<db:table:flights> <hasColumn> <db:column:flights.crsarrtime> .
+<db:column:flights.crsarrtime> <mapsToProperty> <https://w3id.org/demo/airline#/crsArrTime> .
+<db:table:flights> <hasColumn> <db:column:flights.uniquecarrier> .
+<db:column:flights.uniquecarrier> <mapsToProperty> <https://w3id.org/demo/airline#/uniqueCarrier> .
+<db:table:flights> <hasColumn> <db:column:flights.flightnum> .
+<db:column:flights.flightnum> <mapsToProperty> <https://w3id.org/demo/airline#/flightNum> .
+<db:table:flights> <hasColumn> <db:column:flights.tailnum> .
+<db:column:flights.tailnum> <mapsToProperty> <https://w3id.org/demo/airline#/tailNum> .
+<db:table:flights> <hasColumn> <db:column:flights.actualelapsedtime> .
+<db:column:flights.actualelapsedtime> <mapsToProperty> <https://w3id.org/demo/airline#/actualElapsedTime> .
+<db:table:flights> <hasColumn> <db:column:flights.crselapsedtime> .
+<db:column:flights.crselapsedtime> <mapsToProperty> <https://w3id.org/demo/airline#/crsElapsedTime> .
+<db:table:flights> <hasColumn> <db:column:flights.airtime> .
+<db:column:flights.airtime> <mapsToProperty> <https://w3id.org/demo/airline#/airTime> .
+<db:table:flights> <hasColumn> <db:column:flights.arrdelay> .
+<db:column:flights.arrdelay> <mapsToProperty> <https://w3id.org/demo/airline#/arrDelay> .
+<db:table:flights> <hasColumn> <db:column:flights.depdelay> .
+<db:column:flights.depdelay> <mapsToProperty> <https://w3id.org/demo/airline#/depDelay> .
+<db:table:flights> <hasColumn> <db:column:flights.origin> .
+<db:column:flights.origin> <mapsToProperty> <https://w3id.org/demo/airline#/origin> .
+<db:table:flights> <hasColumn> <db:column:flights.dest> .
+<db:column:flights.dest> <mapsToProperty> <https://w3id.org/demo/airline#/dest> .
+<db:table:flights> <hasColumn> <db:column:flights.distance> .
+<db:column:flights.distance> <mapsToProperty> <https://w3id.org/demo/airline#/distance> .
+<db:table:flights> <hasColumn> <db:column:flights.taxiin> .
+<db:column:flights.taxiin> <mapsToProperty> <https://w3id.org/demo/airline#/taxiIn> .
+<db:table:flights> <hasColumn> <db:column:flights.taxiout> .
+<db:column:flights.taxiout> <mapsToProperty> <https://w3id.org/demo/airline#/taxiOut> .
+<db:table:flights> <hasColumn> <db:column:flights.cancelled> .
+<db:column:flights.cancelled> <mapsToProperty> <https://w3id.org/demo/airline#/cancelled> .
+<db:table:flights> <hasColumn> <db:column:flights.cancellationcode> .
+<db:column:flights.cancellationcode> <mapsToProperty> <https://w3id.org/demo/airline#/cancellationCode> .
+<db:table:flights> <hasColumn> <db:column:flights.diverted> .
+<db:column:flights.diverted> <mapsToProperty> <https://w3id.org/demo/airline#/diverted> .
+<db:table:flights> <hasColumn> <db:column:flights.carrierdelay> .
+<db:column:flights.carrierdelay> <mapsToProperty> <https://w3id.org/demo/airline#/carrierDelay> .
+<db:table:flights> <hasColumn> <db:column:flights.weatherdelay> .
+<db:column:flights.weatherdelay> <mapsToProperty> <https://w3id.org/demo/airline#/weatherDelay> .
+<db:table:flights> <hasColumn> <db:column:flights.nasdelay> .
+<db:column:flights.nasdelay> <mapsToProperty> <https://w3id.org/demo/airline#/nasDelay> .
+<db:table:flights> <hasColumn> <db:column:flights.securitydelay> .
+<db:column:flights.securitydelay> <mapsToProperty> <https://w3id.org/demo/airline#/securityDelay> .
+<db:table:flights> <hasColumn> <db:column:flights.lateaircraftdelay> .
+<db:column:flights.lateaircraftdelay> <mapsToProperty> <https://w3id.org/demo/airline#/lateAircraftDelay> .
+<db:table:flights> <hasColumn> <db:column:flights.year> .
+<db:column:flights.year> <mapsToProperty> <https://w3id.org/demo/airline#/year> .
 <db:table:planes> <hasColumn> <db:column:planes.tailnum> .
 <db:column:planes.tailnum> <mapsToProperty> <https://w3id.org/demo/airline#/tailNum> .
 <db:table:planes> <hasColumn> <db:column:planes.owner_type> .

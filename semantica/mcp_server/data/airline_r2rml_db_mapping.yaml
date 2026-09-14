@@ -5,6 +5,7 @@
 ontology_namespace: "https://w3id.org/demo/airline#"
 
 tables:
+  flights: Flight
   flightscsv: Flight
   flightsorc: Flight
   flight: Flight
@@ -79,6 +80,15 @@ foreign_keys:
     target_table: planes
     edge_type: assignedAircraft
   - source_table: flights_csv
+    target_table: airports
+    edge_type: originAirport
+  - source_table: flights
+    target_table: airlines
+    edge_type: operatedBy
+  - source_table: flights
+    target_table: planes
+    edge_type: assignedAircraft
+  - source_table: flights
     target_table: airports
     edge_type: originAirport
   - source_table: flights_orc

@@ -1,7 +1,7 @@
 """
 Resolve airline ontology terms → physical Hive tables/columns via Semantica graph.
 
-Physical tables: flights_orc, airlines, airports, planes (never *_csv).
+Physical tables: flights, airlines, airports, planes (never *_csv; flights_orc is legacy alias).
 
 Business semantics (TimeWindow, flightStatus, primaryDelayReason, …) are **not**
 stored in Hive — they are compiled at query time from airline_business_rules.yaml
@@ -28,7 +28,7 @@ ONTOLOGY_NS = "https://w3id.org/demo/airline#"
 DEFAULT_DATABASE = "airlinedata"
 
 PREFERRED_TABLES: Dict[str, str] = {
-    "Flight": "flights_orc",
+    "Flight": "flights",
     "Airline": "airlines",
     "Airport": "airports",
     "Plane": "planes",
@@ -248,7 +248,7 @@ class AirlineOntologyResolver:
 
     def flight_runtime_from(self, alias: str = "f") -> str:
         """
-        FROM clause: flights_orc wrapped with business-rule CASE expressions.
+        FROM clause: flights wrapped with business-rule CASE expressions.
 
         This is the primary path — no Hive view, all semantics compiled at runtime.
         """

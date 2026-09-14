@@ -1,5 +1,5 @@
 # Declarative business rules for airline ontology analytics.
-# Agents resolve ontology terms → flights_orc columns via airline_graph.json,
+# Agents resolve ontology terms → flights columns via airline_graph.json,
 # then apply these rules as SQL CASE/WHERE or post-query classification.
 #
 # Namespace: https://w3id.org/demo/airline#

@@ -102,7 +102,7 @@ def sql_route_expr(
 
 def sql_runtime_flight_subquery(
     database: str = "airlinedata",
-    source_table: str = "flights_orc",
+    source_table: str = "flights",
     alias: str = "f",
     rules: Optional[Dict[str, Any]] = None,
 ) -> str:
@@ -126,7 +126,7 @@ sql_enriched_flight_subquery = sql_runtime_flight_subquery
 
 def sql_hub_airports_subquery(
     database: str = "airlinedata",
-    flights_table: str = "flights_orc",
+    flights_table: str = "flights",
     reference_year: int = 2008,
     top_n: int = 20,
 ) -> str:

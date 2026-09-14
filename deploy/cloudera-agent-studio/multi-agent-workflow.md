@@ -37,7 +37,7 @@ One MCP server per agent. Semantica has **no** `HIVE_*` credentials.
 
 **Task 2 — gate:**
 - ABORT if Task 1 `ready_for_sql != true`
-- Tables: `flights_orc`, `airlines`, `airports`, `planes` only
+- Tables: `flights`, `airlines`, `airports`, `planes` only (`flights_orc` legacy alias)
 - No `SELECT * LIMIT 1` discovery — use Task 1 mappings
 
 ### 3. `answer_synthesizer` — Semantica (optional)
@@ -77,5 +77,5 @@ Or chain MCP at build time:
 
 Expected trace:
 1. `get_graph_summary` → `node_count: 262`, `ontology_classes: [Flight, Airline, ...]`
-2. `execute_query` → SQL on `flights_orc` JOIN `airlines` WHERE `year = 2008`
+2. `execute_query` → SQL on `flights` JOIN `airlines` WHERE `year = 2008`
 3. Business answer with ontology terms

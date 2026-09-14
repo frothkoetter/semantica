@@ -54,7 +54,7 @@ REQUIRED_CLASSES = (
 )
 
 MATERIALIZED_TABLES = {
-    "flights_orc": "Flight",
+    "flights": "Flight",
     "airlines": "Airline",
     "airports": "Airport",
     "planes": "Plane",
@@ -341,7 +341,7 @@ def validate_graph_mappings(graph: Any) -> Dict[str, Any]:
         elif _normalize_class_key(mapped) != _normalize_class_key(expected):
             warnings.append(f"Table '{table}' maps to '{mapped}' (expected '{expected}')")
 
-    flights_key = _normalize_table("flights_orc")
+    flights_key = _normalize_table("flights")
     flight_cols: Set[str] = set()
     for node in graph.find_nodes(node_type="DatabaseColumn"):
         meta = _graph_node_field(node, "metadata") or {}
@@ -355,7 +355,7 @@ def validate_graph_mappings(graph: Any) -> Dict[str, Any]:
     ]
     if missing_cols:
         warnings.append(
-            f"flights_orc missing mapped columns: {', '.join(missing_cols)}"
+            f"flights missing mapped columns: {', '.join(missing_cols)}"
         )
 
     return {

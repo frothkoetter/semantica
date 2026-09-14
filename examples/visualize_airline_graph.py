@@ -19,7 +19,7 @@ OUT_OVERVIEW = REPO / "data" / "airline_graph_overview.html"
 OUT_FULL = REPO / "data" / "airline_graph_full.html"
 OUT_META = REPO / "data" / "airline_graph_viz_meta.json"
 
-MATERIALIZED_TABLES = {"flights_orc", "airlines", "airports", "planes"}
+MATERIALIZED_TABLES = {"flights", "airlines", "airports", "planes"}
 
 TYPE_COLORS = {
     "Ontology": "#6366f1",

@@ -1,6 +1,6 @@
 # Airline ontology — proposed business logic
 
-Extension of `https://w3id.org/demo/airline#` with **operational semantics** that agents use for analytics. Raw data stays in `flights_orc`; business concepts are **derived** via rules (not new Hive columns required for v1).
+Extension of `https://w3id.org/demo/airline#` with **operational semantics** that agents use for analytics. Raw data stays in `flights`; business concepts are **derived** via rules (not new Hive columns required for v1).
 
 **Artifacts**
 
@@ -17,7 +17,7 @@ Extension of `https://w3id.org/demo/airline#` with **operational semantics** tha
 ```text
 Ontology term          Business rules YAML           Runtime SQL (per query)
 ─────────────          ───────────────────           ───────────────────────
-OnTimeFlight           flight_status_rules           CASE ON flights_orc …
+OnTimeFlight           flight_status_rules           CASE ON flights …
 MorningPeak            time_windows                  CASE ON crsdeptime …
 primaryDelayReason     delay_reason_priority         CASE ON carrierdelay …
 operatedBy             object property joins         JOIN airlines ON …
@@ -30,7 +30,7 @@ operatedBy             object property joins         JOIN airlines ON …
 3. Emits SQL with inline subqueries, `CASE`, and `JOIN`s at **query time**.
 
 ```python
-resolver.flight_runtime_from()  # → (SELECT … CASE … FROM flights_orc) f
+resolver.flight_runtime_from()  # → (SELECT … CASE … FROM flights) f
 resolver.join_sql("operatedBy") # → JOIN airlines a ON …
 ```
 

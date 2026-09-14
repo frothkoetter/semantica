@@ -81,7 +81,7 @@ User question (natural language)
     │
     ├─► semantica          → ontology / graph / reasoning / decisions
     │
-    └─► iceberg-hive       → SQL on airlinedata.flights_orc (+ dimension tables)
+    └─► iceberg-hive       → SQL on airlinedata.flights (+ dimension tables)
 ```
 
 ## 5. Path cheat sheet
@@ -103,7 +103,7 @@ Smoke test prompt:
 
 > Welche Airlines hatten 2008 die höchste durchschnittliche Ankunftsverzögerung?
 
-Expected: agent resolves `Flight.arrDelay` + `operatedBy` → SQL on `flights_orc` + `airlines`.
+Expected: agent resolves `Flight.arrDelay` + `operatedBy` → SQL on `flights` + `airlines`.
 
 ## 7. Generate config from local Cursor env (optional)
 

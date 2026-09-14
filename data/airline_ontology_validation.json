@@ -2,7 +2,7 @@
   "ok": true,
   "errors": [],
   "warnings": [
-    "Table 'flights_orc' maps to 'https://w3id.org/demo/airline#/Flight' (expected 'Flight')",
+    "Table 'flights' maps to 'https://w3id.org/demo/airline#/Flight' (expected 'Flight')",
     "Table 'airlines' maps to 'https://w3id.org/demo/airline#/Airline' (expected 'Airline')",
     "Table 'airports' maps to 'https://w3id.org/demo/airline#/Airport' (expected 'Airport')",
     "Table 'planes' maps to 'https://w3id.org/demo/airline#/Plane' (expected 'Plane')"
@@ -99,7 +99,7 @@
     },
     "errors": [],
     "warnings": [
-      "Table 'flights_orc' maps to 'https://w3id.org/demo/airline#/Flight' (expected 'Flight')",
+      "Table 'flights' maps to 'https://w3id.org/demo/airline#/Flight' (expected 'Flight')",
       "Table 'airlines' maps to 'https://w3id.org/demo/airline#/Airline' (expected 'Airline')",
       "Table 'airports' maps to 'https://w3id.org/demo/airline#/Airport' (expected 'Airport')",
       "Table 'planes' maps to 'https://w3id.org/demo/airline#/Plane' (expected 'Plane')"
