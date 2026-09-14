@@ -1,0 +1,25 @@
+{
+  "mcpServers": {
+    "semantica-airline": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "/home/cdsw/semantica",
+        "semantica-mcp"
+      ],
+      "env": {
+        "SEMANTICA_KG_PATH": "/home/cdsw/semantica/data/airline_graph.json",
+        "SEMANTICA_LOG_LEVEL": "INFO",
+        "HIVE_HOST": "hs2-cdw-aw-se-hive.dw-se-sandbox-aws.a465-9q4k.cloudera.site",
+        "HIVE_PORT": "443",
+        "HIVE_USER": "YOUR_LDAP_USER",
+        "HIVE_PASSWORD": "YOUR_LDAP_PASSWORD",
+        "HIVE_DATABASE": "airlinedata",
+        "HIVE_USE_HTTP_TRANSPORT": "true",
+        "HIVE_HTTP_PATH": "cliservice",
+        "HIVE_USE_SSL": "true",
+        "HIVE_AUTH_MECHANISM": "LDAP"
+      }
+    }
+  }
+}
