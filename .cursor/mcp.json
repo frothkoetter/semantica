@@ -4,16 +4,7 @@
       "command": "/Users/frothkoetter/se-tools/github/semantica/scripts/run-semantica-mcp.sh",
       "env": {
         "SEMANTICA_KG_PATH": "/Users/frothkoetter/se-tools/github/semantica/data/airline_graph.json",
-        "HIVE_HOST": "hs2-cdw-aw-se-hive.dw-se-sandbox-aws.a465-9q4k.cloudera.site",
-        "HIVE_PORT": "443",
-        "HIVE_USER": "frothkoetter",
-        "HIVE_PASSWORD": "SAX201linga",
-        "HIVE_DATABASE": "airlinedata",
-        "HIVE_USE_HTTP_TRANSPORT": "true",
-        "HIVE_HTTP_PATH": "cliservice",
-        "HIVE_USE_SSL": "true",
-        "HIVE_AUTH_MECHANISM": "LDAP"
-      }
+       }
     }
   }
 }

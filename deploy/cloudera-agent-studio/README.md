@@ -29,7 +29,7 @@ Ensure `uv` is available on the workbench (`uvx` command).
 
 **Recommended — GitHub `main`** (no local package install):
 
-Copy [`semantica-airline-mcp.json`](semantica-airline-mcp.json):
+Copy [`semantica-mcp.json`](semantica-mcp.json):
 
 ```json
 "args": [
@@ -41,7 +41,7 @@ Copy [`semantica-airline-mcp.json`](semantica-airline-mcp.json):
 
 **Option B — Local clone path** (offline / fork testing):
 
-Copy [`semantica-airline-mcp-local.json`](semantica-airline-mcp-local.json) and set `--from` to your clone path.
+Copy [`semantica-mcp-local.json`](semantica-mcp-local.json) and set `--from` to your clone path.
 
 ### Semantica tools exposed (14)
 
@@ -70,7 +70,7 @@ See [`multi-agent-workflow.md`](multi-agent-workflow.md).
 1. Create workflow → **Manager OFF**, **Sequential**, **Conversational ON**
 2. Add agents: `ontology_mapper` (semantica only), `sql_executor` (iceberg only)
 3. Enable tools per agent (do not attach both MCPs to one agent):
-   - **ontology_mapper / semantica-airline:** `get_graph_summary`, `export_graph`, `run_reasoning`
+   - **ontology_mapper / semantica:** `get_graph_summary`, `export_graph`, `run_reasoning`
    - **sql_executor / iceberg-hive:** `execute_query`
 4. Paste `HIVE_*` credentials only on **iceberg-hive** workflow attach step
 
@@ -79,7 +79,7 @@ See [`multi-agent-workflow.md`](multi-agent-workflow.md).
 ```text
 User question (natural language)
     │
-    ├─► semantica-airline  → ontology / graph / reasoning / decisions
+    ├─► semantica          → ontology / graph / reasoning / decisions
     │
     └─► iceberg-hive       → SQL on airlinedata.flights_orc (+ dimension tables)
 ```

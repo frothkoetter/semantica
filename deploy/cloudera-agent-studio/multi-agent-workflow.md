@@ -12,7 +12,7 @@ One MCP server per agent. Semantica has **no** `HIVE_*` credentials.
 |---|---|
 | Role | `ontology_mapper` |
 | Goal | Resolve user questions into ontology terms and a SQL mapping plan. Never execute SQL. |
-| MCP | `semantica-airline` |
+| MCP | `semantica` |
 | Tools | `get_graph_summary`, `export_graph`, `run_reasoning` |
 
 **Env:** `SEMANTICA_KG_PATH`, `SEMANTICA_MAPPING_CONFIG` only.
@@ -44,14 +44,14 @@ One MCP server per agent. Semantica has **no** `HIVE_*` credentials.
 | Field | Value |
 |---|---|
 | Role | `answer_synthesizer` |
-| MCP | `semantica-airline` |
+| MCP | `semantica` |
 | Tools | `record_decision` (optional) |
 
 **Task 3:** Answer in ontology language; cite `Flight`, `Airline`, etc.
 
 ## Tool split
 
-| Capability | semantica-airline | iceberg-hive |
+| Capability | semantica | iceberg-hive |
 |---|---|---|
 | Ontology / graph | yes | — |
 | SQL execution | — | yes |

@@ -1,10 +1,10 @@
 {
   "mcpServers": {
-    "semantica-airline": {
+    "semantica": {
       "command": "uvx",
       "args": [
         "--from",
-        "git+https://github.com/frothkoetter/semantica.git@main",
+        "/home/cdsw/semantica",
         "semantica-mcp"
       ],
       "env": {

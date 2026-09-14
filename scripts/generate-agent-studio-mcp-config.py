@@ -47,9 +47,9 @@ def main() -> int:
         hive_env["HIVE_DATABASE"] = "airlinedata"
 
     configs = {
-        "semantica-airline-mcp.json": {
+        "semantica-mcp.json": {
             "mcpServers": {
-                "semantica-airline": {
+                "semantica": {
                     "command": "uvx",
                     "args": ["--from", args.semantica_git, "semantica-mcp"],
                     "env": semantica_env,
