@@ -7,7 +7,6 @@ import pytest
 
 from semantica.context import ContextGraph
 from semantica.mcp_server.ontology_tools import (
-    handle_import_kdm_ontology,
     handle_import_ontology,
     handle_map_db_schema_to_ontology,
     materialize_ontology_to_graph,
@@ -143,15 +142,20 @@ def test_map_db_schema_with_ontology(graph, sample_ontology_path):
     assert len(tables) == 1
 
 
-def test_kdm_explicit_mapping_config(graph, sample_ontology_path):
+def test_explicit_mapping_config(graph, sample_ontology_path):
     from semantica.mcp_server.kdm_mappings import (
         apply_explicit_mappings,
+        default_mapping_config_path,
         load_mapping_config,
         resolve_column_property,
         resolve_table_class,
     )
 
-    config = load_mapping_config()
+    config_path = default_mapping_config_path()
+    if not config_path:
+        pytest.skip("kdm_db_mapping.yaml not available")
+
+    config = load_mapping_config(config_path)
     assert config.get("tables")
 
     resolved = resolve_table_class("natuerliche_person", config)
@@ -180,13 +184,13 @@ def test_kdm_explicit_mapping_config(graph, sample_ontology_path):
                 ],
                 "foreign_keys": [],
             },
-            "use_kdm_defaults": True,
+            "mapping_config_path": config_path,
             "apply_mappings": True,
         },
         lambda: graph,
     )
     assert result["status"] == "ok"
-    assert result["used_kdm_mapping_config"] is True
+    assert result["used_mapping_config"] is True
     assert result["applied"]["tables"] == 1
     assert result["applied"]["columns"] == 2
 
@@ -224,10 +228,13 @@ def test_infer_foreign_keys():
 def test_map_iceberg_schema_with_mocked_introspection(graph, sample_ontology_path):
     from unittest.mock import patch
 
-    from semantica.mcp_server.ontology_tools import (
-        handle_import_ontology,
-        handle_map_iceberg_schema_to_ontology,
-    )
+    from semantica.mcp_server.kdm_mappings import default_mapping_config_path
+    from semantica.mcp_server.hive_build import handle_map_iceberg_schema_to_ontology
+    from semantica.mcp_server.ontology_tools import handle_import_ontology
+
+    config_path = default_mapping_config_path()
+    if not config_path:
+        pytest.skip("kdm_db_mapping.yaml not available")
 
     handle_import_ontology(
         {"file_path": sample_ontology_path, "namespace_filter": "https://w3id.org/kdm/"},
@@ -257,8 +264,7 @@ def test_map_iceberg_schema_with_mocked_introspection(graph, sample_ontology_pat
         result = handle_map_iceberg_schema_to_ontology(
             {
                 "database": "kdm",
-                "import_kdm_if_missing": False,
-                "use_kdm_defaults": True,
+                "mapping_config_path": config_path,
                 "apply_mappings": True,
             },
             lambda: graph,
@@ -267,3 +273,22 @@ def test_map_iceberg_schema_with_mocked_introspection(graph, sample_ontology_pat
     assert result["status"] == "ok"
     assert result["database"] == "kdm"
     assert result["applied"]["tables"] == 1
+
+
+def test_get_graph_summary_includes_ontology_counts(sample_ontology_path):
+    import semantica.mcp_server as mcp_mod
+
+    mcp_mod._graph = None
+    graph = ContextGraph()
+    handle_import_ontology(
+        {"file_path": sample_ontology_path, "namespace_filter": "https://w3id.org/kdm/"},
+        lambda: graph,
+    )
+    mcp_mod._graph = graph
+
+    summary = mcp_mod._tool_get_graph_summary({})
+    assert summary["ontology_class_count"] == 2
+    assert summary["graph_ready"] is True
+    assert "Person" in summary["ontology_classes"] or "Natürliche Person" in summary["ontology_classes"]
+
+    mcp_mod._graph = None

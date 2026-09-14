@@ -39,10 +39,12 @@ def main() -> int:
 
     semantica_env = {
         "SEMANTICA_KG_PATH": f"{args.semantica_root}/data/airline_graph.json",
-        "SEMANTICA_LOG_LEVEL": "INFO",
-        **{k: v for k, v in env.items() if k.startswith("HIVE_")},
+        "SEMANTICA_MAPPING_CONFIG": f"{args.semantica_root}/config/airline_r2rml_db_mapping.yaml",
+        "SEMANTICA_LOG_LEVEL": "WARNING",
     }
-    hive_env = {k: v for k, v in semantica_env.items() if k.startswith("HIVE_")}
+    hive_env = {k: v for k, v in env.items() if k.startswith("HIVE_")}
+    if not hive_env.get("HIVE_DATABASE"):
+        hive_env["HIVE_DATABASE"] = "airlinedata"
 
     configs = {
         "semantica-airline-mcp.json": {

@@ -11,7 +11,7 @@ MCP stands for the Model Context Protocol. It is an open standard that allows ex
 The Semantica MCP server exposes your knowledge graph as 17 callable tools. By connecting it, any compatible AI client can traverse the graph live, record decisions, run analytics, import ontologies, and export results during a conversation — without you having to write custom tool wrappers.
 
 <Info>
-  The Semantica MCP server exposes 17 tools and 3 read-only resources. All tools accept and return JSON. No configuration beyond an optional environment variable for graph persistence is required.
+  The Semantica MCP server exposes 14 tools and 3 read-only resources. All tools accept and return JSON. Optional env vars: `SEMANTICA_KG_PATH` (persisted graph), `SEMANTICA_MAPPING_CONFIG` (ontology↔DB mapping YAML). Hive/Iceberg SQL and schema introspection use **iceberg-mcp-server-hive**, not Semantica.
 </Info>
 
 ## Architecture & Communication
@@ -132,7 +132,7 @@ docker run --rm -i \
   ghcr.io/semantica-agi/semantica-mcp:latest
 ```
 
-## What the Agent Can Do: The 17 Tools
+## What the Agent Can Do: The 14 Tools
 
 Once connected, the LLM can call any of these tools during a conversation. The agent chains them automatically — you do not orchestrate the sequence, you just describe what you want.
 
@@ -140,30 +140,30 @@ Once connected, the LLM can call any of these tools during a conversation. The a
 
 **Knowledge graph manipulation** — `add_entity` adds a node, `add_relationship` adds a directed edge. After extraction, the agent calls these to persist what it found into the live graph.
 
-**Ontology import (KDM / OWL)** — `import_kdm_ontology` loads the [XUnternehmen.Kerndatenmodell](https://w3id.org/kdm/) (KDM) ontology into the graph as `OntologyClass` and property nodes. `import_ontology` does the same for any local OWL/TTL/RDF file or download URL. `map_db_schema_to_ontology` analyzes a SQL database schema and maps tables/columns to KDM classes using explicit rules in `config/kdm_db_mapping.yaml`.
+**Ontology import (OWL)** — `import_ontology` loads any local OWL/TTL/RDF file or download URL into the graph as `OntologyClass` and property nodes. `map_db_schema_to_ontology` maps tables/columns to ontology classes using `schema_info` from **iceberg-mcp** `get_database_schema_info` (or a SQL connection string) plus mapping YAML (`mapping_config_path` or `SEMANTICA_MAPPING_CONFIG`).
 
 **Decision intelligence** — `record_decision` writes a decision as a provenance node with confidence score, reasoning, and decision maker identity. `query_decisions` retrieves past decisions by query or category. `find_precedents` finds the most similar past decisions by semantic similarity. `get_causal_chain` traces decision causality upstream or downstream.
 
 **Reasoning** — `run_reasoning` applies forward-chaining IF/THEN rules over a set of facts and returns derived conclusions.
 
-**Analytics and export** — `get_graph_analytics` computes PageRank centrality and community detection. `get_graph_summary` returns node count, decision count, and server status. `export_graph` serializes the current graph to Turtle (`"turtle"` / `"ttl"`), RDF/XML (`"xml"`), N-Triples (`"nt"`), JSON-LD (`"json-ld"`), or plain JSON (`"json"`).
+**Analytics and export** — `get_graph_analytics` computes PageRank centrality and community detection. `get_graph_summary` returns node counts, ontology class names, database table mappings, and `SEMANTICA_KG_PATH` status. `export_graph` serializes the current graph to Turtle (`"turtle"` / `"ttl"`), RDF/XML (`"xml"`), N-Triples (`"nt"`), JSON-LD (`"json-ld"`), or plain JSON (`"json"`).
 
-## KDM / XÖV Workflow
+## Ontology + Database Mapping Workflow
 
-For German public-sector data (XUnternehmen.Kerndatenmodell), chain these three tools:
+For any domain ontology, chain these tools:
 
 ```text
-1. import_kdm_ontology()
-   → loads 39 KDM classes + 76 properties from the official ontology.ttl
+1. import_ontology(file_path="/path/to/ontology.ttl")
+   → loads OntologyClass and property nodes
 
 2. map_db_schema_to_ontology(
-       connection_string="postgresql://user:pass@localhost/register",
-       use_kdm_defaults=true,
+       connection_string="postgresql://user:pass@localhost/mydb",
+       mapping_config_path="config/my_domain_mapping.yaml",
        apply_mappings=true
    )
-   → maps DB tables/columns using config/kdm_db_mapping.yaml
+   → maps DB tables/columns using explicit YAML rules
 
-3. search_graph(query="NatuerlichePerson")
+3. get_graph_summary()
    export_graph(format="turtle")
 ```
 
@@ -198,21 +198,21 @@ python examples/kdm_db_mapping.py --db postgresql://user:pass@localhost/kdm_db
 
 ### Iceberg / Hive (CDW) integration
 
-When `kdm` tables live on Cloudera Iceberg via Hive, configure `HIVE_*` on `semantica-mcp` (same as `iceberg-mcp-server-hive`) and call:
+When tables live on Cloudera Iceberg via Hive, chain **two MCP servers**:
 
 ```text
-map_iceberg_schema_to_ontology({ "database": "kdm" })
+# iceberg-mcp-server-hive (HIVE_* env here only)
+schema = get_database_schema_info({ "database": "airlinedata" })
+
+# semantica-mcp (no HIVE_* env)
+map_db_schema_to_ontology({
+  "schema_info": schema.schema_info,
+  "mapping_config_path": "config/airline_r2rml_db_mapping.yaml",
+  "apply_mappings": true
+})
 ```
 
-Or chain across MCP servers:
-
-```text
-# iceberg-mcp-server-hive
-get_database_schema_info({ "database": "kdm" })
-
-# semantica-mcp
-map_db_schema_to_ontology({ "schema_info": ..., "use_kdm_defaults": true, "apply_mappings": true })
-```
+For graph builds without MCP, use `scripts/build_airline_graph.py` (internal Hive helpers).
 
 See `deploy/iceberg/README.md` for table DDL and provisioning.
 

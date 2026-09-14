@@ -313,74 +313,6 @@ IMPORT_ONTOLOGY = {
     },
 }
 
-IMPORT_KDM_ONTOLOGY = {
-    "type": "object",
-    "properties": {
-        "file_path": {
-            "type": "string",
-            "description": "Optional local KDM file; defaults to official release URL",
-        },
-        "url": {
-            "type": "string",
-            "description": "Optional KDM download URL",
-        },
-        "format": {
-            "type": "string",
-            "enum": ["ttl", "turtle", "owl", "xml"],
-            "description": "Serialization when using default URL (default: ttl)",
-        },
-        "include_properties": {
-            "type": "boolean",
-            "description": "Import datatype/object properties (default: true)",
-        },
-    },
-}
-
-GET_HIVE_SCHEMA_INFO = {
-    "type": "object",
-    "properties": {
-        "database": {
-            "type": "string",
-            "description": "Hive database name (default: kdm)",
-        },
-        "tables": {
-            "type": "array",
-            "items": {"type": "string"},
-            "description": "Optional subset of tables",
-        },
-    },
-}
-
-MAP_ICEBERG_SCHEMA = {
-    "type": "object",
-    "properties": {
-        "database": {
-            "type": "string",
-            "description": "Hive/Iceberg database (default: kdm)",
-        },
-        "tables": {
-            "type": "array",
-            "items": {"type": "string"},
-        },
-        "import_kdm_if_missing": {
-            "type": "boolean",
-            "description": "Auto-import KDM ontology when graph is empty (default: true)",
-        },
-        "use_kdm_defaults": {
-            "type": "boolean",
-            "description": "Use kdm_db_mapping.yaml (default: true)",
-        },
-        "mapping_config_path": {
-            "type": "string",
-            "description": "Custom KDM mapping YAML",
-        },
-        "apply_mappings": {
-            "type": "boolean",
-            "description": "Write mapping edges to graph (default: true)",
-        },
-    },
-}
-
 MAP_DB_SCHEMA = {
     "type": "object",
     "properties": {
@@ -394,19 +326,18 @@ MAP_DB_SCHEMA = {
         },
         "schema_info": {
             "type": "object",
-            "description": "Pre-computed schema dict from DBIngestor.analyze_schema()",
+            "description": (
+                "Pre-computed schema from DBIngestor or iceberg-mcp "
+                "get_database_schema_info"
+            ),
         },
         "apply_mappings": {
             "type": "boolean",
             "description": "Write table/column/FK mapping edges into the graph (default: false)",
         },
-        "use_kdm_defaults": {
-            "type": "boolean",
-            "description": "Use bundled config/kdm_db_mapping.yaml (default: false)",
-        },
         "mapping_config_path": {
             "type": "string",
-            "description": "Path to custom KDM mapping YAML",
+            "description": "Path to ontology↔DB mapping YAML (or SEMANTICA_MAPPING_CONFIG env)",
         },
     },
 }

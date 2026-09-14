@@ -73,10 +73,8 @@ def main() -> int:
     load_mcp_env()
 
     from semantica.context import ContextGraph
-    from semantica.mcp_server.ontology_tools import (
-        handle_import_ontology,
-        handle_map_iceberg_schema_to_ontology,
-    )
+    from semantica.mcp_server.hive_build import handle_map_iceberg_schema_to_ontology
+    from semantica.mcp_server.ontology_tools import handle_import_ontology
 
     graph = ContextGraph(advanced_analytics=True)
 
@@ -107,8 +105,6 @@ def main() -> int:
         map_result = handle_map_iceberg_schema_to_ontology(
             {
                 "database": args.database,
-                "import_kdm_if_missing": False,
-                "use_kdm_defaults": False,
                 "mapping_config_path": args.mapping,
                 "apply_mappings": True,
             },

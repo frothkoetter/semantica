@@ -16,14 +16,6 @@ from urllib.parse import urlparse
 
 log = logging.getLogger("semantica.mcp.ontology")
 
-KDM_ONTOLOGY_TTL_URL = (
-    "https://kerndatenmodell-ontologie-owl-acb24d.usercontent.opencode.de/ontology.ttl"
-)
-KDM_ONTOLOGY_OWL_URL = (
-    "https://kerndatenmodell-ontologie-owl-acb24d.usercontent.opencode.de/ontology.owl"
-)
-KDM_ONTOLOGY_URI = "https://w3id.org/kdm/"
-
 _UMLAUT_MAP = str.maketrans({"ä": "ae", "ö": "oe", "ü": "ue", "ß": "ss"})
 
 
@@ -243,7 +235,7 @@ def suggest_db_schema_mappings(
     schema_info: Dict[str, Any],
     ontology_classes: List[Dict[str, Any]],
 ) -> Dict[str, Any]:
-    """Heuristic table/column → KDM class/property mapping suggestions."""
+    """Heuristic table/column → ontology class/property mapping suggestions."""
     table_mappings: List[Dict[str, Any]] = []
     column_mappings: List[Dict[str, Any]] = []
     fk_mappings: List[Dict[str, Any]] = []
@@ -369,35 +361,11 @@ def handle_import_ontology(args: dict, get_graph) -> dict:
                 log.debug("Could not remove temp ontology file %s", temp_path)
 
 
-def handle_import_kdm_ontology(args: dict, get_graph) -> dict:
-    """Import the XUnternehmen Kerndatenmodell (KDM) ontology into the graph."""
-    file_path = (args.get("file_path") or "").strip() or None
-    url = (args.get("url") or "").strip() or None
-    format_hint = (args.get("format") or "ttl").lower().strip()
-
-    if not file_path and not url:
-        url = KDM_ONTOLOGY_TTL_URL if format_hint in ("ttl", "turtle") else KDM_ONTOLOGY_OWL_URL
-
-    result = handle_import_ontology(
-        {
-            "file_path": file_path,
-            "url": url,
-            "include_properties": args.get("include_properties", True),
-            "namespace_filter": args.get("namespace_filter") or KDM_ONTOLOGY_URI,
-        },
-        get_graph,
-    )
-    if "error" not in result:
-        result["ontology"] = "XUnternehmen.Kerndatenmodell"
-        result["namespace"] = KDM_ONTOLOGY_URI
-    return result
-
-
 def _merge_mapping_suggestions(
     explicit: Dict[str, Any],
     heuristic: Dict[str, Any],
 ) -> Dict[str, Any]:
-    """Prefer explicit KDM mappings; fill gaps with heuristic suggestions."""
+    """Prefer explicit mapping-config entries; fill gaps with heuristic suggestions."""
     explicit_tables = {m["table"]: m for m in explicit.get("table_mappings", [])}
     merged_tables: List[Dict[str, Any]] = []
 
@@ -524,110 +492,15 @@ def _apply_mappings_to_graph(graph: Any, suggestions: Dict[str, Any]) -> Dict[st
     return stats
 
 
-def handle_get_hive_schema_info(args: dict) -> dict:
-    """
-    Introspect a Hive/Iceberg database (SHOW TABLES + DESCRIBE) and return
-    schema_info for map_db_schema_to_ontology.
-    """
-    database = (args.get("database") or "kdm").strip()
-    tables = args.get("tables")
-    if tables is not None and not isinstance(tables, list):
-        return {"error": "tables must be a list of table names"}
-
-    try:
-        from semantica.mcp_server.hive_schema import introspect_hive_database
-
-        schema_info = introspect_hive_database(database, tables=tables)
-        return {
-            "status": "ok",
-            "database": database,
-            "schema_info": schema_info,
-            "summary": schema_info.get("analysis", {}),
-        }
-    except ImportError as exc:
-        return {
-            "error": (
-                "Hive introspection requires impyla. Install: pip install impyla "
-                "and set HIVE_HOST, HIVE_USER, HIVE_PASSWORD (same as iceberg-mcp-server-hive)."
-            ),
-            "detail": str(exc),
-        }
-    except Exception as exc:
-        log.exception("get_hive_schema_info failed")
-        return {"error": str(exc)}
-
-
-def handle_map_iceberg_schema_to_ontology(args: dict, get_graph) -> dict:
-    """
-    One-shot: introspect Hive/Iceberg DB → optional KDM import → map to ontology.
-    """
-    database = (args.get("database") or "kdm").strip()
-    tables = args.get("tables")
-    import_kdm_if_missing = bool(args.get("import_kdm_if_missing", True))
-    ontology_file_path = (args.get("ontology_file_path") or "").strip() or None
-
-    try:
-        from semantica.mcp_server.hive_schema import introspect_hive_database
-
-        schema_info = introspect_hive_database(database, tables=tables)
-
-        graph = get_graph()
-        if not _collect_ontology_classes_from_graph(graph):
-            if ontology_file_path:
-                import_result = handle_import_ontology(
-                    {"file_path": ontology_file_path}, get_graph
-                )
-                if "error" in import_result:
-                    return {
-                        "error": "Ontology import failed before mapping",
-                        "import_error": import_result["error"],
-                        "schema_info": schema_info,
-                    }
-            elif import_kdm_if_missing:
-                import_result = handle_import_kdm_ontology({}, get_graph)
-                if "error" in import_result:
-                    return {
-                        "error": "KDM ontology import failed before mapping",
-                        "import_error": import_result["error"],
-                        "schema_info": schema_info,
-                    }
-
-        map_result = handle_map_db_schema_to_ontology(
-            {
-                "schema_info": schema_info,
-                "use_kdm_defaults": args.get("use_kdm_defaults", True),
-                "mapping_config_path": args.get("mapping_config_path"),
-                "apply_mappings": args.get("apply_mappings", True),
-            },
-            get_graph,
-        )
-        map_result["database"] = database
-        map_result["schema_info_summary"] = schema_info.get("analysis", {})
-        return map_result
-    except ImportError as exc:
-        return {
-            "error": (
-                "Hive introspection requires impyla and HIVE_* env vars. "
-                "Alternatively call iceberg-mcp get_database_schema_info, "
-                "then map_db_schema_to_ontology with schema_info."
-            ),
-            "detail": str(exc),
-        }
-    except Exception as exc:
-        log.exception("map_iceberg_schema_to_ontology failed")
-        return {"error": str(exc)}
-
-
 def handle_map_db_schema_to_ontology(args: dict, get_graph) -> dict:
     """
     Analyze a SQL database schema and suggest mappings to ontology classes
-    already present in the graph (e.g. after import_kdm_ontology).
+    already present in the graph (e.g. after import_ontology).
     """
     connection_string = (args.get("connection_string") or "").strip() or None
     schema = (args.get("schema") or "").strip() or None
     schema_info = args.get("schema_info")
     apply_mappings = bool(args.get("apply_mappings", False))
-    use_kdm_defaults = bool(args.get("use_kdm_defaults", False))
     mapping_config_path = (args.get("mapping_config_path") or "").strip() or None
 
     try:
@@ -646,24 +519,27 @@ def handle_map_db_schema_to_ontology(args: dict, get_graph) -> dict:
             return {
                 "error": (
                     "No OntologyClass nodes in graph. "
-                    "Call import_kdm_ontology or import_ontology first."
+                    "Call import_ontology first or load a graph via SEMANTICA_KG_PATH."
                 ),
             }
 
         heuristic = suggest_db_schema_mappings(schema_info, ontology_classes)
 
-        explicit: Optional[Dict[str, Any]] = None
-        if use_kdm_defaults or mapping_config_path:
-            from semantica.mcp_server.kdm_mappings import (
-                apply_explicit_mappings,
-                load_mapping_config,
-            )
+        from semantica.mcp_server.schema_mappings import (
+            apply_explicit_mappings,
+            load_mapping_config,
+            resolve_mapping_config_path,
+        )
 
-            mapping_config = load_mapping_config(mapping_config_path or None)
+        config_path = resolve_mapping_config_path(mapping_config_path)
+        if config_path:
+            mapping_config = load_mapping_config(config_path)
             explicit = apply_explicit_mappings(schema_info, mapping_config)
             suggestions = _merge_mapping_suggestions(explicit, heuristic)
+            used_mapping_config = True
         else:
             suggestions = heuristic
+            used_mapping_config = False
 
         applied_stats = {"tables": 0, "columns": 0, "foreign_keys": 0}
         if apply_mappings:
@@ -674,7 +550,8 @@ def handle_map_db_schema_to_ontology(args: dict, get_graph) -> dict:
             "suggestions": suggestions,
             "applied": applied_stats,
             "ontology_classes_available": len(ontology_classes),
-            "used_kdm_mapping_config": bool(use_kdm_defaults or mapping_config_path),
+            "used_mapping_config": used_mapping_config,
+            "mapping_config_path": config_path,
         }
     except Exception as exc:
         log.exception("map_db_schema_to_ontology failed")
@@ -703,29 +580,6 @@ IMPORT_ONTOLOGY_SCHEMA = {
     },
 }
 
-IMPORT_KDM_ONTOLOGY_SCHEMA = {
-    "type": "object",
-    "properties": {
-        "file_path": {
-            "type": "string",
-            "description": "Optional local KDM file; defaults to official release URL",
-        },
-        "url": {
-            "type": "string",
-            "description": "Optional KDM download URL (overrides default)",
-        },
-        "format": {
-            "type": "string",
-            "enum": ["ttl", "turtle", "owl", "xml"],
-            "description": "Serialization when using default URL (default: ttl)",
-        },
-        "include_properties": {
-            "type": "boolean",
-            "description": "Import datatype/object properties (default: true)",
-        },
-    },
-}
-
 MAP_DB_SCHEMA_SCHEMA = {
     "type": "object",
     "properties": {
@@ -739,72 +593,21 @@ MAP_DB_SCHEMA_SCHEMA = {
         },
         "schema_info": {
             "type": "object",
-            "description": "Pre-computed schema dict from DBIngestor.analyze_schema()",
+            "description": (
+                "Pre-computed schema (DBIngestor.analyze_schema or "
+                "iceberg-mcp-server-hive get_database_schema_info)"
+            ),
         },
         "apply_mappings": {
             "type": "boolean",
             "description": "Write table/column/FK mapping edges into the graph (default: false)",
         },
-        "use_kdm_defaults": {
-            "type": "boolean",
+        "mapping_config_path": {
+            "type": "string",
             "description": (
-                "Use bundled config/kdm_db_mapping.yaml for explicit KDM table/column "
-                "mappings (default: false)"
+                "Path to ontology↔DB mapping YAML. "
+                "Falls back to SEMANTICA_MAPPING_CONFIG env when omitted."
             ),
-        },
-        "mapping_config_path": {
-            "type": "string",
-            "description": "Path to custom KDM mapping YAML (overrides bundled defaults)",
-        },
-    },
-}
-
-GET_HIVE_SCHEMA_INFO_SCHEMA = {
-    "type": "object",
-    "properties": {
-        "database": {
-            "type": "string",
-            "description": "Hive database name (default: kdm)",
-        },
-        "tables": {
-            "type": "array",
-            "items": {"type": "string"},
-            "description": "Optional subset of tables; default: all tables in database",
-        },
-    },
-}
-
-MAP_ICEBERG_SCHEMA_SCHEMA = {
-    "type": "object",
-    "properties": {
-        "database": {
-            "type": "string",
-            "description": "Hive/Iceberg database (default: kdm)",
-        },
-        "tables": {
-            "type": "array",
-            "items": {"type": "string"},
-            "description": "Optional table subset to introspect",
-        },
-        "import_kdm_if_missing": {
-            "type": "boolean",
-            "description": "Auto-import KDM ontology when graph has no classes (default: true)",
-        },
-        "ontology_file_path": {
-            "type": "string",
-            "description": "Import this OWL/TTL file instead of KDM when graph is empty (e.g. airline_ontology.owl.xml)",
-        },
-        "use_kdm_defaults": {
-            "type": "boolean",
-            "description": "Use kdm_db_mapping.yaml (default: true). Set false for airline or custom mapping.",
-        },
-        "mapping_config_path": {
-            "type": "string",
-            "description": "Custom mapping YAML (e.g. config/airline_db_mapping.yaml)",
-        },
-        "apply_mappings": {
-            "type": "boolean",
-            "description": "Write mapping edges to graph (default: true)",
         },
     },
 }
@@ -819,38 +622,12 @@ ONTOLOGY_TOOL_DEFINITIONS = [
         "inputSchema": IMPORT_ONTOLOGY_SCHEMA,
     },
     {
-        "name": "import_kdm_ontology",
-        "description": (
-            "Import the XUnternehmen.Kerndatenmodell (KDM) ontology "
-            "(https://w3id.org/kdm/) into the graph. Downloads the official TTL/OWL "
-            "release if no file_path is given."
-        ),
-        "inputSchema": IMPORT_KDM_ONTOLOGY_SCHEMA,
-    },
-    {
         "name": "map_db_schema_to_ontology",
         "description": (
             "Analyze a SQL database schema and suggest mappings from tables/columns "
-            "to OntologyClass nodes already in the graph (e.g. after import_kdm_ontology). "
-            "Optionally apply table→class mapping edges."
+            "to OntologyClass nodes already in the graph. "
+            "Optionally apply table→class mapping edges using a mapping YAML config."
         ),
         "inputSchema": MAP_DB_SCHEMA_SCHEMA,
-    },
-    {
-        "name": "get_hive_schema_info",
-        "description": (
-            "Introspect a Hive/Iceberg database via SHOW TABLES + DESCRIBE and return "
-            "schema_info for map_db_schema_to_ontology. Requires HIVE_* env vars and impyla."
-        ),
-        "inputSchema": GET_HIVE_SCHEMA_INFO_SCHEMA,
-    },
-    {
-        "name": "map_iceberg_schema_to_ontology",
-        "description": (
-            "One-shot pipeline: introspect Hive/Iceberg schema (default database kdm), "
-            "import KDM ontology if needed, map tables/columns to KDM classes using "
-            "kdm_db_mapping.yaml, and optionally apply edges to the ContextGraph."
-        ),
-        "inputSchema": MAP_ICEBERG_SCHEMA_SCHEMA,
     },
 ]

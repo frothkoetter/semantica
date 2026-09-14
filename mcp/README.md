@@ -60,13 +60,14 @@ python -m mcp [--debug]
 | `get_graph_summary` | Node/edge counts, decision count, type breakdown |
 | `get_graph_analytics` | PageRank, betweenness, degree centrality, community detection |
 
-### Ontology (KDM / OWL)
+### Ontology / Schema mapping
 
 | Tool | Description |
 |---|---|
 | `import_ontology` | Import OWL/TTL/RDF from local file or URL into the graph |
-| `import_kdm_ontology` | Import XUnternehmen.Kerndatenmodell (https://w3id.org/kdm/) |
-| `map_db_schema_to_ontology` | Map SQL tables/columns to ontology classes via `config/kdm_db_mapping.yaml` |
+| `map_db_schema_to_ontology` | Map tables/columns via `schema_info` + mapping YAML |
+
+Hive/Iceberg: use **iceberg-mcp-server-hive** (`execute_query`, `get_database_schema_info`).
 
 ### Reasoning
 

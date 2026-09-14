@@ -43,13 +43,17 @@ Copy [`semantica-airline-mcp.json`](semantica-airline-mcp.json):
 
 Copy [`semantica-airline-mcp-local.json`](semantica-airline-mcp-local.json) and set `--from` to your clone path.
 
-### Semantica tools exposed (17)
+### Semantica tools exposed (14)
 
-Ontology: `import_ontology`, `map_iceberg_schema_to_ontology`, `get_graph_summary`, `export_graph`  
+Ontology: `import_ontology`, `get_graph_summary`, `export_graph`, `map_db_schema_to_ontology`  
 Analytics: `run_reasoning`, `record_decision`, `query_decisions`, `find_precedents`  
 Graph: `add_entity`, `add_relationship`, `extract_entities`, `extract_relations`, …
 
-With `HIVE_*` env vars, `map_iceberg_schema_to_ontology` can introspect `airlinedata` directly.
+**No Hive/SQL on Semantica** — use `iceberg-hive` MCP for `execute_query` and schema introspection.
+
+Set `SEMANTICA_KG_PATH` to the pre-built `airline_graph.json` and
+`SEMANTICA_MAPPING_CONFIG` to `config/airline_r2rml_db_mapping.yaml`.
+Do **not** set `HIVE_*` on the Semantica MCP server.
 
 ## 2. Register Iceberg Hive MCP (SQL execution)
 
@@ -59,14 +63,16 @@ Set `--from` to your `iceberg-mcp-server-hive` clone. Entry point: `run-server`.
 
 Key tools: `execute_query`, `get_schema`, `list_databases`, Iceberg branch tools.
 
-## 3. Workflow setup
+## 3. Workflow setup (multi-agent)
 
-1. Create workflow → add agent (see [`agent-airline-analyst.md`](agent-airline-analyst.md) for prompt).
-2. Attach **both** MCP servers to the agent.
-3. Enable tools:
-   - **semantica-airline:** `get_graph_summary`, `import_ontology`, `map_iceberg_schema_to_ontology`, `run_reasoning`, `record_decision`, `export_graph`
-   - **iceberg-hive:** `execute_query`, `get_schema`, `list_databases`
-4. When prompted, paste real values from [`workflow-env.template`](workflow-env.template).
+See [`multi-agent-workflow.md`](multi-agent-workflow.md).
+
+1. Create workflow → **Manager OFF**, **Sequential**, **Conversational ON**
+2. Add agents: `ontology_mapper` (semantica only), `sql_executor` (iceberg only)
+3. Enable tools per agent (do not attach both MCPs to one agent):
+   - **ontology_mapper / semantica-airline:** `get_graph_summary`, `export_graph`, `run_reasoning`
+   - **sql_executor / iceberg-hive:** `execute_query`
+4. Paste `HIVE_*` credentials only on **iceberg-hive** workflow attach step
 
 ## 4. Suggested agent architecture
 

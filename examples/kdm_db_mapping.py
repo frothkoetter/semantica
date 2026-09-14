@@ -25,10 +25,14 @@ from semantica.mcp_server.kdm_mappings import (
     default_mapping_config_path,
     load_mapping_config,
 )
+from pathlib import Path
+
 from semantica.mcp_server.ontology_tools import (
-    handle_import_kdm_ontology,
+    handle_import_ontology,
     handle_map_db_schema_to_ontology,
 )
+
+KDM_NAMESPACE = "https://w3id.org/kdm/"
 
 
 def _demo_schema() -> dict:
@@ -104,8 +108,15 @@ def main() -> int:
     graph = ContextGraph(advanced_analytics=True)
     get_graph = lambda: graph
 
-    print("1. Importing KDM ontology...")
-    import_result = handle_import_kdm_ontology({}, get_graph)
+    kdm_path = Path(__file__).resolve().parents[1] / "data" / "kdm_ontology.ttl"
+    print("1. Importing KDM ontology from", kdm_path)
+    import_result = handle_import_ontology(
+        {
+            "file_path": str(kdm_path),
+            "namespace_filter": KDM_NAMESPACE,
+        },
+        get_graph,
+    )
     if "error" in import_result:
         print("Import failed:", import_result["error"], file=sys.stderr)
         return 1
@@ -116,7 +127,6 @@ def main() -> int:
     print(f"   Tables defined: {len(config.get('tables', {}))}")
 
     map_args = {
-        "use_kdm_defaults": args.mapping_config is None,
         "mapping_config_path": args.mapping_config,
         "apply_mappings": True,
     }
