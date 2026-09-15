@@ -146,11 +146,16 @@ The MCP server is included in the base install: no extras required.
 
 | Variable | Default | Description |
 | :-------- | :------- | :----------- |
-| `SEMANTICA_KG_PATH` | *(none: in-memory graph)* | Path to a persisted graph file to load on startup |
+| `SEMANTICA_KG_PATH` | *(none: in-memory graph)* | Absolute path to a persisted graph JSON file. Loaded on first graph access; skipped silently if the file does not exist |
+| `SEMANTICA_MAPPING_CONFIG` | *(none)* | Absolute path to ontology↔database mapping YAML. Used by `map_db_schema_to_ontology` when `mapping_config_path` is omitted; skipped silently if the file does not exist |
 | `SEMANTICA_LOG_LEVEL` | `WARNING` | Log verbosity: `DEBUG`, `INFO`, `WARNING` |
 
 <Warning>
   **The graph starts empty unless you set `SEMANTICA_KG_PATH`.** The MCP server creates a fresh in-memory `ContextGraph` on first use. Set `SEMANTICA_KG_PATH` to a previously saved graph file to restore state across server restarts. Without it, all data is lost when the process exits.
+</Warning>
+
+<Warning>
+  **Use absolute paths for all file env vars.** Relative paths in MCP client config (e.g. `config/airline_r2rml_db_mapping.yaml`) resolve against the server's unpredictable working directory and are treated as missing. A missing mapping file does not raise an error — `map_db_schema_to_ontology` falls back to heuristic name matching with `"used_mapping_config": false`.
 </Warning>
 
 <Tip>
@@ -444,6 +449,42 @@ The MCP server exposes three readable resources:
 | `semantica://graph/summary` | High-level graph statistics |
 | `semantica://decisions/list` | All recorded decisions (up to 50) |
 | `semantica://schema/info` | Server version and available tools |
+
+## Ontology and Mapping Load Failures
+
+Neither ontology nor mapping files are validated when the MCP server starts. Failures appear at tool-call time or as silent fallbacks.
+
+### `SEMANTICA_KG_PATH`
+
+| Outcome | Behavior |
+| :------ | :------- |
+| Not set | In-memory graph; data lost on exit |
+| Path set, file missing | No error; graph stays empty (`kg_path_exists: false` in `get_graph_summary`) |
+| File exists, load fails | `WARNING` on stderr; graph stays empty |
+| File exists, load succeeds | Graph restored including any `OntologyClass` nodes from a prior build |
+
+### `import_ontology`
+
+Returns `{"error": "…"}` on failure (does not throw to the client):
+
+- `Either file_path or url is required` — no source given
+- `Ontology file not found: …` — local path does not exist on the server host
+- Parse / network errors — message from the underlying exception
+
+Success: `{"status": "imported", "stats": {"class_nodes": N, …}}`.
+
+### `SEMANTICA_MAPPING_CONFIG` / `mapping_config_path`
+
+Read by `map_db_schema_to_ontology` only. Resolution: tool argument → env var → none.
+
+| Outcome | Behavior |
+| :------ | :------- |
+| Path not found | **No error** — `"used_mapping_config": false`, heuristic suggestions only |
+| Valid YAML | `"used_mapping_config": true`, explicit table/column rules applied |
+| Invalid YAML | `{"error": "…"}` |
+| No `OntologyClass` in graph | `{"error": "No OntologyClass nodes in graph. Call import_ontology first or load a graph via SEMANTICA_KG_PATH."}` |
+
+Always confirm `"used_mapping_config": true` after mapping. See the [MCP Server guide](../guides/mcp-server#ontology-and-mapping-files-fail-to-load) for full diagnostic steps and Agent Studio path notes.
 
 - [Context](context) — The ContextGraph that the MCP server operates on.
 - [Semantic Extract](semantic_extract) — NER and relation extraction powering the MCP tools.

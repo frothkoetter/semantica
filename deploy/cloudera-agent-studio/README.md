@@ -51,9 +51,14 @@ Graph: `add_entity`, `add_relationship`, `extract_entities`, `extract_relations`
 
 **No Hive/SQL on Semantica** — use `iceberg-hive` MCP for `execute_query` and schema introspection.
 
-Set `SEMANTICA_KG_PATH` to the pre-built `airline_graph.json` and
-`SEMANTICA_MAPPING_CONFIG` to `config/airline_r2rml_db_mapping.yaml`.
+Set `SEMANTICA_KG_PATH` and `SEMANTICA_MAPPING_CONFIG` to **absolute** workbench paths
+(see §5 below — not relative paths like `config/...`).
 Do **not** set `HIVE_*` on the Semantica MCP server.
+
+If ontology or mapping files fail to load, see
+[MCP Server guide — Ontology and mapping files fail to load](../../docs/guides/mcp-server.md#ontology-and-mapping-files-fail-to-load).
+Common causes: laptop paths in Agent Studio JSON, missing `airline_graph.json` build,
+or `map_db_schema_to_ontology` returning `"used_mapping_config": false` (YAML path not found).
 
 ## 2. Register Iceberg Hive MCP (SQL execution)
 

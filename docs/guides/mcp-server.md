@@ -404,6 +404,181 @@ The result is a fully auditable credit decision trail with precedent links, read
 
 **Permission errors on `SEMANTICA_KG_PATH`** — the server process needs read/write access to the file and its parent directory. If running inside Docker, verify the volume mount and file ownership.
 
+### Ontology and mapping files fail to load
+
+The MCP server reads configuration from environment variables in your client JSON (`claude_desktop_config.json`, `.cursor/mcp.json`, Agent Studio registration, etc.). Ontology and mapping files are **not validated at server startup** — problems surface only when you call `import_ontology`, `map_db_schema_to_ontology`, or when the graph is first accessed.
+
+<Warning>
+  **Always use absolute paths** for `SEMANTICA_KG_PATH`, `SEMANTICA_MAPPING_CONFIG`, and tool arguments like `file_path` / `mapping_config_path`. MCP clients spawn the server with an unpredictable working directory, so relative paths such as `config/airline_r2rml_db_mapping.yaml` often resolve to the wrong location or not at all.
+</Warning>
+
+#### Quick diagnostic
+
+Call `get_graph_summary` first. It reports whether the configured graph file exists and whether ontology classes are present:
+
+```json
+{
+  "node_count": 0,
+  "ontology_class_count": 0,
+  "kg_path": "/home/cdsw/semantica/data/airline_graph.json",
+  "kg_path_exists": false,
+  "graph_ready": false
+}
+```
+
+| Field | What it tells you |
+| :---- | :---------------- |
+| `kg_path_exists: false` | `SEMANTICA_KG_PATH` points to a missing file — server starts with an empty in-memory graph |
+| `ontology_class_count: 0` | No ontology loaded yet; `map_db_schema_to_ontology` will fail until you import one or fix `SEMANTICA_KG_PATH` |
+| `graph_ready: false` | Graph has no nodes — either the KG file did not load or you have not imported data yet |
+
+Set `SEMANTICA_LOG_LEVEL=INFO` (or `DEBUG`) and restart the client to see load warnings on stderr.
+
+#### `SEMANTICA_KG_PATH` — persisted graph (includes pre-imported ontology)
+
+Loaded once when the graph is first accessed. Behavior:
+
+| Condition | Server behavior | What you see |
+| :-------- | :-------------- | :----------- |
+| Env var not set | Fresh in-memory graph | `kg_path: null`, `kg_path_exists: false` |
+| Path set but file missing | Skips load silently | `kg_path_exists: false`, empty graph, no tool error |
+| File exists but corrupt / unreadable | Warning on stderr, empty graph | `Could not load graph from …` in logs; graph appears empty |
+| File exists and valid | Graph restored | `ontology_class_count > 0` if the file contains imported ontology |
+
+**Fix:** Use an absolute path. Confirm the file exists on the machine where the MCP server runs (not just your laptop, if using Agent Studio or a remote workbench). Rebuild with `scripts/build_airline_graph.py` if needed.
+
+```json
+{
+  "env": {
+    "SEMANTICA_KG_PATH": "/home/cdsw/semantica/data/airline_graph.json",
+    "SEMANTICA_LOG_LEVEL": "INFO"
+  }
+}
+```
+
+#### `import_ontology` — loading OWL/TTL/RDF at runtime
+
+Unlike `SEMANTICA_KG_PATH`, this tool fails explicitly and returns an `error` field:
+
+| Condition | Tool response |
+| :-------- | :------------ |
+| Neither `file_path` nor `url` provided | `{"error": "Either file_path or url is required"}` |
+| Local file does not exist | `{"error": "Ontology file not found: /absolute/path/to/ontology.ttl"}` |
+| URL unreachable or invalid scheme | `{"error": "<download or network error>"}` |
+| File unreadable or not valid RDF/OWL | `{"error": "<parse error from OntologyIngestor>"}` |
+| `namespace_filter` too narrow | `{"status": "imported", …}` but `stats.skipped` is high and `class_nodes` may be `0` |
+
+On success:
+
+```json
+{
+  "status": "imported",
+  "ontology_uri": "https://w3id.org/demo/airline#",
+  "stats": { "class_nodes": 12, "property_nodes": 48, "skipped": 0 }
+}
+```
+
+**Fix:** Verify the path with `ls` on the host running `semantica-mcp`. For remote ontologies, test the URL in a browser or with `curl` first. Remove or widen `namespace_filter` if classes are skipped.
+
+#### `SEMANTICA_MAPPING_CONFIG` — ontology↔database mapping YAML
+
+The mapping file is read **only when** `map_db_schema_to_ontology` is called. It is **not** loaded at server startup.
+
+Resolution order:
+
+1. `mapping_config_path` tool argument (if the file exists)
+2. `SEMANTICA_MAPPING_CONFIG` environment variable (if the file exists)
+3. If neither resolves to an existing file → **heuristic name-matching only** (no error)
+
+<Warning>
+  A missing or wrong mapping path does **not** return an error. The tool succeeds with `"used_mapping_config": false` and falls back to fuzzy table/column name matching. Explicit YAML rules are silently ignored — this is the most common misconfiguration.
+</Warning>
+
+| Condition | Tool response |
+| :-------- | :------------ |
+| Path missing / wrong / relative | `"used_mapping_config": false`, `"mapping_config_path": null` — heuristic suggestions only |
+| File exists, valid YAML | `"used_mapping_config": true`, `"mapping_config_path": "/absolute/path/…"` |
+| File exists but invalid YAML | `{"error": "<yaml parse error>"}` |
+| File exists but `ontology_namespace` empty | Tables/columns stay `"status": "unmapped"` even with `tables:` entries |
+| Ontology not in graph | `{"error": "No OntologyClass nodes in graph. Call import_ontology first or load a graph via SEMANTICA_KG_PATH."}` |
+
+Successful mapping with explicit config:
+
+```json
+{
+  "status": "ok",
+  "used_mapping_config": true,
+  "mapping_config_path": "/home/cdsw/semantica/config/airline_r2rml_db_mapping.yaml",
+  "suggestions": {
+    "summary": { "tables": 4, "tables_mapped": 4, "columns_mapped": 18 }
+  },
+  "applied": { "tables": 4, "columns": 18, "foreign_keys": 3 }
+}
+```
+
+Silent fallback (mapping file not found):
+
+```json
+{
+  "status": "ok",
+  "used_mapping_config": false,
+  "mapping_config_path": null,
+  "suggestions": {
+    "summary": { "tables": 4, "tables_mapped": 1 }
+  }
+}
+```
+
+**Fix checklist:**
+
+1. Set `SEMANTICA_MAPPING_CONFIG` to the **absolute** path of your YAML (e.g. `/home/cdsw/semantica/config/airline_r2rml_db_mapping.yaml`).
+2. Confirm `ontology_namespace` in the YAML matches the imported ontology URI prefix.
+3. Table/column keys in YAML are normalized (lowercase, no underscores; umlauts → `ae`/`oe`/`ue`) — `arr_delay` and `arrdelay` both map to token `arrdelay`.
+4. Call `import_ontology` (or load a pre-built graph via `SEMANTICA_KG_PATH`) **before** `map_db_schema_to_ontology`.
+5. After mapping, check `"used_mapping_config": true` in the response — if `false`, the YAML was not found.
+
+```json
+{
+  "env": {
+    "SEMANTICA_KG_PATH": "/home/cdsw/semantica/data/airline_graph.json",
+    "SEMANTICA_MAPPING_CONFIG": "/home/cdsw/semantica/config/airline_r2rml_db_mapping.yaml"
+  }
+}
+```
+
+#### Agent Studio / CDSW path mismatch
+
+On Cloudera workbenches the repo is typically at `/home/cdsw/semantica`. Paths copied from a local laptop (e.g. `/Users/you/semantica/...`) will not exist on the workbench. Use the path cheat sheet in `deploy/cloudera-agent-studio/README.md` or generate config with:
+
+```bash
+python scripts/generate-agent-studio-mcp-config.py \
+  --semantica-root /home/cdsw/semantica \
+  --iceberg-root /home/cdsw/iceberg-mcp-server-hive
+```
+
+#### End-to-end recovery workflow
+
+When ontology or mapping setup is broken, run this sequence:
+
+```text
+1. get_graph_summary()
+   → check kg_path_exists and ontology_class_count
+
+2. If ontology_class_count == 0:
+     import_ontology(file_path="/absolute/path/to/ontology.ttl")
+   → must return status "imported", not "error"
+
+3. map_db_schema_to_ontology(
+     schema_info=<from iceberg-mcp get_database_schema_info>,
+     mapping_config_path="/absolute/path/to/mapping.yaml",
+     apply_mappings=true
+   )
+   → confirm used_mapping_config == true
+
+4. get_graph_summary()
+   → ontology_class_count > 0, database_table_count > 0
+```
+
 ## Related Guides
 
 - [Reasoning & Rules](reasoning) — the engine behind the `run_reasoning` tool
