@@ -116,7 +116,7 @@ Threshold: **15 minutes** (`config/airline_business_rules.yaml` → `on_time_max
 | `ModerateDelay` | 31–60 |
 | `SevereDelay` | > 60 |
 
-### DOT delay attribution (already in `flights_orc`)
+### DOT delay attribution (already in `flights`)
 
 | Ontology class | Column | Meaning |
 |---|---|---|
@@ -165,7 +165,7 @@ flowchart TB
     flight_status_rules
   end
   subgraph physical [Hive airlinedata]
-    flights_orc
+    flights
     airlines
     airports
     planes

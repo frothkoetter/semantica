@@ -120,7 +120,7 @@ def run_reasoning(facts: List[str], rules: List[Dict[str, Any]]) -> Dict[str, An
 
 def build_narrative(derived: List[str]) -> str:
     lines = [
-        "1. Ontologie-Auflösung: Flight → assignedAircraft → Plane.manufacturer auf flights_orc + planes.",
+        "1. Ontologie-Auflösung: Flight → assignedAircraft → Plane.manufacturer auf flights + planes.",
         "2. Aggregation 2000–2008: Boeing führt mit 14,5 Mio. Segmenten (segmentRank=1 → marketLeader).",
         "3. OTP-Klassifikation: FAA 15-min-Regel (OnTimeFlight) pro Jahr und Hersteller.",
         "4. Trend 2003→2007: otpTrend(declining) bei allen Top-5 → punctualityRisk(elevated).",
@@ -155,7 +155,7 @@ def record_analysis_decision(
             "analysis_period": "2000-2008",
             "derived_facts": derived,
             "otp_definition": "FAA 15-min OnTimeFlight",
-            "data_sources": ["airlinedata.flights_orc", "airlinedata.planes"],
+            "data_sources": ["airlinedata.flights", "airlinedata.planes"],
         },
     )
 

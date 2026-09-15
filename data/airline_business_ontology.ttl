@@ -193,7 +193,7 @@
     rdfs:domain :DelayBreakdown ;
     rdfs:range xsd:integer .
 
-# Datatype properties already mapped from flights_orc (add to demo ontology import)
+# Datatype properties already mapped from flights (add to demo ontology import)
 :carrierDelay a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:integer .
 :weatherDelay a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:integer .
 :nasDelay a owl:DatatypeProperty ; rdfs:domain :Flight ; rdfs:range xsd:integer .

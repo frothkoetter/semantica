@@ -1,5 +1,5 @@
 # Derived from data/airline_mapping.ttl (R2RML → Semantica YAML bridge)
-# Keys are normalized: lowercase, no underscores/hyphens (see kdm_db_mapping.yaml).
+# Keys are normalized: lowercase, no underscores/hyphens.
 # Namespace: https://w3id.org/demo/airline#
 
 ontology_namespace: "https://w3id.org/demo/airline#"
@@ -89,14 +89,5 @@ foreign_keys:
     target_table: planes
     edge_type: assignedAircraft
   - source_table: flights
-    target_table: airports
-    edge_type: originAirport
-  - source_table: flights_orc
-    target_table: airlines
-    edge_type: operatedBy
-  - source_table: flights_orc
-    target_table: planes
-    edge_type: assignedAircraft
-  - source_table: flights_orc
     target_table: airports
     edge_type: originAirport

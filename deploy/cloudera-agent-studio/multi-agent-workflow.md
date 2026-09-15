@@ -37,7 +37,7 @@ One MCP server per agent. Semantica has **no** `HIVE_*` credentials.
 
 **Task 2 — gate:**
 - ABORT if Task 1 `ready_for_sql != true`
-- Tables: `flights`, `airlines`, `airports`, `planes` only (`flights_orc` legacy alias)
+- Tables: `flights`, `airlines`, `airports`, `planes` only
 - No `SELECT * LIMIT 1` discovery — use Task 1 mappings
 
 ### 3. `answer_synthesizer` — Semantica (optional)

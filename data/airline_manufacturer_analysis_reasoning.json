@@ -239,7 +239,7 @@
       }
     ]
   },
-  "narrative_de": "1. Ontologie-Auflösung: Flight → assignedAircraft → Plane.manufacturer auf flights_orc + planes.\n2. Aggregation 2000–2008: Boeing führt mit 14,5 Mio. Segmenten (segmentRank=1 → marketLeader).\n3. OTP-Klassifikation: FAA 15-min-Regel (OnTimeFlight) pro Jahr und Hersteller.\n4. Trend 2003→2007: otpTrend(declining) bei allen Top-5 → punctualityRisk(elevated).\n5. Schwachjahr 2007: weakOtp2007 für Airbus, Bombardier, McDonnell Douglas.\n6. Boeing >40% Top-5-Anteil → fleetDominance(BOEING).\n7. Marktführer + sinkende OTP → industryWideStress(2000-2008).\n8. Empfehlung: recommendOTPReview(BOEING) — dominante Flotte, fallende Pünktlichkeit.",
+  "narrative_de": "1. Ontologie-Auflösung: Flight → assignedAircraft → Plane.manufacturer auf flights + planes.\n2. Aggregation 2000–2008: Boeing führt mit 14,5 Mio. Segmenten (segmentRank=1 → marketLeader).\n3. OTP-Klassifikation: FAA 15-min-Regel (OnTimeFlight) pro Jahr und Hersteller.\n4. Trend 2003→2007: otpTrend(declining) bei allen Top-5 → punctualityRisk(elevated).\n5. Schwachjahr 2007: weakOtp2007 für Airbus, Bombardier, McDonnell Douglas.\n6. Boeing >40% Top-5-Anteil → fleetDominance(BOEING).\n7. Marktführer + sinkende OTP → industryWideStress(2000-2008).\n8. Empfehlung: recommendOTPReview(BOEING) — dominante Flotte, fallende Pünktlichkeit.",
   "decision_id": "dbc6a178-b5f0-4cef-b29c-6283965b8b57",
   "graph_path": "/Users/frothkoetter/se-tools/github/semantica/data/airline_graph.json"
 }

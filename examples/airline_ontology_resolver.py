@@ -1,7 +1,7 @@
 """
 Resolve airline ontology terms → physical Hive tables/columns via Semantica graph.
 
-Physical tables: flights, airlines, airports, planes (never *_csv; flights_orc is legacy alias).
+Physical tables: flights, airlines, airports, planes (never *_csv).
 
 Business semantics (TimeWindow, flightStatus, primaryDelayReason, …) are **not**
 stored in Hive — they are compiled at query time from airline_business_rules.yaml

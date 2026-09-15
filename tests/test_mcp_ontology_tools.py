@@ -142,32 +142,38 @@ def test_map_db_schema_with_ontology(graph, sample_ontology_path):
     assert len(tables) == 1
 
 
-def test_explicit_mapping_config(graph, sample_ontology_path):
-    from semantica.mcp_server.kdm_mappings import (
+def test_explicit_mapping_config(graph):
+    from pathlib import Path
+
+    from semantica.mcp_server.schema_mappings import (
         apply_explicit_mappings,
-        default_mapping_config_path,
         load_mapping_config,
         resolve_column_property,
         resolve_table_class,
     )
 
-    config_path = default_mapping_config_path()
-    if not config_path:
-        pytest.skip("kdm_db_mapping.yaml not available")
-
+    config_path = str(
+        Path(__file__).resolve().parents[1] / "config" / "airline_r2rml_db_mapping.yaml"
+    )
     config = load_mapping_config(config_path)
     assert config.get("tables")
 
-    resolved = resolve_table_class("natuerliche_person", config)
+    resolved = resolve_table_class("flights", config)
     assert resolved is not None
-    assert resolved[1] == "NatuerlichePerson"
+    assert resolved[1] == "Flight"
 
-    col = resolve_column_property("natuerliche_person", "familienname", config)
+    col = resolve_column_property("flights", "arrdelay", config)
     assert col is not None
-    assert col[1] == "familienname"
+    assert col[1] == "arrDelay"
 
+    airline_ttl = (
+        Path(__file__).resolve().parents[1] / "data" / "airline_demo_ontology.ttl"
+    )
     handle_import_ontology(
-        {"file_path": sample_ontology_path, "namespace_filter": "https://w3id.org/kdm/"},
+        {
+            "file_path": str(airline_ttl),
+            "namespace_filter": "https://w3id.org/demo/airline#",
+        },
         lambda: graph,
     )
     result = handle_map_db_schema_to_ontology(
@@ -175,10 +181,10 @@ def test_explicit_mapping_config(graph, sample_ontology_path):
             "schema_info": {
                 "tables": [
                     {
-                        "name": "natuerliche_person",
+                        "name": "flights",
                         "columns": [
-                            {"name": "familienname", "type": "VARCHAR"},
-                            {"name": "vornamen", "type": "VARCHAR"},
+                            {"name": "arrdelay", "type": "INT"},
+                            {"name": "year", "type": "INT"},
                         ],
                     }
                 ],
@@ -196,7 +202,7 @@ def test_explicit_mapping_config(graph, sample_ontology_path):
 
     explicit = apply_explicit_mappings(
         {
-            "tables": [{"name": "natuerliche_person", "columns": []}],
+            "tables": [{"name": "flights", "columns": []}],
             "foreign_keys": [],
         },
         config,
@@ -225,30 +231,35 @@ def test_infer_foreign_keys():
     assert fks[0]["referred_table"] == "juristische_person"
 
 
-def test_map_iceberg_schema_with_mocked_introspection(graph, sample_ontology_path):
+def test_map_iceberg_schema_with_mocked_introspection(graph):
+    from pathlib import Path
     from unittest.mock import patch
 
-    from semantica.mcp_server.kdm_mappings import default_mapping_config_path
     from semantica.mcp_server.hive_build import handle_map_iceberg_schema_to_ontology
     from semantica.mcp_server.ontology_tools import handle_import_ontology
 
-    config_path = default_mapping_config_path()
-    if not config_path:
-        pytest.skip("kdm_db_mapping.yaml not available")
-
+    config_path = str(
+        Path(__file__).resolve().parents[1] / "config" / "airline_r2rml_db_mapping.yaml"
+    )
+    airline_ttl = (
+        Path(__file__).resolve().parents[1] / "data" / "airline_demo_ontology.ttl"
+    )
     handle_import_ontology(
-        {"file_path": sample_ontology_path, "namespace_filter": "https://w3id.org/kdm/"},
+        {
+            "file_path": str(airline_ttl),
+            "namespace_filter": "https://w3id.org/demo/airline#",
+        },
         lambda: graph,
     )
 
     mock_schema = {
-        "database": "kdm",
+        "database": "airlinedata",
         "tables": [
             {
-                "name": "natuerliche_person",
+                "name": "flights",
                 "columns": [
-                    {"name": "id", "type": "string"},
-                    {"name": "familienname", "type": "string"},
+                    {"name": "year", "type": "int"},
+                    {"name": "arrdelay", "type": "int"},
                 ],
             }
         ],
@@ -263,7 +274,7 @@ def test_map_iceberg_schema_with_mocked_introspection(graph, sample_ontology_pat
     ):
         result = handle_map_iceberg_schema_to_ontology(
             {
-                "database": "kdm",
+                "database": "airlinedata",
                 "mapping_config_path": config_path,
                 "apply_mappings": True,
             },
@@ -271,7 +282,7 @@ def test_map_iceberg_schema_with_mocked_introspection(graph, sample_ontology_pat
         )
 
     assert result["status"] == "ok"
-    assert result["database"] == "kdm"
+    assert result["database"] == "airlinedata"
     assert result["applied"]["tables"] == 1
 
 

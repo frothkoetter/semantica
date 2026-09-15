@@ -1,6 +1,6 @@
 # Airline Ontology Demo Chats
 
-These demos show **ontology-first** analytics: the user speaks in domain terms (`Flight`, `arrDelay`, `operatedBy`), the agent resolves physical tables via `data/airline_graph.json`, and runs SQL only against **materialized** Hive tables (`flights_orc`, `airlines`, `airports`, `planes` — never `*_csv`).
+These demos show **ontology-first** analytics: the user speaks in domain terms (`Flight`, `arrDelay`, `operatedBy`), the agent resolves physical tables via `data/airline_graph.json`, and runs SQL only against **materialized** Hive tables (`flights`, `airlines`, `airports`, `planes` — never `*_csv`).
 
 ## Prerequisites
 
@@ -15,8 +15,8 @@ These demos show **ontology-first** analytics: the user speaks in domain terms (
 
 | Ontology class | Physical table |
 |---|---|
-| `Flight` (raw) | `airlinedata.flights_orc` |
-| `Flight` (+ business logic) | **runtime subquery** on `flights_orc` (no Hive view) |
+| `Flight` (raw) | `airlinedata.flights` |
+| `Flight` (+ business logic) | **runtime subquery** on `flights` (no Hive view) |
 | `Airline` | `airlinedata.airlines` |
 | `Airport` | `airlinedata.airports` |
 | `Plane` | `airlinedata.planes` |
@@ -31,7 +31,7 @@ Runnable script (same logic as below): `python examples/airline_ontology_analyti
 
 **Agent (reasoning, not shown to user):**
 
-1. Load Semantica graph → class `Flight` maps to `flights_orc`, property `arrDelay` → column `arrdelay`.
+1. Load Semantica graph → class `Flight` maps to `flights`, property `arrDelay` → column `arrdelay`.
 2. Relationship `Flight.operatedBy` → join `Flight.uniqueCarrier` to `Airline.airlineCode` (`uniquecarrier` = `code`).
 3. Filter non-cancelled flights, partition year 2008.
 
@@ -45,7 +45,7 @@ SELECT
   a.code AS airline_code,
   ROUND(AVG(f.arrdelay), 1) AS avg_arr_delay_min,
   COUNT(*) AS flight_count
-FROM airlinedata.flights_orc f
+FROM airlinedata.flights f
 JOIN airlinedata.airlines a ON f.uniquecarrier = a.code
 WHERE f.year = 2008
   AND f.arrdelay IS NOT NULL
@@ -76,7 +76,7 @@ LIMIT 5;
 
 **Agent (reasoning):**
 
-1. `Flight.originAirport` → column `origin` on `flights_orc`.
+1. `Flight.originAirport` → column `origin` on `flights`.
 2. `Flight.destinationAirport` → column `dest`.
 3. Filter `origin = 'LAX'`, year 2007.
 
@@ -86,7 +86,7 @@ LIMIT 5;
 
 ```sql
 SELECT f.origin AS origin_iata, f.dest AS dest_iata, COUNT(*) AS flight_count
-FROM airlinedata.flights_orc f
+FROM airlinedata.flights f
 WHERE f.year = 2007 AND f.origin = 'LAX'
 GROUP BY f.origin, f.dest
 ORDER BY flight_count DESC
@@ -122,7 +122,7 @@ LIMIT 5;
 
 ```sql
 SELECT p.manufacturer, COUNT(*) AS flight_segments
-FROM airlinedata.flights_orc f
+FROM airlinedata.flights f
 JOIN airlinedata.planes p ON f.tailnum = p.tailnum
 WHERE f.year = 2008
   AND p.manufacturer IS NOT NULL AND p.manufacturer <> ''
@@ -164,7 +164,7 @@ SELECT
   a.description AS airline_name,
   SUM(COALESCE(f.carrierdelay, 0)) AS total_carrier_delay_min,
   SUM(COALESCE(f.weatherdelay, 0)) AS total_weather_delay_min
-FROM airlinedata.flights_orc f
+FROM airlinedata.flights f
 JOIN airlinedata.airlines a ON f.uniquecarrier = a.code
 WHERE f.year = 2008
   AND f.carrierdelay IS NOT NULL AND f.weatherdelay IS NOT NULL
@@ -194,7 +194,7 @@ ORDER BY total_carrier_delay_min DESC;
 2. Semantica graph (airline_graph.json):
    - DatabaseTable --mapsToClass--> OntologyClass
    - DatabaseColumn --mapsToProperty--> DatatypeProperty / ObjectProperty
-3. Prefer materialized tables: flights_orc, airlines, airports, planes
+3. Prefer materialized tables: flights, airlines, airports, planes
 4. Object properties → join hints (operatedBy, assignedAircraft, originAirport, destinationAirport)
 5. iceberg-mcp execute_query with resolved SQL
 6. Answer in domain language; cite ontology terms, not raw column names
@@ -209,8 +209,8 @@ Business-Felder existieren **nicht** als Hive-Spalten. Der Agent baut sie pro Qu
 ```text
 ontology: EveningPeak, OnTimeFlight
     → airline_business_rules.yaml
-    → sql_runtime_flight_subquery(flights_orc)
-    → SELECT … FROM (SELECT *, CASE … END AS flight_status, … FROM flights_orc) f
+    → sql_runtime_flight_subquery(flights)
+    → SELECT … FROM (SELECT *, CASE … END AS flight_status, … FROM flights) f
 ```
 
 `--print-sql-only` zeigt das generierte SQL ohne Hive-Ausführung.
@@ -221,7 +221,7 @@ ontology: EveningPeak, OnTimeFlight
 
 **User:** What was on-time performance by peak business hour in 2008?
 
-**Agent:** Compiles `TimeWindow` + `OnTimePerformance` at runtime on `flights_orc`.
+**Agent:** Compiles `TimeWindow` + `OnTimePerformance` at runtime on `flights`.
 
 ---
 

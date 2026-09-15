@@ -3,7 +3,7 @@
 Run ontology-first airline analytics against Hive materialized tables.
 
 Resolves ontology terms (Flight, Airline, arrDelay, operatedBy, …) to
-flights_orc / airlines / airports / planes via airline_graph.json, then
+flights / airlines / airports / planes via airline_graph.json, then
 executes SQL through impyla (same HIVE_* env as iceberg-mcp-server-hive).
 
 Usage:
@@ -189,7 +189,7 @@ ORDER BY total_carrier_delay_min DESC
 
 
 def demo_5_otp_by_time_window(resolver: AirlineOntologyResolver) -> None:
-    """On-time performance by TimeWindow (runtime SQL on flights_orc)."""
+    """On-time performance by TimeWindow (runtime SQL on flights)."""
     flight_from = resolver.flight_runtime_from()
     status = resolver.column_for_property("Flight", "flightStatus")
     window = resolver.column_for_property("Flight", "scheduledInWindowClass")
@@ -209,7 +209,7 @@ GROUP BY f.{window.column}
 ORDER BY otp_pct ASC
 """
     note = (
-        "Runtime: flights_orc + CASE rules → flightStatus, scheduledInWindowClass; "
+        "Runtime: flights + CASE rules → flightStatus, scheduledInWindowClass; "
         "KPI OnTimePerformance (ontology: OnTimeFlight / TimeWindow)"
     )
     _print_result("Demo 5 — OTP by business hour band (2008)", note, sql, _hive_query(sql))
@@ -234,7 +234,7 @@ GROUP BY f.{reason.column}
 ORDER BY delayed_flights DESC
 """
     note = (
-        "Runtime primaryDelayReason CASE on flights_orc; "
+        "Runtime primaryDelayReason CASE on flights; "
         "filter DelayedFlight via flight_status"
     )
     _print_result("Demo 6 — Primary delay reason mix (2008)", note, sql, _hive_query(sql))

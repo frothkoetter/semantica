@@ -95,7 +95,7 @@ def _title_page(pdf: PdfPages) -> None:
     fig.text(
         0.5,
         0.48,
-        "Datenquelle: airlinedata.flights_orc + planes\n"
+        "Datenquelle: airlinedata.flights + planes\n"
         "Ontologie: Flight → assignedAircraft → Plane.manufacturer\n"
         "OTP: FAA 15-min-Regel (OnTimeFlight / abgeschlossene Flüge)",
         ha="center",

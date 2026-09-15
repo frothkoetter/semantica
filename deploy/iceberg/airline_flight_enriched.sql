@@ -58,4 +58,4 @@ SELECT
       AND COALESCE(f.lateaircraftdelay, 0) >= COALESCE(f.securitydelay, 0) THEN 'LateAircraftDelayReason'
     ELSE NULL
   END AS primary_delay_reason
-FROM airlinedata.flights_orc f;
+FROM airlinedata.flights f;

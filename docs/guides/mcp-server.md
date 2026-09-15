@@ -169,31 +169,27 @@ For any domain ontology, chain these tools:
 
 ### Customizing table/column mappings
 
-Edit `config/kdm_db_mapping.yaml` (or pass `mapping_config_path` to the tool):
+Edit `config/airline_r2rml_db_mapping.yaml` (or pass `mapping_config_path` to the tool):
 
 ```yaml
-ontology_namespace: "https://w3id.org/kdm/"
+ontology_namespace: "https://w3id.org/demo/airline#"
 
 tables:
-  natuerlicheperson: NatuerlichePerson
-  unternehmen: JuristischePerson
+  flights: Flight
+  airlines: Airline
 
 columns:
   _global:
-    familienname: familienname
-    postleitzahl: postleitzahl
-  natuerlicheperson:
-    vornamen: vornamen
-    geburtsdatum: geburtsdatum
+    arrdelay: arrDelay
+    year: year
 ```
 
 Table and column keys are normalized (lowercase, no underscores, umlauts → `ae`/`oe`/`ue`).
 
-Run the standalone example:
+Build the graph with mappings applied:
 
 ```bash
-python examples/kdm_db_mapping.py
-python examples/kdm_db_mapping.py --db postgresql://user:pass@localhost/kdm_db
+uv run python scripts/build_airline_graph.py
 ```
 
 ### Iceberg / Hive (CDW) integration
