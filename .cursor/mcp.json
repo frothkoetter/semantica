@@ -4,7 +4,10 @@
       "command": "/Users/frothkoetter/se-tools/github/semantica/scripts/run-semantica-mcp.sh",
       "env": {
         "SEMANTICA_KG_PATH": "/Users/frothkoetter/se-tools/github/semantica/data/airline_graph.json",
-       }
+        "SEMANTICA_MAPPING_CONFIG": "/Users/frothkoetter/se-tools/github/semantica/config/airline_r2rml_db_mapping.yaml",
+        "SEMANTICA_BUSINESS_RULES": "/Users/frothkoetter/se-tools/github/semantica/config/airline_business_rules.yaml",
+        "SEMANTICA_LOG_LEVEL": "INFO"
+      }
     }
   }
 }
