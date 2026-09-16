@@ -3086,6 +3086,297 @@
         ],
         "content": "Welche Hersteller flogen 2000–2008 die meisten Segmente und welche OTP pro Jahr?"
       }
+    },
+    {
+      "id": "business_rule:threshold:on_time_max_delay",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "threshold",
+        "ontology_class": null,
+        "when": null,
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/airline_business_rules.yaml",
+        "metadata": {
+          "value": 15
+        },
+        "content": "on_time_max_delay"
+      }
+    },
+    {
+      "id": "business_rule:threshold:minor_delay_max",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "threshold",
+        "ontology_class": null,
+        "when": null,
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/airline_business_rules.yaml",
+        "metadata": {
+          "value": 30
+        },
+        "content": "minor_delay_max"
+      }
+    },
+    {
+      "id": "business_rule:threshold:moderate_delay_max",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "threshold",
+        "ontology_class": null,
+        "when": null,
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/airline_business_rules.yaml",
+        "metadata": {
+          "value": 60
+        },
+        "content": "moderate_delay_max"
+      }
+    },
+    {
+      "id": "business_rule:flight_status_rules:CancelledFlight",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "flight_status_rules",
+        "ontology_class": "CancelledFlight",
+        "when": "cancelled = 1",
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/airline_business_rules.yaml",
+        "metadata": {},
+        "content": "CancelledFlight"
+      }
+    },
+    {
+      "id": "business_rule:flight_status_rules:DivertedFlight",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "flight_status_rules",
+        "ontology_class": "DivertedFlight",
+        "when": "diverted = '1' OR diverted = 'Y'",
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/airline_business_rules.yaml",
+        "metadata": {},
+        "content": "DivertedFlight"
+      }
+    },
+    {
+      "id": "business_rule:flight_status_rules:OnTimeFlight",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "flight_status_rules",
+        "ontology_class": "OnTimeFlight",
+        "when": "cancelled = 0 AND COALESCE(arrdelay,0) <= 15 AND COALESCE(depdelay,0) <= 15",
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/airline_business_rules.yaml",
+        "metadata": {},
+        "content": "OnTimeFlight"
+      }
+    },
+    {
+      "id": "business_rule:flight_status_rules:DelayedFlight",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "flight_status_rules",
+        "ontology_class": "DelayedFlight",
+        "when": "cancelled = 0 AND (COALESCE(arrdelay,0) > 15 OR COALESCE(depdelay,0) > 15)",
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/airline_business_rules.yaml",
+        "metadata": {},
+        "content": "DelayedFlight"
+      }
+    },
+    {
+      "id": "business_rule:delay_severity_rules:MinorDelay",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "delay_severity_rules",
+        "ontology_class": "MinorDelay",
+        "when": "GREATEST(COALESCE(arrdelay,0), COALESCE(depdelay,0)) BETWEEN 16 AND 30",
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/airline_business_rules.yaml",
+        "metadata": {},
+        "content": "MinorDelay"
+      }
+    },
+    {
+      "id": "business_rule:delay_severity_rules:ModerateDelay",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "delay_severity_rules",
+        "ontology_class": "ModerateDelay",
+        "when": "GREATEST(COALESCE(arrdelay,0), COALESCE(depdelay,0)) BETWEEN 31 AND 60",
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/airline_business_rules.yaml",
+        "metadata": {},
+        "content": "ModerateDelay"
+      }
+    },
+    {
+      "id": "business_rule:delay_severity_rules:SevereDelay",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "delay_severity_rules",
+        "ontology_class": "SevereDelay",
+        "when": "GREATEST(COALESCE(arrdelay,0), COALESCE(depdelay,0)) > 60",
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/airline_business_rules.yaml",
+        "metadata": {},
+        "content": "SevereDelay"
+      }
+    },
+    {
+      "id": "business_rule:time_windows:MorningPeak",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "time_windows",
+        "ontology_class": "MorningPeak",
+        "when": null,
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/airline_business_rules.yaml",
+        "metadata": {
+          "class": "MorningPeak",
+          "crs_deptime_min": 600,
+          "crs_deptime_max": 959,
+          "label": "06:00–09:59"
+        },
+        "content": "MorningPeak"
+      }
+    },
+    {
+      "id": "business_rule:time_windows:Midday",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "time_windows",
+        "ontology_class": "Midday",
+        "when": null,
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/airline_business_rules.yaml",
+        "metadata": {
+          "class": "Midday",
+          "crs_deptime_min": 1000,
+          "crs_deptime_max": 1659,
+          "label": "10:00–16:59"
+        },
+        "content": "Midday"
+      }
+    },
+    {
+      "id": "business_rule:time_windows:EveningPeak",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "time_windows",
+        "ontology_class": "EveningPeak",
+        "when": null,
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/airline_business_rules.yaml",
+        "metadata": {
+          "class": "EveningPeak",
+          "crs_deptime_min": 1700,
+          "crs_deptime_max": 2059,
+          "label": "17:00–20:59"
+        },
+        "content": "EveningPeak"
+      }
+    },
+    {
+      "id": "business_rule:time_windows:Overnight",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "time_windows",
+        "ontology_class": "Overnight",
+        "when": null,
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/airline_business_rules.yaml",
+        "metadata": {
+          "class": "Overnight",
+          "crs_deptime_min": 2100,
+          "crs_deptime_max": 559,
+          "label": "21:00–05:59",
+          "wrap_midnight": true
+        },
+        "content": "Overnight"
+      }
+    },
+    {
+      "id": "business_rule:logistics:route",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "logistics",
+        "ontology_class": "Route",
+        "when": null,
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/airline_business_rules.yaml",
+        "metadata": {
+          "class": "Route",
+          "key_columns": [
+            "origin",
+            "dest"
+          ],
+          "distance_column": "distance"
+        },
+        "content": "Route"
+      }
+    },
+    {
+      "id": "business_rule:logistics:hub_airport",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "logistics",
+        "ontology_class": "HubAirport",
+        "when": null,
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/airline_business_rules.yaml",
+        "metadata": {
+          "class": "HubAirport",
+          "metric": "COUNT(*) departures WHERE origin = airport.iata",
+          "default_top_n": 20,
+          "default_reference_year": 2008
+        },
+        "content": "HubAirport"
+      }
+    },
+    {
+      "id": "business_rule:analytics_templates:on_time_performance",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "analytics_templates",
+        "ontology_class": null,
+        "when": null,
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/airline_business_rules.yaml",
+        "metadata": {
+          "question": "OTP by carrier in peak hours",
+          "classes": [
+            "OnTimeFlight",
+            "Flight",
+            "Airline",
+            "EveningPeak"
+          ],
+          "kpi": "COUNT(OnTimeFlight) / COUNT(Flight WHERE cancelled=0)"
+        },
+        "content": "on_time_performance"
+      }
+    },
+    {
+      "id": "business_rule:analytics_templates:delay_attribution",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "analytics_templates",
+        "ontology_class": null,
+        "when": null,
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/airline_business_rules.yaml",
+        "metadata": {
+          "question": "Which delay reason dominates for a carrier?",
+          "classes": [
+            "DelayReason",
+            "DelayedFlight",
+            "Airline"
+          ],
+          "kpi": "SUM per delay_reason_columns / SUM(arrdelay)"
+        },
+        "content": "delay_attribution"
+      }
+    },
+    {
+      "id": "business_rule:analytics_templates:peak_hour_volume",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "analytics_templates",
+        "ontology_class": null,
+        "when": null,
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/airline_business_rules.yaml",
+        "metadata": {
+          "question": "Busiest business hour band by departure count",
+          "classes": [
+            "TimeWindow",
+            "Flight"
+          ],
+          "group_by": "scheduledInWindow"
+        },
+        "content": "peak_hour_volume"
+      }
     }
   ],
   "edges": [
@@ -8382,6 +8673,123 @@
       "source_id": "7b2979ee-0737-4642-a61a-f5f4ba688cca",
       "target_id": "maker_airline_manufacturer_reasoning.py",
       "type": "made_by",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "084d9e53-acee-56ac-9d48-c6a663c01960",
+      "familyId": "084d9e53-acee-56ac-9d48-c6a663c01960",
+      "source_id": "business_rule:flight_status_rules:CancelledFlight",
+      "target_id": "https://w3id.org/demo/airline#CancelledFlight",
+      "type": "appliesToClass",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "cf7556d5-0e6d-5833-9f19-491e7dfed973",
+      "familyId": "cf7556d5-0e6d-5833-9f19-491e7dfed973",
+      "source_id": "business_rule:flight_status_rules:DivertedFlight",
+      "target_id": "https://w3id.org/demo/airline#DivertedFlight",
+      "type": "appliesToClass",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "08fa586e-97ff-5a9c-bed6-307eae747953",
+      "familyId": "08fa586e-97ff-5a9c-bed6-307eae747953",
+      "source_id": "business_rule:flight_status_rules:OnTimeFlight",
+      "target_id": "https://w3id.org/demo/airline#OnTimeFlight",
+      "type": "appliesToClass",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "e5ef4990-1e41-5c3c-991d-2b9e23f6e55a",
+      "familyId": "e5ef4990-1e41-5c3c-991d-2b9e23f6e55a",
+      "source_id": "business_rule:flight_status_rules:DelayedFlight",
+      "target_id": "https://w3id.org/demo/airline#DelayedFlight",
+      "type": "appliesToClass",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "95762fdb-3924-5d08-bead-5c9202dcd6a4",
+      "familyId": "95762fdb-3924-5d08-bead-5c9202dcd6a4",
+      "source_id": "business_rule:delay_severity_rules:MinorDelay",
+      "target_id": "https://w3id.org/demo/airline#MinorDelay",
+      "type": "appliesToClass",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "e9eb4319-61f4-5800-b51d-52e58a157582",
+      "familyId": "e9eb4319-61f4-5800-b51d-52e58a157582",
+      "source_id": "business_rule:delay_severity_rules:ModerateDelay",
+      "target_id": "https://w3id.org/demo/airline#ModerateDelay",
+      "type": "appliesToClass",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "684dc838-9966-56b3-9184-dab9787617cb",
+      "familyId": "684dc838-9966-56b3-9184-dab9787617cb",
+      "source_id": "business_rule:delay_severity_rules:SevereDelay",
+      "target_id": "https://w3id.org/demo/airline#SevereDelay",
+      "type": "appliesToClass",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "fc958f8d-1568-5368-9a0c-f113a5b72f44",
+      "familyId": "fc958f8d-1568-5368-9a0c-f113a5b72f44",
+      "source_id": "business_rule:time_windows:MorningPeak",
+      "target_id": "https://w3id.org/demo/airline#MorningPeak",
+      "type": "appliesToClass",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "3ecf2fc7-24fe-58df-b527-6282990381af",
+      "familyId": "3ecf2fc7-24fe-58df-b527-6282990381af",
+      "source_id": "business_rule:time_windows:Midday",
+      "target_id": "https://w3id.org/demo/airline#Midday",
+      "type": "appliesToClass",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "af221161-6892-52a8-bb39-27717125368a",
+      "familyId": "af221161-6892-52a8-bb39-27717125368a",
+      "source_id": "business_rule:time_windows:EveningPeak",
+      "target_id": "https://w3id.org/demo/airline#EveningPeak",
+      "type": "appliesToClass",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "f1ff013d-df96-51a1-b8a7-4220da9aa357",
+      "familyId": "f1ff013d-df96-51a1-b8a7-4220da9aa357",
+      "source_id": "business_rule:time_windows:Overnight",
+      "target_id": "https://w3id.org/demo/airline#Overnight",
+      "type": "appliesToClass",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "24cdc1ee-3861-5524-8747-bc843535abaa",
+      "familyId": "24cdc1ee-3861-5524-8747-bc843535abaa",
+      "source_id": "business_rule:logistics:route",
+      "target_id": "https://w3id.org/demo/airline#Route",
+      "type": "appliesToClass",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "98de9dfa-786b-5bf8-9c24-6aaa7e88c05a",
+      "familyId": "98de9dfa-786b-5bf8-9c24-6aaa7e88c05a",
+      "source_id": "business_rule:logistics:hub_airport",
+      "target_id": "https://w3id.org/demo/airline#HubAirport",
+      "type": "appliesToClass",
       "weight": 1.0,
       "properties": {}
     }
