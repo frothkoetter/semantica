@@ -48,6 +48,10 @@ def main() -> int:
         default=str(REPO / "config" / "airline_r2rml_db_mapping.yaml"),
     )
     parser.add_argument(
+        "--business-rules",
+        default=str(REPO / "config" / "airline_business_rules.yaml"),
+    )
+    parser.add_argument(
         "--database",
         default=os.getenv("HIVE_DATABASE", "airlinedata"),
     )
@@ -115,6 +119,24 @@ def main() -> int:
             return 1
         print(json.dumps(map_result.get("applied"), indent=2))
         print(json.dumps(map_result.get("suggestions", {}).get("summary"), indent=2))
+
+    rules_path = Path(args.business_rules)
+    if rules_path.is_file():
+        from semantica.mcp_server.business_rules import (
+            ingest_business_rules_into_graph,
+            load_business_rules,
+        )
+
+        print(f"Ingesting business rules from {rules_path.name} ...")
+        rules = load_business_rules(str(rules_path))
+        rule_stats = ingest_business_rules_into_graph(
+            graph,
+            rules,
+            source_path=str(rules_path),
+        )
+        print(json.dumps(rule_stats, indent=2))
+    else:
+        print(f"Skipping business rules (not found): {rules_path}", file=sys.stderr)
 
     graph.save_to_file(args.output)
     print(f"Saved {args.output} ({graph.stats()['node_count']} nodes)")

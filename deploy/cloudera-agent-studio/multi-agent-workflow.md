@@ -13,13 +13,14 @@ One MCP server per agent. Semantica has **no** `HIVE_*` credentials.
 | Role | `ontology_mapper` |
 | Goal | Resolve user questions into ontology terms and a SQL mapping plan. Never execute SQL. |
 | MCP | `semantica` |
-| Tools | `get_graph_summary`, `run_reasoning` (optional: `export_graph` with `subset: ontology`) |
+| Tools | `get_graph_summary`, `get_business_rules`, `run_reasoning` (optional: `export_graph` with `subset: ontology`) |
 
-**Env:** `ALLOW_AGENT_STUDIO_INSECURE_TOOL_EXECUTION`, `SEMANTICA_KG_PATH`, `SEMANTICA_MAPPING_CONFIG`.
+**Env:** `ALLOW_AGENT_STUDIO_INSECURE_TOOL_EXECUTION`, `SEMANTICA_KG_PATH`, `SEMANTICA_MAPPING_CONFIG`, `SEMANTICA_BUSINESS_RULES`.
 
 **Task 1 — abort rules:**
 - If `get_graph_summary.node_count < 50` → `ready_for_sql: false`, STOP
 - If `ontology_class_count == 0` → STOP
+- Call `get_business_rules` before building the SQL plan (on-time = 15 min, peak hours, delay severity). Compile Hive SQL with `examples/airline_business_sql.py` — MCP returns rules only, not airline SQL.
 - Never call `import_ontology` when graph is pre-loaded
 - **Do not call `export_graph` unless column-level mappings are required** — use `get_graph_summary` first; if needed, `export_graph({format: "json", subset: "ontology"})` only
 - Output JSON mapping plan; never write SQL

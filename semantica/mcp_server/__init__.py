@@ -35,9 +35,10 @@ Run directly for testing:
     python -m semantica.mcp_server
 
 Environment variables:
-    SEMANTICA_KG_PATH        — path to a persisted graph to load on start (optional)
-    SEMANTICA_MAPPING_CONFIG — default ontology↔DB mapping YAML path (optional)
-    SEMANTICA_LOG_LEVEL      — log level: DEBUG, INFO, WARNING (default: WARNING)
+    SEMANTICA_KG_PATH          — path to a persisted graph to load on start (optional)
+    SEMANTICA_MAPPING_CONFIG   — default ontology↔DB mapping YAML path (optional)
+    SEMANTICA_BUSINESS_RULES   — business rules YAML (thresholds, flight status, SQL) (optional)
+    SEMANTICA_LOG_LEVEL        — log level: DEBUG, INFO, WARNING (default: WARNING)
 
 Hive/Iceberg SQL and schema introspection: use iceberg-mcp-server-hive (not this server).
 """
@@ -439,6 +440,25 @@ def _tool_get_graph_summary(args: dict) -> dict:
         ontology_classes = list(graph.find_nodes(node_type="OntologyClass"))
         db_tables = list(graph.find_nodes(node_type="DatabaseTable"))
         db_columns = list(graph.find_nodes(node_type="DatabaseColumn"))
+        business_rules = list(graph.find_nodes(node_type="BusinessRule"))
+        rules_path = None
+        rules_exists = False
+        rules_summary = {}
+        try:
+            from semantica.mcp_server.business_rules import (
+                load_business_rules,
+                resolve_business_rules_path,
+                summarize_business_rules,
+            )
+
+            rules_path = resolve_business_rules_path()
+            rules_exists = bool(rules_path and os.path.exists(rules_path))
+            loaded_rules = load_business_rules()
+            if loaded_rules:
+                rules_summary = summarize_business_rules(loaded_rules)
+        except Exception:
+            pass
+
         kg_path = (os.environ.get("SEMANTICA_KG_PATH") or "").strip() or None
         kg_exists = bool(kg_path and os.path.exists(kg_path))
         return {
@@ -447,6 +467,7 @@ def _tool_get_graph_summary(args: dict) -> dict:
             "ontology_class_count": len(ontology_classes),
             "database_table_count": len(db_tables),
             "database_column_count": len(db_columns),
+            "business_rule_count": len(business_rules),
             "ontology_classes": [
                 n.get("label") or n.get("content") or _local_name(str(n.get("uri") or n.get("id", "")))
                 for n in ontology_classes[:50]
@@ -455,6 +476,9 @@ def _tool_get_graph_summary(args: dict) -> dict:
                 n.get("table_name") or n.get("content") or _local_name(str(n.get("id", "")))
                 for n in db_tables[:50]
             ],
+            "business_rules_path": rules_path,
+            "business_rules_path_exists": rules_exists,
+            "business_rules_summary": rules_summary or None,
             "kg_path": kg_path,
             "kg_path_exists": kg_exists,
             "kg_loaded": bool(_graph_loaded_from),
@@ -483,6 +507,36 @@ def _tool_map_db_schema_to_ontology(args: dict) -> dict:
     from semantica.mcp_server.ontology_tools import handle_map_db_schema_to_ontology
 
     return handle_map_db_schema_to_ontology(args, _get_graph)
+
+
+def _tool_get_business_rules(args: dict) -> dict:
+    """Return declarative business rules YAML (thresholds, classifications)."""
+    from semantica.mcp_server.business_rules import (
+        build_business_rules_payload,
+        ingest_business_rules_into_graph,
+        load_business_rules,
+        resolve_business_rules_path,
+    )
+
+    rules_path = resolve_business_rules_path(args.get("rules_path"))
+    rules = load_business_rules(args.get("rules_path"))
+    if not rules:
+        return build_business_rules_payload({}, rules_path=rules_path)
+
+    graph = _get_graph()
+    if not list(graph.find_nodes(node_type="BusinessRule")):
+        stats = ingest_business_rules_into_graph(
+            graph,
+            rules,
+            source_path=rules_path or "",
+        )
+        log.info("Ingested business rules into graph: %s", stats)
+
+    payload = build_business_rules_payload(rules, rules_path=rules_path)
+    payload["graph_business_rule_count"] = len(
+        list(graph.find_nodes(node_type="BusinessRule"))
+    )
+    return payload
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -659,10 +713,28 @@ TOOLS = [
         "name": "get_graph_summary",
         "description": (
             "Return graph statistics: node counts, ontology classes, database table/column "
-            "mappings, SEMANTICA_KG_PATH status."
+            "mappings, business rules status, SEMANTICA_KG_PATH status."
         ),
         "inputSchema": {"type": "object", "properties": {}},
         "_handler": _tool_get_graph_summary,
+    },
+    {
+        "name": "get_business_rules",
+        "description": (
+            "Return declarative business rules from YAML (thresholds, classification rules "
+            "with class/when, reasoning_facts for run_reasoning). "
+            "Uses SEMANTICA_BUSINESS_RULES or rules_path. Does not compile domain SQL."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "rules_path": {
+                    "type": "string",
+                    "description": "Path to business rules YAML (or SEMANTICA_BUSINESS_RULES)",
+                },
+            },
+        },
+        "_handler": _tool_get_business_rules,
     },
     {
         "name": "import_ontology",

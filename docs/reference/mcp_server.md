@@ -148,6 +148,7 @@ The MCP server is included in the base install: no extras required.
 | :-------- | :------- | :----------- |
 | `SEMANTICA_KG_PATH` | *(none: in-memory graph)* | Absolute path to a persisted graph JSON file. Loaded on first graph access; skipped silently if the file does not exist |
 | `SEMANTICA_MAPPING_CONFIG` | *(none)* | Absolute path to ontology↔database mapping YAML. Used by `map_db_schema_to_ontology` when `mapping_config_path` is omitted; skipped silently if the file does not exist |
+| `SEMANTICA_BUSINESS_RULES` | *(none)* | Absolute path to domain business rules YAML. Used by `get_business_rules`; ingested into the graph at build time via `build_airline_graph.py`. SQL compilation is application-specific (not MCP) |
 | `SEMANTICA_LOG_LEVEL` | `WARNING` | Log verbosity: `DEBUG`, `INFO`, `WARNING` |
 
 <Warning>
@@ -176,7 +177,8 @@ The MCP server exposes 12 tools that any connected AI assistant can call:
 | `get_causal_chain` | Decision Intelligence | Trace upstream / downstream causal chains |
 | `add_entity` | Graph Operations | Add a node to the live graph |
 | `add_relationship` | Graph Operations | Add a directed edge between two nodes |
-| `get_graph_summary` | Graph Operations | Node count, decision count, graph status |
+| `get_graph_summary` | Graph Operations | Node count, decision count, graph status, business rules summary |
+| `get_business_rules` | Graph Operations | Declarative rules YAML (thresholds, `class`/`when` rules, reasoning strings) |
 | `get_graph_analytics` | Graph Operations | PageRank centrality and community detection |
 | `run_reasoning` | Reasoning | Forward-chain IF/THEN rules over facts |
 | `export_graph` | Reasoning & Export | Serialise the graph (`turtle`/`ttl`: RDF Turtle aliases, `nt`, `xml`, `json-ld`, `json`) |

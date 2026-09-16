@@ -25,9 +25,9 @@ operatedBy             object property joins         JOIN airlines ON …
 
 **Nothing is pre-materialized in Hive** for business logic. The agent:
 
-1. Reads ontology + `airline_graph.json` (what exists physically).
-2. Reads `airline_business_rules.yaml` (how to interpret it).
-3. Emits SQL with inline subqueries, `CASE`, and `JOIN`s at **query time**.
+1. Reads ontology + `airline_graph.json` (what exists physically; rules are also stored as `BusinessRule` nodes when built with `build_airline_graph.py`).
+2. Calls MCP `get_business_rules` or reads `airline_business_rules.yaml` via `SEMANTICA_BUSINESS_RULES` (how to interpret it).
+3. Emits SQL with inline subqueries, `CASE`, and `JOIN`s at **query time** via `examples/airline_business_sql.py` (`sql_runtime_flight_subquery`) — not via the generic MCP server.
 
 ```python
 resolver.flight_runtime_from()  # → (SELECT … CASE … FROM flights) f

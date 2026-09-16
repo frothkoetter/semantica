@@ -43,15 +43,15 @@ Copy [`semantica-mcp.json`](semantica-mcp.json):
 
 Copy [`semantica-mcp-local.json`](semantica-mcp-local.json) and set `--from` to your clone path.
 
-### Semantica tools exposed (14)
+### Semantica tools exposed (15)
 
-Ontology: `import_ontology`, `get_graph_summary`, `map_db_schema_to_ontology` (`export_graph` only if column mappings needed)  
+Ontology: `import_ontology`, `get_graph_summary`, `get_business_rules`, `map_db_schema_to_ontology` (`export_graph` only if column mappings needed)  
 Analytics: `run_reasoning`, `record_decision`, `query_decisions`, `find_precedents`  
 Graph: `add_entity`, `add_relationship`, `extract_entities`, `extract_relations`, …
 
 **No Hive/SQL on Semantica** — use `iceberg-hive` MCP for `execute_query` and schema introspection.
 
-Set `SEMANTICA_KG_PATH` and `SEMANTICA_MAPPING_CONFIG` to **absolute** workbench paths
+Set `SEMANTICA_KG_PATH`, `SEMANTICA_MAPPING_CONFIG`, and `SEMANTICA_BUSINESS_RULES` to **absolute** workbench paths
 (see §5 below — not relative paths like `config/...`).
 Do **not** set `HIVE_*` on the Semantica MCP server.
 
@@ -96,7 +96,7 @@ User question (natural language)
 | Semantica repo | `/home/cdsw/semantica` |
 | Airline graph | `/home/cdsw/semantica/data/airline_graph.json` |
 | Mapping YAML | `/home/cdsw/semantica/config/airline_r2rml_db_mapping.yaml` |
-| Business rules | `/home/cdsw/semantica/config/airline_business_rules.yaml` |
+| Business rules | `/home/cdsw/semantica/config/airline_business_rules.yaml` (`SEMANTICA_BUSINESS_RULES`; also ingested into KG at build time) |
 | Iceberg MCP repo | `/home/cdsw/iceberg-mcp-server-hive` |
 | Hive database | `airlinedata` |
 

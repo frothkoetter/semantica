@@ -1,4 +1,4 @@
-"""SQL expression builders from config/airline_business_rules.yaml."""
+"""SQL expression builders from config/airline_business_rules.yaml (airline demo only)."""
 
 from __future__ import annotations
 
@@ -120,7 +120,6 @@ def sql_runtime_flight_subquery(
 ) {alias}"""
 
 
-# Back-compat alias
 sql_enriched_flight_subquery = sql_runtime_flight_subquery
 
 
