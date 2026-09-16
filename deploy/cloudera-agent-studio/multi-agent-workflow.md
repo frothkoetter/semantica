@@ -15,7 +15,7 @@ One MCP server per agent. Semantica has **no** `HIVE_*` credentials.
 | MCP | `semantica` |
 | Tools | `get_graph_summary`, `run_reasoning` (optional: `export_graph` with `subset: ontology`) |
 
-**Env:** `SEMANTICA_KG_PATH`, `SEMANTICA_MAPPING_CONFIG` only.
+**Env:** `ALLOW_AGENT_STUDIO_INSECURE_TOOL_EXECUTION`, `SEMANTICA_KG_PATH`, `SEMANTICA_MAPPING_CONFIG`.
 
 **Task 1 — abort rules:**
 - If `get_graph_summary.node_count < 50` → `ready_for_sql: false`, STOP

@@ -67,6 +67,28 @@ log = logging.getLogger("semantica.mcp_server")
 
 # ── lazy graph session ──────────────────────────────────────────────────────
 _graph: Any = None
+_graph_loaded_from: str | None = None
+
+
+def _try_load_graph_from_env(graph: Any) -> bool:
+    """Load persisted graph from SEMANTICA_KG_PATH when the file is readable."""
+    global _graph_loaded_from
+    kg_path = (os.environ.get("SEMANTICA_KG_PATH") or "").strip()
+    if not kg_path:
+        return False
+    if not os.path.exists(kg_path):
+        log.warning("SEMANTICA_KG_PATH set but file not found: %s", kg_path)
+        return False
+    if _graph_loaded_from == kg_path and list(graph.find_nodes()):
+        return True
+    try:
+        graph.load_from_file(kg_path)
+        _graph_loaded_from = kg_path
+        log.info("Loaded graph from %s", kg_path)
+        return True
+    except Exception as exc:
+        log.warning("Could not load graph from %s: %s", kg_path, exc)
+        return False
 
 
 def _get_graph():
@@ -74,13 +96,10 @@ def _get_graph():
     if _graph is None:
         from semantica.context import ContextGraph
         _graph = ContextGraph(advanced_analytics=False)
-        kg_path = os.environ.get("SEMANTICA_KG_PATH")
-        if kg_path and os.path.exists(kg_path):
-            try:
-                _graph.load_from_file(kg_path)
-                log.info("Loaded graph from %s", kg_path)
-            except Exception as exc:
-                log.warning("Could not load graph from %s: %s", kg_path, exc)
+        _try_load_graph_from_env(_graph)
+    elif not list(_graph.find_nodes()):
+        # Retry when the file was unavailable at first access (e.g. Agent Studio cold start).
+        _try_load_graph_from_env(_graph)
     return _graph
 
 
@@ -410,6 +429,8 @@ def _local_name(uri: str) -> str:
 
 def _tool_get_graph_summary(args: dict) -> dict:
     """Return a high-level summary of the current graph."""
+    import socket
+
     graph = _get_graph()
     try:
         nodes = list(graph.find_nodes())
@@ -418,7 +439,8 @@ def _tool_get_graph_summary(args: dict) -> dict:
         ontology_classes = list(graph.find_nodes(node_type="OntologyClass"))
         db_tables = list(graph.find_nodes(node_type="DatabaseTable"))
         db_columns = list(graph.find_nodes(node_type="DatabaseColumn"))
-        kg_path = os.environ.get("SEMANTICA_KG_PATH")
+        kg_path = (os.environ.get("SEMANTICA_KG_PATH") or "").strip() or None
+        kg_exists = bool(kg_path and os.path.exists(kg_path))
         return {
             "node_count": node_count,
             "decision_count": len(decisions),
@@ -434,8 +456,18 @@ def _tool_get_graph_summary(args: dict) -> dict:
                 for n in db_tables[:50]
             ],
             "kg_path": kg_path,
-            "kg_path_exists": bool(kg_path and os.path.exists(kg_path)),
+            "kg_path_exists": kg_exists,
+            "kg_loaded": bool(_graph_loaded_from),
+            "hostname": socket.gethostname(),
+            "cwd": os.getcwd(),
             "graph_ready": node_count > 0,
+            "load_hint": (
+                "SEMANTICA_KG_PATH is set but file not visible in this MCP process "
+                "(Agent Studio may run MCP on a different worker than your shell). "
+                "Run ls on the same host shown in hostname, or copy the graph into the project path."
+                if kg_path and not kg_exists
+                else None
+            ),
         }
     except Exception as exc:
         return {"error": str(exc), "graph_ready": False}

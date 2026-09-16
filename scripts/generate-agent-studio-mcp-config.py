@@ -38,6 +38,7 @@ def main() -> int:
             env[key] = _placeholder(key, str(value))
 
     semantica_env = {
+        "ALLOW_AGENT_STUDIO_INSECURE_TOOL_EXECUTION": "true",
         "SEMANTICA_KG_PATH": f"{args.semantica_root}/data/airline_graph.json",
         "SEMANTICA_MAPPING_CONFIG": f"{args.semantica_root}/config/airline_r2rml_db_mapping.yaml",
         "SEMANTICA_LOG_LEVEL": "WARNING",

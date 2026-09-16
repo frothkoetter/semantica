@@ -1,7 +1,16 @@
 # Cloudera Agent Studio — Workflow environment (paste real values at workflow setup)
 # Agent Studio does NOT persist MCP env secrets after registration; set them per workflow.
+#
+# IMPORTANT: graph file lives inside the semantica clone — NOT /home/cdsw/data/
+#   ✓ /home/cdsw/semantica/data/airline_graph.json
+#   ✗ /home/cdsw/data/airline_graph.json   (wrong — common misconfiguration)
+
+# Bypass bubblewrap sandbox so MCP can read host paths (e.g. SEMANTICA_KG_PATH).
+# Reduces isolation — use only when graph paths are outside the workflow mount.
+ALLOW_AGENT_STUDIO_INSECURE_TOOL_EXECUTION=true
 
 SEMANTICA_KG_PATH=/home/cdsw/semantica/data/airline_graph.json
+SEMANTICA_MAPPING_CONFIG=/home/cdsw/semantica/config/airline_r2rml_db_mapping.yaml
 SEMANTICA_LOG_LEVEL=INFO
 
 HIVE_HOST=hs2-cdw-aw-se-hive.dw-se-sandbox-aws.a465-9q4k.cloudera.site

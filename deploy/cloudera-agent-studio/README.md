@@ -100,7 +100,42 @@ User question (natural language)
 | Iceberg MCP repo | `/home/cdsw/iceberg-mcp-server-hive` |
 | Hive database | `airlinedata` |
 
-## 6. Validate registration
+## 6. Troubleshooting: graph file not found
+
+`get_graph_summary` reports `kg_path_exists: false` when `SEMANTICA_KG_PATH` points to a missing file.
+This is **not** a `uvx` sandbox issue — `uvx` runs `semantica-mcp` on the workbench with the same
+filesystem access as your shell. The path in the env var is simply wrong or the file was never built.
+
+| Symptom | Cause | Fix |
+|---------|-------|-----|
+| `ls` shows file but `kg_path_exists: false` | **Shell and MCP run on different CDSW workers** — file exists on workbench A, workflow session on workbench B | Compare `hostname` from `get_graph_summary` with your shell's `hostname`. Run `ls` on the workflow host, or copy graph into the CDSW **project** directory |
+| `kg_path_exists: false` on workflow host | `SEMANTICA_KG_PATH` not passed to MCP subprocess at workflow attach | Re-attach semantica MCP with env block; restart workflow session |
+| File missing entirely | `build_airline_graph.py` not run | `cd /home/cdsw/semantica && uv run python scripts/build_airline_graph.py` |
+| `kg_path_exists: true` but `node_count: 0` | Corrupt JSON or load failed silently | Set `SEMANTICA_LOG_LEVEL=INFO`, check stderr for load warnings |
+| `kg_path_exists: false` with correct path on host | bubblewrap sandbox cannot see the path | Set `ALLOW_AGENT_STUDIO_INSECURE_TOOL_EXECUTION=true` in MCP env (see `semantica-mcp.json`), or copy graph under `agent-studio/studio-data/workflows/` |
+
+`ALLOW_AGENT_STUDIO_INSECURE_TOOL_EXECUTION=true` disables bubblewrap for MCP/tool runs so host paths like `/home/cdsw/semantica/data/` are visible. It is included in the semantica MCP registration JSON and workflow attach env. **Security trade-off:** MCP runs without filesystem sandbox isolation. If bubblewrap is still active after workflow attach, also set the variable at **Project Settings → Advanced → Environment Variables** and restart the Agent Studio application ([Cloudera known issues](https://docs.cloudera.com/machine-learning/cloud/ai-studios-release-notes/topics/ml-ai-studios-known-issues.html)).
+
+**Verify on the workbench** (run on the **same** CDSW session that runs the workflow):
+
+```bash
+# Quick check
+ls -la /home/cdsw/semantica/data/airline_graph.json
+echo "SEMANTICA_KG_PATH=$SEMANTICA_KG_PATH"   # must NOT be /home/cdsw/data/...
+
+# Full smoke test (uses uvx like Agent Studio)
+bash /home/cdsw/semantica/deploy/cloudera-agent-studio/verify-kg-path.sh
+```
+
+**Do not** test with plain `uv run python -c "import semantica"` from `$HOME` — there is no
+`semantica` package in that directory. Either `cd /home/cdsw/semantica` first, or use `uvx --from
+git+https://github.com/frothkoetter/semantica.git@main` (see `verify-kg-path.sh`).
+
+After fixing env vars, restart the workflow (or re-attach the semantica MCP server) so the new
+`SEMANTICA_KG_PATH` is picked up. `get_graph_summary` should then show `kg_path_exists: true` and
+`ontology_class_count > 0`.
+
+## 7. Validate registration
 
 After register, Agent Studio should discover tools. If discovery is incomplete, tools still work when selected manually in the workflow.
 
@@ -110,7 +145,7 @@ Smoke test prompt:
 
 Expected: agent resolves `Flight.arrDelay` + `operatedBy` → SQL on `flights` + `airlines`.
 
-## 7. Generate config from local Cursor env (optional)
+## 8. Generate config from local Cursor env (optional)
 
 On your laptop (not on Agent Studio):
 
