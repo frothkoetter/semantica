@@ -24,7 +24,11 @@ def _placeholder(key: str, value: str) -> str:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--mcp-config", type=Path, default=DEFAULT_MCP)
-    parser.add_argument("--semantica-root", default="/home/cdsw/semantica")
+    parser.add_argument(
+        "--semantica-root",
+        default="/home/cdsw/semantica",
+        help="Workbench path for registration placeholders; workflow attach should use /workflow_data/...",
+    )
     parser.add_argument("--semantica-git", default=DEFAULT_SEMANTICA_GIT)
     parser.add_argument("--iceberg-root", default="/home/cdsw/iceberg-mcp-server-hive")
     parser.add_argument("--output-dir", type=Path, default=OUT_DIR)

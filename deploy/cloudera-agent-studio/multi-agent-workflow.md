@@ -15,7 +15,7 @@ One MCP server per agent. Semantica has **no** `HIVE_*` credentials.
 | MCP | `semantica` |
 | Tools | `get_graph_summary`, `get_business_rules`, `run_reasoning` (optional: `export_graph` with `subset: ontology`) |
 
-**Env:** `ALLOW_AGENT_STUDIO_INSECURE_TOOL_EXECUTION`, `SEMANTICA_KG_PATH`, `SEMANTICA_MAPPING_CONFIG`, `SEMANTICA_BUSINESS_RULES`.
+**Env:** `ALLOW_AGENT_STUDIO_INSECURE_TOOL_EXECUTION`, `SEMANTICA_KG_PATH`, `SEMANTICA_MAPPING_CONFIG`, `SEMANTICA_BUSINESS_RULES` — all under `/workflow_data/` (see [`README.md`](README.md) §5).
 
 **Task 1 — abort rules:**
 - If `get_graph_summary.node_count < 50` → `ready_for_sql: false`, STOP
@@ -59,6 +59,18 @@ One MCP server per agent. Semantica has **no** `HIVE_*` credentials.
 | SQL execution | — | yes |
 | Schema introspection | — | `get_schema`, `get_database_schema_info` |
 | Iceberg branches | — | yes |
+
+## Workflow data (runtime)
+
+Copy built artifacts into the workflow's `workflow_data` folder, then point MCP env at `/workflow_data/...`:
+
+```bash
+WORKFLOW_DIR=/home/cdsw/agent-studio/studio-data/workflows/<workflow_dir>
+mkdir -p "$WORKFLOW_DIR/workflow_data/data" "$WORKFLOW_DIR/workflow_data/config"
+cp /home/cdsw/semantica/data/airline_graph.json "$WORKFLOW_DIR/workflow_data/data/"
+cp /home/cdsw/semantica/config/airline_r2rml_db_mapping.yaml "$WORKFLOW_DIR/workflow_data/config/"
+cp /home/cdsw/semantica/config/airline_business_rules.yaml "$WORKFLOW_DIR/workflow_data/config/"
+```
 
 ## Build-time (not runtime)
 

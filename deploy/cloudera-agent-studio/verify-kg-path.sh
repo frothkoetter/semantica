@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # Verify airline_graph.json is reachable the same way semantica-mcp loads it.
 # Run on the SAME CDSW workbench host that runs the Agent Studio workflow session.
+#
+# For workflow MCP runs, use /workflow_data/... paths (see README.md §5) and validate with
+# get_graph_summary in the workflow — this script tests workbench/uvx paths only.
 set -euo pipefail
 
 SEMANTICA_ROOT="${SEMANTICA_ROOT:-/home/cdsw/semantica}"
