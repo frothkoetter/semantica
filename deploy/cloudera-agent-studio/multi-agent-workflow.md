@@ -162,20 +162,21 @@ sql_executor can run via execute_query.
 | Setting | Value |
 |---|---|
 | MCP server | `semantica` |
-| Tools exposed | `get_graph_summary`, `get_business_rules`, `run_reasoning`, `record_decision` |
+| Tools (check **only** these) | `get_graph_summary`, `get_business_rules`, `run_reasoning` |
+| Tools (optional) | `record_decision` (answer_synthesizer agent) |
+| Tools (leave **unchecked**) | `extract_entities`, `extract_relations`, `import_ontology`, `add_entity`, `add_relationship`, `export_graph` |
 
-> **Agent Studio cannot uncheck individual MCP tools.** Set env var
-> **`SEMANTICA_MCP_TOOLSET=preloaded_graph`** on the semantica MCP server (registration
-> and workflow attach). The server then hides `extract_entities`, `extract_relations`, and
-> other tools from `tools/list` so the agent cannot call them.
+In Agent Studio: edit agent → MCP → semantica → **uncheck** NER/extraction tools.
+`extract_entities` loads spaCy/ML and can hang for minutes — it is not needed when the graph
+is pre-loaded via `SEMANTICA_KG_PATH`.
 
-Do **not** use `SEMANTICA_MCP_TOOLSET=full` for this workflow.
+**Optional:** `SEMANTICA_MCP_TOOLSET=preloaded_graph` in MCP env hides unused tools server-side
+(useful if you prefer not to curate the checklist per agent).
 
 ### MCP env (workflow attach)
 
 ```
 ALLOW_AGENT_STUDIO_INSECURE_TOOL_EXECUTION=true
-SEMANTICA_MCP_TOOLSET=preloaded_graph
 SEMANTICA_KG_PATH=/workflow_data/data/airline_graph.json
 SEMANTICA_MAPPING_CONFIG=/workflow_data/config/airline_r2rml_db_mapping.yaml
 SEMANTICA_BUSINESS_RULES=/workflow_data/config/airline_business_rules.yaml
@@ -522,20 +523,18 @@ ORDER BY f.year, segments DESC;
 `NamedEntityRecognizer()` (spaCy/ML) on **every call** — first run can take many minutes in Agent Studio
 (especially after cold `uvx` start).
 
-**Fix (Agent Studio — UI cannot uncheck tools):**
+**Fix (Agent Studio):**
 
-1. Add to semantica MCP env (registration **and** workflow attach):
-   ```
-   SEMANTICA_MCP_TOOLSET=preloaded_graph
-   ```
-2. Restart workflow session (MCP subprocess must restart to pick up env).
-3. Confirm `tools/list` shows only 4 tools (no `extract_entities`).
-4. Use **local clone** until GitHub `main` has the toolset feature:
-   `"args": ["--from", "/home/cdsw/semantica", "semantica-mcp"]`
-5. Add to agent Background: `NEVER call extract_entities or extract_relations`
+1. Edit `ontology_mapper` → MCP → semantica → **uncheck** `extract_entities`, `extract_relations`
+2. Ensure **checked:** `get_graph_summary`, `get_business_rules` (+ optional `run_reasoning`)
+3. Add to agent Background: `First tool: get_graph_summary. Never call extract_entities.`
+4. Restart workflow session
 
-**Fallback** (if an old MCP build still lists NER tools): also set
-`SEMANTICA_MCP_DISABLE_ML=true` — calls return instantly with an error hint.
+**Optional server-side filter:** `SEMANTICA_MCP_TOOLSET=preloaded_graph` in MCP env (hides NER
+tools from `tools/list` even if left checked).
+
+**Fallback:** `SEMANTICA_MCP_DISABLE_ML=true` — if the agent still calls NER tools, they fail
+fast instead of loading spaCy.
 
 **Wrong trace (your log):**
 
@@ -564,7 +563,7 @@ agent 1 is `ontology_mapper` with the restricted tool list above.
 | Manager **OFF**, Sequential **ON** | Crew Manager ON (no MCP access, hallucination risk) |
 | First tool call: `get_graph_summary` | Describe graph from backstory when `graph_ready: false` |
 | `get_business_rules` for OTP/delay | `extract_entities` (ML NER — hangs) |
-| `SEMANTICA_MCP_TOOLSET=preloaded_graph` | Full 15-tool semantica MCP in Agent Studio |
+| Uncheck NER tools on ontology_mapper | Leave all 15 semantica tools enabled |
 | Use `/workflow_data/...` MCP paths | `/home/cdsw/semantica/...` in workflow env |
 | One MCP per agent | Both semantica + iceberg-hive on same agent |
 | Abort when `ready_for_sql: false` | Run SQL against empty graph |

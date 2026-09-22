@@ -43,7 +43,6 @@ def main() -> int:
 
     semantica_env = {
         "ALLOW_AGENT_STUDIO_INSECURE_TOOL_EXECUTION": "true",
-        "SEMANTICA_MCP_TOOLSET": "preloaded_graph",
         "SEMANTICA_KG_PATH": f"{args.semantica_root}/data/airline_graph.json",
         "SEMANTICA_MAPPING_CONFIG": f"{args.semantica_root}/config/airline_r2rml_db_mapping.yaml",
         "SEMANTICA_BUSINESS_RULES": f"{args.semantica_root}/config/airline_business_rules.yaml",

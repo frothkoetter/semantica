@@ -456,9 +456,10 @@ Loaded once when the graph is first accessed. Behavior:
 }
 ```
 
-#### `SEMANTICA_MCP_TOOLSET` — limit exposed tools (Agent Studio)
+#### `SEMANTICA_MCP_TOOLSET` — limit exposed tools (optional)
 
-Some MCP clients (e.g. Cloudera Agent Studio) expose every tool and cannot disable individual ones in the UI. Set a toolset preset so `tools/list` only advertises the tools you need:
+Set a toolset preset so `tools/list` only advertises the tools you need. Useful when you prefer
+env-based filtering instead of curating the tool checklist per agent (e.g. in Agent Studio):
 
 | Preset | Tools exposed | Use when |
 | :----- | :------------ | :------- |

@@ -822,7 +822,7 @@ TOOLS = [
     },
 ]
 
-# Presets for Agent Studio (cannot uncheck individual MCP tools in the UI).
+# Optional presets when clients expose all tools or you prefer env-based filtering.
 # preloaded_graph: graph loaded via SEMANTICA_KG_PATH — query/rules/reasoning only, no NER/build.
 _PRELOADED_GRAPH_TOOLS = [
     "get_graph_summary",
