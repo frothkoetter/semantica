@@ -139,6 +139,10 @@ MANDATORY tool order:
    Never describe ontology classes from memory when the graph is not loaded.
 3. Call get_business_rules before building the mapping plan.
 
+NEVER call extract_entities or extract_relations. The graph and business rules
+are already loaded — NER/extraction tools load heavy ML models and will timeout.
+For OTP questions, use get_business_rules (on_time_max_delay: 15), not NER.
+
 Business semantics (OTP, peak hours, delay severity) come from get_business_rules:
 - On-time = FAA 15-minute rule (arrdelay and depdelay <= 15, cancelled = 0)
 - Derived classes: OnTimeFlight, DelayedFlight, MorningPeak, etc.
@@ -158,14 +162,20 @@ sql_executor can run via execute_query.
 | Setting | Value |
 |---|---|
 | MCP server | `semantica` |
-| Tools | `get_graph_summary`, `get_business_rules`, `run_reasoning` |
+| Tools exposed | `get_graph_summary`, `get_business_rules`, `run_reasoning`, `record_decision` |
 
-Do **not** enable `export_graph` unless column-level mappings are required.
+> **Agent Studio cannot uncheck individual MCP tools.** Set env var
+> **`SEMANTICA_MCP_TOOLSET=preloaded_graph`** on the semantica MCP server (registration
+> and workflow attach). The server then hides `extract_entities`, `extract_relations`, and
+> other tools from `tools/list` so the agent cannot call them.
+
+Do **not** use `SEMANTICA_MCP_TOOLSET=full` for this workflow.
 
 ### MCP env (workflow attach)
 
 ```
 ALLOW_AGENT_STUDIO_INSECURE_TOOL_EXECUTION=true
+SEMANTICA_MCP_TOOLSET=preloaded_graph
 SEMANTICA_KG_PATH=/workflow_data/data/airline_graph.json
 SEMANTICA_MAPPING_CONFIG=/workflow_data/config/airline_r2rml_db_mapping.yaml
 SEMANTICA_BUSINESS_RULES=/workflow_data/config/airline_business_rules.yaml
@@ -205,7 +215,8 @@ For every user question:
 }
 
 4. Never call execute_query. Never call import_ontology.
-5. Do not call export_graph unless column mappings are required.
+5. Never call extract_entities or extract_relations (ML NER — will hang).
+6. Do not call export_graph unless column mappings are required.
 ```
 
 ---
@@ -402,6 +413,69 @@ Flight.operatedBy → Airline.
 
 ---
 
+## Example — Best airline OTP in 2005
+
+### User question
+
+```
+What airline has the best OTP in 2005?
+```
+
+### Correct tool trace (not extract_entities)
+
+| Step | Tool | Purpose |
+|---|---|---|
+| 1 | `get_graph_summary` | Confirm graph loaded |
+| 2 | `get_business_rules` | OTP = 15-min rule (`on_time_max_delay`) |
+| 3 | — | Mapping plan → sql_executor |
+
+### Mapping plan (ontology_mapper)
+
+```json
+{
+  "ready_for_sql": true,
+  "question_intent": "Airline with highest on-time performance in 2005",
+  "ontology_terms": ["Flight", "Airline", "OnTimeFlight", "OnTimePerformance", "operatedBy"],
+  "business_rules_applied": ["on_time_max_delay: 15", "cancelled = 0"],
+  "tables": ["flights", "airlines"],
+  "joins": [
+    {"from": "flights", "to": "airlines", "on": "flights.uniquecarrier = airlines.code"}
+  ],
+  "filters": ["flights.year = 2005", "flights.cancelled = 0"],
+  "metrics": [
+    {
+      "name": "otp_pct",
+      "expr": "100.0 * SUM(CASE WHEN arrdelay <= 15 AND depdelay <= 15 THEN 1 ELSE 0 END) / NULLIF(COUNT(*), 0)"
+    },
+    {"name": "flight_count", "expr": "COUNT(*)"}
+  ],
+  "group_by": ["airlines.code", "airlines.description"],
+  "order_by": "otp_pct DESC",
+  "having": "COUNT(*) >= 1000"
+}
+```
+
+### SQL (sql_executor)
+
+```sql
+SELECT
+  a.description AS airline_name,
+  a.code AS airline_code,
+  ROUND(100.0 * SUM(CASE WHEN f.arrdelay <= 15 AND f.depdelay <= 15 THEN 1 ELSE 0 END)
+    / NULLIF(COUNT(*), 0), 1) AS otp_pct,
+  COUNT(*) AS flight_count
+FROM airlinedata.flights f
+JOIN airlinedata.airlines a ON f.uniquecarrier = a.code
+WHERE f.year = 2005
+  AND f.cancelled = 0
+GROUP BY a.code, a.description
+HAVING COUNT(*) >= 1000
+ORDER BY otp_pct DESC
+LIMIT 5;
+```
+
+---
+
 ## Second example — Manufacturer OTP 2000–2008
 
 ### User question
@@ -440,16 +514,60 @@ ORDER BY f.year, segments DESC;
 
 ---
 
+## Troubleshooting: `extract_entities` hangs
+
+**Symptom:** Tool log shows `extract_entities` with a long synthetic paragraph; run never completes.
+
+**Cause:** The agent chose NER extraction instead of ontology tools. `extract_entities` instantiates
+`NamedEntityRecognizer()` (spaCy/ML) on **every call** — first run can take many minutes in Agent Studio
+(especially after cold `uvx` start).
+
+**Fix (Agent Studio — UI cannot uncheck tools):**
+
+1. Add to semantica MCP env (registration **and** workflow attach):
+   ```
+   SEMANTICA_MCP_TOOLSET=preloaded_graph
+   ```
+2. Restart workflow session (MCP subprocess must restart to pick up env).
+3. Confirm `tools/list` shows only 4 tools (no `extract_entities`).
+4. Use **local clone** until GitHub `main` has the toolset feature:
+   `"args": ["--from", "/home/cdsw/semantica", "semantica-mcp"]`
+5. Add to agent Background: `NEVER call extract_entities or extract_relations`
+
+**Fallback** (if an old MCP build still lists NER tools): also set
+`SEMANTICA_MCP_DISABLE_ML=true` — calls return instantly with an error hint.
+
+**Wrong trace (your log):**
+
+```
+extract_entities({"text": "On-Time Performance (OTP) is a KPI defined in..."})
+```
+
+**Correct trace for OTP 2005:**
+
+```
+get_graph_summary({})
+get_business_rules({})
+→ mapping plan JSON
+→ sql_executor: execute_query(...)
+```
+
+If the agent role shows as "Lead Semantic Architect" or similar, ensure **Manager is OFF** and
+agent 1 is `ontology_mapper` with the restricted tool list above.
+
+---
+
 ## Conversational mode tips
 
 | Do | Don't |
 |---|---|
 | Manager **OFF**, Sequential **ON** | Crew Manager ON (no MCP access, hallucination risk) |
 | First tool call: `get_graph_summary` | Describe graph from backstory when `graph_ready: false` |
+| `get_business_rules` for OTP/delay | `extract_entities` (ML NER — hangs) |
+| `SEMANTICA_MCP_TOOLSET=preloaded_graph` | Full 15-tool semantica MCP in Agent Studio |
 | Use `/workflow_data/...` MCP paths | `/home/cdsw/semantica/...` in workflow env |
 | One MCP per agent | Both semantica + iceberg-hive on same agent |
 | Abort when `ready_for_sql: false` | Run SQL against empty graph |
-| `get_business_rules` before OTP/delay questions | Hard-code 15 min without checking rules |
 
 ---
 

@@ -38,6 +38,9 @@ Environment variables:
     SEMANTICA_KG_PATH          — path to a persisted graph to load on start (optional)
     SEMANTICA_MAPPING_CONFIG   — default ontology↔DB mapping YAML path (optional)
     SEMANTICA_BUSINESS_RULES   — business rules YAML (thresholds, flight status, SQL) (optional)
+    SEMANTICA_MCP_TOOLSET      — expose a subset of tools (e.g. preloaded_graph for Agent Studio)
+    SEMANTICA_MCP_TOOLS        — comma-separated tool names (overrides SEMANTICA_MCP_TOOLSET)
+    SEMANTICA_MCP_DISABLE_ML   — if true, extract_entities/extract_relations fail fast (no spaCy load)
     SEMANTICA_LOG_LEVEL        — log level: DEBUG, INFO, WARNING (default: WARNING)
 
 Hive/Iceberg SQL and schema introspection: use iceberg-mcp-server-hive (not this server).
@@ -108,11 +111,25 @@ def _get_graph():
 # Tool implementations
 # ══════════════════════════════════════════════════════════════════════════════
 
+def _ml_extraction_disabled() -> bool:
+    """True when NER/relation tools must not load spaCy/ML (Agent Studio airline demo)."""
+    flag = (os.environ.get("SEMANTICA_MCP_DISABLE_ML") or "").strip().lower()
+    if flag in ("1", "true", "yes"):
+        return True
+    toolset = (os.environ.get("SEMANTICA_MCP_TOOLSET") or "").strip().lower()
+    return bool(toolset and toolset not in ("full", "all", "*"))
+
+
 def _tool_extract_entities(args: dict) -> dict:
     """Extract named entities from text."""
     text = args.get("text", "")
     if not text:
         return {"error": "text is required"}
+    if _ml_extraction_disabled():
+        return {
+            "error": "extract_entities disabled for this MCP profile",
+            "hint": "Use get_graph_summary and get_business_rules (pre-loaded airline graph).",
+        }
     from semantica.semantic_extract import NamedEntityRecognizer
     entities = NamedEntityRecognizer().extract_entities(text)
     return {
@@ -131,6 +148,11 @@ def _tool_extract_relations(args: dict) -> dict:
     text = args.get("text", "")
     if not text:
         return {"error": "text is required"}
+    if _ml_extraction_disabled():
+        return {
+            "error": "extract_relations disabled for this MCP profile",
+            "hint": "Use get_graph_summary and get_business_rules (pre-loaded airline graph).",
+        }
     from semantica.semantic_extract import RelationExtractor, TripletExtractor
     relations = RelationExtractor().extract_relations(text)
     triplets = TripletExtractor().extract_triplets(text)
@@ -800,6 +822,55 @@ TOOLS = [
     },
 ]
 
+# Presets for Agent Studio (cannot uncheck individual MCP tools in the UI).
+# preloaded_graph: graph loaded via SEMANTICA_KG_PATH — query/rules/reasoning only, no NER/build.
+_PRELOADED_GRAPH_TOOLS = [
+    "get_graph_summary",
+    "get_business_rules",
+    "run_reasoning",
+    "record_decision",
+]
+MCP_TOOLSETS: dict[str, list[str]] = {
+    "preloaded_graph": _PRELOADED_GRAPH_TOOLS,
+    "airline_analytics": _PRELOADED_GRAPH_TOOLS,  # deprecated alias
+}
+
+
+def resolve_active_tools(all_tools: list[dict]) -> list[dict]:
+    """Filter tools by SEMANTICA_MCP_TOOLS or SEMANTICA_MCP_TOOLSET env."""
+    names: list[str] | None = None
+    explicit = (os.environ.get("SEMANTICA_MCP_TOOLS") or "").strip()
+    toolset = (os.environ.get("SEMANTICA_MCP_TOOLSET") or "").strip()
+    if explicit:
+        names = [n.strip() for n in explicit.split(",") if n.strip()]
+    elif toolset:
+        key = toolset.lower()
+        if key in ("full", "all", "*"):
+            names = None
+        else:
+            preset = MCP_TOOLSETS.get(key) or MCP_TOOLSETS.get(toolset)
+            if preset is None:
+                log.warning("Unknown SEMANTICA_MCP_TOOLSET=%r; exposing all tools", toolset)
+                names = None
+            else:
+                names = preset
+    if names is None:
+        return all_tools
+    by_name = {t["name"]: t for t in all_tools}
+    active = [by_name[n] for n in names if n in by_name]
+    unknown = set(names) - set(by_name)
+    if unknown:
+        log.warning("SEMANTICA_MCP_TOOLS unknown names: %s", sorted(unknown))
+    log.info(
+        "MCP tool filter active (%s): %s",
+        toolset or explicit or "custom",
+        [t["name"] for t in active],
+    )
+    return active
+
+
+ACTIVE_TOOLS = resolve_active_tools(TOOLS)
+
 RESOURCES = [
     {
         "uri": "semantica://graph/summary",
@@ -831,7 +902,7 @@ def _read_resource(uri: str) -> dict:
         return {
             "name": "Semantica",
             "version": _SEMANTICA_VERSION,
-            "tools": [t["name"] for t in TOOLS],
+            "tools": [t["name"] for t in ACTIVE_TOOLS],
             "resources": [r["uri"] for r in RESOURCES],
         }
     return {"error": f"Unknown resource URI: {uri}"}
@@ -884,14 +955,14 @@ def _handle(req: dict) -> dict | None:
     if method == "tools/list":
         tools_out = [
             {"name": t["name"], "description": t["description"], "inputSchema": t["inputSchema"]}
-            for t in TOOLS
+            for t in ACTIVE_TOOLS
         ]
         return ok({"tools": tools_out})
 
     if method == "tools/call":
         name = params.get("name", "")
         arguments = params.get("arguments") or {}
-        handler = next((t["_handler"] for t in TOOLS if t["name"] == name), None)
+        handler = next((t["_handler"] for t in ACTIVE_TOOLS if t["name"] == name), None)
         if handler is None:
             return err(-32601, f"Unknown tool: {name}")
         try:

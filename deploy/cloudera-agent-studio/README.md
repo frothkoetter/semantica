@@ -80,7 +80,7 @@ See [`multi-agent-workflow.md`](multi-agent-workflow.md).
 1. Create workflow → **Manager OFF**, **Sequential**, **Conversational ON**
 2. Add agents: `ontology_mapper` (semantica only), `sql_executor` (iceberg only)
 3. Enable tools per agent (do not attach both MCPs to one agent):
-   - **ontology_mapper / semantica:** `get_graph_summary`, `run_reasoning` (avoid `export_graph` unless mappings required)
+   - **ontology_mapper / semantica:** set `SEMANTICA_MCP_TOOLSET=preloaded_graph` in MCP env (Agent Studio cannot uncheck tools — this hides NER/extraction tools server-side).
    - **sql_executor / iceberg-hive:** `execute_query`
 4. Paste `HIVE_*` credentials only on **iceberg-hive** workflow attach step
 

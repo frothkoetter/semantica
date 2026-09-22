@@ -456,6 +456,19 @@ Loaded once when the graph is first accessed. Behavior:
 }
 ```
 
+#### `SEMANTICA_MCP_TOOLSET` — limit exposed tools (Agent Studio)
+
+Some MCP clients (e.g. Cloudera Agent Studio) expose every tool and cannot disable individual ones in the UI. Set a toolset preset so `tools/list` only advertises the tools you need:
+
+| Preset | Tools exposed | Use when |
+| :----- | :------------ | :------- |
+| `preloaded_graph` | `get_graph_summary`, `get_business_rules`, `run_reasoning`, `record_decision` | Graph loaded via `SEMANTICA_KG_PATH`; no NER/build tools |
+| `full` / unset | All tools | Local dev, full extraction pipeline |
+
+Override with a comma-separated list: `SEMANTICA_MCP_TOOLS=get_graph_summary,get_business_rules`.
+
+`SEMANTICA_MCP_DISABLE_ML=true` makes `extract_entities` / `extract_relations` fail fast (no spaCy load) if an old client still calls them.
+
 #### `import_ontology` — loading OWL/TTL/RDF at runtime
 
 Unlike `SEMANTICA_KG_PATH`, this tool fails explicitly and returns an `error` field:
