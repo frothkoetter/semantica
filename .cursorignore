@@ -1,0 +1,12 @@
+# Agent index exclusions
+
+.venv/
+venv/
+kdm/hive/.batches/
+kdm/hive/.chunks/
+kdm/hive/.chunks250/
+kdm/hive/.chunk_json/
+kdm/hive/.mcp_payload/
+kdm/hive/xunternehmen_seed_large.sql
+kdm/viz/
+data/airline_graph.json
