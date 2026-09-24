@@ -1,0 +1,202 @@
+# Derived from data/xunternehmen_mapping.ttl (R2RML → Semantica YAML bridge)
+# Database: xunternehmen (see kdm/hive/xunternehmen_ddl.sql)
+# Ontology: https://w3id.org/kdm/
+#
+# Table/column keys are normalized for lookup: lowercase, no underscores/hyphens.
+# Example: natuerliche_person → natuerlicheperson
+
+ontology_namespace: "https://w3id.org/kdm/"
+
+database: xunternehmen
+
+tables:
+  # Kerndatenobjekte — Personen & wirtschaftliche Tätigkeit
+  natuerlicheperson: NatuerlichePerson
+  namenatuerlicheperson: NameEinerNatuerlichenPerson
+  geburt: Geburt
+  juristischeperson: JuristischePerson
+  rechtsfaehigepersonengesellschaft: RechtsfaehigePersonengesellschaft
+  sonstigepersonenvereinigung: SonstigePersonenvereinigung
+  wirtschaftlichtaetigkeit: WirtschaftlicheTaetigkeit
+
+  # Kerndatenobjekte — Anschrift, Kommunikation, Register
+  anschrift: Anschrift
+  kommunikation: Kommunikation
+  eintragung: Eintragung
+  sitz: Sitz
+  effektiververwaltungssitz: EffektiverVerwaltungssitz
+  betriebsstaette: Betriebsstaette
+  wirtschaftszweig: Wirtschaftszweig
+
+  # Vorgänge
+  antrag: Antrag
+  anzeige: Anzeige
+
+  # Rollen (BFO)
+  rollewirtschaftlichtaetiger: WirtschaftlichTaetiger
+  rollegesellschafter: Gesellschafter
+  rollegesetzlichervertreter: GesetzlicherVertreter
+  rollebeteiligter: Beteiligter
+  rolleantragsteller: Antragsteller
+  rolleanzeigender: Anzeigender
+  rollehandelndeperson: HandelndePerson
+  rolleansprechpartner: Ansprechpartner
+
+columns:
+  _global:
+    # Shared address / location fields (kdm:Anschrift, kdm:Sitz, kdm:Eintragung, kdm:Geburt)
+    ort: ort
+    staat: staat
+    strasse: strasse
+    hausnummer: hausnummer
+    postleitzahl: postleitzahl
+    postfach: postfach
+
+    # Shared org identifiers
+    eingetragenername: eingetragenerName
+    bundeseinheitlichewirtschaftsnummer: bundeseinheitlicheWirtschaftsnummer
+    rechtsformencode: rechtsformenCode
+
+  natuerlicheperson:
+    doktorgrad: doktorgrad
+    geschlechtcode: geschlechtCode
+    identifikationsnummer: identifikationsnummer
+    staatsangehoerigkeitcode: staatsangehoerigkeitCode
+
+  namenatuerlicheperson:
+    vornamen: vornamen
+    familienname: familienname
+    geburtsname: geburtsname
+    familiennamenichtvorhanden: familiennameNichtVorhanden
+    geburtsnamenichtvorhanden: geburtsnameNichtVorhanden
+    vornamennichtvorhanden: vornamenNichtVorhanden
+
+  geburt:
+    geburtsdatum: geburtsdatum
+    ortdergeburt: ortDerGeburt
+
+  wirtschaftlichtaetigkeit:
+    geschaeftsbezeichnung: geschaeftsbezeichnung
+    taetigkeit: taetigkeit
+
+  anschrift:
+    artanschriftcode: artAnschriftCode
+    gemeindeschluesselcode: gemeindeschluesselCode
+    frueherergemeindename: fruehererGemeindename
+    wohnungsinhaber: wohnungsinhaber
+    zusatzangabenanschrift: zusatzangabenAnschrift
+
+  kommunikation:
+    klassifikationkommunikationcode: klassifikationKommunikationCode
+    kommunikationhinweis: kommunikationHinweis
+    emailadresse: emailadresse
+    telefonnummer: telefonnummer
+    telefaxnummer: telefaxnummer
+    demailadresse: demailadresse
+    webadresse: webadresse
+
+  eintragung:
+    arteintragungcode: artEintragungCode
+    eintragungsnummer: eintragungsnummer
+    registergerichtcode: registergerichtCode
+    registergerichtbezeichnung: registergerichtBezeichnung
+    stiftungsverzeichnis: stiftungsverzeichnis
+
+  betriebsstaette:
+    artbetriebsstaettecode: artBetriebsstaetteCode
+
+  wirtschaftszweig:
+    wirtschaftszweigschluessel: wirtschaftszweigschluessel
+    versionwirtschaftszweigschluesselcode: versionWirtschaftszweigschluesselCode
+
+  antrag:
+    vorgangsnummer: vorgangsnummer
+    eingangsdatum: eingangsdatum
+
+  anzeige:
+    vorgangsnummer: vorgangsnummer
+    eingangsdatum: eingangsdatum
+
+  rollegesellschafter:
+    artgesellschaftercode: artGesellschafterCode
+
+  rollegesetzlichervertreter:
+    artgesetzlichervertretercode: artGesetzlicherVertreterCode
+
+  rolleantragsteller:
+    artangabeantragstelleranzeigendercode: artAngabeAntragstellerAnzeigenderCode
+
+  rolleanzeigender:
+    artangabeantragstelleranzeigendercode: artAngabeAntragstellerAnzeigenderCode
+
+foreign_keys:
+  # 1:1 / 1:n Kerndatenobjekt-Beziehungen
+  - source_table: namenatuerlicheperson
+    target_table: natuerlicheperson
+    edge_type: nameEinerNatuerlichenPerson
+
+  - source_table: geburt
+    target_table: natuerlicheperson
+    edge_type: geburt
+
+  - source_table: betriebsstaette
+    target_table: wirtschaftlichtaetigkeit
+    edge_type: betriebsstaette
+
+  - source_table: wirtschaftszweig
+    target_table: wirtschaftlichtaetigkeit
+    edge_type: wirtschaftszweig
+
+  # Rollen → Kerndatenobjekte / Vorgänge
+  - source_table: rollewirtschaftlichtaetiger
+    target_table: wirtschaftlichtaetigkeit
+    edge_type: wirtschaftlichTaetiger
+
+  - source_table: rollegesellschafter
+    target_table: rechtsfaehigepersonengesellschaft
+    edge_type: gesellschafter
+
+  - source_table: rollebeteiligter
+    target_table: sonstigepersonenvereinigung
+    edge_type: beteiligter
+
+  - source_table: rollebeteiligter
+    target_table: natuerlicheperson
+    edge_type: beteiligterID
+
+  - source_table: rolleantragsteller
+    target_table: antrag
+    edge_type: antragsteller
+
+  - source_table: rolleanzeigender
+    target_table: anzeige
+    edge_type: anzeigender
+
+  - source_table: rollehandelndeperson
+    target_table: natuerlicheperson
+    edge_type: handelndePersonID
+
+  - source_table: rolleansprechpartner
+    target_table: natuerlicheperson
+    edge_type: ansprechpartnerID
+
+  # Zuordnungstabellen → Kerndatenobjekte (kdm:anschrift, kdm:kommunikation, …)
+  - source_table: zuordnunganschrift
+    target_table: anschrift
+    edge_type: anschrift
+
+  - source_table: zuordnungkommunikation
+    target_table: kommunikation
+    edge_type: kommunikation
+
+  - source_table: zuordnungeintragung
+    target_table: eintragung
+    edge_type: eintragung
+
+  - source_table: zuordnungsitz
+    target_table: sitz
+    edge_type: sitz
+
+  - source_table: zuordnungeffektiververwaltungssitz
+    target_table: effektiververwaltungssitz
+    edge_type: effektiverVerwaltungssitz

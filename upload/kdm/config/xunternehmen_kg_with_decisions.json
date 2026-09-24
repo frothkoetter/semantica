@@ -1,0 +1,5836 @@
+{
+  "graph_id": "a4890304-3b8b-443c-83a5-0bcec9479996",
+  "nodes": [
+    {
+      "id": "https://w3id.org/kdm/",
+      "type": "Ontology",
+      "properties": {
+        "uri": "https://w3id.org/kdm/",
+        "version": "Version 1.2",
+        "description": null,
+        "source": "ontology_import",
+        "content": "ontology.owl"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/Anschrift",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/Anschrift",
+        "label": "Anschrift",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [],
+        "source": "ontology_import",
+        "content": "Anschrift"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/AnschriftAusland",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/AnschriftAusland",
+        "label": "Anschrift Ausland",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [
+          "https://w3id.org/kdm/Anschrift"
+        ],
+        "source": "ontology_import",
+        "content": "Anschrift Ausland"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/AnschriftInland",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/AnschriftInland",
+        "label": "Anschrift Inland",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [
+          "https://w3id.org/kdm/Anschrift"
+        ],
+        "source": "ontology_import",
+        "content": "Anschrift Inland"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/AnschriftInlandGrossempfaengeranschrift",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/AnschriftInlandGrossempfaengeranschrift",
+        "label": "Anschrift Inland Großempfängeranschrift",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [
+          "https://w3id.org/kdm/AnschriftInland"
+        ],
+        "source": "ontology_import",
+        "content": "Anschrift Inland Großempfängeranschrift"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/AnschriftInlandPostfachanschrift",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/AnschriftInlandPostfachanschrift",
+        "label": "Anschrift Inland Postfachanschrift",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [
+          "https://w3id.org/kdm/AnschriftInland"
+        ],
+        "source": "ontology_import",
+        "content": "Anschrift Inland Postfachanschrift"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/AnschriftInlandStrassenanschrift",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/AnschriftInlandStrassenanschrift",
+        "label": "Anschrift Inland Straßenanschrift",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [
+          "https://w3id.org/kdm/AnschriftInland"
+        ],
+        "source": "ontology_import",
+        "content": "Anschrift Inland Straßenanschrift"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/Ansprechpartner",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/Ansprechpartner",
+        "label": "Ansprechpartner",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [
+          "http://purl.obolibrary.org/obo/BFO_0000023"
+        ],
+        "source": "ontology_import",
+        "content": "Ansprechpartner"
+      }
+    },
+    {
+      "id": "http://purl.obolibrary.org/obo/BFO_0000023",
+      "type": "entity",
+      "properties": {
+        "content": "http://purl.obolibrary.org/obo/BFO_0000023"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/Antrag",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/Antrag",
+        "label": "Antrag eines wirtschaftlichen Tätigen",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [],
+        "source": "ontology_import",
+        "content": "Antrag eines wirtschaftlichen Tätigen"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/Antragsteller",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/Antragsteller",
+        "label": "Antragsteller",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [
+          "http://purl.obolibrary.org/obo/BFO_0000023"
+        ],
+        "source": "ontology_import",
+        "content": "Antragsteller"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/Anzeige",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/Anzeige",
+        "label": "Anzeige eines wirtschaftlichen Tätigen",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [],
+        "source": "ontology_import",
+        "content": "Anzeige eines wirtschaftlichen Tätigen"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/Anzeigender",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/Anzeigender",
+        "label": "Anzeigender",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [
+          "http://purl.obolibrary.org/obo/BFO_0000023"
+        ],
+        "source": "ontology_import",
+        "content": "Anzeigender"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/Beteiligter",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/Beteiligter",
+        "label": "Beteiligter einer sonstigen Personenvereinigung",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [
+          "http://purl.obolibrary.org/obo/BFO_0000023"
+        ],
+        "source": "ontology_import",
+        "content": "Beteiligter einer sonstigen Personenvereinigung"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/Betriebsstaette",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/Betriebsstaette",
+        "label": "Betriebsstätte",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [],
+        "source": "ontology_import",
+        "content": "Betriebsstätte"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/Demail",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/Demail",
+        "label": "De-Mail",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [
+          "https://w3id.org/kdm/Kommunikation"
+        ],
+        "source": "ontology_import",
+        "content": "De-Mail"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/Kommunikation",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/Kommunikation",
+        "label": "Kommunikation",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [],
+        "source": "ontology_import",
+        "content": "Kommunikation"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/EffektiverVerwaltungssitz",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/EffektiverVerwaltungssitz",
+        "label": "Effektiver Verwaltungssitz",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [],
+        "source": "ontology_import",
+        "content": "Effektiver Verwaltungssitz"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/Eintragung",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/Eintragung",
+        "label": "Eintragung",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [],
+        "source": "ontology_import",
+        "content": "Eintragung"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/Email",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/Email",
+        "label": "E-Mail",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [
+          "https://w3id.org/kdm/Kommunikation"
+        ],
+        "source": "ontology_import",
+        "content": "E-Mail"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/Geburt",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/Geburt",
+        "label": "Geburt",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [],
+        "source": "ontology_import",
+        "content": "Geburt"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/Gesellschafter",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/Gesellschafter",
+        "label": "Gesellschafter",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [
+          "http://purl.obolibrary.org/obo/BFO_0000023"
+        ],
+        "source": "ontology_import",
+        "content": "Gesellschafter"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/GesetzlicherVertreter",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/GesetzlicherVertreter",
+        "label": "Gesetzlicher Vertreter",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [
+          "http://purl.obolibrary.org/obo/BFO_0000023"
+        ],
+        "source": "ontology_import",
+        "content": "Gesetzlicher Vertreter"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/HandelndePerson",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/HandelndePerson",
+        "label": "Handelnde Person",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [
+          "http://purl.obolibrary.org/obo/BFO_0000023"
+        ],
+        "source": "ontology_import",
+        "content": "Handelnde Person"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/JuristischePerson",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/JuristischePerson",
+        "label": "Juristische Person",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [
+          "http://www.ontologyrepository.com/CommonCoreOntologies/Agent"
+        ],
+        "source": "ontology_import",
+        "content": "Juristische Person"
+      }
+    },
+    {
+      "id": "http://www.ontologyrepository.com/CommonCoreOntologies/Agent",
+      "type": "entity",
+      "properties": {
+        "content": "http://www.ontologyrepository.com/CommonCoreOntologies/Agent"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/NameEinerNatuerlichenPerson",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/NameEinerNatuerlichenPerson",
+        "label": "Name einer natürlichen Person",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [],
+        "source": "ontology_import",
+        "content": "Name einer natürlichen Person"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/NatuerlichePerson",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/NatuerlichePerson",
+        "label": "Natürliche Person",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [
+          "http://www.ontologyrepository.com/CommonCoreOntologies/Agent"
+        ],
+        "source": "ontology_import",
+        "content": "Natürliche Person"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/Personengesellschaft",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/Personengesellschaft",
+        "label": "Personengesellschaft",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [],
+        "source": "ontology_import",
+        "content": "Personengesellschaft"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/RechtsfaehigePersonengesellschaft",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/RechtsfaehigePersonengesellschaft",
+        "label": "Rechtsfähige Personengesellschaft",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [
+          "http://www.ontologyrepository.com/CommonCoreOntologies/Agent"
+        ],
+        "source": "ontology_import",
+        "content": "Rechtsfähige Personengesellschaft"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/Sitz",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/Sitz",
+        "label": "Sitz",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [],
+        "source": "ontology_import",
+        "content": "Sitz"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/SonstigePersonenvereinigung",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/SonstigePersonenvereinigung",
+        "label": "Sonstige Personenvereinigung",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [
+          "http://www.ontologyrepository.com/CommonCoreOntologies/Agent"
+        ],
+        "source": "ontology_import",
+        "content": "Sonstige Personenvereinigung"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/Staat",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/Staat",
+        "label": "Staat",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [],
+        "source": "ontology_import",
+        "content": "Staat"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/Telefax",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/Telefax",
+        "label": "Telefax",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [
+          "https://w3id.org/kdm/Kommunikation"
+        ],
+        "source": "ontology_import",
+        "content": "Telefax"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/Telefon",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/Telefon",
+        "label": "Telefon",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [
+          "https://w3id.org/kdm/Kommunikation"
+        ],
+        "source": "ontology_import",
+        "content": "Telefon"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/WebAdresse",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/WebAdresse",
+        "label": "Web-Adresse",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [
+          "https://w3id.org/kdm/Kommunikation"
+        ],
+        "source": "ontology_import",
+        "content": "Web-Adresse"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/WirtschaftlichTaetiger",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/WirtschaftlichTaetiger",
+        "label": "Wirtschaftlich Tätiger",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [
+          "http://purl.obolibrary.org/obo/BFO_0000023"
+        ],
+        "source": "ontology_import",
+        "content": "Wirtschaftlich Tätiger"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/WirtschaftlicheTaetigkeit",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/WirtschaftlicheTaetigkeit",
+        "label": "Wirtschaftliche Tätigkeit",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [
+          "http://purl.obolibrary.org/obo/BFO_0000017"
+        ],
+        "source": "ontology_import",
+        "content": "Wirtschaftliche Tätigkeit"
+      }
+    },
+    {
+      "id": "http://purl.obolibrary.org/obo/BFO_0000017",
+      "type": "entity",
+      "properties": {
+        "content": "http://purl.obolibrary.org/obo/BFO_0000017"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/Wirtschaftszweig",
+      "type": "OntologyClass",
+      "properties": {
+        "uri": "https://w3id.org/kdm/Wirtschaftszweig",
+        "label": "Wirtschaftszweig",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "description": null,
+        "parents": [],
+        "source": "ontology_import",
+        "content": "Wirtschaftszweig"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/anschrift",
+      "type": "ObjectProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/anschrift",
+        "label": "hat Anschrift",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "object",
+        "description": null,
+        "domain": null,
+        "range": "https://w3id.org/kdm/Anschrift",
+        "source": "ontology_import",
+        "content": "hat Anschrift"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/ansprechpartner",
+      "type": "ObjectProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/ansprechpartner",
+        "label": "hat Ansprechpartner",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "object",
+        "description": null,
+        "domain": null,
+        "range": "https://w3id.org/kdm/Ansprechpartner",
+        "source": "ontology_import",
+        "content": "hat Ansprechpartner"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/ansprechpartnerID",
+      "type": "ObjectProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/ansprechpartnerID",
+        "label": "Ansprechpartner ist",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "object",
+        "description": null,
+        "domain": "https://w3id.org/kdm/Ansprechpartner",
+        "range": "https://w3id.org/kdm/NatuerlichePerson",
+        "source": "ontology_import",
+        "content": "Ansprechpartner ist"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/antragsteller",
+      "type": "ObjectProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/antragsteller",
+        "label": "hat Antragsteller",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "object",
+        "description": null,
+        "domain": "https://w3id.org/kdm/Antrag",
+        "range": "https://w3id.org/kdm/Antragsteller",
+        "source": "ontology_import",
+        "content": "hat Antragsteller"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/antragstellerID",
+      "type": "ObjectProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/antragstellerID",
+        "label": "Antragsteller ist",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "object",
+        "description": null,
+        "domain": "https://w3id.org/kdm/Antragsteller",
+        "range": null,
+        "source": "ontology_import",
+        "content": "Antragsteller ist"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/anzeigender",
+      "type": "ObjectProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/anzeigender",
+        "label": "hat Anzeigenden",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "object",
+        "description": null,
+        "domain": "https://w3id.org/kdm/Anzeige",
+        "range": "https://w3id.org/kdm/Anzeigender",
+        "source": "ontology_import",
+        "content": "hat Anzeigenden"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/anzeigenderID",
+      "type": "ObjectProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/anzeigenderID",
+        "label": "Anzeigender ist",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "object",
+        "description": null,
+        "domain": "https://w3id.org/kdm/Anzeigender",
+        "range": null,
+        "source": "ontology_import",
+        "content": "Anzeigender ist"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/beteiligter",
+      "type": "ObjectProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/beteiligter",
+        "label": "hat Beteiligten",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "object",
+        "description": null,
+        "domain": "https://w3id.org/kdm/RechtsfaehigePersonengesellschaft",
+        "range": "https://w3id.org/kdm/Beteiligter",
+        "source": "ontology_import",
+        "content": "hat Beteiligten"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/beteiligterID",
+      "type": "ObjectProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/beteiligterID",
+        "label": "Beteiligter ist",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "object",
+        "description": null,
+        "domain": "https://w3id.org/kdm/Beteiligter",
+        "range": "https://w3id.org/kdm/NatuerlichePerson",
+        "source": "ontology_import",
+        "content": "Beteiligter ist"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/betriebsstaette",
+      "type": "ObjectProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/betriebsstaette",
+        "label": "hat Betriebsstätte",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "object",
+        "description": null,
+        "domain": "https://w3id.org/kdm/WirtschaftlicheTaetigkeit",
+        "range": "https://w3id.org/kdm/Betriebsstaette",
+        "source": "ontology_import",
+        "content": "hat Betriebsstätte"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/demail",
+      "type": "ObjectProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/demail",
+        "label": "hat De-Mail",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "object",
+        "description": null,
+        "domain": "https://w3id.org/kdm/Kommunikation",
+        "range": "https://w3id.org/kdm/Demail",
+        "source": "ontology_import",
+        "content": "hat De-Mail"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/effektiverVerwaltungssitz",
+      "type": "ObjectProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/effektiverVerwaltungssitz",
+        "label": "hat effektiven Verwaltungssitz",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "object",
+        "description": null,
+        "domain": null,
+        "range": "https://w3id.org/kdm/EffektiverVerwaltungssitz",
+        "source": "ontology_import",
+        "content": "hat effektiven Verwaltungssitz"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/eintragung",
+      "type": "ObjectProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/eintragung",
+        "label": "hat Eintragung",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "object",
+        "description": null,
+        "domain": null,
+        "range": "https://w3id.org/kdm/Eintragung",
+        "source": "ontology_import",
+        "content": "hat Eintragung"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/email",
+      "type": "ObjectProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/email",
+        "label": "hat E-Mail",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "object",
+        "description": null,
+        "domain": "https://w3id.org/kdm/Kommunikation",
+        "range": "https://w3id.org/kdm/Email",
+        "source": "ontology_import",
+        "content": "hat E-Mail"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/geburt",
+      "type": "ObjectProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/geburt",
+        "label": "hat Geburt",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "object",
+        "description": null,
+        "domain": "https://w3id.org/kdm/NatuerlichePerson",
+        "range": "https://w3id.org/kdm/Geburt",
+        "source": "ontology_import",
+        "content": "hat Geburt"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/gesellschafter",
+      "type": "ObjectProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/gesellschafter",
+        "label": "hat Gesellschafter",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "object",
+        "description": null,
+        "domain": "https://w3id.org/kdm/Personengesellschaft",
+        "range": "https://w3id.org/kdm/Gesellschafter",
+        "source": "ontology_import",
+        "content": "hat Gesellschafter"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/gesellschafterID",
+      "type": "ObjectProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/gesellschafterID",
+        "label": "Gesellschafter ist",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "object",
+        "description": null,
+        "domain": "https://w3id.org/kdm/Gesellschafter",
+        "range": null,
+        "source": "ontology_import",
+        "content": "Gesellschafter ist"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/gesetzlicherVertreter",
+      "type": "ObjectProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/gesetzlicherVertreter",
+        "label": "hat gesetzlichen Vertreter",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "object",
+        "description": null,
+        "domain": "https://w3id.org/kdm/GesetzlicherVertreter",
+        "range": null,
+        "source": "ontology_import",
+        "content": "hat gesetzlichen Vertreter"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/gesetzlicherVertreterID",
+      "type": "ObjectProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/gesetzlicherVertreterID",
+        "label": "Gesetzlicher Vertreter ist",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "object",
+        "description": null,
+        "domain": "https://w3id.org/kdm/GesetzlicherVertreter",
+        "range": null,
+        "source": "ontology_import",
+        "content": "Gesetzlicher Vertreter ist"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/handelndePerson",
+      "type": "ObjectProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/handelndePerson",
+        "label": "hat handelnde Person",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "object",
+        "description": null,
+        "domain": null,
+        "range": "https://w3id.org/kdm/HandelndePerson",
+        "source": "ontology_import",
+        "content": "hat handelnde Person"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/handelndePersonID",
+      "type": "ObjectProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/handelndePersonID",
+        "label": "Handelnde Person ist",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "object",
+        "description": null,
+        "domain": "https://w3id.org/kdm/HandelndePerson",
+        "range": "https://w3id.org/kdm/NatuerlichePerson",
+        "source": "ontology_import",
+        "content": "Handelnde Person ist"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/kommunikation",
+      "type": "ObjectProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/kommunikation",
+        "label": "hat Kommunikation",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "object",
+        "description": null,
+        "domain": null,
+        "range": "https://w3id.org/kdm/Kommunikation",
+        "source": "ontology_import",
+        "content": "hat Kommunikation"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/nameEinerNatuerlichenPerson",
+      "type": "ObjectProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/nameEinerNatuerlichenPerson",
+        "label": "hat Namen",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "object",
+        "description": null,
+        "domain": "https://w3id.org/kdm/NatuerlichePerson",
+        "range": "https://w3id.org/kdm/NameEinerNatuerlichenPerson",
+        "source": "ontology_import",
+        "content": "hat Namen"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/sitz",
+      "type": "ObjectProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/sitz",
+        "label": "hat Sitz",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "object",
+        "description": null,
+        "domain": null,
+        "range": "https://w3id.org/kdm/Sitz",
+        "source": "ontology_import",
+        "content": "hat Sitz"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/telefax",
+      "type": "ObjectProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/telefax",
+        "label": "hat Telefax",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "object",
+        "description": null,
+        "domain": "https://w3id.org/kdm/Kommunikation",
+        "range": "https://w3id.org/kdm/Telefax",
+        "source": "ontology_import",
+        "content": "hat Telefax"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/telefon",
+      "type": "ObjectProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/telefon",
+        "label": "hat Telefon",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "object",
+        "description": null,
+        "domain": "https://w3id.org/kdm/Kommunikation",
+        "range": "https://w3id.org/kdm/Telefon",
+        "source": "ontology_import",
+        "content": "hat Telefon"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/web",
+      "type": "ObjectProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/web",
+        "label": "hat Web-Adresse",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "object",
+        "description": null,
+        "domain": "https://w3id.org/kdm/Kommunikation",
+        "range": "https://w3id.org/kdm/WebAdresse",
+        "source": "ontology_import",
+        "content": "hat Web-Adresse"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/wirtschaftlichTaetiger",
+      "type": "ObjectProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/wirtschaftlichTaetiger",
+        "label": "hat Wirtschaftlich Tätigen",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "object",
+        "description": null,
+        "domain": "https://w3id.org/kdm/WirtschaftlicheTaetigkeit",
+        "range": "https://w3id.org/kdm/WirtschaftlichTaetiger",
+        "source": "ontology_import",
+        "content": "hat Wirtschaftlich Tätigen"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/wirtschaftlichTaetigerID",
+      "type": "ObjectProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/wirtschaftlichTaetigerID",
+        "label": "Wirtschaftlich Tätiger ist",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "object",
+        "description": null,
+        "domain": "https://w3id.org/kdm/WirtschaftlichTaetiger",
+        "range": null,
+        "source": "ontology_import",
+        "content": "Wirtschaftlich Tätiger ist"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/wirtschaftszweig",
+      "type": "ObjectProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/wirtschaftszweig",
+        "label": "hat Wirtschaftszweig",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "object",
+        "description": null,
+        "domain": "https://w3id.org/kdm/WirtschaftlicheTaetigkeit",
+        "range": "https://w3id.org/kdm/Wirtschaftszweig",
+        "source": "ontology_import",
+        "content": "hat Wirtschaftszweig"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/artAngabeAntragstellerAnzeigenderCode",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/artAngabeAntragstellerAnzeigenderCode",
+        "label": "Art der Angabe des Antragstellers oder des Anzeigenden",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": null,
+        "range": "urn:xoev-de:xunternehmen:codeliste:angabeantragstelleranzeigender",
+        "source": "ontology_import",
+        "content": "Art der Angabe des Antragstellers oder des Anzeigenden"
+      }
+    },
+    {
+      "id": "urn:xoev-de:xunternehmen:codeliste:angabeantragstelleranzeigender",
+      "type": "entity",
+      "properties": {
+        "content": "urn:xoev-de:xunternehmen:codeliste:angabeantragstelleranzeigender"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/artAnschriftCode",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/artAnschriftCode",
+        "label": "Art der Anschrift",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": null,
+        "range": "urn:xoev-de:xunternehmen:codeliste:artanschrift",
+        "source": "ontology_import",
+        "content": "Art der Anschrift"
+      }
+    },
+    {
+      "id": "urn:xoev-de:xunternehmen:codeliste:artanschrift",
+      "type": "entity",
+      "properties": {
+        "content": "urn:xoev-de:xunternehmen:codeliste:artanschrift"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/artBetriebsstaetteCode",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/artBetriebsstaetteCode",
+        "label": "Art der Betriebsstätte",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/Betriebsstaette",
+        "range": "urn:xoev-de:xunternehmen:codeliste:artniederlassung",
+        "source": "ontology_import",
+        "content": "Art der Betriebsstätte"
+      }
+    },
+    {
+      "id": "urn:xoev-de:xunternehmen:codeliste:artniederlassung",
+      "type": "entity",
+      "properties": {
+        "content": "urn:xoev-de:xunternehmen:codeliste:artniederlassung"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/artEintragungCode",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/artEintragungCode",
+        "label": "Art der Eintragung",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/Eintragung",
+        "range": "urn:xoev-de:xunternehmen:codeliste:artdereintragung",
+        "source": "ontology_import",
+        "content": "Art der Eintragung"
+      }
+    },
+    {
+      "id": "urn:xoev-de:xunternehmen:codeliste:artdereintragung",
+      "type": "entity",
+      "properties": {
+        "content": "urn:xoev-de:xunternehmen:codeliste:artdereintragung"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/artGesellschafterCode",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/artGesellschafterCode",
+        "label": "Art des Gesellschafters",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/Gesellschafter",
+        "range": "urn:xoev-de:xunternehmen:codeliste:artgesellschafterpersonengesellschaft",
+        "source": "ontology_import",
+        "content": "Art des Gesellschafters"
+      }
+    },
+    {
+      "id": "urn:xoev-de:xunternehmen:codeliste:artgesellschafterpersonengesellschaft",
+      "type": "entity",
+      "properties": {
+        "content": "urn:xoev-de:xunternehmen:codeliste:artgesellschafterpersonengesellschaft"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/artGesetzlicherVertreterCode",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/artGesetzlicherVertreterCode",
+        "label": "Art des Gesetzlichen Vertreters",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/GesetzlicherVertreter",
+        "range": "urn:xoev-de:xunternehmen:codeliste:artgesetzlichervertreter",
+        "source": "ontology_import",
+        "content": "Art des Gesetzlichen Vertreters"
+      }
+    },
+    {
+      "id": "urn:xoev-de:xunternehmen:codeliste:artgesetzlichervertreter",
+      "type": "entity",
+      "properties": {
+        "content": "urn:xoev-de:xunternehmen:codeliste:artgesetzlichervertreter"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/bundeseinheitlicheWirtschaftsnummer",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/bundeseinheitlicheWirtschaftsnummer",
+        "label": "Bundeseinheitliche Wirtschaftsnummer",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": null,
+        "range": "http://www.w3.org/2001/XMLSchema#string",
+        "source": "ontology_import",
+        "content": "Bundeseinheitliche Wirtschaftsnummer"
+      }
+    },
+    {
+      "id": "http://www.w3.org/2001/XMLSchema#string",
+      "type": "entity",
+      "properties": {
+        "content": "http://www.w3.org/2001/XMLSchema#string"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/demailadresse",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/demailadresse",
+        "label": "De-Mail-Adresse",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/Demail",
+        "range": "http://www.w3.org/2001/XMLSchema#string",
+        "source": "ontology_import",
+        "content": "De-Mail-Adresse"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/doktorgrad",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/doktorgrad",
+        "label": "Doktorgrad",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/NatuerlichePerson",
+        "range": "http://www.w3.org/2001/XMLSchema#string",
+        "source": "ontology_import",
+        "content": "Doktorgrad"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/eingetragenerName",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/eingetragenerName",
+        "label": "eingetragenen Namen",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": null,
+        "range": "http://www.w3.org/2001/XMLSchema#string",
+        "source": "ontology_import",
+        "content": "eingetragenen Namen"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/eintragungsnummer",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/eintragungsnummer",
+        "label": "Eintragungsnummer",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/Eintragung",
+        "range": "http://www.w3.org/2001/XMLSchema#string",
+        "source": "ontology_import",
+        "content": "Eintragungsnummer"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/emailadresse",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/emailadresse",
+        "label": "E-Mail-Adresse",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/Email",
+        "range": "http://www.w3.org/2001/XMLSchema#string",
+        "source": "ontology_import",
+        "content": "E-Mail-Adresse"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/familienname",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/familienname",
+        "label": "Familienname",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/NameEinerNatuerlichenPerson",
+        "range": "http://www.w3.org/2001/XMLSchema#string",
+        "source": "ontology_import",
+        "content": "Familienname"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/familiennameNichtVorhanden",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/familiennameNichtVorhanden",
+        "label": "Familienname nicht vorhanden",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/NameEinerNatuerlichenPerson",
+        "range": "http://www.w3.org/2001/XMLSchema#boolean",
+        "source": "ontology_import",
+        "content": "Familienname nicht vorhanden"
+      }
+    },
+    {
+      "id": "http://www.w3.org/2001/XMLSchema#boolean",
+      "type": "entity",
+      "properties": {
+        "content": "http://www.w3.org/2001/XMLSchema#boolean"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/fruehererGemeindename",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/fruehererGemeindename",
+        "label": "Früherer Gemeindename",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/AnschriftInlandStrassenanschrift",
+        "range": "http://www.w3.org/2001/XMLSchema#string",
+        "source": "ontology_import",
+        "content": "Früherer Gemeindename"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/geburtsdatum",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/geburtsdatum",
+        "label": "Geburtsdatum",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": "Die Datumsangabe per xsd:date, xsd:gYear oder xsd:gYearMonth ist im Format zu restriktiv, da an dieser Stelle im XUnternehmen.Kerndatenmodell keine Beschränkungen gemacht werden bzw. auf eine deutsche Datumgsangabe zurückzugreifen ist.",
+        "domain": "https://w3id.org/kdm/Geburt",
+        "range": "http://www.w3.org/2001/XMLSchema#string",
+        "source": "ontology_import",
+        "content": "Geburtsdatum"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/geburtsname",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/geburtsname",
+        "label": "Geburtsname",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/NameEinerNatuerlichenPerson",
+        "range": "http://www.w3.org/2001/XMLSchema#string",
+        "source": "ontology_import",
+        "content": "Geburtsname"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/geburtsnameNichtVorhanden",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/geburtsnameNichtVorhanden",
+        "label": "Geburtsname nicht vorhanden",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/NameEinerNatuerlichenPerson",
+        "range": "http://www.w3.org/2001/XMLSchema#boolean",
+        "source": "ontology_import",
+        "content": "Geburtsname nicht vorhanden"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/gemeindeschluesselCode",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/gemeindeschluesselCode",
+        "label": "Gemeindeschlüssel",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/AnschriftInlandStrassenanschrift",
+        "range": "urn:de:bund:destatis:bevoelkerungsstatistik:schluessel:ags",
+        "source": "ontology_import",
+        "content": "Gemeindeschlüssel"
+      }
+    },
+    {
+      "id": "urn:de:bund:destatis:bevoelkerungsstatistik:schluessel:ags",
+      "type": "entity",
+      "properties": {
+        "content": "urn:de:bund:destatis:bevoelkerungsstatistik:schluessel:ags"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/geschaeftsbezeichnung",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/geschaeftsbezeichnung",
+        "label": "Geschäftsbezeichnung",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/WirtschaftlicheTaetigkeit",
+        "range": "http://www.w3.org/2001/XMLSchema#string",
+        "source": "ontology_import",
+        "content": "Geschäftsbezeichnung"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/geschlechtCode",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/geschlechtCode",
+        "label": "Geschlecht",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/NatuerlichePerson",
+        "range": "urn:xoev-de:xinneres:codeliste:geschlecht",
+        "source": "ontology_import",
+        "content": "Geschlecht"
+      }
+    },
+    {
+      "id": "urn:xoev-de:xinneres:codeliste:geschlecht",
+      "type": "entity",
+      "properties": {
+        "content": "urn:xoev-de:xinneres:codeliste:geschlecht"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/hausnummer",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/hausnummer",
+        "label": "Hausnummer",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": null,
+        "range": "http://www.w3.org/2001/XMLSchema#string",
+        "source": "ontology_import",
+        "content": "Hausnummer"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/identifikationsnummer",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/identifikationsnummer",
+        "label": "Identifikationsnummer",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/NatuerlichePerson",
+        "range": "http://www.w3.org/2001/XMLSchema#string",
+        "source": "ontology_import",
+        "content": "Identifikationsnummer"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/klassifikationKommunikationCode",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/klassifikationKommunikationCode",
+        "label": "Klassifikation der Kommunikationsangabe",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/Kommunikation",
+        "range": "urn:xoev-de:xunternehmen:codeliste:klassifikationkommunikation",
+        "source": "ontology_import",
+        "content": "Klassifikation der Kommunikationsangabe"
+      }
+    },
+    {
+      "id": "urn:xoev-de:xunternehmen:codeliste:klassifikationkommunikation",
+      "type": "entity",
+      "properties": {
+        "content": "urn:xoev-de:xunternehmen:codeliste:klassifikationkommunikation"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/kommunikationHinweis",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/kommunikationHinweis",
+        "label": "Hinweis zur Kommunikation",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/Kommunikation",
+        "range": "http://www.w3.org/2001/XMLSchema#string",
+        "source": "ontology_import",
+        "content": "Hinweis zur Kommunikation"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/ort",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/ort",
+        "label": "Ort",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": null,
+        "range": "http://www.w3.org/2001/XMLSchema#string",
+        "source": "ontology_import",
+        "content": "Ort"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/ortDerGeburt",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/ortDerGeburt",
+        "label": "Ort der Geburt",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/Geburt",
+        "range": "http://www.w3.org/2001/XMLSchema#string",
+        "source": "ontology_import",
+        "content": "Ort der Geburt"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/postfach",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/postfach",
+        "label": "Postfach",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/AnschriftInlandGrossempfaengeranschrift",
+        "range": "http://www.w3.org/2001/XMLSchema#string",
+        "source": "ontology_import",
+        "content": "Postfach"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/postleitzahl",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/postleitzahl",
+        "label": "Postleitzahl",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": null,
+        "range": "http://www.w3.org/2001/XMLSchema#string",
+        "source": "ontology_import",
+        "content": "Postleitzahl"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/rechtsformenCode",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/rechtsformenCode",
+        "label": "Rechtsform",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": null,
+        "range": "urn:xoev-de:xunternehmen:codeliste:rechtsformen",
+        "source": "ontology_import",
+        "content": "Rechtsform"
+      }
+    },
+    {
+      "id": "urn:xoev-de:xunternehmen:codeliste:rechtsformen",
+      "type": "entity",
+      "properties": {
+        "content": "urn:xoev-de:xunternehmen:codeliste:rechtsformen"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/registergerichtBezeichnung",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/registergerichtBezeichnung",
+        "label": "Bezeichnung Registergericht",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/Eintragung",
+        "range": "http://www.w3.org/2001/XMLSchema#string",
+        "source": "ontology_import",
+        "content": "Bezeichnung Registergericht"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/registergerichtCode",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/registergerichtCode",
+        "label": "Registergericht Code",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/Eintragung",
+        "range": "urn:xoev-de:xunternehmen:codeliste:registergerichte",
+        "source": "ontology_import",
+        "content": "Registergericht Code"
+      }
+    },
+    {
+      "id": "urn:xoev-de:xunternehmen:codeliste:registergerichte",
+      "type": "entity",
+      "properties": {
+        "content": "urn:xoev-de:xunternehmen:codeliste:registergerichte"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/staat",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/staat",
+        "label": "Staat",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": null,
+        "range": "http://www.w3.org/2001/XMLSchema#string",
+        "source": "ontology_import",
+        "content": "Staat"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/staatsangehoerigkeitCode",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/staatsangehoerigkeitCode",
+        "label": "Staatsangehörigkeit Code",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/NatuerlichePerson",
+        "range": "urn:de:bund:destatis:bevoelkerungsstatistik:schluessel:staatsangehoerigkeit",
+        "source": "ontology_import",
+        "content": "Staatsangehörigkeit Code"
+      }
+    },
+    {
+      "id": "urn:de:bund:destatis:bevoelkerungsstatistik:schluessel:staatsangehoerigkeit",
+      "type": "entity",
+      "properties": {
+        "content": "urn:de:bund:destatis:bevoelkerungsstatistik:schluessel:staatsangehoerigkeit"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/stiftungsverzeichnis",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/stiftungsverzeichnis",
+        "label": "Stiftungsverzeichnis in",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/Eintragung",
+        "range": "http://www.w3.org/2001/XMLSchema#string",
+        "source": "ontology_import",
+        "content": "Stiftungsverzeichnis in"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/strasse",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/strasse",
+        "label": "Straße",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": null,
+        "range": "http://www.w3.org/2001/XMLSchema#string",
+        "source": "ontology_import",
+        "content": "Straße"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/taetigkeit",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/taetigkeit",
+        "label": "Tätigkeit",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/WirtschaftlicheTaetigkeit",
+        "range": "http://www.w3.org/2001/XMLSchema#string",
+        "source": "ontology_import",
+        "content": "Tätigkeit"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/telefaxnummer",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/telefaxnummer",
+        "label": "Telefaxnummer",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/Telefax",
+        "range": "http://www.w3.org/2001/XMLSchema#string",
+        "source": "ontology_import",
+        "content": "Telefaxnummer"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/telefonnummer",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/telefonnummer",
+        "label": "Telefonnummer",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/Telefon",
+        "range": "http://www.w3.org/2001/XMLSchema#string",
+        "source": "ontology_import",
+        "content": "Telefonnummer"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/versionWirtschaftszweigschluesselCode",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/versionWirtschaftszweigschluesselCode",
+        "label": "Version der Wirtschaftszweigklassifikation",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/Wirtschaftszweig",
+        "range": "urn:xoev-de:xunternehmen:codeliste:wirtschaftszweigklassifikationsversion",
+        "source": "ontology_import",
+        "content": "Version der Wirtschaftszweigklassifikation"
+      }
+    },
+    {
+      "id": "urn:xoev-de:xunternehmen:codeliste:wirtschaftszweigklassifikationsversion",
+      "type": "entity",
+      "properties": {
+        "content": "urn:xoev-de:xunternehmen:codeliste:wirtschaftszweigklassifikationsversion"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/vornamen",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/vornamen",
+        "label": "Vornamen",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/NameEinerNatuerlichenPerson",
+        "range": "http://www.w3.org/2001/XMLSchema#string",
+        "source": "ontology_import",
+        "content": "Vornamen"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/vornamenNichtVorhanden",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/vornamenNichtVorhanden",
+        "label": "Geburtsname nicht vorhanden",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/NameEinerNatuerlichenPerson",
+        "range": "http://www.w3.org/2001/XMLSchema#boolean",
+        "source": "ontology_import",
+        "content": "Geburtsname nicht vorhanden"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/webadresse",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/webadresse",
+        "label": "Web-Adresse",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/WebAdresse",
+        "range": "http://www.w3.org/2001/XMLSchema#string",
+        "source": "ontology_import",
+        "content": "Web-Adresse"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/wirtschaftszweigschluessel",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/wirtschaftszweigschluessel",
+        "label": "Wirtschaftszweigschlüssel",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/Wirtschaftszweig",
+        "range": "http://www.w3.org/2001/XMLSchema#string",
+        "source": "ontology_import",
+        "content": "Wirtschaftszweigschlüssel"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/wohnungsinhaber",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/wohnungsinhaber",
+        "label": "Wohnungsinhaber",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": "https://w3id.org/kdm/AnschriftInlandStrassenanschrift",
+        "range": "http://www.w3.org/2001/XMLSchema#string",
+        "source": "ontology_import",
+        "content": "Wohnungsinhaber"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/zusatzangabenAnschrift",
+      "type": "DatatypeProperty",
+      "properties": {
+        "uri": "https://w3id.org/kdm/zusatzangabenAnschrift",
+        "label": "Zusatzangaben",
+        "ontology_uri": "https://w3id.org/kdm/",
+        "property_kind": "data",
+        "description": null,
+        "domain": null,
+        "range": "http://www.w3.org/2001/XMLSchema#string",
+        "source": "ontology_import",
+        "content": "Zusatzangaben"
+      }
+    },
+    {
+      "id": "business_rule:threshold:idnr_min_length",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "threshold",
+        "ontology_class": null,
+        "when": null,
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/xunternehmen_business_rules.yaml",
+        "metadata": {
+          "value": 11
+        },
+        "content": "idnr_min_length"
+      }
+    },
+    {
+      "id": "business_rule:threshold:plz_inland_pattern",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "threshold",
+        "ontology_class": null,
+        "when": null,
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/xunternehmen_business_rules.yaml",
+        "metadata": {
+          "value": "^[0-9]{5}$"
+        },
+        "content": "plz_inland_pattern"
+      }
+    },
+    {
+      "id": "business_rule:threshold:wz_code_length",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "threshold",
+        "ontology_class": null,
+        "when": null,
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/xunternehmen_business_rules.yaml",
+        "metadata": {
+          "value": 5
+        },
+        "content": "wz_code_length"
+      }
+    },
+    {
+      "id": "business_rule:threshold:min_confidence_tier_a",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "threshold",
+        "ontology_class": null,
+        "when": null,
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/xunternehmen_business_rules.yaml",
+        "metadata": {
+          "value": 0.85
+        },
+        "content": "min_confidence_tier_a"
+      }
+    },
+    {
+      "id": "business_rule:anschrift_type_rules:InlandStrassenanschrift",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "anschrift_type_rules",
+        "ontology_class": "InlandStrassenanschrift",
+        "when": "anschrift_typ = 'INLAND_STRASSE' AND strasse IS NOT NULL AND postleitzahl IS NOT NULL AND ort IS NOT NULL",
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/xunternehmen_business_rules.yaml",
+        "metadata": {},
+        "content": "InlandStrassenanschrift"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/InlandStrassenanschrift",
+      "type": "entity",
+      "properties": {
+        "content": "https://w3id.org/kdm/InlandStrassenanschrift"
+      }
+    },
+    {
+      "id": "business_rule:anschrift_type_rules:InlandPostfachanschrift",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "anschrift_type_rules",
+        "ontology_class": "InlandPostfachanschrift",
+        "when": "anschrift_typ = 'INLAND_POSTFACH' AND postfach IS NOT NULL AND postleitzahl IS NOT NULL",
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/xunternehmen_business_rules.yaml",
+        "metadata": {},
+        "content": "InlandPostfachanschrift"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/InlandPostfachanschrift",
+      "type": "entity",
+      "properties": {
+        "content": "https://w3id.org/kdm/InlandPostfachanschrift"
+      }
+    },
+    {
+      "id": "business_rule:anschrift_type_rules:InlandGrossempfaengeranschrift",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "anschrift_type_rules",
+        "ontology_class": "InlandGrossempfaengeranschrift",
+        "when": "anschrift_typ = 'INLAND_GROSSEMPFAENGER' AND postfach IS NOT NULL",
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/xunternehmen_business_rules.yaml",
+        "metadata": {},
+        "content": "InlandGrossempfaengeranschrift"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/InlandGrossempfaengeranschrift",
+      "type": "entity",
+      "properties": {
+        "content": "https://w3id.org/kdm/InlandGrossempfaengeranschrift"
+      }
+    },
+    {
+      "id": "business_rule:anschrift_type_rules:AuslandAnschrift",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "anschrift_type_rules",
+        "ontology_class": "AuslandAnschrift",
+        "when": "anschrift_typ = 'AUSLAND' AND staat IS NOT NULL AND staat <> '000'",
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/xunternehmen_business_rules.yaml",
+        "metadata": {},
+        "content": "AuslandAnschrift"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/AuslandAnschrift",
+      "type": "entity",
+      "properties": {
+        "content": "https://w3id.org/kdm/AuslandAnschrift"
+      }
+    },
+    {
+      "id": "business_rule:kommunikation_channel_rules:EmailKanal",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "kommunikation_channel_rules",
+        "ontology_class": "EmailKanal",
+        "when": "kommunikation_art = 'EMAIL' AND emailadresse IS NOT NULL",
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/xunternehmen_business_rules.yaml",
+        "metadata": {},
+        "content": "EmailKanal"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/EmailKanal",
+      "type": "entity",
+      "properties": {
+        "content": "https://w3id.org/kdm/EmailKanal"
+      }
+    },
+    {
+      "id": "business_rule:kommunikation_channel_rules:TelefonKanal",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "kommunikation_channel_rules",
+        "ontology_class": "TelefonKanal",
+        "when": "kommunikation_art = 'TELEFON' AND telefonnummer IS NOT NULL",
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/xunternehmen_business_rules.yaml",
+        "metadata": {},
+        "content": "TelefonKanal"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/TelefonKanal",
+      "type": "entity",
+      "properties": {
+        "content": "https://w3id.org/kdm/TelefonKanal"
+      }
+    },
+    {
+      "id": "business_rule:kommunikation_channel_rules:InkonsistenteKommunikation",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "kommunikation_channel_rules",
+        "ontology_class": "InkonsistenteKommunikation",
+        "when": "kommunikation_art = 'EMAIL' AND (emailadresse IS NULL OR TRIM(emailadresse) = '')",
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/xunternehmen_business_rules.yaml",
+        "metadata": {},
+        "content": "InkonsistenteKommunikation"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/InkonsistenteKommunikation",
+      "type": "entity",
+      "properties": {
+        "content": "https://w3id.org/kdm/InkonsistenteKommunikation"
+      }
+    },
+    {
+      "id": "business_rule:natuerliche_person_completeness_rules:VollstaendigeNatuerlichePerson",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "natuerliche_person_completeness_rules",
+        "ontology_class": "VollstaendigeNatuerlichePerson",
+        "when": "geschlecht_code IS NOT NULL AND EXISTS name AND EXISTS geburt",
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/xunternehmen_business_rules.yaml",
+        "metadata": {},
+        "content": "VollstaendigeNatuerlichePerson"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/VollstaendigeNatuerlichePerson",
+      "type": "entity",
+      "properties": {
+        "content": "https://w3id.org/kdm/VollstaendigeNatuerlichePerson"
+      }
+    },
+    {
+      "id": "business_rule:natuerliche_person_completeness_rules:UnvollstaendigeNatuerlichePerson",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "natuerliche_person_completeness_rules",
+        "ontology_class": "UnvollstaendigeNatuerlichePerson",
+        "when": "NOT (geschlecht_code IS NOT NULL AND EXISTS name AND EXISTS geburt)",
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/xunternehmen_business_rules.yaml",
+        "metadata": {},
+        "content": "UnvollstaendigeNatuerlichePerson"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/UnvollstaendigeNatuerlichePerson",
+      "type": "entity",
+      "properties": {
+        "content": "https://w3id.org/kdm/UnvollstaendigeNatuerlichePerson"
+      }
+    },
+    {
+      "id": "business_rule:organisation_completeness_rules:RegisterEingetragen",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "organisation_completeness_rules",
+        "ontology_class": "RegisterEingetragen",
+        "when": "EXISTS zuordnung_eintragung",
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/xunternehmen_business_rules.yaml",
+        "metadata": {},
+        "content": "RegisterEingetragen"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/RegisterEingetragen",
+      "type": "entity",
+      "properties": {
+        "content": "https://w3id.org/kdm/RegisterEingetragen"
+      }
+    },
+    {
+      "id": "business_rule:organisation_completeness_rules:HatSitz",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "organisation_completeness_rules",
+        "ontology_class": "HatSitz",
+        "when": "EXISTS zuordnung_sitz",
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/xunternehmen_business_rules.yaml",
+        "metadata": {},
+        "content": "HatSitz"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/HatSitz",
+      "type": "entity",
+      "properties": {
+        "content": "https://w3id.org/kdm/HatSitz"
+      }
+    },
+    {
+      "id": "business_rule:organisation_completeness_rules:VollstaendigeOrganisation",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "organisation_completeness_rules",
+        "ontology_class": "VollstaendigeOrganisation",
+        "when": "eingetragener_name IS NOT NULL AND bundeseinheitliche_wirtschaftsnummer IS NOT NULL AND EXISTS zuordnung_eintragung AND EXISTS zuordnung_sitz",
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/xunternehmen_business_rules.yaml",
+        "metadata": {},
+        "content": "VollstaendigeOrganisation"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/VollstaendigeOrganisation",
+      "type": "entity",
+      "properties": {
+        "content": "https://w3id.org/kdm/VollstaendigeOrganisation"
+      }
+    },
+    {
+      "id": "business_rule:wirtschaftliche_taetigkeit_rules:HatHauptbetriebsstaette",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "wirtschaftliche_taetigkeit_rules",
+        "ontology_class": "HatHauptbetriebsstaette",
+        "when": "EXISTS betriebsstaette WHERE art_betriebsstaette_code = '01'",
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/xunternehmen_business_rules.yaml",
+        "metadata": {},
+        "content": "HatHauptbetriebsstaette"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/HatHauptbetriebsstaette",
+      "type": "entity",
+      "properties": {
+        "content": "https://w3id.org/kdm/HatHauptbetriebsstaette"
+      }
+    },
+    {
+      "id": "business_rule:wirtschaftliche_taetigkeit_rules:HatWirtschaftszweig",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "wirtschaftliche_taetigkeit_rules",
+        "ontology_class": "HatWirtschaftszweig",
+        "when": "EXISTS wirtschaftszweig",
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/xunternehmen_business_rules.yaml",
+        "metadata": {},
+        "content": "HatWirtschaftszweig"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/HatWirtschaftszweig",
+      "type": "entity",
+      "properties": {
+        "content": "https://w3id.org/kdm/HatWirtschaftszweig"
+      }
+    },
+    {
+      "id": "business_rule:data_quality_tier_rules:TierA_Vollstaendig",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "data_quality_tier_rules",
+        "ontology_class": "TierA_Vollstaendig",
+        "when": "all mandatory KDM blocks present for entity type",
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/xunternehmen_business_rules.yaml",
+        "metadata": {},
+        "content": "TierA_Vollstaendig"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/TierA_Vollstaendig",
+      "type": "entity",
+      "properties": {
+        "content": "https://w3id.org/kdm/TierA_Vollstaendig"
+      }
+    },
+    {
+      "id": "business_rule:data_quality_tier_rules:TierB_Teilweise",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "data_quality_tier_rules",
+        "ontology_class": "TierB_Teilweise",
+        "when": "core identifier present but secondary links missing",
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/xunternehmen_business_rules.yaml",
+        "metadata": {},
+        "content": "TierB_Teilweise"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/TierB_Teilweise",
+      "type": "entity",
+      "properties": {
+        "content": "https://w3id.org/kdm/TierB_Teilweise"
+      }
+    },
+    {
+      "id": "business_rule:data_quality_tier_rules:TierC_Minimal",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "data_quality_tier_rules",
+        "ontology_class": "TierC_Minimal",
+        "when": "only PK and one attribute present",
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/xunternehmen_business_rules.yaml",
+        "metadata": {},
+        "content": "TierC_Minimal"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/TierC_Minimal",
+      "type": "entity",
+      "properties": {
+        "content": "https://w3id.org/kdm/TierC_Minimal"
+      }
+    },
+    {
+      "id": "business_rule:vorgang_readiness_rules:AntragEinreichbar",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "vorgang_readiness_rules",
+        "ontology_class": "AntragEinreichbar",
+        "when": "EXISTS rolle_antragsteller AND EXISTS rolle_handelnde_person",
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/xunternehmen_business_rules.yaml",
+        "metadata": {},
+        "content": "AntragEinreichbar"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/AntragEinreichbar",
+      "type": "entity",
+      "properties": {
+        "content": "https://w3id.org/kdm/AntragEinreichbar"
+      }
+    },
+    {
+      "id": "business_rule:vorgang_readiness_rules:AnzeigeVollstaendig",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "vorgang_readiness_rules",
+        "ontology_class": "AnzeigeVollstaendig",
+        "when": "EXISTS rolle_anzeigender AND EXISTS rolle_ansprechpartner",
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/xunternehmen_business_rules.yaml",
+        "metadata": {},
+        "content": "AnzeigeVollstaendig"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/AnzeigeVollstaendig",
+      "type": "entity",
+      "properties": {
+        "content": "https://w3id.org/kdm/AnzeigeVollstaendig"
+      }
+    },
+    {
+      "id": "business_rule:analytics_templates:register_completeness",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "analytics_templates",
+        "ontology_class": null,
+        "when": null,
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/xunternehmen_business_rules.yaml",
+        "metadata": {
+          "question": "Anteil juristischer Personen mit Eintragung und Sitz",
+          "classes": [
+            "JuristischePerson",
+            "RegisterEingetragen",
+            "HatSitz"
+          ],
+          "kpi": "COUNT(complete) / COUNT(JuristischePerson)"
+        },
+        "content": "register_completeness"
+      }
+    },
+    {
+      "id": "business_rule:analytics_templates:personen_datenqualitaet",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "analytics_templates",
+        "ontology_class": null,
+        "when": null,
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/xunternehmen_business_rules.yaml",
+        "metadata": {
+          "question": "Vollständige vs. unvollständige natürliche Personen",
+          "classes": [
+            "VollstaendigeNatuerlichePerson",
+            "UnvollstaendigeNatuerlichePerson"
+          ]
+        },
+        "content": "personen_datenqualitaet"
+      }
+    },
+    {
+      "id": "business_rule:analytics_templates:vorgang_bereitschaft",
+      "type": "BusinessRule",
+      "properties": {
+        "rule_kind": "analytics_templates",
+        "ontology_class": null,
+        "when": null,
+        "source": "/Users/frothkoetter/se-tools/github/semantica/config/xunternehmen_business_rules.yaml",
+        "metadata": {
+          "question": "Anträge ohne Antragsteller oder Handelnde Person",
+          "classes": [
+            "Antrag",
+            "AntragEinreichbar"
+          ]
+        },
+        "content": "vorgang_bereitschaft"
+      }
+    },
+    {
+      "id": "5e570778-8bff-4a29-99c1-1be4a9dbdc60",
+      "type": "decision",
+      "properties": {
+        "category": "data_quality_tier",
+        "outcome": "TierA_Vollstaendig",
+        "confidence": 0.94,
+        "timestamp": 1790278575.495158,
+        "scenario": "Natürliche Person np-000042: Name, Geburt, Geschlecht, Anschrift und Kommunikation vorhanden",
+        "decision_maker": "kdm_quality_agent",
+        "reasoning": "Alle Pflicht-KDM-Blöcke für NatuerlichePerson erfüllt (Tier-A-Kriterien)",
+        "content": "Natürliche Person np-000042: Name, Geburt, Geschlecht, Anschrift und Kommunikation vorhanden"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/NatuerlichePerson/np-000042",
+      "type": "entity",
+      "properties": {
+        "name": "https://w3id.org/kdm/NatuerlichePerson/np-000042",
+        "content": "https://w3id.org/kdm/NatuerlichePerson/np-000042"
+      }
+    },
+    {
+      "id": "category_data_quality_tier",
+      "type": "category",
+      "properties": {
+        "name": "data_quality_tier",
+        "content": "category_data_quality_tier"
+      }
+    },
+    {
+      "id": "maker_kdm_quality_agent",
+      "type": "decision_maker",
+      "properties": {
+        "name": "kdm_quality_agent",
+        "content": "maker_kdm_quality_agent"
+      }
+    },
+    {
+      "id": "95668556-91f5-4e0c-958c-a53ceffa6a2e",
+      "type": "decision",
+      "properties": {
+        "category": "data_quality_tier",
+        "outcome": "TierB_Teilweise",
+        "confidence": 0.88,
+        "timestamp": 1790278575.496323,
+        "scenario": "Natürliche Person np-001287: Name vorhanden, Geburt fehlt, Geschlecht gesetzt",
+        "decision_maker": "kdm_quality_agent",
+        "reasoning": "Kernidentifikation ok, sekundärer KDM-Block Geburt fehlt",
+        "content": "Natürliche Person np-001287: Name vorhanden, Geburt fehlt, Geschlecht gesetzt"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/NatuerlichePerson/np-001287",
+      "type": "entity",
+      "properties": {
+        "name": "https://w3id.org/kdm/NatuerlichePerson/np-001287",
+        "content": "https://w3id.org/kdm/NatuerlichePerson/np-001287"
+      }
+    },
+    {
+      "id": "f64db4b1-6bb7-47ad-9309-20395dafd2f7",
+      "type": "decision",
+      "properties": {
+        "category": "register_completeness",
+        "outcome": "TierB_Teilweise",
+        "confidence": 0.91,
+        "timestamp": 1790278575.497482,
+        "scenario": "Juristische Person jp-000519: eingetragener Name und BWN vorhanden, keine Eintragung im Register",
+        "decision_maker": "kdm_quality_agent",
+        "reasoning": "RegisterEingetragen-Regel nicht erfüllt; Sitz ebenfalls nicht verknüpft",
+        "content": "Juristische Person jp-000519: eingetragener Name und BWN vorhanden, keine Eintragung im Register"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/JuristischePerson/jp-000519",
+      "type": "entity",
+      "properties": {
+        "name": "https://w3id.org/kdm/JuristischePerson/jp-000519",
+        "content": "https://w3id.org/kdm/JuristischePerson/jp-000519"
+      }
+    },
+    {
+      "id": "category_register_completeness",
+      "type": "category",
+      "properties": {
+        "name": "register_completeness",
+        "content": "category_register_completeness"
+      }
+    },
+    {
+      "id": "4147420d-4f32-417b-8d85-2dfc8c22bdac",
+      "type": "decision",
+      "properties": {
+        "category": "register_completeness",
+        "outcome": "TierA_Vollstaendig",
+        "confidence": 0.96,
+        "timestamp": 1790278575.498541,
+        "scenario": "Juristische Person jp-000003: Name, BWN, Eintragung HRB und Sitz Bremen verknüpft",
+        "decision_maker": "kdm_quality_agent",
+        "reasoning": "VollstaendigeOrganisation: Eintragung + Sitz + Identifikatoren vollständig",
+        "content": "Juristische Person jp-000003: Name, BWN, Eintragung HRB und Sitz Bremen verknüpft"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/JuristischePerson/jp-000003",
+      "type": "entity",
+      "properties": {
+        "name": "https://w3id.org/kdm/JuristischePerson/jp-000003",
+        "content": "https://w3id.org/kdm/JuristischePerson/jp-000003"
+      }
+    },
+    {
+      "id": "2ee0b469-e56d-4657-8fe0-7b240b94d1d2",
+      "type": "decision",
+      "properties": {
+        "category": "wirtschaftliche_taetigkeit",
+        "outcome": "TierA_Vollstaendig",
+        "confidence": 0.93,
+        "timestamp": 1790278575.49979,
+        "scenario": "Wirtschaftliche Tätigkeit wt-000112: BWN, Hauptbetriebsstätte (01), WZ2008-Klassifikation",
+        "decision_maker": "kdm_quality_agent",
+        "reasoning": "HatHauptbetriebsstaette und HatWirtschaftszweig erfüllt",
+        "content": "Wirtschaftliche Tätigkeit wt-000112: BWN, Hauptbetriebsstätte (01), WZ2008-Klassifikation"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/WirtschaftlicheTaetigkeit/wt-000112",
+      "type": "entity",
+      "properties": {
+        "name": "https://w3id.org/kdm/WirtschaftlicheTaetigkeit/wt-000112",
+        "content": "https://w3id.org/kdm/WirtschaftlicheTaetigkeit/wt-000112"
+      }
+    },
+    {
+      "id": "category_wirtschaftliche_taetigkeit",
+      "type": "category",
+      "properties": {
+        "name": "wirtschaftliche_taetigkeit",
+        "content": "category_wirtschaftliche_taetigkeit"
+      }
+    },
+    {
+      "id": "0c8d939f-96d0-4f34-96a8-4b37aadd2b4c",
+      "type": "decision",
+      "properties": {
+        "category": "data_quality_tier",
+        "outcome": "TierC_Minimal",
+        "confidence": 0.87,
+        "timestamp": 1790278575.501067,
+        "scenario": "Personengesellschaft pg-000891: nur eingetragener Name, kein Gesellschafter, keine Eintragung",
+        "decision_maker": "kdm_quality_agent",
+        "reasoning": "Minimale Kerndaten; Rollen- und Register-Blöcke fehlen",
+        "content": "Personengesellschaft pg-000891: nur eingetragener Name, kein Gesellschafter, keine Eintragung"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/RechtsfaehigePersonengesellschaft/pg-000891",
+      "type": "entity",
+      "properties": {
+        "name": "https://w3id.org/kdm/RechtsfaehigePersonengesellschaft/pg-000891",
+        "content": "https://w3id.org/kdm/RechtsfaehigePersonengesellschaft/pg-000891"
+      }
+    },
+    {
+      "id": "db0936e1-a015-47be-89c6-e8dfcedb6ad7",
+      "type": "decision",
+      "properties": {
+        "category": "vorgang_readiness",
+        "outcome": "AntragEinreichbar",
+        "confidence": 0.92,
+        "timestamp": 1790278575.502309,
+        "scenario": "Antrag an-000045: Antragsteller (JP) und Handelnde Person verknüpft, Registerdaten des Antragstellers vollständig",
+        "decision_maker": "kdm_vorgang_agent",
+        "reasoning": "AntragEinreichbar-Regel erfüllt; Referenz jp-000003 als vollständig klassifiziert",
+        "content": "Antrag an-000045: Antragsteller (JP) und Handelnde Person verknüpft, Registerdaten des Antragstellers vollständig"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/Antrag/an-000045",
+      "type": "entity",
+      "properties": {
+        "name": "https://w3id.org/kdm/Antrag/an-000045",
+        "content": "https://w3id.org/kdm/Antrag/an-000045"
+      }
+    },
+    {
+      "id": "category_vorgang_readiness",
+      "type": "category",
+      "properties": {
+        "name": "vorgang_readiness",
+        "content": "category_vorgang_readiness"
+      }
+    },
+    {
+      "id": "maker_kdm_vorgang_agent",
+      "type": "decision_maker",
+      "properties": {
+        "name": "kdm_vorgang_agent",
+        "content": "maker_kdm_vorgang_agent"
+      }
+    },
+    {
+      "id": "c0f3fa36-976e-4647-868b-9f9c58b321c9",
+      "type": "decision",
+      "properties": {
+        "category": "vorgang_readiness",
+        "outcome": "AntragBlockiert_RegisterUnvollstaendig",
+        "confidence": 0.89,
+        "timestamp": 1790278575.503403,
+        "scenario": "Antrag an-001902: Antragsteller jp-000519 ohne Register-Eintragung",
+        "decision_maker": "kdm_vorgang_agent",
+        "reasoning": "Antragsteller hat TierB_Teilweise — Einreichung blockiert bis Registerdaten nachgereicht",
+        "content": "Antrag an-001902: Antragsteller jp-000519 ohne Register-Eintragung"
+      }
+    },
+    {
+      "id": "https://w3id.org/kdm/Antrag/an-001902",
+      "type": "entity",
+      "properties": {
+        "name": "https://w3id.org/kdm/Antrag/an-001902",
+        "content": "https://w3id.org/kdm/Antrag/an-001902"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "2c4b61f4-2b6d-52f5-aac4-5cdc7cf199ea",
+      "familyId": "2c4b61f4-2b6d-52f5-aac4-5cdc7cf199ea",
+      "source_id": "https://w3id.org/kdm/Anschrift",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "1b98ca6a-8a4c-52e7-9ef4-b0fb5f095b86",
+      "familyId": "1b98ca6a-8a4c-52e7-9ef4-b0fb5f095b86",
+      "source_id": "https://w3id.org/kdm/AnschriftAusland",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "a8c8dcf7-5151-5281-babb-6f129c8c3a6a",
+      "familyId": "a8c8dcf7-5151-5281-babb-6f129c8c3a6a",
+      "source_id": "https://w3id.org/kdm/AnschriftAusland",
+      "target_id": "https://w3id.org/kdm/Anschrift",
+      "type": "subClassOf",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "23c3fbd2-7153-5544-bcb5-37dcf91d4221",
+      "familyId": "23c3fbd2-7153-5544-bcb5-37dcf91d4221",
+      "source_id": "https://w3id.org/kdm/AnschriftInland",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "ee190013-5984-5b7f-8901-151416598569",
+      "familyId": "ee190013-5984-5b7f-8901-151416598569",
+      "source_id": "https://w3id.org/kdm/AnschriftInland",
+      "target_id": "https://w3id.org/kdm/Anschrift",
+      "type": "subClassOf",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "1652f9db-2b4d-558e-ae2d-c66925bda0ed",
+      "familyId": "1652f9db-2b4d-558e-ae2d-c66925bda0ed",
+      "source_id": "https://w3id.org/kdm/AnschriftInlandGrossempfaengeranschrift",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "0dfa6ba0-9c4a-5c69-a56a-b240e693492a",
+      "familyId": "0dfa6ba0-9c4a-5c69-a56a-b240e693492a",
+      "source_id": "https://w3id.org/kdm/AnschriftInlandGrossempfaengeranschrift",
+      "target_id": "https://w3id.org/kdm/AnschriftInland",
+      "type": "subClassOf",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "48abe022-4d78-5cd8-a75e-accfe1348763",
+      "familyId": "48abe022-4d78-5cd8-a75e-accfe1348763",
+      "source_id": "https://w3id.org/kdm/AnschriftInlandPostfachanschrift",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "333e9e73-3788-5bd0-9981-aceb4b80a316",
+      "familyId": "333e9e73-3788-5bd0-9981-aceb4b80a316",
+      "source_id": "https://w3id.org/kdm/AnschriftInlandPostfachanschrift",
+      "target_id": "https://w3id.org/kdm/AnschriftInland",
+      "type": "subClassOf",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "2afab15f-7cb1-5271-a52d-1fff4de70402",
+      "familyId": "2afab15f-7cb1-5271-a52d-1fff4de70402",
+      "source_id": "https://w3id.org/kdm/AnschriftInlandStrassenanschrift",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "0c40bc8c-f24c-5f25-98c1-be9a65de355d",
+      "familyId": "0c40bc8c-f24c-5f25-98c1-be9a65de355d",
+      "source_id": "https://w3id.org/kdm/AnschriftInlandStrassenanschrift",
+      "target_id": "https://w3id.org/kdm/AnschriftInland",
+      "type": "subClassOf",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "ad1fb3d0-0ba8-509c-b77b-917db6cc7e6f",
+      "familyId": "ad1fb3d0-0ba8-509c-b77b-917db6cc7e6f",
+      "source_id": "https://w3id.org/kdm/Ansprechpartner",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "0490ff47-9833-50cc-8e0c-c057c607ef79",
+      "familyId": "0490ff47-9833-50cc-8e0c-c057c607ef79",
+      "source_id": "https://w3id.org/kdm/Ansprechpartner",
+      "target_id": "http://purl.obolibrary.org/obo/BFO_0000023",
+      "type": "subClassOf",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "3523c4f8-28fa-586d-86e6-b6967084bcb7",
+      "familyId": "3523c4f8-28fa-586d-86e6-b6967084bcb7",
+      "source_id": "https://w3id.org/kdm/Antrag",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "3ba7b794-0630-5065-ba93-84efb5df1f73",
+      "familyId": "3ba7b794-0630-5065-ba93-84efb5df1f73",
+      "source_id": "https://w3id.org/kdm/Antragsteller",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "cbc2fe64-7892-5c8a-b31d-b206c0883328",
+      "familyId": "cbc2fe64-7892-5c8a-b31d-b206c0883328",
+      "source_id": "https://w3id.org/kdm/Antragsteller",
+      "target_id": "http://purl.obolibrary.org/obo/BFO_0000023",
+      "type": "subClassOf",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "df2a7599-3407-5d50-b77f-d6a19a70473f",
+      "familyId": "df2a7599-3407-5d50-b77f-d6a19a70473f",
+      "source_id": "https://w3id.org/kdm/Anzeige",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "ff35bf18-cbc9-5873-b72b-9d2645f4b8c8",
+      "familyId": "ff35bf18-cbc9-5873-b72b-9d2645f4b8c8",
+      "source_id": "https://w3id.org/kdm/Anzeigender",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "eaa1272c-7462-5377-9710-5e92a19732a1",
+      "familyId": "eaa1272c-7462-5377-9710-5e92a19732a1",
+      "source_id": "https://w3id.org/kdm/Anzeigender",
+      "target_id": "http://purl.obolibrary.org/obo/BFO_0000023",
+      "type": "subClassOf",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "00150246-cc47-5396-bf2a-d4b0e73146f5",
+      "familyId": "00150246-cc47-5396-bf2a-d4b0e73146f5",
+      "source_id": "https://w3id.org/kdm/Beteiligter",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "d8ad9cee-c03f-58f5-a9c8-74255c84811e",
+      "familyId": "d8ad9cee-c03f-58f5-a9c8-74255c84811e",
+      "source_id": "https://w3id.org/kdm/Beteiligter",
+      "target_id": "http://purl.obolibrary.org/obo/BFO_0000023",
+      "type": "subClassOf",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "d53326bf-2bb6-5612-8eb4-8d28f01f58c9",
+      "familyId": "d53326bf-2bb6-5612-8eb4-8d28f01f58c9",
+      "source_id": "https://w3id.org/kdm/Betriebsstaette",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "f9b077cb-5a94-545f-9f71-a31762272dcd",
+      "familyId": "f9b077cb-5a94-545f-9f71-a31762272dcd",
+      "source_id": "https://w3id.org/kdm/Demail",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "c193c44a-c98d-5db4-8bf2-75cc6f820bff",
+      "familyId": "c193c44a-c98d-5db4-8bf2-75cc6f820bff",
+      "source_id": "https://w3id.org/kdm/Demail",
+      "target_id": "https://w3id.org/kdm/Kommunikation",
+      "type": "subClassOf",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "a1179491-12c5-5c78-a8f8-f0d36e9b74d4",
+      "familyId": "a1179491-12c5-5c78-a8f8-f0d36e9b74d4",
+      "source_id": "https://w3id.org/kdm/EffektiverVerwaltungssitz",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "bef23e59-0623-5a09-bf8d-8dd9674e30a7",
+      "familyId": "bef23e59-0623-5a09-bf8d-8dd9674e30a7",
+      "source_id": "https://w3id.org/kdm/Eintragung",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "778fa193-6b40-5ac9-8d97-ccc5eb4f4e76",
+      "familyId": "778fa193-6b40-5ac9-8d97-ccc5eb4f4e76",
+      "source_id": "https://w3id.org/kdm/Email",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "cf341058-69cb-5581-a9c8-6436f0258481",
+      "familyId": "cf341058-69cb-5581-a9c8-6436f0258481",
+      "source_id": "https://w3id.org/kdm/Email",
+      "target_id": "https://w3id.org/kdm/Kommunikation",
+      "type": "subClassOf",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "f7cd1a60-551a-5678-82ba-ec9e550bf7e5",
+      "familyId": "f7cd1a60-551a-5678-82ba-ec9e550bf7e5",
+      "source_id": "https://w3id.org/kdm/Geburt",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "d9a61880-72f9-5b32-beae-e498e08c3c89",
+      "familyId": "d9a61880-72f9-5b32-beae-e498e08c3c89",
+      "source_id": "https://w3id.org/kdm/Gesellschafter",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "993bf32f-db3b-55bb-b4ca-7c553f481b39",
+      "familyId": "993bf32f-db3b-55bb-b4ca-7c553f481b39",
+      "source_id": "https://w3id.org/kdm/Gesellschafter",
+      "target_id": "http://purl.obolibrary.org/obo/BFO_0000023",
+      "type": "subClassOf",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "eba8f2a0-f163-5b2b-8257-76424077563e",
+      "familyId": "eba8f2a0-f163-5b2b-8257-76424077563e",
+      "source_id": "https://w3id.org/kdm/GesetzlicherVertreter",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "a99b398b-5150-5be1-bf95-3344e76d603a",
+      "familyId": "a99b398b-5150-5be1-bf95-3344e76d603a",
+      "source_id": "https://w3id.org/kdm/GesetzlicherVertreter",
+      "target_id": "http://purl.obolibrary.org/obo/BFO_0000023",
+      "type": "subClassOf",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "62545e6d-e7db-5905-a762-1f05de04c61d",
+      "familyId": "62545e6d-e7db-5905-a762-1f05de04c61d",
+      "source_id": "https://w3id.org/kdm/HandelndePerson",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "207c7d02-8ef7-564c-86bc-ae319eb9ceb2",
+      "familyId": "207c7d02-8ef7-564c-86bc-ae319eb9ceb2",
+      "source_id": "https://w3id.org/kdm/HandelndePerson",
+      "target_id": "http://purl.obolibrary.org/obo/BFO_0000023",
+      "type": "subClassOf",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "9bb50d7b-b2ba-5b25-b8f3-6eb73f7da0b2",
+      "familyId": "9bb50d7b-b2ba-5b25-b8f3-6eb73f7da0b2",
+      "source_id": "https://w3id.org/kdm/JuristischePerson",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "69f4867b-40a3-593c-8fae-badce238c697",
+      "familyId": "69f4867b-40a3-593c-8fae-badce238c697",
+      "source_id": "https://w3id.org/kdm/JuristischePerson",
+      "target_id": "http://www.ontologyrepository.com/CommonCoreOntologies/Agent",
+      "type": "subClassOf",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "1c5cfedf-8a07-56a2-b940-6386c90186ff",
+      "familyId": "1c5cfedf-8a07-56a2-b940-6386c90186ff",
+      "source_id": "https://w3id.org/kdm/Kommunikation",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "c111deee-79b4-58f4-9795-cd5225a78c4f",
+      "familyId": "c111deee-79b4-58f4-9795-cd5225a78c4f",
+      "source_id": "https://w3id.org/kdm/NameEinerNatuerlichenPerson",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "5253e5ca-c6cf-521d-8d16-9e809cfcc6cc",
+      "familyId": "5253e5ca-c6cf-521d-8d16-9e809cfcc6cc",
+      "source_id": "https://w3id.org/kdm/NatuerlichePerson",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "dc856002-6441-587a-86ec-06221a8cecf5",
+      "familyId": "dc856002-6441-587a-86ec-06221a8cecf5",
+      "source_id": "https://w3id.org/kdm/NatuerlichePerson",
+      "target_id": "http://www.ontologyrepository.com/CommonCoreOntologies/Agent",
+      "type": "subClassOf",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "568b5e7a-a477-539f-8274-5936ad145a78",
+      "familyId": "568b5e7a-a477-539f-8274-5936ad145a78",
+      "source_id": "https://w3id.org/kdm/Personengesellschaft",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "3a654a23-a3c8-5524-ad5d-3070cd8e6a31",
+      "familyId": "3a654a23-a3c8-5524-ad5d-3070cd8e6a31",
+      "source_id": "https://w3id.org/kdm/RechtsfaehigePersonengesellschaft",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "8f23f225-1ccc-5fde-93f8-07fa57c74875",
+      "familyId": "8f23f225-1ccc-5fde-93f8-07fa57c74875",
+      "source_id": "https://w3id.org/kdm/RechtsfaehigePersonengesellschaft",
+      "target_id": "http://www.ontologyrepository.com/CommonCoreOntologies/Agent",
+      "type": "subClassOf",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "a23fbe4b-e3fe-5712-9ce6-66ec17e1cc15",
+      "familyId": "a23fbe4b-e3fe-5712-9ce6-66ec17e1cc15",
+      "source_id": "https://w3id.org/kdm/Sitz",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "d0bbb8d3-ee1d-5997-80da-78401b0c3d48",
+      "familyId": "d0bbb8d3-ee1d-5997-80da-78401b0c3d48",
+      "source_id": "https://w3id.org/kdm/SonstigePersonenvereinigung",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "9b38b3c6-a493-5fbf-a8d1-fc01b7e62b39",
+      "familyId": "9b38b3c6-a493-5fbf-a8d1-fc01b7e62b39",
+      "source_id": "https://w3id.org/kdm/SonstigePersonenvereinigung",
+      "target_id": "http://www.ontologyrepository.com/CommonCoreOntologies/Agent",
+      "type": "subClassOf",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "dca4a05e-8f7c-52b3-815f-f22ffc72f1cd",
+      "familyId": "dca4a05e-8f7c-52b3-815f-f22ffc72f1cd",
+      "source_id": "https://w3id.org/kdm/Staat",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "832d7972-34a7-502a-bad9-bae2e2fa51af",
+      "familyId": "832d7972-34a7-502a-bad9-bae2e2fa51af",
+      "source_id": "https://w3id.org/kdm/Telefax",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "ef4dbb12-8de3-5577-b015-70e0305d5885",
+      "familyId": "ef4dbb12-8de3-5577-b015-70e0305d5885",
+      "source_id": "https://w3id.org/kdm/Telefax",
+      "target_id": "https://w3id.org/kdm/Kommunikation",
+      "type": "subClassOf",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "7566bda2-87e3-523a-be70-c543a0e6155f",
+      "familyId": "7566bda2-87e3-523a-be70-c543a0e6155f",
+      "source_id": "https://w3id.org/kdm/Telefon",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "b97d7364-ec20-51f3-9b9c-52eb3cfa513c",
+      "familyId": "b97d7364-ec20-51f3-9b9c-52eb3cfa513c",
+      "source_id": "https://w3id.org/kdm/Telefon",
+      "target_id": "https://w3id.org/kdm/Kommunikation",
+      "type": "subClassOf",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "755faae8-38c1-5c84-be8c-ff29ebfceb92",
+      "familyId": "755faae8-38c1-5c84-be8c-ff29ebfceb92",
+      "source_id": "https://w3id.org/kdm/WebAdresse",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "7cd1cb55-9366-52b9-a730-85f78618ecba",
+      "familyId": "7cd1cb55-9366-52b9-a730-85f78618ecba",
+      "source_id": "https://w3id.org/kdm/WebAdresse",
+      "target_id": "https://w3id.org/kdm/Kommunikation",
+      "type": "subClassOf",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "bdf55cad-d964-5da5-afd1-00f19e0aeaae",
+      "familyId": "bdf55cad-d964-5da5-afd1-00f19e0aeaae",
+      "source_id": "https://w3id.org/kdm/WirtschaftlichTaetiger",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "dab663c6-365e-563e-b2ff-b8a7818b44e1",
+      "familyId": "dab663c6-365e-563e-b2ff-b8a7818b44e1",
+      "source_id": "https://w3id.org/kdm/WirtschaftlichTaetiger",
+      "target_id": "http://purl.obolibrary.org/obo/BFO_0000023",
+      "type": "subClassOf",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "ce450461-2bdc-5662-9b14-a0c64ff8b42c",
+      "familyId": "ce450461-2bdc-5662-9b14-a0c64ff8b42c",
+      "source_id": "https://w3id.org/kdm/WirtschaftlicheTaetigkeit",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "1025e5da-66df-591d-b11a-83f78ca2aabf",
+      "familyId": "1025e5da-66df-591d-b11a-83f78ca2aabf",
+      "source_id": "https://w3id.org/kdm/WirtschaftlicheTaetigkeit",
+      "target_id": "http://purl.obolibrary.org/obo/BFO_0000017",
+      "type": "subClassOf",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "70c260e3-0702-5f1f-b892-2e2dae210bd5",
+      "familyId": "70c260e3-0702-5f1f-b892-2e2dae210bd5",
+      "source_id": "https://w3id.org/kdm/Wirtschaftszweig",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "7af4804d-8533-5e59-8b9c-55e334678e5d",
+      "familyId": "7af4804d-8533-5e59-8b9c-55e334678e5d",
+      "source_id": "https://w3id.org/kdm/anschrift",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "fe543131-eab2-51cd-991a-13bad6cac9e1",
+      "familyId": "fe543131-eab2-51cd-991a-13bad6cac9e1",
+      "source_id": "https://w3id.org/kdm/anschrift",
+      "target_id": "https://w3id.org/kdm/Anschrift",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "8c060a16-7402-5044-9496-42665d6b4576",
+      "familyId": "8c060a16-7402-5044-9496-42665d6b4576",
+      "source_id": "https://w3id.org/kdm/ansprechpartner",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "e406ce50-6589-5ff9-a26f-e573e49d0df9",
+      "familyId": "e406ce50-6589-5ff9-a26f-e573e49d0df9",
+      "source_id": "https://w3id.org/kdm/ansprechpartner",
+      "target_id": "https://w3id.org/kdm/Ansprechpartner",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "147906f6-9975-5fb4-8513-87e2b6e0e8c8",
+      "familyId": "147906f6-9975-5fb4-8513-87e2b6e0e8c8",
+      "source_id": "https://w3id.org/kdm/ansprechpartnerID",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "eacdc3ea-6041-51db-89c4-9aa3e545c25d",
+      "familyId": "eacdc3ea-6041-51db-89c4-9aa3e545c25d",
+      "source_id": "https://w3id.org/kdm/ansprechpartnerID",
+      "target_id": "https://w3id.org/kdm/Ansprechpartner",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "32340955-ec9f-5997-9286-77a2aa39ee2f",
+      "familyId": "32340955-ec9f-5997-9286-77a2aa39ee2f",
+      "source_id": "https://w3id.org/kdm/ansprechpartnerID",
+      "target_id": "https://w3id.org/kdm/NatuerlichePerson",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "afe9aabe-6ad9-5af9-9218-a33d0e0370be",
+      "familyId": "afe9aabe-6ad9-5af9-9218-a33d0e0370be",
+      "source_id": "https://w3id.org/kdm/antragsteller",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "c6d7670f-21c3-506e-aae5-00677e27a176",
+      "familyId": "c6d7670f-21c3-506e-aae5-00677e27a176",
+      "source_id": "https://w3id.org/kdm/antragsteller",
+      "target_id": "https://w3id.org/kdm/Antrag",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "480e156a-09cd-50e5-8d9b-b7a051e54932",
+      "familyId": "480e156a-09cd-50e5-8d9b-b7a051e54932",
+      "source_id": "https://w3id.org/kdm/antragsteller",
+      "target_id": "https://w3id.org/kdm/Antragsteller",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "ceecf6b8-37b0-5c95-a3ba-b08014d78e4c",
+      "familyId": "ceecf6b8-37b0-5c95-a3ba-b08014d78e4c",
+      "source_id": "https://w3id.org/kdm/antragstellerID",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "020849f9-a9a8-57b2-a512-1477d594abd1",
+      "familyId": "020849f9-a9a8-57b2-a512-1477d594abd1",
+      "source_id": "https://w3id.org/kdm/antragstellerID",
+      "target_id": "https://w3id.org/kdm/Antragsteller",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "49922b35-b11a-5f1d-bff6-dc677e69e15d",
+      "familyId": "49922b35-b11a-5f1d-bff6-dc677e69e15d",
+      "source_id": "https://w3id.org/kdm/anzeigender",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "a8cea406-03da-5d25-b68d-40e246869d93",
+      "familyId": "a8cea406-03da-5d25-b68d-40e246869d93",
+      "source_id": "https://w3id.org/kdm/anzeigender",
+      "target_id": "https://w3id.org/kdm/Anzeige",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "0624e028-753a-513e-ae75-8aa542b8122c",
+      "familyId": "0624e028-753a-513e-ae75-8aa542b8122c",
+      "source_id": "https://w3id.org/kdm/anzeigender",
+      "target_id": "https://w3id.org/kdm/Anzeigender",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "d69ca168-05a8-58b6-b690-78d645fb465c",
+      "familyId": "d69ca168-05a8-58b6-b690-78d645fb465c",
+      "source_id": "https://w3id.org/kdm/anzeigenderID",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "1c8a612a-dd79-531a-9d95-f4bb44940088",
+      "familyId": "1c8a612a-dd79-531a-9d95-f4bb44940088",
+      "source_id": "https://w3id.org/kdm/anzeigenderID",
+      "target_id": "https://w3id.org/kdm/Anzeigender",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "329e9165-c9a0-5bdb-abd2-7930f7cf9b1d",
+      "familyId": "329e9165-c9a0-5bdb-abd2-7930f7cf9b1d",
+      "source_id": "https://w3id.org/kdm/beteiligter",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "81a0ff33-4dbd-51e4-9276-20accfec04d4",
+      "familyId": "81a0ff33-4dbd-51e4-9276-20accfec04d4",
+      "source_id": "https://w3id.org/kdm/beteiligter",
+      "target_id": "https://w3id.org/kdm/RechtsfaehigePersonengesellschaft",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "8cae218c-9242-5c98-8179-72be6ed646cf",
+      "familyId": "8cae218c-9242-5c98-8179-72be6ed646cf",
+      "source_id": "https://w3id.org/kdm/beteiligter",
+      "target_id": "https://w3id.org/kdm/Beteiligter",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "4426f68f-313d-5477-bff8-ed83faea6c8a",
+      "familyId": "4426f68f-313d-5477-bff8-ed83faea6c8a",
+      "source_id": "https://w3id.org/kdm/beteiligterID",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "57260949-f2d3-5116-81d3-ef97acfab70a",
+      "familyId": "57260949-f2d3-5116-81d3-ef97acfab70a",
+      "source_id": "https://w3id.org/kdm/beteiligterID",
+      "target_id": "https://w3id.org/kdm/Beteiligter",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "b16c4cfa-29cc-533d-9506-e7f6a49d7175",
+      "familyId": "b16c4cfa-29cc-533d-9506-e7f6a49d7175",
+      "source_id": "https://w3id.org/kdm/beteiligterID",
+      "target_id": "https://w3id.org/kdm/NatuerlichePerson",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "39fd1db8-a18b-593e-92bd-757e26fa953c",
+      "familyId": "39fd1db8-a18b-593e-92bd-757e26fa953c",
+      "source_id": "https://w3id.org/kdm/betriebsstaette",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "aae36cf0-7899-5ebe-816b-263707386f39",
+      "familyId": "aae36cf0-7899-5ebe-816b-263707386f39",
+      "source_id": "https://w3id.org/kdm/betriebsstaette",
+      "target_id": "https://w3id.org/kdm/WirtschaftlicheTaetigkeit",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "a685cd7b-f6e8-5a58-b3b6-0c9797dc6778",
+      "familyId": "a685cd7b-f6e8-5a58-b3b6-0c9797dc6778",
+      "source_id": "https://w3id.org/kdm/betriebsstaette",
+      "target_id": "https://w3id.org/kdm/Betriebsstaette",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "4687de01-5c9f-5ce5-aa9c-b5751e95dd60",
+      "familyId": "4687de01-5c9f-5ce5-aa9c-b5751e95dd60",
+      "source_id": "https://w3id.org/kdm/demail",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "938eab96-227a-5c33-ace1-5ea371308240",
+      "familyId": "938eab96-227a-5c33-ace1-5ea371308240",
+      "source_id": "https://w3id.org/kdm/demail",
+      "target_id": "https://w3id.org/kdm/Kommunikation",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "a0d7fd82-84d6-50cd-8ea8-06f478a1292a",
+      "familyId": "a0d7fd82-84d6-50cd-8ea8-06f478a1292a",
+      "source_id": "https://w3id.org/kdm/demail",
+      "target_id": "https://w3id.org/kdm/Demail",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "64fa6fcf-67c2-5d09-9e41-ca8ce73ab713",
+      "familyId": "64fa6fcf-67c2-5d09-9e41-ca8ce73ab713",
+      "source_id": "https://w3id.org/kdm/effektiverVerwaltungssitz",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "0de1474b-d0f9-5b3d-bcb0-e99b0f8373b7",
+      "familyId": "0de1474b-d0f9-5b3d-bcb0-e99b0f8373b7",
+      "source_id": "https://w3id.org/kdm/effektiverVerwaltungssitz",
+      "target_id": "https://w3id.org/kdm/EffektiverVerwaltungssitz",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "5d8829ff-b31c-55df-9b14-9e54ca54e3bc",
+      "familyId": "5d8829ff-b31c-55df-9b14-9e54ca54e3bc",
+      "source_id": "https://w3id.org/kdm/eintragung",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "997dcb14-a430-5da7-be77-f504957c918e",
+      "familyId": "997dcb14-a430-5da7-be77-f504957c918e",
+      "source_id": "https://w3id.org/kdm/eintragung",
+      "target_id": "https://w3id.org/kdm/Eintragung",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "a5887e35-cc94-5136-bf54-40e4e1ff1fc2",
+      "familyId": "a5887e35-cc94-5136-bf54-40e4e1ff1fc2",
+      "source_id": "https://w3id.org/kdm/email",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "068f5041-060f-5d50-8af9-8e3d5b4bbe69",
+      "familyId": "068f5041-060f-5d50-8af9-8e3d5b4bbe69",
+      "source_id": "https://w3id.org/kdm/email",
+      "target_id": "https://w3id.org/kdm/Kommunikation",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "09417c3d-cd92-5ae5-bcd5-c7c8895bbeb9",
+      "familyId": "09417c3d-cd92-5ae5-bcd5-c7c8895bbeb9",
+      "source_id": "https://w3id.org/kdm/email",
+      "target_id": "https://w3id.org/kdm/Email",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "b3ee305d-c83e-596a-a769-34ccfd937a14",
+      "familyId": "b3ee305d-c83e-596a-a769-34ccfd937a14",
+      "source_id": "https://w3id.org/kdm/geburt",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "9cfe351a-c53d-5117-a7a3-e830c273a066",
+      "familyId": "9cfe351a-c53d-5117-a7a3-e830c273a066",
+      "source_id": "https://w3id.org/kdm/geburt",
+      "target_id": "https://w3id.org/kdm/NatuerlichePerson",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "418efe3c-4f77-5a82-a8df-2b3c825f8436",
+      "familyId": "418efe3c-4f77-5a82-a8df-2b3c825f8436",
+      "source_id": "https://w3id.org/kdm/geburt",
+      "target_id": "https://w3id.org/kdm/Geburt",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "3f8a7aa9-a920-5d7e-bbdf-bd07d7306046",
+      "familyId": "3f8a7aa9-a920-5d7e-bbdf-bd07d7306046",
+      "source_id": "https://w3id.org/kdm/gesellschafter",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "7005277e-9ce8-5ac0-b5dc-66903563f8b4",
+      "familyId": "7005277e-9ce8-5ac0-b5dc-66903563f8b4",
+      "source_id": "https://w3id.org/kdm/gesellschafter",
+      "target_id": "https://w3id.org/kdm/Personengesellschaft",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "ca9b8e2f-e0cc-5968-81d8-32df5c50625c",
+      "familyId": "ca9b8e2f-e0cc-5968-81d8-32df5c50625c",
+      "source_id": "https://w3id.org/kdm/gesellschafter",
+      "target_id": "https://w3id.org/kdm/Gesellschafter",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "e4210252-3e59-58cb-8e50-99e42af04925",
+      "familyId": "e4210252-3e59-58cb-8e50-99e42af04925",
+      "source_id": "https://w3id.org/kdm/gesellschafterID",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "d5ab997d-fee4-5ee4-a7d8-1bc2482b569e",
+      "familyId": "d5ab997d-fee4-5ee4-a7d8-1bc2482b569e",
+      "source_id": "https://w3id.org/kdm/gesellschafterID",
+      "target_id": "https://w3id.org/kdm/Gesellschafter",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "031115bc-bfb2-5a2e-8724-3d1796374972",
+      "familyId": "031115bc-bfb2-5a2e-8724-3d1796374972",
+      "source_id": "https://w3id.org/kdm/gesetzlicherVertreter",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "16062d7c-2aaf-5410-a5a5-559a8889ad8b",
+      "familyId": "16062d7c-2aaf-5410-a5a5-559a8889ad8b",
+      "source_id": "https://w3id.org/kdm/gesetzlicherVertreter",
+      "target_id": "https://w3id.org/kdm/GesetzlicherVertreter",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "964f61c8-8a28-55e5-8b04-728cdf832a90",
+      "familyId": "964f61c8-8a28-55e5-8b04-728cdf832a90",
+      "source_id": "https://w3id.org/kdm/gesetzlicherVertreterID",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "693bdfab-a208-52af-b32f-5146d338a6ee",
+      "familyId": "693bdfab-a208-52af-b32f-5146d338a6ee",
+      "source_id": "https://w3id.org/kdm/gesetzlicherVertreterID",
+      "target_id": "https://w3id.org/kdm/GesetzlicherVertreter",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "d39ef4a0-0fb0-5425-b7e0-d764f712b241",
+      "familyId": "d39ef4a0-0fb0-5425-b7e0-d764f712b241",
+      "source_id": "https://w3id.org/kdm/handelndePerson",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "c61c6ca3-93d2-5a1a-acd1-50a63de266d2",
+      "familyId": "c61c6ca3-93d2-5a1a-acd1-50a63de266d2",
+      "source_id": "https://w3id.org/kdm/handelndePerson",
+      "target_id": "https://w3id.org/kdm/HandelndePerson",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "89d4a2fc-b94f-5881-b176-1383c881a3bd",
+      "familyId": "89d4a2fc-b94f-5881-b176-1383c881a3bd",
+      "source_id": "https://w3id.org/kdm/handelndePersonID",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "fc0bb4b9-385f-50ab-b97f-549b8b88a9fa",
+      "familyId": "fc0bb4b9-385f-50ab-b97f-549b8b88a9fa",
+      "source_id": "https://w3id.org/kdm/handelndePersonID",
+      "target_id": "https://w3id.org/kdm/HandelndePerson",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "14743fa5-34be-5f5d-a12e-e8d8cf6407c1",
+      "familyId": "14743fa5-34be-5f5d-a12e-e8d8cf6407c1",
+      "source_id": "https://w3id.org/kdm/handelndePersonID",
+      "target_id": "https://w3id.org/kdm/NatuerlichePerson",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "2ac2d63e-1005-58e5-a8f8-547db638ce5b",
+      "familyId": "2ac2d63e-1005-58e5-a8f8-547db638ce5b",
+      "source_id": "https://w3id.org/kdm/kommunikation",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "9b909655-d275-5315-89f2-521b097cfaf7",
+      "familyId": "9b909655-d275-5315-89f2-521b097cfaf7",
+      "source_id": "https://w3id.org/kdm/kommunikation",
+      "target_id": "https://w3id.org/kdm/Kommunikation",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "76d42bb8-88ec-59e3-b845-c859b4f6d4eb",
+      "familyId": "76d42bb8-88ec-59e3-b845-c859b4f6d4eb",
+      "source_id": "https://w3id.org/kdm/nameEinerNatuerlichenPerson",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "2ca228d7-ede4-5bc9-9230-51f5af56cf98",
+      "familyId": "2ca228d7-ede4-5bc9-9230-51f5af56cf98",
+      "source_id": "https://w3id.org/kdm/nameEinerNatuerlichenPerson",
+      "target_id": "https://w3id.org/kdm/NatuerlichePerson",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "338b8759-76c8-5d45-9aec-2ae1075b18f0",
+      "familyId": "338b8759-76c8-5d45-9aec-2ae1075b18f0",
+      "source_id": "https://w3id.org/kdm/nameEinerNatuerlichenPerson",
+      "target_id": "https://w3id.org/kdm/NameEinerNatuerlichenPerson",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "606fb0f3-e714-5be8-b225-e29aef54d8d8",
+      "familyId": "606fb0f3-e714-5be8-b225-e29aef54d8d8",
+      "source_id": "https://w3id.org/kdm/sitz",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "6a549aa3-de1d-59d5-b62e-73af2117476a",
+      "familyId": "6a549aa3-de1d-59d5-b62e-73af2117476a",
+      "source_id": "https://w3id.org/kdm/sitz",
+      "target_id": "https://w3id.org/kdm/Sitz",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "8a77659e-5827-5725-9c36-089bf6b80546",
+      "familyId": "8a77659e-5827-5725-9c36-089bf6b80546",
+      "source_id": "https://w3id.org/kdm/telefax",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "58ab5540-e63c-5432-a92e-25ab05a6d404",
+      "familyId": "58ab5540-e63c-5432-a92e-25ab05a6d404",
+      "source_id": "https://w3id.org/kdm/telefax",
+      "target_id": "https://w3id.org/kdm/Kommunikation",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "3d714d76-6e8b-5326-9a71-8b418a0cb13b",
+      "familyId": "3d714d76-6e8b-5326-9a71-8b418a0cb13b",
+      "source_id": "https://w3id.org/kdm/telefax",
+      "target_id": "https://w3id.org/kdm/Telefax",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "c97ff74b-58e5-51ff-95ca-4a2ef6ee561b",
+      "familyId": "c97ff74b-58e5-51ff-95ca-4a2ef6ee561b",
+      "source_id": "https://w3id.org/kdm/telefon",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "28d67522-6d67-504d-9e7d-a765b9778246",
+      "familyId": "28d67522-6d67-504d-9e7d-a765b9778246",
+      "source_id": "https://w3id.org/kdm/telefon",
+      "target_id": "https://w3id.org/kdm/Kommunikation",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "5505f786-ddf9-55ad-bfb7-6b6d893a7914",
+      "familyId": "5505f786-ddf9-55ad-bfb7-6b6d893a7914",
+      "source_id": "https://w3id.org/kdm/telefon",
+      "target_id": "https://w3id.org/kdm/Telefon",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "9634f69e-e7f2-5c1f-a1c7-cb164e3fdf0c",
+      "familyId": "9634f69e-e7f2-5c1f-a1c7-cb164e3fdf0c",
+      "source_id": "https://w3id.org/kdm/web",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "c53c41d7-2728-5f87-a5d3-04d929a4c3ae",
+      "familyId": "c53c41d7-2728-5f87-a5d3-04d929a4c3ae",
+      "source_id": "https://w3id.org/kdm/web",
+      "target_id": "https://w3id.org/kdm/Kommunikation",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "ef174b15-95d5-5b94-8751-a3ef105596bd",
+      "familyId": "ef174b15-95d5-5b94-8751-a3ef105596bd",
+      "source_id": "https://w3id.org/kdm/web",
+      "target_id": "https://w3id.org/kdm/WebAdresse",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "9c913d2c-b8f6-53d8-8374-a5dd6e5678a2",
+      "familyId": "9c913d2c-b8f6-53d8-8374-a5dd6e5678a2",
+      "source_id": "https://w3id.org/kdm/wirtschaftlichTaetiger",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "e4d222f4-f6e6-5a85-9be0-d55c38538fb4",
+      "familyId": "e4d222f4-f6e6-5a85-9be0-d55c38538fb4",
+      "source_id": "https://w3id.org/kdm/wirtschaftlichTaetiger",
+      "target_id": "https://w3id.org/kdm/WirtschaftlicheTaetigkeit",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "b1caa517-b24c-55f1-8fef-59f03410eea1",
+      "familyId": "b1caa517-b24c-55f1-8fef-59f03410eea1",
+      "source_id": "https://w3id.org/kdm/wirtschaftlichTaetiger",
+      "target_id": "https://w3id.org/kdm/WirtschaftlichTaetiger",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "7ca5a3fc-b784-5571-a9ea-9f941c5dcb51",
+      "familyId": "7ca5a3fc-b784-5571-a9ea-9f941c5dcb51",
+      "source_id": "https://w3id.org/kdm/wirtschaftlichTaetigerID",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "ff58e705-acdb-521b-b7b3-d6c9a1dd1fb9",
+      "familyId": "ff58e705-acdb-521b-b7b3-d6c9a1dd1fb9",
+      "source_id": "https://w3id.org/kdm/wirtschaftlichTaetigerID",
+      "target_id": "https://w3id.org/kdm/WirtschaftlichTaetiger",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "3d22d161-264f-59db-b035-0fae22d51ef2",
+      "familyId": "3d22d161-264f-59db-b035-0fae22d51ef2",
+      "source_id": "https://w3id.org/kdm/wirtschaftszweig",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "f79d9869-3e19-5d45-841b-353fe455fa63",
+      "familyId": "f79d9869-3e19-5d45-841b-353fe455fa63",
+      "source_id": "https://w3id.org/kdm/wirtschaftszweig",
+      "target_id": "https://w3id.org/kdm/WirtschaftlicheTaetigkeit",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "bdd81d9b-c49c-5759-84d5-7634ed67ca37",
+      "familyId": "bdd81d9b-c49c-5759-84d5-7634ed67ca37",
+      "source_id": "https://w3id.org/kdm/wirtschaftszweig",
+      "target_id": "https://w3id.org/kdm/Wirtschaftszweig",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "11c2e9b0-5537-5bdb-a909-65e6d398e8d1",
+      "familyId": "11c2e9b0-5537-5bdb-a909-65e6d398e8d1",
+      "source_id": "https://w3id.org/kdm/artAngabeAntragstellerAnzeigenderCode",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "39275ced-0422-5753-9f69-f2f60b68c6ea",
+      "familyId": "39275ced-0422-5753-9f69-f2f60b68c6ea",
+      "source_id": "https://w3id.org/kdm/artAngabeAntragstellerAnzeigenderCode",
+      "target_id": "urn:xoev-de:xunternehmen:codeliste:angabeantragstelleranzeigender",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "4c336bea-f8b1-5ae1-bc3e-5c8e879f3ad6",
+      "familyId": "4c336bea-f8b1-5ae1-bc3e-5c8e879f3ad6",
+      "source_id": "https://w3id.org/kdm/artAnschriftCode",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "6115a7d9-317e-5334-b61a-c00e23ae565c",
+      "familyId": "6115a7d9-317e-5334-b61a-c00e23ae565c",
+      "source_id": "https://w3id.org/kdm/artAnschriftCode",
+      "target_id": "urn:xoev-de:xunternehmen:codeliste:artanschrift",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "ccdc1bc3-b046-5c6c-9b13-2b80278cc309",
+      "familyId": "ccdc1bc3-b046-5c6c-9b13-2b80278cc309",
+      "source_id": "https://w3id.org/kdm/artBetriebsstaetteCode",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "1d978b77-127e-57b0-9741-56c668538125",
+      "familyId": "1d978b77-127e-57b0-9741-56c668538125",
+      "source_id": "https://w3id.org/kdm/artBetriebsstaetteCode",
+      "target_id": "https://w3id.org/kdm/Betriebsstaette",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "e05fb042-d404-57ec-9495-9999f8530fdb",
+      "familyId": "e05fb042-d404-57ec-9495-9999f8530fdb",
+      "source_id": "https://w3id.org/kdm/artBetriebsstaetteCode",
+      "target_id": "urn:xoev-de:xunternehmen:codeliste:artniederlassung",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "0151ff65-668f-5ee9-bdc4-4d28777c497a",
+      "familyId": "0151ff65-668f-5ee9-bdc4-4d28777c497a",
+      "source_id": "https://w3id.org/kdm/artEintragungCode",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "41b31dd1-c8f6-5fdf-b7f8-c6b47878e79f",
+      "familyId": "41b31dd1-c8f6-5fdf-b7f8-c6b47878e79f",
+      "source_id": "https://w3id.org/kdm/artEintragungCode",
+      "target_id": "https://w3id.org/kdm/Eintragung",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "74ed5d8c-8c91-5c34-935e-b60f25011a7f",
+      "familyId": "74ed5d8c-8c91-5c34-935e-b60f25011a7f",
+      "source_id": "https://w3id.org/kdm/artEintragungCode",
+      "target_id": "urn:xoev-de:xunternehmen:codeliste:artdereintragung",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "cc1a2d9d-8762-5f90-b03e-c5ee946beb58",
+      "familyId": "cc1a2d9d-8762-5f90-b03e-c5ee946beb58",
+      "source_id": "https://w3id.org/kdm/artGesellschafterCode",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "78a228be-4170-5298-aff8-f84402a4b68e",
+      "familyId": "78a228be-4170-5298-aff8-f84402a4b68e",
+      "source_id": "https://w3id.org/kdm/artGesellschafterCode",
+      "target_id": "https://w3id.org/kdm/Gesellschafter",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "28d035e9-b37f-5546-94ec-122dcf40b5e8",
+      "familyId": "28d035e9-b37f-5546-94ec-122dcf40b5e8",
+      "source_id": "https://w3id.org/kdm/artGesellschafterCode",
+      "target_id": "urn:xoev-de:xunternehmen:codeliste:artgesellschafterpersonengesellschaft",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "e414f4b6-7997-5545-921c-028e0d21475c",
+      "familyId": "e414f4b6-7997-5545-921c-028e0d21475c",
+      "source_id": "https://w3id.org/kdm/artGesetzlicherVertreterCode",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "ba984f28-b16a-568d-b589-8cb0bdf0b133",
+      "familyId": "ba984f28-b16a-568d-b589-8cb0bdf0b133",
+      "source_id": "https://w3id.org/kdm/artGesetzlicherVertreterCode",
+      "target_id": "https://w3id.org/kdm/GesetzlicherVertreter",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "ea48b682-7b78-5a54-9238-f12c19451dfa",
+      "familyId": "ea48b682-7b78-5a54-9238-f12c19451dfa",
+      "source_id": "https://w3id.org/kdm/artGesetzlicherVertreterCode",
+      "target_id": "urn:xoev-de:xunternehmen:codeliste:artgesetzlichervertreter",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "a43fcf2f-01da-56b2-ab35-6ac2452ff402",
+      "familyId": "a43fcf2f-01da-56b2-ab35-6ac2452ff402",
+      "source_id": "https://w3id.org/kdm/bundeseinheitlicheWirtschaftsnummer",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "d42bd750-b184-573c-9b4a-96ea216637e2",
+      "familyId": "d42bd750-b184-573c-9b4a-96ea216637e2",
+      "source_id": "https://w3id.org/kdm/bundeseinheitlicheWirtschaftsnummer",
+      "target_id": "http://www.w3.org/2001/XMLSchema#string",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "809745e3-013c-5948-87b1-1bd8a31f6f87",
+      "familyId": "809745e3-013c-5948-87b1-1bd8a31f6f87",
+      "source_id": "https://w3id.org/kdm/demailadresse",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "d08017b9-105a-5d1b-a7c0-28f0e822af3a",
+      "familyId": "d08017b9-105a-5d1b-a7c0-28f0e822af3a",
+      "source_id": "https://w3id.org/kdm/demailadresse",
+      "target_id": "https://w3id.org/kdm/Demail",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "be6e97d2-0608-5f30-a847-c564cd3c7a09",
+      "familyId": "be6e97d2-0608-5f30-a847-c564cd3c7a09",
+      "source_id": "https://w3id.org/kdm/demailadresse",
+      "target_id": "http://www.w3.org/2001/XMLSchema#string",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "0be1d564-b3e8-5503-a598-a1adc43ffae9",
+      "familyId": "0be1d564-b3e8-5503-a598-a1adc43ffae9",
+      "source_id": "https://w3id.org/kdm/doktorgrad",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "524e33f6-6843-5e5e-8ba3-fd0b72cdcb99",
+      "familyId": "524e33f6-6843-5e5e-8ba3-fd0b72cdcb99",
+      "source_id": "https://w3id.org/kdm/doktorgrad",
+      "target_id": "https://w3id.org/kdm/NatuerlichePerson",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "0b1f024c-d21e-5d6c-b48c-47fe2daa3338",
+      "familyId": "0b1f024c-d21e-5d6c-b48c-47fe2daa3338",
+      "source_id": "https://w3id.org/kdm/doktorgrad",
+      "target_id": "http://www.w3.org/2001/XMLSchema#string",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "ca3c3a9e-c41b-53ec-b6bc-879174d293ba",
+      "familyId": "ca3c3a9e-c41b-53ec-b6bc-879174d293ba",
+      "source_id": "https://w3id.org/kdm/eingetragenerName",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "f305f1ae-156d-55ae-9935-981399b5c250",
+      "familyId": "f305f1ae-156d-55ae-9935-981399b5c250",
+      "source_id": "https://w3id.org/kdm/eingetragenerName",
+      "target_id": "http://www.w3.org/2001/XMLSchema#string",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "d4215440-6116-5633-ab60-438d9deb05db",
+      "familyId": "d4215440-6116-5633-ab60-438d9deb05db",
+      "source_id": "https://w3id.org/kdm/eintragungsnummer",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "602a0fce-db53-593a-80cc-bcfd073390fa",
+      "familyId": "602a0fce-db53-593a-80cc-bcfd073390fa",
+      "source_id": "https://w3id.org/kdm/eintragungsnummer",
+      "target_id": "https://w3id.org/kdm/Eintragung",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "511b1330-b7c3-5323-adab-6998a3c8acc6",
+      "familyId": "511b1330-b7c3-5323-adab-6998a3c8acc6",
+      "source_id": "https://w3id.org/kdm/eintragungsnummer",
+      "target_id": "http://www.w3.org/2001/XMLSchema#string",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "e536b7c5-bec7-5e00-ab09-26e33e742caf",
+      "familyId": "e536b7c5-bec7-5e00-ab09-26e33e742caf",
+      "source_id": "https://w3id.org/kdm/emailadresse",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "ae40ab1c-e614-5272-996b-144835f6fc5f",
+      "familyId": "ae40ab1c-e614-5272-996b-144835f6fc5f",
+      "source_id": "https://w3id.org/kdm/emailadresse",
+      "target_id": "https://w3id.org/kdm/Email",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "6c1bc9d4-6b36-5602-915c-1c3ae5537125",
+      "familyId": "6c1bc9d4-6b36-5602-915c-1c3ae5537125",
+      "source_id": "https://w3id.org/kdm/emailadresse",
+      "target_id": "http://www.w3.org/2001/XMLSchema#string",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "7239ab66-d04d-5976-9ea4-1100ebeccad6",
+      "familyId": "7239ab66-d04d-5976-9ea4-1100ebeccad6",
+      "source_id": "https://w3id.org/kdm/familienname",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "346bf1dc-bba3-5da9-84ef-0fc57c455657",
+      "familyId": "346bf1dc-bba3-5da9-84ef-0fc57c455657",
+      "source_id": "https://w3id.org/kdm/familienname",
+      "target_id": "https://w3id.org/kdm/NameEinerNatuerlichenPerson",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "72a4e295-0da1-558f-8173-ebb55bf29df3",
+      "familyId": "72a4e295-0da1-558f-8173-ebb55bf29df3",
+      "source_id": "https://w3id.org/kdm/familienname",
+      "target_id": "http://www.w3.org/2001/XMLSchema#string",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "fa429add-4827-5185-b9c4-4b0701888ac7",
+      "familyId": "fa429add-4827-5185-b9c4-4b0701888ac7",
+      "source_id": "https://w3id.org/kdm/familiennameNichtVorhanden",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "ac8b008d-d40b-5dab-a59d-cc273f5380ea",
+      "familyId": "ac8b008d-d40b-5dab-a59d-cc273f5380ea",
+      "source_id": "https://w3id.org/kdm/familiennameNichtVorhanden",
+      "target_id": "https://w3id.org/kdm/NameEinerNatuerlichenPerson",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "4e60c572-e5de-5191-abcd-27112107b5e2",
+      "familyId": "4e60c572-e5de-5191-abcd-27112107b5e2",
+      "source_id": "https://w3id.org/kdm/familiennameNichtVorhanden",
+      "target_id": "http://www.w3.org/2001/XMLSchema#boolean",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "405b5bd9-dad5-554d-9149-fbef8dd71b7e",
+      "familyId": "405b5bd9-dad5-554d-9149-fbef8dd71b7e",
+      "source_id": "https://w3id.org/kdm/fruehererGemeindename",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "2b88e02a-a3c4-5497-8f18-8e82d635d887",
+      "familyId": "2b88e02a-a3c4-5497-8f18-8e82d635d887",
+      "source_id": "https://w3id.org/kdm/fruehererGemeindename",
+      "target_id": "https://w3id.org/kdm/AnschriftInlandStrassenanschrift",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "a9534527-ec95-5890-8c6d-b2ab259b87f2",
+      "familyId": "a9534527-ec95-5890-8c6d-b2ab259b87f2",
+      "source_id": "https://w3id.org/kdm/fruehererGemeindename",
+      "target_id": "http://www.w3.org/2001/XMLSchema#string",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "8b19c797-8d17-5689-af15-378789c8fca0",
+      "familyId": "8b19c797-8d17-5689-af15-378789c8fca0",
+      "source_id": "https://w3id.org/kdm/geburtsdatum",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "42be99d1-b3d4-505c-8041-f705aeef5723",
+      "familyId": "42be99d1-b3d4-505c-8041-f705aeef5723",
+      "source_id": "https://w3id.org/kdm/geburtsdatum",
+      "target_id": "https://w3id.org/kdm/Geburt",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "fb6250f5-99f5-5084-a1cc-b78f25acf07b",
+      "familyId": "fb6250f5-99f5-5084-a1cc-b78f25acf07b",
+      "source_id": "https://w3id.org/kdm/geburtsdatum",
+      "target_id": "http://www.w3.org/2001/XMLSchema#string",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "d0b32630-6a1d-5bc5-a03f-b409e9d90640",
+      "familyId": "d0b32630-6a1d-5bc5-a03f-b409e9d90640",
+      "source_id": "https://w3id.org/kdm/geburtsname",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "c6d99c0c-475f-5387-b0ef-6455acee49ed",
+      "familyId": "c6d99c0c-475f-5387-b0ef-6455acee49ed",
+      "source_id": "https://w3id.org/kdm/geburtsname",
+      "target_id": "https://w3id.org/kdm/NameEinerNatuerlichenPerson",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "c37317b7-4090-509d-9209-ebdc15423561",
+      "familyId": "c37317b7-4090-509d-9209-ebdc15423561",
+      "source_id": "https://w3id.org/kdm/geburtsname",
+      "target_id": "http://www.w3.org/2001/XMLSchema#string",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "5fa9deb2-296c-5fb0-806f-9828450b0289",
+      "familyId": "5fa9deb2-296c-5fb0-806f-9828450b0289",
+      "source_id": "https://w3id.org/kdm/geburtsnameNichtVorhanden",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "aefe3863-aabb-513d-b6d0-28b0be36cf33",
+      "familyId": "aefe3863-aabb-513d-b6d0-28b0be36cf33",
+      "source_id": "https://w3id.org/kdm/geburtsnameNichtVorhanden",
+      "target_id": "https://w3id.org/kdm/NameEinerNatuerlichenPerson",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "a1ced432-d691-50cb-b811-1a8c1e8a8ad4",
+      "familyId": "a1ced432-d691-50cb-b811-1a8c1e8a8ad4",
+      "source_id": "https://w3id.org/kdm/geburtsnameNichtVorhanden",
+      "target_id": "http://www.w3.org/2001/XMLSchema#boolean",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "c6bdb17b-d51a-5f76-9c85-7c2a46060f27",
+      "familyId": "c6bdb17b-d51a-5f76-9c85-7c2a46060f27",
+      "source_id": "https://w3id.org/kdm/gemeindeschluesselCode",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "5fbdf8d3-3ce6-5d98-a542-07e5363eed54",
+      "familyId": "5fbdf8d3-3ce6-5d98-a542-07e5363eed54",
+      "source_id": "https://w3id.org/kdm/gemeindeschluesselCode",
+      "target_id": "https://w3id.org/kdm/AnschriftInlandStrassenanschrift",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "f1d871b3-771b-5e28-9b8d-2ffddd68c783",
+      "familyId": "f1d871b3-771b-5e28-9b8d-2ffddd68c783",
+      "source_id": "https://w3id.org/kdm/gemeindeschluesselCode",
+      "target_id": "urn:de:bund:destatis:bevoelkerungsstatistik:schluessel:ags",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "4b62bd64-676f-592b-9168-e8ee56262825",
+      "familyId": "4b62bd64-676f-592b-9168-e8ee56262825",
+      "source_id": "https://w3id.org/kdm/geschaeftsbezeichnung",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "12b3f016-ab82-58f8-a805-59d5fa831ffe",
+      "familyId": "12b3f016-ab82-58f8-a805-59d5fa831ffe",
+      "source_id": "https://w3id.org/kdm/geschaeftsbezeichnung",
+      "target_id": "https://w3id.org/kdm/WirtschaftlicheTaetigkeit",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "017b7c22-2b54-5237-b951-f089b1ef4cfb",
+      "familyId": "017b7c22-2b54-5237-b951-f089b1ef4cfb",
+      "source_id": "https://w3id.org/kdm/geschaeftsbezeichnung",
+      "target_id": "http://www.w3.org/2001/XMLSchema#string",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "7489f1e4-4111-5f86-b5a5-07420bb04507",
+      "familyId": "7489f1e4-4111-5f86-b5a5-07420bb04507",
+      "source_id": "https://w3id.org/kdm/geschlechtCode",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "474fd3e1-3b28-5b25-904a-749e99107e60",
+      "familyId": "474fd3e1-3b28-5b25-904a-749e99107e60",
+      "source_id": "https://w3id.org/kdm/geschlechtCode",
+      "target_id": "https://w3id.org/kdm/NatuerlichePerson",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "81ed9e1e-efec-5a45-8cda-080cc2fb406c",
+      "familyId": "81ed9e1e-efec-5a45-8cda-080cc2fb406c",
+      "source_id": "https://w3id.org/kdm/geschlechtCode",
+      "target_id": "urn:xoev-de:xinneres:codeliste:geschlecht",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "525761e4-869b-56c3-a9cb-bd2ee32907f9",
+      "familyId": "525761e4-869b-56c3-a9cb-bd2ee32907f9",
+      "source_id": "https://w3id.org/kdm/hausnummer",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "1091f4e0-e69c-560e-adc0-cddbfc9ca100",
+      "familyId": "1091f4e0-e69c-560e-adc0-cddbfc9ca100",
+      "source_id": "https://w3id.org/kdm/hausnummer",
+      "target_id": "http://www.w3.org/2001/XMLSchema#string",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "588b0657-b910-5a49-9cbb-f979969ed4dc",
+      "familyId": "588b0657-b910-5a49-9cbb-f979969ed4dc",
+      "source_id": "https://w3id.org/kdm/identifikationsnummer",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "a80d85d9-12bf-5c09-bb2b-2cd13dcb0ec9",
+      "familyId": "a80d85d9-12bf-5c09-bb2b-2cd13dcb0ec9",
+      "source_id": "https://w3id.org/kdm/identifikationsnummer",
+      "target_id": "https://w3id.org/kdm/NatuerlichePerson",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "9087259c-c559-5c86-8aa7-0ab40faa019e",
+      "familyId": "9087259c-c559-5c86-8aa7-0ab40faa019e",
+      "source_id": "https://w3id.org/kdm/identifikationsnummer",
+      "target_id": "http://www.w3.org/2001/XMLSchema#string",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "59a78787-21b7-50e0-9fd6-e681604bbd21",
+      "familyId": "59a78787-21b7-50e0-9fd6-e681604bbd21",
+      "source_id": "https://w3id.org/kdm/klassifikationKommunikationCode",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "8ecbe7c6-448f-5b51-aa94-05e3655b460b",
+      "familyId": "8ecbe7c6-448f-5b51-aa94-05e3655b460b",
+      "source_id": "https://w3id.org/kdm/klassifikationKommunikationCode",
+      "target_id": "https://w3id.org/kdm/Kommunikation",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "70aa4fc6-37a4-5e92-9374-bc2ecfc6316a",
+      "familyId": "70aa4fc6-37a4-5e92-9374-bc2ecfc6316a",
+      "source_id": "https://w3id.org/kdm/klassifikationKommunikationCode",
+      "target_id": "urn:xoev-de:xunternehmen:codeliste:klassifikationkommunikation",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "641ed3fb-39b4-568a-9b4f-e97585457b96",
+      "familyId": "641ed3fb-39b4-568a-9b4f-e97585457b96",
+      "source_id": "https://w3id.org/kdm/kommunikationHinweis",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "efc8eb65-7894-54f4-95f6-5482a3a75fa3",
+      "familyId": "efc8eb65-7894-54f4-95f6-5482a3a75fa3",
+      "source_id": "https://w3id.org/kdm/kommunikationHinweis",
+      "target_id": "https://w3id.org/kdm/Kommunikation",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "5d1063ae-53d4-5ad7-bb6c-82944a785c6e",
+      "familyId": "5d1063ae-53d4-5ad7-bb6c-82944a785c6e",
+      "source_id": "https://w3id.org/kdm/kommunikationHinweis",
+      "target_id": "http://www.w3.org/2001/XMLSchema#string",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "04c40612-05aa-5059-937f-6a490a093580",
+      "familyId": "04c40612-05aa-5059-937f-6a490a093580",
+      "source_id": "https://w3id.org/kdm/ort",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "dc44f99a-a123-56ab-ac2d-adac13c1ba07",
+      "familyId": "dc44f99a-a123-56ab-ac2d-adac13c1ba07",
+      "source_id": "https://w3id.org/kdm/ort",
+      "target_id": "http://www.w3.org/2001/XMLSchema#string",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "98be4756-d2fa-5043-8b63-a48c785d6330",
+      "familyId": "98be4756-d2fa-5043-8b63-a48c785d6330",
+      "source_id": "https://w3id.org/kdm/ortDerGeburt",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "74fe4ed8-e282-54a1-ad44-93ddb103b7b8",
+      "familyId": "74fe4ed8-e282-54a1-ad44-93ddb103b7b8",
+      "source_id": "https://w3id.org/kdm/ortDerGeburt",
+      "target_id": "https://w3id.org/kdm/Geburt",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "e3553ac9-0cea-54a2-a500-8d99b61fc0da",
+      "familyId": "e3553ac9-0cea-54a2-a500-8d99b61fc0da",
+      "source_id": "https://w3id.org/kdm/ortDerGeburt",
+      "target_id": "http://www.w3.org/2001/XMLSchema#string",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "066bf73d-6786-536c-9a26-7dc5b877e55a",
+      "familyId": "066bf73d-6786-536c-9a26-7dc5b877e55a",
+      "source_id": "https://w3id.org/kdm/postfach",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "3740028f-1dbf-588f-aee5-ba36a3bda008",
+      "familyId": "3740028f-1dbf-588f-aee5-ba36a3bda008",
+      "source_id": "https://w3id.org/kdm/postfach",
+      "target_id": "https://w3id.org/kdm/AnschriftInlandGrossempfaengeranschrift",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "62cf7357-624f-5b53-845d-1fecdbb67330",
+      "familyId": "62cf7357-624f-5b53-845d-1fecdbb67330",
+      "source_id": "https://w3id.org/kdm/postfach",
+      "target_id": "http://www.w3.org/2001/XMLSchema#string",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "5b3430f9-64c1-56bc-897b-d8b41ff23138",
+      "familyId": "5b3430f9-64c1-56bc-897b-d8b41ff23138",
+      "source_id": "https://w3id.org/kdm/postleitzahl",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "9c8eeb47-c090-58b7-a39b-5f291acfd2f1",
+      "familyId": "9c8eeb47-c090-58b7-a39b-5f291acfd2f1",
+      "source_id": "https://w3id.org/kdm/postleitzahl",
+      "target_id": "http://www.w3.org/2001/XMLSchema#string",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "93d6c493-d48a-5523-b101-babce3c90ed9",
+      "familyId": "93d6c493-d48a-5523-b101-babce3c90ed9",
+      "source_id": "https://w3id.org/kdm/rechtsformenCode",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "95a4235c-38bf-57a7-a463-51afbd7a2ca9",
+      "familyId": "95a4235c-38bf-57a7-a463-51afbd7a2ca9",
+      "source_id": "https://w3id.org/kdm/rechtsformenCode",
+      "target_id": "urn:xoev-de:xunternehmen:codeliste:rechtsformen",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "da09868a-5063-53a2-9a7c-59f740a625b8",
+      "familyId": "da09868a-5063-53a2-9a7c-59f740a625b8",
+      "source_id": "https://w3id.org/kdm/registergerichtBezeichnung",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "35b1bd34-c376-59ce-ac83-646dcbb2ad5e",
+      "familyId": "35b1bd34-c376-59ce-ac83-646dcbb2ad5e",
+      "source_id": "https://w3id.org/kdm/registergerichtBezeichnung",
+      "target_id": "https://w3id.org/kdm/Eintragung",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "92f434fc-324d-55d8-a0cb-7c3dfc7af63a",
+      "familyId": "92f434fc-324d-55d8-a0cb-7c3dfc7af63a",
+      "source_id": "https://w3id.org/kdm/registergerichtBezeichnung",
+      "target_id": "http://www.w3.org/2001/XMLSchema#string",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "8ee6452f-ade8-52ab-9215-20a584d5ca10",
+      "familyId": "8ee6452f-ade8-52ab-9215-20a584d5ca10",
+      "source_id": "https://w3id.org/kdm/registergerichtCode",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "506cf58e-03c3-5673-a597-af5a2d6ba114",
+      "familyId": "506cf58e-03c3-5673-a597-af5a2d6ba114",
+      "source_id": "https://w3id.org/kdm/registergerichtCode",
+      "target_id": "https://w3id.org/kdm/Eintragung",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "8e558219-f83f-5c78-807b-14db1ae15033",
+      "familyId": "8e558219-f83f-5c78-807b-14db1ae15033",
+      "source_id": "https://w3id.org/kdm/registergerichtCode",
+      "target_id": "urn:xoev-de:xunternehmen:codeliste:registergerichte",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "0819a904-6478-522c-b0b8-c659b22d78f3",
+      "familyId": "0819a904-6478-522c-b0b8-c659b22d78f3",
+      "source_id": "https://w3id.org/kdm/staat",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "e79a3e08-a38a-5641-a3a9-93f59f1e66df",
+      "familyId": "e79a3e08-a38a-5641-a3a9-93f59f1e66df",
+      "source_id": "https://w3id.org/kdm/staat",
+      "target_id": "http://www.w3.org/2001/XMLSchema#string",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "641cea53-b9e6-552c-b972-f865425ed30b",
+      "familyId": "641cea53-b9e6-552c-b972-f865425ed30b",
+      "source_id": "https://w3id.org/kdm/staatsangehoerigkeitCode",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "a33d6ae0-15a5-5b8d-8a78-5e4f273579ea",
+      "familyId": "a33d6ae0-15a5-5b8d-8a78-5e4f273579ea",
+      "source_id": "https://w3id.org/kdm/staatsangehoerigkeitCode",
+      "target_id": "https://w3id.org/kdm/NatuerlichePerson",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "8561263b-4c97-56be-abe9-a49e6e675a1f",
+      "familyId": "8561263b-4c97-56be-abe9-a49e6e675a1f",
+      "source_id": "https://w3id.org/kdm/staatsangehoerigkeitCode",
+      "target_id": "urn:de:bund:destatis:bevoelkerungsstatistik:schluessel:staatsangehoerigkeit",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "a41464bd-9bc8-5a22-8656-c8e2cae750ab",
+      "familyId": "a41464bd-9bc8-5a22-8656-c8e2cae750ab",
+      "source_id": "https://w3id.org/kdm/stiftungsverzeichnis",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "371dfc38-5bba-5967-9020-560e1afe0285",
+      "familyId": "371dfc38-5bba-5967-9020-560e1afe0285",
+      "source_id": "https://w3id.org/kdm/stiftungsverzeichnis",
+      "target_id": "https://w3id.org/kdm/Eintragung",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "74349244-ae72-5b4b-bba7-fd23dc5cd97c",
+      "familyId": "74349244-ae72-5b4b-bba7-fd23dc5cd97c",
+      "source_id": "https://w3id.org/kdm/stiftungsverzeichnis",
+      "target_id": "http://www.w3.org/2001/XMLSchema#string",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "0d615ca7-f547-5b81-8fe9-a92b0c1eb5a4",
+      "familyId": "0d615ca7-f547-5b81-8fe9-a92b0c1eb5a4",
+      "source_id": "https://w3id.org/kdm/strasse",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "8a2e5dde-2110-5423-80e4-a3ed17c29336",
+      "familyId": "8a2e5dde-2110-5423-80e4-a3ed17c29336",
+      "source_id": "https://w3id.org/kdm/strasse",
+      "target_id": "http://www.w3.org/2001/XMLSchema#string",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "5950ec8b-0196-5a59-bff9-53d379461400",
+      "familyId": "5950ec8b-0196-5a59-bff9-53d379461400",
+      "source_id": "https://w3id.org/kdm/taetigkeit",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "10c7db97-0571-5b49-bc8f-16a7cc010ea9",
+      "familyId": "10c7db97-0571-5b49-bc8f-16a7cc010ea9",
+      "source_id": "https://w3id.org/kdm/taetigkeit",
+      "target_id": "https://w3id.org/kdm/WirtschaftlicheTaetigkeit",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "b7b4ed7b-35c0-5941-b4de-6feff6cda222",
+      "familyId": "b7b4ed7b-35c0-5941-b4de-6feff6cda222",
+      "source_id": "https://w3id.org/kdm/taetigkeit",
+      "target_id": "http://www.w3.org/2001/XMLSchema#string",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "6aef892f-18c7-5e97-8cd9-84afad461be2",
+      "familyId": "6aef892f-18c7-5e97-8cd9-84afad461be2",
+      "source_id": "https://w3id.org/kdm/telefaxnummer",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "b21e9387-94e9-526b-9824-bb85ea085cc1",
+      "familyId": "b21e9387-94e9-526b-9824-bb85ea085cc1",
+      "source_id": "https://w3id.org/kdm/telefaxnummer",
+      "target_id": "https://w3id.org/kdm/Telefax",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "d3d30591-8828-55d0-bebe-49eaaa548f77",
+      "familyId": "d3d30591-8828-55d0-bebe-49eaaa548f77",
+      "source_id": "https://w3id.org/kdm/telefaxnummer",
+      "target_id": "http://www.w3.org/2001/XMLSchema#string",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "ad93caba-d4c4-55e2-b1d0-bed2a61a61b4",
+      "familyId": "ad93caba-d4c4-55e2-b1d0-bed2a61a61b4",
+      "source_id": "https://w3id.org/kdm/telefonnummer",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "048fe5f8-2467-5c19-9232-8f28c86876d1",
+      "familyId": "048fe5f8-2467-5c19-9232-8f28c86876d1",
+      "source_id": "https://w3id.org/kdm/telefonnummer",
+      "target_id": "https://w3id.org/kdm/Telefon",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "c2ea98dd-f478-5246-8c1e-dbdf22e50d63",
+      "familyId": "c2ea98dd-f478-5246-8c1e-dbdf22e50d63",
+      "source_id": "https://w3id.org/kdm/telefonnummer",
+      "target_id": "http://www.w3.org/2001/XMLSchema#string",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "be4d5231-e167-5d19-ba50-0cc9747ebc84",
+      "familyId": "be4d5231-e167-5d19-ba50-0cc9747ebc84",
+      "source_id": "https://w3id.org/kdm/versionWirtschaftszweigschluesselCode",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "7378e02d-6ae5-55d3-bce2-be14f1461131",
+      "familyId": "7378e02d-6ae5-55d3-bce2-be14f1461131",
+      "source_id": "https://w3id.org/kdm/versionWirtschaftszweigschluesselCode",
+      "target_id": "https://w3id.org/kdm/Wirtschaftszweig",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "9e8c231e-e732-542f-8f93-79ec431679bd",
+      "familyId": "9e8c231e-e732-542f-8f93-79ec431679bd",
+      "source_id": "https://w3id.org/kdm/versionWirtschaftszweigschluesselCode",
+      "target_id": "urn:xoev-de:xunternehmen:codeliste:wirtschaftszweigklassifikationsversion",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "8cf81ae0-4ea2-5c07-9ba1-d280216c5ca8",
+      "familyId": "8cf81ae0-4ea2-5c07-9ba1-d280216c5ca8",
+      "source_id": "https://w3id.org/kdm/vornamen",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "77f0b4f4-fdc7-5111-86f1-7cfa6521b919",
+      "familyId": "77f0b4f4-fdc7-5111-86f1-7cfa6521b919",
+      "source_id": "https://w3id.org/kdm/vornamen",
+      "target_id": "https://w3id.org/kdm/NameEinerNatuerlichenPerson",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "5ae8400b-812f-5daa-9db2-c1e7b683ab36",
+      "familyId": "5ae8400b-812f-5daa-9db2-c1e7b683ab36",
+      "source_id": "https://w3id.org/kdm/vornamen",
+      "target_id": "http://www.w3.org/2001/XMLSchema#string",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "df462995-2131-5291-ae76-293d548a92b3",
+      "familyId": "df462995-2131-5291-ae76-293d548a92b3",
+      "source_id": "https://w3id.org/kdm/vornamenNichtVorhanden",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "de6caf7f-4331-5f6b-84e2-9fac81a6cb9d",
+      "familyId": "de6caf7f-4331-5f6b-84e2-9fac81a6cb9d",
+      "source_id": "https://w3id.org/kdm/vornamenNichtVorhanden",
+      "target_id": "https://w3id.org/kdm/NameEinerNatuerlichenPerson",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "8e12c3e7-1891-5f74-a3af-849651d9a2a6",
+      "familyId": "8e12c3e7-1891-5f74-a3af-849651d9a2a6",
+      "source_id": "https://w3id.org/kdm/vornamenNichtVorhanden",
+      "target_id": "http://www.w3.org/2001/XMLSchema#boolean",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "23eddb30-a2af-5166-8aff-d650dc28d2cc",
+      "familyId": "23eddb30-a2af-5166-8aff-d650dc28d2cc",
+      "source_id": "https://w3id.org/kdm/webadresse",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "5a303b7d-8ab8-5e71-aa47-8e598ecefec5",
+      "familyId": "5a303b7d-8ab8-5e71-aa47-8e598ecefec5",
+      "source_id": "https://w3id.org/kdm/webadresse",
+      "target_id": "https://w3id.org/kdm/WebAdresse",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "90d247a7-f83f-52f4-a224-984d7311bb82",
+      "familyId": "90d247a7-f83f-52f4-a224-984d7311bb82",
+      "source_id": "https://w3id.org/kdm/webadresse",
+      "target_id": "http://www.w3.org/2001/XMLSchema#string",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "55199565-347a-57e6-91a5-325174c918b0",
+      "familyId": "55199565-347a-57e6-91a5-325174c918b0",
+      "source_id": "https://w3id.org/kdm/wirtschaftszweigschluessel",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "4ecd22ff-bc94-5ed4-a8cf-e06d85406206",
+      "familyId": "4ecd22ff-bc94-5ed4-a8cf-e06d85406206",
+      "source_id": "https://w3id.org/kdm/wirtschaftszweigschluessel",
+      "target_id": "https://w3id.org/kdm/Wirtschaftszweig",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "e583580f-ee5e-5602-9ab1-4a9bac6d2e2d",
+      "familyId": "e583580f-ee5e-5602-9ab1-4a9bac6d2e2d",
+      "source_id": "https://w3id.org/kdm/wirtschaftszweigschluessel",
+      "target_id": "http://www.w3.org/2001/XMLSchema#string",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "5f499e8e-696a-50e0-9607-be55b6a6ae61",
+      "familyId": "5f499e8e-696a-50e0-9607-be55b6a6ae61",
+      "source_id": "https://w3id.org/kdm/wohnungsinhaber",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "4c16a7bf-712c-5e8f-bffc-b704da74b4ba",
+      "familyId": "4c16a7bf-712c-5e8f-bffc-b704da74b4ba",
+      "source_id": "https://w3id.org/kdm/wohnungsinhaber",
+      "target_id": "https://w3id.org/kdm/AnschriftInlandStrassenanschrift",
+      "type": "domain",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "57a32d7f-3107-5753-b954-6901d8382239",
+      "familyId": "57a32d7f-3107-5753-b954-6901d8382239",
+      "source_id": "https://w3id.org/kdm/wohnungsinhaber",
+      "target_id": "http://www.w3.org/2001/XMLSchema#string",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "dedf7c85-664e-5e20-a1a1-5f66b36e7a25",
+      "familyId": "dedf7c85-664e-5e20-a1a1-5f66b36e7a25",
+      "source_id": "https://w3id.org/kdm/zusatzangabenAnschrift",
+      "target_id": "https://w3id.org/kdm/",
+      "type": "definedIn",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "d1bafe10-83f9-5df0-81c8-49e8295d14b6",
+      "familyId": "d1bafe10-83f9-5df0-81c8-49e8295d14b6",
+      "source_id": "https://w3id.org/kdm/zusatzangabenAnschrift",
+      "target_id": "http://www.w3.org/2001/XMLSchema#string",
+      "type": "range",
+      "weight": 1.0,
+      "properties": {
+        "source": "ontology_import"
+      }
+    },
+    {
+      "id": "2322c13d-ca28-505c-9d59-475e452d1730",
+      "familyId": "2322c13d-ca28-505c-9d59-475e452d1730",
+      "source_id": "business_rule:anschrift_type_rules:InlandStrassenanschrift",
+      "target_id": "https://w3id.org/kdm/InlandStrassenanschrift",
+      "type": "appliesToClass",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "82048836-5e1f-5f70-aa1d-331b084abe51",
+      "familyId": "82048836-5e1f-5f70-aa1d-331b084abe51",
+      "source_id": "business_rule:anschrift_type_rules:InlandPostfachanschrift",
+      "target_id": "https://w3id.org/kdm/InlandPostfachanschrift",
+      "type": "appliesToClass",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "01ff1f83-8496-5b81-9648-ec2e43fd26fc",
+      "familyId": "01ff1f83-8496-5b81-9648-ec2e43fd26fc",
+      "source_id": "business_rule:anschrift_type_rules:InlandGrossempfaengeranschrift",
+      "target_id": "https://w3id.org/kdm/InlandGrossempfaengeranschrift",
+      "type": "appliesToClass",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "20202cf3-8071-5144-9118-aab6f571ae4f",
+      "familyId": "20202cf3-8071-5144-9118-aab6f571ae4f",
+      "source_id": "business_rule:anschrift_type_rules:AuslandAnschrift",
+      "target_id": "https://w3id.org/kdm/AuslandAnschrift",
+      "type": "appliesToClass",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "a968fc33-6b6e-5ef4-818c-ea7b53012e99",
+      "familyId": "a968fc33-6b6e-5ef4-818c-ea7b53012e99",
+      "source_id": "business_rule:kommunikation_channel_rules:EmailKanal",
+      "target_id": "https://w3id.org/kdm/EmailKanal",
+      "type": "appliesToClass",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "35ce26cd-69fe-529c-8515-e1b645327ce1",
+      "familyId": "35ce26cd-69fe-529c-8515-e1b645327ce1",
+      "source_id": "business_rule:kommunikation_channel_rules:TelefonKanal",
+      "target_id": "https://w3id.org/kdm/TelefonKanal",
+      "type": "appliesToClass",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "6d9072f3-1dcd-53b4-adb7-c1bb92646163",
+      "familyId": "6d9072f3-1dcd-53b4-adb7-c1bb92646163",
+      "source_id": "business_rule:kommunikation_channel_rules:InkonsistenteKommunikation",
+      "target_id": "https://w3id.org/kdm/InkonsistenteKommunikation",
+      "type": "appliesToClass",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "f38a321d-0b55-54e8-8ae8-5a984582dd7e",
+      "familyId": "f38a321d-0b55-54e8-8ae8-5a984582dd7e",
+      "source_id": "business_rule:natuerliche_person_completeness_rules:VollstaendigeNatuerlichePerson",
+      "target_id": "https://w3id.org/kdm/VollstaendigeNatuerlichePerson",
+      "type": "appliesToClass",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "f4ebe3f5-0ec9-5aec-b514-e90d5dd40c17",
+      "familyId": "f4ebe3f5-0ec9-5aec-b514-e90d5dd40c17",
+      "source_id": "business_rule:natuerliche_person_completeness_rules:UnvollstaendigeNatuerlichePerson",
+      "target_id": "https://w3id.org/kdm/UnvollstaendigeNatuerlichePerson",
+      "type": "appliesToClass",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "ebc8e1b0-3953-52d1-b288-c1348ae3a5fb",
+      "familyId": "ebc8e1b0-3953-52d1-b288-c1348ae3a5fb",
+      "source_id": "business_rule:organisation_completeness_rules:RegisterEingetragen",
+      "target_id": "https://w3id.org/kdm/RegisterEingetragen",
+      "type": "appliesToClass",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "40024851-77c6-5eff-8452-1eaa3820441a",
+      "familyId": "40024851-77c6-5eff-8452-1eaa3820441a",
+      "source_id": "business_rule:organisation_completeness_rules:HatSitz",
+      "target_id": "https://w3id.org/kdm/HatSitz",
+      "type": "appliesToClass",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "ae819da1-fa81-5e3b-8482-438aad72d475",
+      "familyId": "ae819da1-fa81-5e3b-8482-438aad72d475",
+      "source_id": "business_rule:organisation_completeness_rules:VollstaendigeOrganisation",
+      "target_id": "https://w3id.org/kdm/VollstaendigeOrganisation",
+      "type": "appliesToClass",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "0b1da96d-f2d7-5c17-9332-976d0b8bd34c",
+      "familyId": "0b1da96d-f2d7-5c17-9332-976d0b8bd34c",
+      "source_id": "business_rule:wirtschaftliche_taetigkeit_rules:HatHauptbetriebsstaette",
+      "target_id": "https://w3id.org/kdm/HatHauptbetriebsstaette",
+      "type": "appliesToClass",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "73743053-e06a-5c47-8529-227b2e2a9c67",
+      "familyId": "73743053-e06a-5c47-8529-227b2e2a9c67",
+      "source_id": "business_rule:wirtschaftliche_taetigkeit_rules:HatWirtschaftszweig",
+      "target_id": "https://w3id.org/kdm/HatWirtschaftszweig",
+      "type": "appliesToClass",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "41fa4097-3eb6-5ead-8083-9891baf424cb",
+      "familyId": "41fa4097-3eb6-5ead-8083-9891baf424cb",
+      "source_id": "business_rule:data_quality_tier_rules:TierA_Vollstaendig",
+      "target_id": "https://w3id.org/kdm/TierA_Vollstaendig",
+      "type": "appliesToClass",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "222c8fda-943a-5d1d-8205-a0f6c1f1d9eb",
+      "familyId": "222c8fda-943a-5d1d-8205-a0f6c1f1d9eb",
+      "source_id": "business_rule:data_quality_tier_rules:TierB_Teilweise",
+      "target_id": "https://w3id.org/kdm/TierB_Teilweise",
+      "type": "appliesToClass",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "85b3a23c-8f69-51e1-81b1-da33ae721dc2",
+      "familyId": "85b3a23c-8f69-51e1-81b1-da33ae721dc2",
+      "source_id": "business_rule:data_quality_tier_rules:TierC_Minimal",
+      "target_id": "https://w3id.org/kdm/TierC_Minimal",
+      "type": "appliesToClass",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "c1b2da15-fa23-5a5b-9541-4b2d30d022fb",
+      "familyId": "c1b2da15-fa23-5a5b-9541-4b2d30d022fb",
+      "source_id": "business_rule:vorgang_readiness_rules:AntragEinreichbar",
+      "target_id": "https://w3id.org/kdm/AntragEinreichbar",
+      "type": "appliesToClass",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "9f5fbdd4-162c-5209-a0ad-f91a613881e2",
+      "familyId": "9f5fbdd4-162c-5209-a0ad-f91a613881e2",
+      "source_id": "business_rule:vorgang_readiness_rules:AnzeigeVollstaendig",
+      "target_id": "https://w3id.org/kdm/AnzeigeVollstaendig",
+      "type": "appliesToClass",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "c14be396-ec81-5870-a285-c1a23331aa27",
+      "familyId": "c14be396-ec81-5870-a285-c1a23331aa27",
+      "source_id": "5e570778-8bff-4a29-99c1-1be4a9dbdc60",
+      "target_id": "https://w3id.org/kdm/NatuerlichePerson/np-000042",
+      "type": "involves",
+      "weight": 1.0,
+      "properties": {
+        "confidence": 0.94
+      }
+    },
+    {
+      "id": "c22f63f6-3a02-5d2f-8a8e-d6a8f1e424eb",
+      "familyId": "c22f63f6-3a02-5d2f-8a8e-d6a8f1e424eb",
+      "source_id": "5e570778-8bff-4a29-99c1-1be4a9dbdc60",
+      "target_id": "category_data_quality_tier",
+      "type": "belongs_to",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "61832601-29fa-5697-874b-7d7255def70e",
+      "familyId": "61832601-29fa-5697-874b-7d7255def70e",
+      "source_id": "5e570778-8bff-4a29-99c1-1be4a9dbdc60",
+      "target_id": "maker_kdm_quality_agent",
+      "type": "made_by",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "8beda248-e205-57f6-ac2a-b2660978d7b5",
+      "familyId": "8beda248-e205-57f6-ac2a-b2660978d7b5",
+      "source_id": "95668556-91f5-4e0c-958c-a53ceffa6a2e",
+      "target_id": "https://w3id.org/kdm/NatuerlichePerson/np-001287",
+      "type": "involves",
+      "weight": 1.0,
+      "properties": {
+        "confidence": 0.88
+      }
+    },
+    {
+      "id": "41e1fcd3-9032-5487-8d0e-d50cbead41bd",
+      "familyId": "41e1fcd3-9032-5487-8d0e-d50cbead41bd",
+      "source_id": "95668556-91f5-4e0c-958c-a53ceffa6a2e",
+      "target_id": "category_data_quality_tier",
+      "type": "belongs_to",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "55228fe4-f375-5361-a490-8ac33efef0f2",
+      "familyId": "55228fe4-f375-5361-a490-8ac33efef0f2",
+      "source_id": "95668556-91f5-4e0c-958c-a53ceffa6a2e",
+      "target_id": "maker_kdm_quality_agent",
+      "type": "made_by",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "e60aa4d7-8bc5-5ed5-9ea1-dc6dcdf39f2b",
+      "familyId": "e60aa4d7-8bc5-5ed5-9ea1-dc6dcdf39f2b",
+      "source_id": "f64db4b1-6bb7-47ad-9309-20395dafd2f7",
+      "target_id": "https://w3id.org/kdm/JuristischePerson/jp-000519",
+      "type": "involves",
+      "weight": 1.0,
+      "properties": {
+        "confidence": 0.91
+      }
+    },
+    {
+      "id": "ef7fadb4-3611-5ec0-9106-51d2c3533262",
+      "familyId": "ef7fadb4-3611-5ec0-9106-51d2c3533262",
+      "source_id": "f64db4b1-6bb7-47ad-9309-20395dafd2f7",
+      "target_id": "category_register_completeness",
+      "type": "belongs_to",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "356892ab-690d-5787-8c60-b0a831cd25cc",
+      "familyId": "356892ab-690d-5787-8c60-b0a831cd25cc",
+      "source_id": "f64db4b1-6bb7-47ad-9309-20395dafd2f7",
+      "target_id": "maker_kdm_quality_agent",
+      "type": "made_by",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "45695a3d-b5ce-5a46-b51d-84aeaa6cc52f",
+      "familyId": "45695a3d-b5ce-5a46-b51d-84aeaa6cc52f",
+      "source_id": "4147420d-4f32-417b-8d85-2dfc8c22bdac",
+      "target_id": "https://w3id.org/kdm/JuristischePerson/jp-000003",
+      "type": "involves",
+      "weight": 1.0,
+      "properties": {
+        "confidence": 0.96
+      }
+    },
+    {
+      "id": "d1698203-d084-52cf-ab1b-802d18c5f5c0",
+      "familyId": "d1698203-d084-52cf-ab1b-802d18c5f5c0",
+      "source_id": "4147420d-4f32-417b-8d85-2dfc8c22bdac",
+      "target_id": "category_register_completeness",
+      "type": "belongs_to",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "d63b8ae7-99b5-54ae-abea-fc63e020c355",
+      "familyId": "d63b8ae7-99b5-54ae-abea-fc63e020c355",
+      "source_id": "4147420d-4f32-417b-8d85-2dfc8c22bdac",
+      "target_id": "maker_kdm_quality_agent",
+      "type": "made_by",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "cb6a3dd5-5f27-5d2d-8e73-7bdf7f0328d7",
+      "familyId": "cb6a3dd5-5f27-5d2d-8e73-7bdf7f0328d7",
+      "source_id": "2ee0b469-e56d-4657-8fe0-7b240b94d1d2",
+      "target_id": "https://w3id.org/kdm/WirtschaftlicheTaetigkeit/wt-000112",
+      "type": "involves",
+      "weight": 1.0,
+      "properties": {
+        "confidence": 0.93
+      }
+    },
+    {
+      "id": "eb8cc910-a734-5921-b048-a1b1f61ab18a",
+      "familyId": "eb8cc910-a734-5921-b048-a1b1f61ab18a",
+      "source_id": "2ee0b469-e56d-4657-8fe0-7b240b94d1d2",
+      "target_id": "category_wirtschaftliche_taetigkeit",
+      "type": "belongs_to",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "84e2345c-f6b4-58a1-b3d5-dc1abf7259a2",
+      "familyId": "84e2345c-f6b4-58a1-b3d5-dc1abf7259a2",
+      "source_id": "2ee0b469-e56d-4657-8fe0-7b240b94d1d2",
+      "target_id": "maker_kdm_quality_agent",
+      "type": "made_by",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "c45e4a53-f705-556a-9632-5f2196e15aa7",
+      "familyId": "c45e4a53-f705-556a-9632-5f2196e15aa7",
+      "source_id": "0c8d939f-96d0-4f34-96a8-4b37aadd2b4c",
+      "target_id": "https://w3id.org/kdm/RechtsfaehigePersonengesellschaft/pg-000891",
+      "type": "involves",
+      "weight": 1.0,
+      "properties": {
+        "confidence": 0.87
+      }
+    },
+    {
+      "id": "efe0f808-3610-5672-ad32-4a0bae37c147",
+      "familyId": "efe0f808-3610-5672-ad32-4a0bae37c147",
+      "source_id": "0c8d939f-96d0-4f34-96a8-4b37aadd2b4c",
+      "target_id": "category_data_quality_tier",
+      "type": "belongs_to",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "b10a3121-3eb3-54ca-b84b-dfa43d8d0380",
+      "familyId": "b10a3121-3eb3-54ca-b84b-dfa43d8d0380",
+      "source_id": "0c8d939f-96d0-4f34-96a8-4b37aadd2b4c",
+      "target_id": "maker_kdm_quality_agent",
+      "type": "made_by",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "2455fdbc-687e-5aeb-ad67-b27d43ec7a84",
+      "familyId": "2455fdbc-687e-5aeb-ad67-b27d43ec7a84",
+      "source_id": "db0936e1-a015-47be-89c6-e8dfcedb6ad7",
+      "target_id": "https://w3id.org/kdm/Antrag/an-000045",
+      "type": "involves",
+      "weight": 1.0,
+      "properties": {
+        "confidence": 0.92
+      }
+    },
+    {
+      "id": "b0c13c8d-270a-59ea-bb7f-7614d989003a",
+      "familyId": "b0c13c8d-270a-59ea-bb7f-7614d989003a",
+      "source_id": "db0936e1-a015-47be-89c6-e8dfcedb6ad7",
+      "target_id": "https://w3id.org/kdm/JuristischePerson/jp-000003",
+      "type": "involves",
+      "weight": 1.0,
+      "properties": {
+        "confidence": 0.92
+      }
+    },
+    {
+      "id": "db59a113-9f1e-5606-9c8d-c7635c9c96b3",
+      "familyId": "db59a113-9f1e-5606-9c8d-c7635c9c96b3",
+      "source_id": "db0936e1-a015-47be-89c6-e8dfcedb6ad7",
+      "target_id": "category_vorgang_readiness",
+      "type": "belongs_to",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "5fa70ebf-baab-56a1-80ab-7f322febb497",
+      "familyId": "5fa70ebf-baab-56a1-80ab-7f322febb497",
+      "source_id": "db0936e1-a015-47be-89c6-e8dfcedb6ad7",
+      "target_id": "maker_kdm_vorgang_agent",
+      "type": "made_by",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "a4a9c9af-a2e5-5c80-b173-3ae4db29065f",
+      "familyId": "a4a9c9af-a2e5-5c80-b173-3ae4db29065f",
+      "source_id": "c0f3fa36-976e-4647-868b-9f9c58b321c9",
+      "target_id": "https://w3id.org/kdm/Antrag/an-001902",
+      "type": "involves",
+      "weight": 1.0,
+      "properties": {
+        "confidence": 0.89
+      }
+    },
+    {
+      "id": "a98a557d-6cc8-5229-9fb6-319b449790a9",
+      "familyId": "a98a557d-6cc8-5229-9fb6-319b449790a9",
+      "source_id": "c0f3fa36-976e-4647-868b-9f9c58b321c9",
+      "target_id": "https://w3id.org/kdm/JuristischePerson/jp-000519",
+      "type": "involves",
+      "weight": 1.0,
+      "properties": {
+        "confidence": 0.89
+      }
+    },
+    {
+      "id": "2911d3af-3cda-5922-a9a0-6c33ed6337be",
+      "familyId": "2911d3af-3cda-5922-a9a0-6c33ed6337be",
+      "source_id": "c0f3fa36-976e-4647-868b-9f9c58b321c9",
+      "target_id": "category_vorgang_readiness",
+      "type": "belongs_to",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "c546f5c5-9942-5057-bd37-eb0a7d87f619",
+      "familyId": "c546f5c5-9942-5057-bd37-eb0a7d87f619",
+      "source_id": "c0f3fa36-976e-4647-868b-9f9c58b321c9",
+      "target_id": "maker_kdm_vorgang_agent",
+      "type": "made_by",
+      "weight": 1.0,
+      "properties": {}
+    },
+    {
+      "id": "b140ba39-9429-5349-b69a-179b780c0fd2",
+      "familyId": "b140ba39-9429-5349-b69a-179b780c0fd2",
+      "source_id": "f64db4b1-6bb7-47ad-9309-20395dafd2f7",
+      "target_id": "c0f3fa36-976e-4647-868b-9f9c58b321c9",
+      "type": "CAUSED",
+      "weight": 1.0,
+      "properties": {
+        "recorded_at": "2026-09-24T19:36:15.504717"
+      }
+    },
+    {
+      "id": "8e523e36-0b51-5bf3-b189-8421b93f0887",
+      "familyId": "8e523e36-0b51-5bf3-b189-8421b93f0887",
+      "source_id": "4147420d-4f32-417b-8d85-2dfc8c22bdac",
+      "target_id": "db0936e1-a015-47be-89c6-e8dfcedb6ad7",
+      "type": "INFLUENCED",
+      "weight": 1.0,
+      "properties": {
+        "recorded_at": "2026-09-24T19:36:15.504734"
+      }
+    }
+  ],
+  "links": []
+}

@@ -1,0 +1,990 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix kdm:     <https://w3id.org/kdm/> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema:  <http://schema.org/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann:    <http://purl.org/vocab/vann/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+
+
+<https://w3id.org/kdm/> rdf:type owl:Ontology ;
+    owl:versionIRI <https://w3id.org/kdm/> ;
+    dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+    dcterms:title "XUnternehmen.Kerndatenmodell als Ontologie"@de ;
+    dcterms:creator "Cornelia Strauß" ,
+                    "Annika Strupp" ,
+                    "Ludger Rinsche" ;
+    owl:versionInfo "Version 1.2"@de ;
+    dcterms:description "Diese Ontologie ist die formale Repräsentation des XUnternehmen.Kerndatenmodells als Ontologie, auf der Basis der Basic Formal Ontology (BFO)." @de ;
+    dcterms:abstract "Diese Ontologie ist die Darstellung des semantischen Datenmodells XUnternehmen.Kerndatenmodell." @de ;
+    dcterms:description "This Ontology is the representation of semantic model XUnternehmen.Kerndatenmodell based on Basic Formal Ontology (BFO)." @en ;
+    vann:preferredNamespacePrefix "kdm" ;
+    dcterms:created "2025-09-29"^^xsd:date ;
+    # dcterms:modified "2025-09-29"^^xsd:date ;
+    dcterms:bibliographicCitation "Rinsche, L.; Strauß, C.; Strupp, A.; Repräsentation des XUnternehmen.Kerndatenmodells als Ontologie (2025)" ;
+    rdfs:seeAlso <https://www.xrepository.de/details/urn:xoev-de:xunternehmen:standard:basismodul> ;
+    schema:codeRepository "https://gitlab.opencode.de/xunternehmen/kerndatenmodell-ontologie-owl"^^xsd:anyURI;
+.
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+## Object Properties für Abbildung komplexer Datentypen
+kdm:eintragung a owl:ObjectProperty ;
+                rdfs:label "hat Eintragung"@de ;
+                rdfs:domain [
+                    rdf:type owl:Class ;
+                    owl:unionOf (
+                        kdm:WirtschaftlicheTaetigkeit 
+                        kdm:JuristischePerson 
+                        kdm:RechtsfaehigePersonengesellschaft 
+                        kdm:SonstigePersonenvereinigung
+                    )
+                ] ;
+                rdfs:range kdm:Eintragung ;
+                skos:definition "Verweis auf das Datenobjekt Eintragung einer Wirtschaftlichen Tätigkeit, einer Juristischen Person, einer Rechtsfähigen Personengesellschaft oder einer Sonstigen Personenvereinigung."@de .
+
+
+kdm:wirtschaftszweig a owl:ObjectProperty ;
+                rdfs:label "hat Wirtschaftszweig"@de ;    
+                rdfs:domain kdm:WirtschaftlicheTaetigkeit ;
+                rdfs:range kdm:Wirtschaftszweig ;
+                skos:definition "Verweis auf das Datenobjekt Wirtschaftszweig einer wirtschaftlichen Tätigkeit."@de .
+
+kdm:anschrift a owl:ObjectProperty ;
+                rdfs:label "hat Anschrift"@de ;    
+                rdfs:domain [
+                    a owl:Class ;
+                    owl:unionOf (
+                        kdm:WirtschaftlicheTaetigkeit
+                        kdm:JuristischePerson
+                        kdm:RechtsfaehigePersonengesellschaft
+                        kdm:SonstigePersonenvereinigung
+                        kdm:NatuerlichePerson
+                        kdm:Betriebsstaette
+                    )
+                ] ;
+                rdfs:range kdm:Anschrift ;
+                skos:definition "Verweis auf das Datenobjekt Anschrift einer wirtschaftlichen Tätigkeit, einer natürlichen Person, einer juristischen Person, einer rechtsfähigen Personengesellschaft oder einer sonstigen Personenvereinigung, ebenso einer Betriebsstätte einer wirtschaftlichen Tätigkeit."@de .
+
+kdm:kommunikation a owl:ObjectProperty ;
+                rdfs:label "hat Kommunikation"@de ;    
+                rdfs:domain [
+                    a owl:Class ;
+                    owl:unionOf (
+                        kdm:WirtschaftlicheTaetigkeit
+                        kdm:JuristischePerson
+                        kdm:RechtsfaehigePersonengesellschaft
+                        kdm:SonstigePersonenvereinigung
+                        kdm:NatuerlichePerson
+                        kdm:Betriebsstaette
+                    )
+                ] ;
+                rdfs:range kdm:Kommunikation ;
+                skos:definition "Verweis auf das Datenobjekt Kommunikation einer wirtschaftlichen Tätigkeit, einer natürlichen Person, einer juristischen Person, einer rechtsfähigen Personengesellschaft oder einer sonstigen Personenvereinigung, ebenso einer Betriebsstätte einer wirtschaftlichen Tätigkeit."@de .
+
+kdm:betriebsstaette a owl:ObjectProperty ;
+                rdfs:label "hat Betriebsstätte"@de ;    
+                rdfs:domain kdm:WirtschaftlicheTaetigkeit ;
+                rdfs:range kdm:Betriebsstaette ;
+                skos:definition "Verweis auf das Datenobjekt Betriebsstätte einer wirtschaftlichen Tätigkeit."@de .
+
+kdm:sitz a owl:ObjectProperty ;
+                rdfs:label "hat Sitz"@de ;    
+                rdfs:domain [
+                    a owl:Class ;
+                    owl:unionOf (
+                        kdm:JuristischePerson
+                        kdm:RechtsfaehigePersonengesellschaft
+                        kdm:SonstigePersonenvereinigung
+                    )
+                ] ;
+                rdfs:range kdm:Sitz ;
+                skos:definition "Verweis auf das Datenobjekt Sitz einer juristischen Person, einer rechtsfähigen Personengesellschaft oder einer sonstigen Personenvereinigung."@de .
+
+kdm:effektiverVerwaltungssitz a owl:ObjectProperty ;
+                rdfs:label "hat effektiven Verwaltungssitz"@de ;    
+                rdfs:domain [
+                    a owl:Class ;
+                    owl:unionOf (
+                        kdm:JuristischePerson
+                        kdm:RechtsfaehigePersonengesellschaft
+                        kdm:SonstigePersonenvereinigung
+                    )
+                ] ;
+                rdfs:range kdm:EffektiverVerwaltungssitz ;
+                skos:definition "Verweis auf das Datenobjekt Effektiver Verwaltungssitz einer juristischen Person, einer rechtsfähigen Personengesellschaft oder einer sonstigen Personenvereinigung."@de .
+
+kdm:nameEinerNatuerlichenPerson a owl:ObjectProperty ;
+                rdfs:label "hat Namen"@de ;    
+                rdfs:domain kdm:NatuerlichePerson ;
+                rdfs:range kdm:NameEinerNatuerlichenPerson ;
+                skos:definition "Verweis auf das Datenobjekt Name einer natürlichen Person."@de .
+
+kdm:geburt a owl:ObjectProperty ;
+                rdfs:label "hat Geburt"@de ;    
+                rdfs:domain kdm:NatuerlichePerson ;
+                rdfs:range kdm:Geburt ;
+                skos:definition "Verweis auf das Datenobjekt Geburt einer natürlichen Person."@de .
+
+
+
+## Object Properties für Abbildung von das Einnehmen von Rollen
+
+kdm:wirtschaftlichTaetiger a owl:ObjectProperty ;
+                rdfs:label "hat Wirtschaftlich Tätigen"@de ;
+                rdfs:domain kdm:WirtschaftlicheTaetigkeit ;
+                rdfs:range kdm:WirtschaftlichTaetiger ;
+                skos:definition "Dies ist ein Verweis auf die Rolle Wirtschaftlich Tätiger, welche die Kerndatenobjekte Natürliche Person, Juristische Person, Rechtsfähige Personengesellschaft und Sonstige Personenvereinigung einnehmen können."@de .
+
+kdm:gesetzlicherVertreter a owl:ObjectProperty ;
+                rdfs:label "hat gesetzlichen Vertreter"@de ;
+                rdfs:domain [
+                    a owl:Class ;
+                    owl:unionOf (
+                        kdm:NatuerlichePerson
+                        kdm:JuristischePerson
+                    )
+                ] ;
+                rdfs:domain kdm:GesetzlicherVertreter ;
+                skos:definition "Dies ist ein Verweis auf die Rolle Gesetzlicher Vertreter, welche die Kerndatenobjekte Natürliche Person und Juristische Person einnehmen können."@de .
+
+kdm:gesellschafter a owl:ObjectProperty ;
+                rdfs:label "hat Gesellschafter"@de ;
+                rdfs:domain kdm:Personengesellschaft ;
+                rdfs:range kdm:Gesellschafter ;   
+                skos:definition "Dies ist ein Verweis auf die Rolle Gesellschafter, welche die Kerndatenobjekte Natürliche Person, Juristische Person und Rechtsfähige Personengesellschaft einnehmen können."@de .
+
+kdm:beteiligter a owl:ObjectProperty ;
+                rdfs:label "hat Beteiligten"@de ;
+                rdfs:domain kdm:RechtsfaehigePersonengesellschaft ;
+                rdfs:range kdm:Beteiligter ;
+                skos:definition "Dies ist ein Verweis auf die Rolle Beteiligter, welche das Kerndatenobjekt Natürliche Person einnehmen kann. Mit dieser Rolle wird ein Beteiligter einer sonstigen Personenvereinigung gefasst."@de .
+
+kdm:antragsteller a owl:ObjectProperty ;
+                rdfs:label "hat Antragsteller"@de ;
+                rdfs:domain kdm:Antrag ;
+                rdfs:range kdm:Antragsteller ;
+                skos:definition "Dies ist ein Verweis auf die Rolle Antragsteller, welche die Kerndatenobjekte Natürliche Person, Juristische Person, Rechtsfähige Personengesellschaft, Sonstige Personenvereinigung und Wirtschaftliche Tätigkeit einnehmen können."@de .
+                
+kdm:anzeigender a owl:ObjectProperty  ;
+                rdfs:label "hat Anzeigenden"@de ;
+                rdfs:domain kdm:Anzeige ;
+                rdfs:range kdm:Anzeigender ;
+                skos:definition "Dies ist ein Verweis auf die Rolle Anzeigender."@de .
+
+kdm:handelndePerson a owl:ObjectProperty ;
+                rdfs:label "hat handelnde Person"@de ;
+                rdfs:domain [
+                    a owl:Class;
+                    owl:unionOf (
+                        kdm:Anzeige
+                        kdm:Antrag
+                    )
+                ] ;
+                rdfs:range kdm:HandelndePerson ;
+                skos:definition "Dies ist ein Verweis auf die Rolle Handelnde Person, welche die Kerndatenobjekte Natürliche Person, Juristische Person, Rechtsfähige Personengesellschaft, Sonstige Personenvereinigung und Wirtschaftliche Tätigkeit einnehmen können."@de .
+
+kdm:ansprechpartner a owl:ObjectProperty  ;
+                rdfs:label "hat Ansprechpartner"@de ;
+                rdfs:domain [
+                    a owl:Class;
+                    owl:unionOf (
+                        kdm:Anzeige
+                        kdm:Antrag
+                    )
+                ] ;
+                rdfs:range kdm:Ansprechpartner ;
+                skos:definition "Dies ist ein Verweis auf die Rolle Ansprechpartner, welche das Kerndatenobjekt Natürliche Person einnehmen kann."@de .
+
+kdm:telefon a owl:ObjectProperty  ;
+                rdfs:label "hat Telefon"@de ;
+                rdfs:domain kdm:Kommunikation ;
+                rdfs:range kdm:Telefon;
+                skos:definition "Dies ist ein Verweis auf die Angaben zur telefonischen Erreichbarkeit."@de .
+
+kdm:telefax a owl:ObjectProperty  ;
+                rdfs:label "hat Telefax"@de ;
+                rdfs:domain kdm:Kommunikation ;
+                rdfs:range kdm:Telefax;
+                skos:definition "Dies ist ein Verweis auf die Angaben zur Erreichbarkeit per Telefax."@de .
+
+kdm:email a owl:ObjectProperty  ;
+                rdfs:label "hat E-Mail"@de ;
+                rdfs:domain kdm:Kommunikation ;
+                rdfs:range kdm:Email;
+                skos:definition "Dies ist ein Verweis auf die Angaben zur Erreichbarkeit per E-Mail."@de .
+
+kdm:demail a owl:ObjectProperty  ;
+                rdfs:label "hat De-Mail"@de ;
+                rdfs:domain kdm:Kommunikation ;
+                rdfs:range kdm:Demail;
+                skos:definition "Dies ist ein Verweis auf die Angaben zur Erreichbarkeit per De-Mail."@de .
+
+kdm:web a owl:ObjectProperty  ;
+                rdfs:label "hat Web-Adresse"@de ;
+                rdfs:domain kdm:Kommunikation ;
+                rdfs:range kdm:WebAdresse;
+                skos:definition "Dies ist ein Verweis auf die Angaben zur Erreichbarkeit per Web-Adresse."@de .
+
+## Object Properties für den ID-Querverweis auf die Klassen, die eine Rolle einnehmen können
+
+kdm:wirtschaftlichTaetigerID a owl:ObjectProperty ;
+                rdfs:label "Wirtschaftlich Tätiger ist"@de ;
+                rdfs:domain kdm:WirtschaftlichTaetiger ;
+                rdfs:range [
+                    a owl:Class ;
+                    owl:unionOf (
+                        kdm:NatuerlichePerson
+                        kdm:JuristischePerson
+                        kdm:RechtsfaehigePersonengesellschaft
+                        kdm:SonstigePersonenvereinigung
+                    )
+                ] ;
+                skos:definition "Diese Eigenschaft dient dem Verweis auf die natürliche Person, juristische Person, rechtsfähige Personengesellschaft oder sonstige Personenvereinigung, die die Rolle des Wirtschaftlich Tätigen einnehmen."@de .
+
+kdm:gesetzlicherVertreterID a owl:ObjectProperty ;
+                rdfs:label "Gesetzlicher Vertreter ist"@de ;
+                rdfs:domain kdm:GesetzlicherVertreter ;
+                rdfs:range [
+                    a owl:Class ;
+                    owl:unionOf (
+                        kdm:NatuerlichePerson
+                        kdm:JuristischePerson
+                    )
+                ] ;
+                skos:definition "Diese Eigenschaft dient dem Verweis auf die natürliche Person oder die juristische Person, die die Rolle des gesetzlichen Vertreters einnehmen."@de .
+
+kdm:gesellschafterID a owl:ObjectProperty ;
+                rdfs:label "Gesellschafter ist"@de ;
+                rdfs:domain kdm:Gesellschafter ;
+                rdfs:range [
+                    a owl:Class ;
+                    owl:unionOf (
+                        kdm:NatuerlichePerson
+                        kdm:JuristischePerson
+                        kdm:RechtsfaehigePersonengesellschaft
+                    )
+                ] ;
+                skos:definition "Diese Eigenschaft dient dem Verweis auf die natürliche Person, Jjuristische Person oder rechtsfähige Personengesellschaft, die die Rolle des Gesellschafters einnehmen."@de .
+
+kdm:beteiligterID a owl:ObjectProperty ;
+                rdfs:label "Beteiligter ist"@de ;
+                rdfs:domain kdm:Beteiligter ;
+                rdfs:range kdm:NatuerlichePerson ;
+                skos:definition "Diese Eigenschaft dient dem Verweis auf die natürliche Person, die die Rolle des Beteiligten einnimmt."@de .
+
+kdm:antragstellerID a owl:ObjectProperty ;
+                rdfs:label "Antragsteller ist"@de ;
+                rdfs:domain kdm:Antragsteller ;
+                rdfs:range [
+                    a owl:Class ;
+                    owl:unionOf (
+                        kdm:NatuerlichePerson
+                        kdm:JuristischePerson
+                        kdm:RechtsfaehigePersonengesellschaft
+                        kdm:SonstigePersonenvereinigung
+                        kdm:WirtschaftlicheTaetigkeit
+                    )
+                ] ;
+                skos:definition "Diese Eigenschaft dient dem Verweis auf die Natürliche Person, Juristische Person, Rechtsfähige Personengesellschaft, Sonstige Personenvereinigung oder Wirtschaftliche Tätigkeit, die die Rolle des Antragstellers einnehmen."@de .
+
+kdm:ansprechpartnerID a owl:ObjectProperty ;
+                rdfs:label "Ansprechpartner ist"@de ;
+                rdfs:domain kdm:Ansprechpartner ;
+                rdfs:range kdm:NatuerlichePerson ;
+                skos:definition "Diese Eigenschaft dient dem Verweis auf die natürliche Person, die die Rolle des Ansprechpartners einnimmt."@de .
+
+kdm:anzeigenderID a owl:ObjectProperty ;
+                rdfs:label "Anzeigender ist"@de ;
+                rdfs:domain kdm:Anzeigender ;
+                rdfs:range [
+                    a owl:Class ;
+                    owl:unionOf (
+                        kdm:NatuerlichePerson
+                        kdm:JuristischePerson
+                        kdm:RechtsfaehigePersonengesellschaft
+                        kdm:SonstigePersonenvereinigung
+                        kdm:WirtschaftlicheTaetigkeit
+                    )
+                ] ;
+                skos:definition "Diese Eigenschaft dient dem Verweis auf die Natürliche Person, Juristische Person, Rechtsfähige Personengesellschaft, Sonstige Personenvereinigung oder Wirtschaftliche Tätigkeit, die die Rolle des Anzeigenden einnehmen."@de .    
+
+kdm:handelndePersonID a owl:ObjectProperty ;
+                rdfs:label "Handelnde Person ist"@de ;
+                rdfs:domain kdm:HandelndePerson ;
+                rdfs:range kdm:NatuerlichePerson ;
+                skos:definition "Diese Eigenschaft dient dem Verweis auf die natürliche Person, die die Rolle der handelnden Person einnimmt."@de .
+
+#################################################################
+#    Datatype Properties
+#################################################################
+
+## Datatype Properties für die Angabe von einfachen Kindelementen
+
+kdm:bundeseinheitlicheWirtschaftsnummer a owl:DatatypeProperty ;
+                rdfs:label "Bundeseinheitliche Wirtschaftsnummer"@de ;
+                skos:definition "Angabe der bundeseinheitlichen Wirtschaftsnummer für Unternehmen gemäß § 2 UBRegG."@de ;
+                rdfs:range xsd:string ;
+                rdfs:domain [
+                    rdf:type owl:Class ;
+                    owl:unionOf (
+                        kdm:WirtschaftlicheTaetigkeit 
+                        kdm:JuristischePerson 
+                        kdm:RechtsfaehigePersonengesellschaft 
+                        kdm:SonstigePersonenvereinigung
+                    )
+                ] .
+
+kdm:taetigkeit a owl:DatatypeProperty ;
+                rdfs:domain kdm:WirtschaftlicheTaetigkeit ;
+                rdfs:range xsd:string ;
+                rdfs:label "Tätigkeit"@de ;
+                skos:definition "Benennung bzw. Bezeichnung der ausgeübten Tätigkeit."@de .
+
+kdm:eingetragenerName a owl:DatatypeProperty ;
+                rdfs:label "eingetragenen Namen"@de ;
+                skos:definition "Die im Handels-, Genossenschafts- oder Gesellschaftsregister eingetragene Firma eines wirtschaftlich Tätigen oder einer wirtschaftlichen Tätigkeit (z. B. eingetragenes Einzelunternehmen, eingetragene Zweigniederlassung) bzw. der im Vereins-, Partnerschafts- oder Stiftungsregister oder im Stiftungsverzeichnis eingetragene Name."@de ;
+                rdfs:range xsd:string ;
+                rdfs:domain [
+                    rdf:type owl:Class ;
+                    owl:unionOf (
+                        kdm:WirtschaftlicheTaetigkeit 
+                        kdm:JuristischePerson 
+                        kdm:RechtsfaehigePersonengesellschaft 
+                        kdm:SonstigePersonenvereinigung
+                    )
+                ].
+
+kdm:geschaeftsbezeichnung a owl:DatatypeProperty ;
+                rdfs:domain kdm:WirtschaftlicheTaetigkeit ;
+                rdfs:range xsd:string ;
+                rdfs:label "Geschäftsbezeichnung"@de ;
+                skos:definition "Im Geschäftsverkehr einer wirtschaftlichen Tätigkeit verwendeter Name. Dieser kann abweichen von einem ggf. im Handel-, Genossenschafts-, Gesellschafts-, Partnerschafts- oder Vereinsregister eingetragen Namen."@de .
+
+kdm:wirtschaftszweigschluessel a owl:DatatypeProperty ;
+                rdfs:domain kdm:Wirtschaftszweig ;
+                rdfs:range xsd:string ;
+                rdfs:label "Wirtschaftszweigschlüssel"@de ;
+                skos:definition "Wirtschaftszweigschlüssel gemäß der Klassifikation der Wirtschaftszweige des Statistischen Bundesamts. Umsetzungshinweis: Die Angabe erfolgt ausschließlich in Ziffern, ohne Trennzeichen. Es sind bis zu 5 Ziffern zulässig."@de .
+
+kdm:registergerichtBezeichnung a owl:DatatypeProperty ;
+                rdfs:domain kdm:Eintragung ;
+                rdfs:range xsd:string ;
+                rdfs:label "Bezeichnung Registergericht"@de ;
+                skos:definition "Bezeichnung des Registergerichts, in dessen Register der wirtschaftlich Tätige bzw. die wirtschaftliche Tätigkeit (z. B. Zweigniederlassung) geführt wird."@de .
+
+kdm:stiftungsverzeichnis a owl:DatatypeProperty ;
+                rdfs:domain kdm:Eintragung ;
+                rdfs:range xsd:string ;
+                rdfs:label "Stiftungsverzeichnis in"@de ;
+                skos:definition "Bei Einträgen im Stiftungsverzeichnis: Angabe des Bundeslandes bzw. der Behörde, in dessen oder deren Stiftungsverzeichnis der Eintrag geführt wird."@de .
+
+kdm:eintragungsnummer a owl:DatatypeProperty ;
+                rdfs:domain kdm:Eintragung ;
+                rdfs:range xsd:string ;
+                rdfs:label "Eintragungsnummer"@de ;
+                skos:definition "Nummer der Eintragung im jeweiligen Register bzw. Aktenzeichen im Stiftungsverzeichnis. Sofern zum Zwecke der Eindeutigkeit der Eintragungsnummer im angegebenen Register ein Ortskennzeichen verwendet wird, wird dieses ebenfalls, durch Leerzeichen getrennt, in diesem Attribut angegeben (Beispiele: 12345 KI, 12345 FL)."@de .
+
+kdm:ort a owl:DatatypeProperty ;
+                rdfs:domain [
+                    a owl:Class ;
+                    owl:unionOf (
+                        kdm:Eintragung
+                        kdm:AnschriftAusland
+                        kdm:AnschriftInlandGrossempfaengeranschrift
+                        kdm:AnschriftInlandPostfachanschrift
+                        kdm:AnschriftInlandStrassenanschrift
+                        kdm:Sitz
+                        kdm:EffektiverVerwaltungssitz
+                    )
+                ];
+                rdfs:range xsd:string ;
+                rdfs:label "Ort"@de ;
+                skos:definition "Der Name des Ortes (Gemeinde, Ortschaft oder Stadt)."@de .
+
+kdm:staat a owl:DatatypeProperty ;
+                rdfs:domain [
+                    a owl:Class ;
+                    owl:unionOf (
+                        kdm:Eintragung
+                        kdm:AnschriftAusland
+                        kdm:Sitz
+                        kdm:EffektiverVerwaltungssitz
+                        kdm:Geburt
+                    )
+                ];
+                rdfs:range xsd:string ;
+                rdfs:label "Staat"@de ;
+                skos:definition "Angabe eines Staats oder eines Staatsgebiets. Je nach fachlichem und rechtlichem Kontext bzw. dem jeweiligen Ziel der Datenerhebung kann diese Angabe mit unterschiedlich umfangreichen und unterschiedlich fein aufgelösten Codelisten codiert werden. Der Standard XUnternehmen.Kerndatenmodell gibt entsprechend keine einheitliche Codeliste vor, sondern lässt die Verwendung unterschiedlicher Codelisten, im Wesentlichen aus der Staats- und Gebietssystematik (BEV) des Statistischen Bundesamts zu."@de ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:staat" ;
+                rdfs:seeAlso <https://www.destatis.de/DE/Methoden/Klassifikationen/Staat-Gebietsystematik/staatsangehoerigkeit-gebietsschluessel.html> ;
+                rdfs:seeAlso <https://www.iso.org/obp/ui/#search> .
+
+
+kdm:identifikationsnummer a owl:DatatypeProperty ;
+                rdfs:domain kdm:NatuerlichePerson ;
+                rdfs:range xsd:string ;
+                rdfs:label "Identifikationsnummer"@de ;
+                skos:definition "Identifikationsnummer einer natürlichen Person gemäß IDNrG."@de .
+
+kdm:doktorgrad a owl:DatatypeProperty ;
+                rdfs:domain kdm:NatuerlichePerson ;
+                rdfs:range xsd:string ;
+                rdfs:label "Doktorgrad"@de ;
+                skos:definition "Es sind nur diejenigen Doktorgrade anzugeben, die in Pässe eingetragen werden dürfen. Sind mehrere Doktorgrade anzugeben, so sind sie durch ein Leerzeichen zu trennen."@de .
+
+kdm:familienname a owl:DatatypeProperty ;
+                rdfs:domain kdm:NameEinerNatuerlichenPerson ;
+                rdfs:range xsd:string ;
+                rdfs:label "Familienname"@de ;
+                skos:definition "Familienname einer natürlichen Person bestehend aus Nachname, Zuname bzw. Familienname."@de .
+
+kdm:familiennameNichtVorhanden a owl:DatatypeProperty ;
+                rdfs:domain kdm:NameEinerNatuerlichenPerson ;
+                rdfs:range xsd:boolean ;
+                rdfs:label "Familienname nicht vorhanden"@de ;
+                skos:definition "Angabe, dass die betreffende Person keinen Familiennamen führt."@de .
+
+kdm:geburtsname a owl:DatatypeProperty ;
+                rdfs:domain kdm:NameEinerNatuerlichenPerson ;
+                rdfs:range xsd:string ;
+                rdfs:label "Geburtsname"@de ;
+                skos:definition "Der Geburtsname entspricht dem Familiennamen einer natürlichen Person vor der Schließung der ersten Ehe bzw. vor dem Eingehen der ersten Lebenspartnerschaft."@de .
+
+kdm:geburtsnameNichtVorhanden a owl:DatatypeProperty ;
+                rdfs:domain kdm:NameEinerNatuerlichenPerson ;
+                rdfs:range xsd:boolean ;
+                rdfs:label "Geburtsname nicht vorhanden"@de ;
+                skos:definition "Angabe, dass vor der Eheschließung oder vor der Begründung der Lebenspartnerschaft nach dem für die Namensführung maßgebenden Recht kein Familienname vorhanden gewesen ist."@de .            
+
+kdm:vornamen a owl:DatatypeProperty ;
+                rdfs:domain kdm:NameEinerNatuerlichenPerson ;
+                rdfs:range xsd:string ;
+                rdfs:label "Vornamen"@de ;
+                skos:definition "Vornamen einer natürlichen Person."@de .
+            
+kdm:vornamenNichtVorhanden a owl:DatatypeProperty ;
+                rdfs:domain kdm:NameEinerNatuerlichenPerson ;
+                rdfs:range xsd:boolean ;
+                rdfs:label "Geburtsname nicht vorhanden"@de ;
+                skos:definition "Angabe, dass die betreffende Person keinen Vornamen führt."@de .   
+
+kdm:geburtsdatum a owl:DatatypeProperty ;
+                rdfs:domain kdm:Geburt ;
+                rdfs:range xsd:string ;
+                rdfs:label "Geburtsdatum"@de ;
+                rdfs:comment "Die Datumsangabe per xsd:date, xsd:gYear oder xsd:gYearMonth ist im Format zu restriktiv, da an dieser Stelle im XUnternehmen.Kerndatenmodell keine Beschränkungen gemacht werden bzw. auf eine deutsche Datumgsangabe zurückzugreifen ist."@de ;
+                skos:definition "Datum der Vollendung der Geburt. Diese Angabe ist als teilbekannte Datumsangabe zu machen. Eine teilbekannte Datumsangabe umfasst die Komponenten Tag, Monat und Jahr, die Komponenten Monat und Jahr oder nur die Komponente Jahr."@de .
+
+kdm:ortDerGeburt a owl:DatatypeProperty ;
+                rdfs:domain kdm:Geburt ;
+                rdfs:range xsd:string ;
+                rdfs:label "Ort der Geburt"@de ;
+                skos:definition "Der Ort der Geburt einer natürlichen Person."@de .
+
+
+kdm:strasse a owl:DatatypeProperty ;
+                rdfs:domain [
+                    a owl:Class ;
+                    owl:unionOf (
+                        kdm:AnschriftAusland
+                        kdm:AnschriftInlandStrassenanschrift
+                    )
+                ];
+                rdfs:range xsd:string ;
+                rdfs:label "Straße"@de ;
+                skos:definition "Es ist die Bezeichnung der Straße anzugeben."@de .
+
+kdm:hausnummer a owl:DatatypeProperty ;
+                rdfs:domain [
+                    a owl:Class ;
+                    owl:unionOf (
+                        kdm:AnschriftAusland
+                        kdm:AnschriftInlandStrassenanschrift
+                    )
+                ];
+                rdfs:range xsd:string ;
+                rdfs:label "Hausnummer"@de ;
+                skos:definition "Die vollständige Hausnummer, ggf. inkl. Buchstabe/Zusatzziffern und Teilnummer."@de .
+
+kdm:postleitzahl a owl:DatatypeProperty ;
+                rdfs:domain [
+                    a owl:Class ;
+                    owl:unionOf (
+                        kdm:AnschriftAusland
+                        kdm:AnschriftInlandStrassenanschrift
+                        kdm:AnschriftInlandPostfachanschrift
+                        kdm:AnschriftInlandGrossempfaengeranschrift
+                    )
+                ];
+                rdfs:range xsd:string ;
+                rdfs:label "Postleitzahl"@de ;
+                skos:definition "Es ist die Postleitzahl anzugeben."@de .
+
+kdm:fruehererGemeindename a owl:DatatypeProperty ;
+                rdfs:domain kdm:AnschriftInlandStrassenanschrift ;
+                rdfs:range xsd:string ;
+                rdfs:label "Früherer Gemeindename"@de ;
+                skos:definition "Der frühere Gemeindename, der als Stadt- bzw. Ortsteilname dem jetzigen Gemeindenamen hinzugefügt wird. Der frühere Gemeindename (jetziger Ortsteil- oder Stadtteilname) ist bei Adressierungen unterhalb des Namens (oberhalb der Straßenbezeichnung) anzugeben."@de .
+
+kdm:wohnungsinhaber a owl:DatatypeProperty ;
+                rdfs:domain kdm:AnschriftInlandStrassenanschrift ;
+                rdfs:range xsd:string ;
+                rdfs:label "Wohnungsinhaber"@de ;
+                skos:definition "Der Name des Wohnungsinhabers, soweit dies zur Adressierung erforderlich ist. Max Mustermann bei Müller; Max Mustermann c/o Schmidt."@de .
+
+kdm:zusatzangabenAnschrift a owl:DatatypeProperty ;
+                rdfs:domain [
+                    a owl:Class ;
+                    owl:unionOf (
+                        kdm:AnschriftAusland
+                        kdm:AnschriftInlandStrassenanschrift
+                    )
+                ];
+                rdfs:range xsd:string ;
+                rdfs:label "Zusatzangaben"@de ;
+                skos:definition "Es sind Zusatzangaben zur Anschrift anzugeben. Beispiele: Hinterhaus, Gartenhaus."@de .
+
+kdm:postfach a owl:DatatypeProperty ;
+                rdfs:domain kdm:AnschriftInlandGrossempfaengeranschrift ;
+                rdfs:range xsd:string ;
+                rdfs:label "Postfach"@de ;
+                skos:definition "Ein Postfach (oft Postfachnummer) ist ein Schlüssel zur Identifikation eines Postfaches in einer Postfiliale."@de .
+
+kdm:kommunikationHinweis a owl:DatatypeProperty ;
+                rdfs:domain kdm:Kommunikation ;
+                rdfs:range xsd:string ;
+                rdfs:label "Hinweis zur Kommunikation"@de ;
+                skos:definition "Ein ergänzender Hinweis zur Verwendung dieser Kommunikationsangabe."@de .
+
+kdm:telefonnummer a owl:DatatypeProperty ;
+                rdfs:domain kdm:Telefon ;
+                rdfs:range xsd:string ;
+                rdfs:label "Telefonnummer"@de ;
+                skos:definition "Telefonnummer, strukturiert gemäß ITU E.123. Beispiel: +49 421 1234567, +49 421 123 4567, (0421) 1234567. Die Angabe soll möglichst gemäß DIN 5008 aufgebaut sein."@de .
+
+kdm:telefaxnummer a owl:DatatypeProperty ;
+                rdfs:domain kdm:Telefax ;
+                rdfs:range xsd:string ;
+                rdfs:label "Telefaxnummer"@de ;
+                skos:definition "Telefaxnummer, strukturiert gemäß ITU E.123. Beispiel: +49 421 1234567, +49 421 123 4567, (0421) 1234567. Die Angabe soll möglichst gemäß DIN 5008 aufgebaut sein."@de .
+
+kdm:emailadresse a owl:DatatypeProperty ;
+                rdfs:domain kdm:Email ;
+                rdfs:range xsd:string ;
+                rdfs:label "E-Mail-Adresse"@de ;
+                skos:definition "E-Mail-Adresse."@de .
+
+kdm:demailadresse a owl:DatatypeProperty ;
+                rdfs:domain kdm:Demail ;
+                rdfs:range xsd:string ;
+                rdfs:label "De-Mail-Adresse"@de ;
+                skos:definition "De-Mail-Adresse, strukturiert gemäß BSI TR-01201 De-Mail. Beispiel: erika.mustermann@mustermann.de-mail.de."@de .
+
+kdm:webadresse a owl:DatatypeProperty ;
+                rdfs:domain kdm:WebAdresse ;
+                rdfs:range xsd:string ;
+                rdfs:label "Web-Adresse"@de ;
+                skos:definition "Web-Adresse."@de .
+
+## DatatypeProperties und Datatypes für die Zuweisung von Arten, die in einer Codeliste verzeichnet sind
+
+kdm:artGesetzlicherVertreterCode a owl:DatatypeProperty ;
+                rdfs:label "Art des Gesetzlichen Vertreters"@de ;
+                skos:definition "Angabe der Art des Gesetzlichen Vertreters."@de ;
+                rdfs:domain kdm:GesetzlicherVertreter ;
+                rdfs:range <urn:xoev-de:xunternehmen:codeliste:artgesetzlichervertreter> ;
+                rdfs:seeAlso <https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:artgesetzlichervertreter> ;
+                skos:note "Hier ist der Codelistenwert (= String) der Codeliste Art des Gesetzlichen Vertreters (https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:artgesetzlichervertreter) anzugeben, beispielsweise 3 für Vorstand."@de .
+
+<urn:xoev-de:xunternehmen:codeliste:artgesetzlichervertreter> a rdfs:Datatype ;
+                owl:equivalentClass xsd:string ;
+                skos:scopeNote "Mit diesem Datentyp sollen nur Codelistenwerte (= Strings) angegeben werden, die in der Codeliste Art des Gesetzlichen Vertreters ausgezeichnet werden." ;
+                rdfs:seeAlso <https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:artgesetzlichervertreter> .
+
+kdm:artGesellschafterCode a owl:DatatypeProperty ;
+                rdfs:label "Art des Gesellschafters"@de ;
+                rdfs:domain kdm:Gesellschafter ;
+                rdfs:range <urn:xoev-de:xunternehmen:codeliste:artgesellschafterpersonengesellschaft> ;
+                rdfs:seeAlso <https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:artgesellschafterpersonengesellschaft> ;
+                skos:definition "Angabe der Art eines Gesellschafters einer Personengesellschaft"@de ;
+                skos:note "Hier ist der Codelistenwert der Codeliste Art des Gesellschafters (https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:artgesellschafterpersonengesellschaft) anzugeben, beispielsweise 02 für einen persönlich haftenden Gesellschafter."@de .
+
+<urn:xoev-de:xunternehmen:codeliste:artgesellschafterpersonengesellschaft> a rdfs:Datatype ;
+                owl:equivalentClass xsd:string ;
+                skos:scopeNote "Mit diesem Datentyp sollen nur Codelistenwerte (= Strings) angegeben werden, die in der Codeliste Art eines Gesellschafters einer Personengesellschaft ausgezeichnet werden."@de ;
+                rdfs:seeAlso <https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:artgesellschafterpersonengesellschaft> .
+
+kdm:artAngabeAntragstellerAnzeigenderCode a owl:DatatypeProperty ;
+                rdfs:label "Art der Angabe des Antragstellers oder des Anzeigenden"@de ;
+                rdfs:domain [
+                    a owl:Class ;
+                    owl:unionOf (
+                        kdm:Antragsteller
+                        kdm:Anzeigender
+                    )
+                ] ;
+                rdfs:range <urn:xoev-de:xunternehmen:codeliste:angabeantragstelleranzeigender> ;
+                rdfs:seeAlso <https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:angabeantragstelleranzeigender> ;
+                skos:definition "Angabe der Angabenart des Antragstellers oder des Anzeigenden in einem Antrag oder einer Anzeige. Hier wird angegeben, ob die natürliche oder juristische Person bzw. die rechtsfähige Personengesellschaft des Anzeigenden explizit angegeben wird oder ob lediglich seine wirtschaftliche Tätigkeit angegeben wird und der Anzeigende damit implizit bestimmt ist."@de .
+
+<urn:xoev-de:xunternehmen:codeliste:angabeantragstelleranzeigender> a rdfs:Datatype ;
+                owl:equivalentClass xsd:string ;
+                skos:scopeNote "Mit diesem Datentyp sollen nur Codelistenwerte (= Strings) angegeben werden, die in der Codeliste Angabe des Antragstellers/Anzeigenden ausgezeichnet werden"@de ;
+                rdfs:seeAlso <https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:angabeantragstelleranzeigender> .
+
+kdm:artAnschriftCode a owl:DatatypeProperty ;
+                rdfs:label "Art der Anschrift"@de ;
+                rdfs:domain [
+                    a owl:Class ;
+                    owl:unionOf (
+                        kdm:AnschriftInlandGrossempfaengeranschrift
+                        kdm:AnschriftInlandPostfachanschrift
+                        kdm:AnschriftInlandStrassenanschrift
+                        kdm:AnschriftAusland
+                    )
+                ] ;
+                rdfs:range <urn:xoev-de:xunternehmen:codeliste:artanschrift> ;
+                rdfs:seeAlso <https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:artanschrift> ;
+                skos:definition "Angabe der Rolle oder Funktion einer Anschrift, z. B. einer Geschäftsanschrift oder Wohnsitzadresse."@de .
+
+<urn:xoev-de:xunternehmen:codeliste:artanschrift> a rdfs:Datatype ;
+                owl:equivalentClass xsd:string ;
+                skos:scopeNote "Mit diesem Datentyp sollen nur Codelistenwerte (= Strings) angegeben werden, die in der Codeliste Art der Anschrift ausgezeichnet werden."@de ;
+                rdfs:seeAlso <https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:artanschrift> .
+
+kdm:artEintragungCode a owl:DatatypeProperty ;
+                rdfs:label "Art der Eintragung"@de ;
+                rdfs:domain kdm:Eintragung ;
+                rdfs:range <urn:xoev-de:xunternehmen:codeliste:artdereintragung> ;
+                rdfs:seeAlso <https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:artdereintragung> ;
+                skos:definition "Angabe der Art des Registers, in welchem ein wirtschaftlich Tätiger bzw. eine wirtschaftliche Tätigkeit geführt wird."@de .
+
+<urn:xoev-de:xunternehmen:codeliste:artdereintragung> a rdfs:Datatype ;
+                owl:equivalentClass xsd:string ;
+                skos:scopeNote "Mit diesem Datentyp sollen nur Codelistenwerte (= Strings) angegeben werden, die in der Codeliste Art der Eintragung ausgezeichnet werden."@de ;
+                rdfs:seeAlso <https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:artdereintragung> .
+
+kdm:rechtsformenCode a owl:DatatypeProperty ;
+                rdfs:label "Rechtsform"@de ;
+                rdfs:domain [
+                    a owl:Class ;
+                    owl:unionOf (
+                        kdm:JuristischePerson
+                        kdm:RechtsfaehigePersonengesellschaft
+                        kdm:SonstigePersonenvereinigung
+                        kdm:WirtschaftlicheTaetigkeit
+                    )
+                ] ;
+                rdfs:range <urn:xoev-de:xunternehmen:codeliste:rechtsformen> ;
+                rdfs:seeAlso <https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:rechtsformen> ;
+                skos:definition "Die Codeliste der Rechtsformen bildet ab Version 2 fachbereichsübergreifend Anforderungen an die Codierung von Rechtsforminformationen ab und ermöglicht deren bereichsübergreifend einheitliche Codierung und Übermittlung. Aktuell werden die Anforderungen aus dem Grundinformationsdienst GINSTER der Steuerverwaltung und damit auch der Codierung im ELSTER-Unternehmenskonto, aus dem Registerportal der Handels-, Genossenschafts-, Partnerschafts- und Vereinsregister, dem Standard XGewerbeanzeige / XGewerbeordnung und damit auch dem Unternehmerverzeichnis der gesetzlichen Unfallversicherung umgesetzt. Auf diese Weise können beispielweise Rechtsforminformationen ohne semantische Brüche aus dem ELSTER-Unternehmenskonto über einen Online-Dienst zur Gewerbeanmeldung an die zuständige Gewerbebehörde übermittelt werden und dort mit Daten aus dem Registerportal der Justiz und (perspektivisch) mit dem Basisregister gemäß UBRegG zusammengeführt werden. Seit Version 2 sind die Codes sechsstellig und hierarchisch gegliedert, um unterschiedliche Granularitäten der Rechtsformdifferenzierung zu unterstützen und Codes einfacher zueinander in Bezug setzen zu können. Die Version 2 der Rechtsformcodierung ist vollständig rückwärtskompatibel zur Version 1 in dem Sinne, dass eine Eins-zu-eins-Umschlüsselung der bisherigen Codes erfolgen kann."@de .
+
+<urn:xoev-de:xunternehmen:codeliste:rechtsformen> a rdfs:Datatype ;
+                owl:equivalentClass xsd:string ;
+                skos:scopeNote "Mit diesem Datentyp sollen nur Codelistenwerte (= Strings) angegeben werden, die in der Rechtsformen-Codeliste ausgezeichnet werden."@de ;
+                rdfs:seeAlso <https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:rechtsformen> .
+
+kdm:artBetriebsstaetteCode a owl:DatatypeProperty ;
+                rdfs:label "Art der Betriebsstätte"@de ;
+                rdfs:domain kdm:Betriebsstaette ;
+                rdfs:range <urn:xoev-de:xunternehmen:codeliste:artniederlassung> ;
+                rdfs:seeAlso <https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:artniederlassung> ;
+                skos:definition "Nähere Bestimmung der Art der Betriebsstätte. Die möglichen Ausprägungen dieses Attributes sind durch die Codeliste Art einer Niederlassung (https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:artniederlassung) im XRepository bestimmt."@de .
+
+<urn:xoev-de:xunternehmen:codeliste:artniederlassung> a rdfs:Datatype ;
+                owl:equivalentClass xsd:string ;
+                skos:scopeNote "Mit diesem Datentyp sollen nur Codelistenwerte (= Strings) angegeben werden, die in der Codeliste Art der Niederlassung ausgezeichnet werden."@de ;
+                rdfs:seeAlso <https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:artniederlassung>.
+
+kdm:versionWirtschaftszweigschluesselCode a owl:DatatypeProperty ;
+                rdfs:label "Version der Wirtschaftszweigklassifikation"@de ;
+                rdfs:domain kdm:Wirtschaftszweig ;
+                rdfs:range <urn:xoev-de:xunternehmen:codeliste:wirtschaftszweigklassifikationsversion> ;
+                rdfs:seeAlso <https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:wirtschaftszweigklassifikationsversion> ;
+                skos:definition "Version der Klassifikation der Wirtschaftszweige, bspw. WZ-2008. Die möglichen Ausprägungen dieses Attributes sind durch die Codeliste Wirtschaftszweigklassifikation im XRepository bestimmt."@de .
+
+<urn:xoev-de:xunternehmen:codeliste:wirtschaftszweigklassifikationsversion> a rdfs:Datatype ;
+                owl:equivalentClass xsd:string ;
+                skos:scopeNote "Mit diesem Datentyp sollen nur Codelistenwerte (= Strings) angegeben werden, die in der Codeliste Version der Wirtschaftszweigklassifikation ausgezeichnet werden."@de ;
+                rdfs:seeAlso <https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:wirtschaftszweigklassifikationsversion>.
+
+kdm:registergerichtCode a owl:DatatypeProperty ;
+                rdfs:label "Registergericht Code"@de ;
+                rdfs:domain kdm:Eintragung ;
+                rdfs:range <urn:xoev-de:xunternehmen:codeliste:registergerichte> ;
+                rdfs:seeAlso <https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:registergerichte> ;
+                skos:definition "Schlüssel des Registergerichts, in dessen Register der wirtschaftlich Tätige bzw. die wirtschaftliche Tätigkeit (z. B. Zweigniederlassung) geführt wird."@de .
+
+<urn:xoev-de:xunternehmen:codeliste:registergerichte> a rdfs:Datatype ;
+                owl:equivalentClass xsd:string ;
+                skos:scopeNote "Mit diesem Datentyp sollen nur Codelistenwerte (= Strings) angegeben werden, die in der Codeliste Registergericht Code ausgezeichnet werden."@de ;
+                rdfs:seeAlso <https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:registergerichte>.
+
+kdm:staatsangehoerigkeitCode a owl:DatatypeProperty ;
+                rdfs:label "Staatsangehörigkeit Code"@de ;
+                rdfs:domain kdm:NatuerlichePerson ;
+                rdfs:range <urn:de:bund:destatis:bevoelkerungsstatistik:schluessel:staatsangehoerigkeit> ;
+                rdfs:seeAlso <https://www.xrepository.de/details/urn:de:bund:destatis:bevoelkerungsstatistik:schluessel:staatsangehoerigkeit> ;
+                skos:definition "Die Staatsangehörigkeit der natürlichen Person gemäß Codierung des statistischen Bundesamts."@de .
+
+<urn:de:bund:destatis:bevoelkerungsstatistik:schluessel:staatsangehoerigkeit> a rdfs:Datatype ;
+                owl:equivalentClass xsd:string ;
+                skos:scopeNote "Mit diesem Datentyp sollen nur Codelistenwerte (= Strings) angegeben werden, die in der Codeliste Staatsabgehörigkeit ausgezeichnet werden."@de ;
+                rdfs:seeAlso <https://www.xrepository.de/details/urn:de:bund:destatis:bevoelkerungsstatistik:schluessel:staatsangehoerigkeit>.
+
+kdm:geschlechtCode a owl:DatatypeProperty ;
+                rdfs:label "Geschlecht"@de ;
+                rdfs:domain kdm:NatuerlichePerson ;
+                rdfs:range <urn:xoev-de:xinneres:codeliste:geschlecht> ;
+                rdfs:seeAlso <https://www.xrepository.de/details/urn:xoev-de:xinneres:codeliste:geschlecht> ;
+                skos:definition "Als Geschlechtsangabe zulässig sind: männlich, weiblich, divers, keine Angabe."@de .
+
+<urn:xoev-de:xinneres:codeliste:geschlecht> a rdfs:Datatype ;
+                owl:equivalentClass xsd:string ;
+                skos:scopeNote "Mit diesem Datentyp sollen nur Codelistenwerte (= Strings) angegeben werden, die in der Codeliste Geschlecht ausgezeichnet werden."@de ;
+                rdfs:seeAlso <https://www.xrepository.de/details/urn:xoev-de:xinneres:codeliste:geschlecht>.            
+
+kdm:gemeindeschluesselCode a owl:DatatypeProperty ;
+                rdfs:label "Gemeindeschlüssel"@de ;
+                rdfs:domain kdm:AnschriftInlandStrassenanschrift ;
+                rdfs:range <urn:de:bund:destatis:bevoelkerungsstatistik:schluessel:ags> ;
+                rdfs:seeAlso <https://www.xrepository.de/details/urn:de:bund:destatis:bevoelkerungsstatistik:schluessel:ags> ;
+                skos:definition "Der vom Statistischen Bundesamt herausgegebene bundeseinheitliche Gemeindeschlüssel der Gemeinde, in welcher die Anschrift liegt."@de .
+
+<urn:de:bund:destatis:bevoelkerungsstatistik:schluessel:ags> a rdfs:Datatype ;
+                owl:equivalentClass xsd:string ;
+                skos:scopeNote "Mit diesem Datentyp sollen nur Codelistenwerte (= Strings) angegeben werden, die in der Codeliste Amtlicher Gemeindeschlüssel ausgezeichnet werden."@de ;
+                rdfs:seeAlso <https://www.xrepository.de/details/urn:de:bund:destatis:bevoelkerungsstatistik:schluessel:ags>.
+
+kdm:klassifikationKommunikationCode a owl:DatatypeProperty ;
+                rdfs:label "Klassifikation der Kommunikationsangabe"@de ;
+                rdfs:domain kdm:Kommunikation ;
+                rdfs:range <urn:xoev-de:xunternehmen:codeliste:klassifikationkommunikation> ;
+                rdfs:seeAlso <https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:klassifikationkommunikation> ;
+                skos:definition "Eine Klassifikation der Kommunikationsangabe (privat, geschäftlich, ...)."@de .
+
+<urn:xoev-de:xunternehmen:codeliste:klassifikationkommunikation> a rdfs:Datatype ;
+                owl:equivalentClass xsd:string ;
+                skos:scopeNote "Mit diesem Datentyp sollen nur Codelistenwerte (= Strings) angegeben werden, die in der Codeliste Klassifikation der Kommunikationsangabe ausgezeichnet werden."@de ;
+                rdfs:seeAlso <https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:klassifikationkommunikation>.
+
+#################################################################
+#    Classes
+#################################################################
+
+## Hauptdatenobjekte
+
+kdm:WirtschaftlicheTaetigkeit a owl:Class ;
+                rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000017> ;
+                rdfs:label "Wirtschaftliche Tätigkeit"@de ;
+                skos:definition "Das Kerndatenobjekt Wirtschaftliche Tätigkeit umfasst in generischer Weise eine planmäßige, für eine gewisse Dauer bestimmte, selbstständige wirtschaftliche Tätigkeit eines wirtschaftlich Tätigen."@de ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:wirtschaftlichetaetigkeit" .
+
+kdm:JuristischePerson a owl:Class ;
+                rdfs:subClassOf <http://www.ontologyrepository.com/CommonCoreOntologies/Agent> ;
+                rdfs:label "Juristische Person"@de ;
+                skos:definition "Dieses Kerndatenobjekt umfasst die allgemeinen Angaben zu einer juristischen Person des privaten oder öffentlichen Rechts." ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:juristischeperson" .
+
+kdm:NatuerlichePerson a owl:Class ;
+                rdfs:subClassOf <http://www.ontologyrepository.com/CommonCoreOntologies/Agent> ;
+                rdfs:label "Natürliche Person"@de ;
+                skos:definition "Dieses Kerndatenobjekt umfasst die allgemeinen Angaben zu einer natürlichen Person (Mensch), welche im fachlichen Kontext in mindestens einer und gegebenenfalls mehreren Rollen auftritt." ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:natuerlicheperson" .
+
+kdm:RechtsfaehigePersonengesellschaft a owl:Class ;
+                rdfs:subClassOf <http://www.ontologyrepository.com/CommonCoreOntologies/Agent> ;
+                rdfs:label "Rechtsfähige Personengesellschaft"@de ;
+                skos:definition "Dieses Kerndatenobjekt umfasst die allgemeinen Angaben zu einer rechtsfähigen Personengesellschaft." ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:rechtsfaehigepersonengesellschaft" .
+
+kdm:SonstigePersonenvereinigung a owl:Class ;
+                rdfs:subClassOf <http://www.ontologyrepository.com/CommonCoreOntologies/Agent> ;
+                rdfs:label "Sonstige Personenvereinigung"@de ;
+                skos:definition "Dieses Kerndatenobjekt umfasst die allgemeinen Angaben zu einer sonstigen Personenvereinigung. Unter diesem Kerndatenobjekt werden alle Personenvereinigungen gefasst, die weder unter juristische Personen noch unter rechtsfähige Personengesellschaften fallen." ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:sonstigepersonenvereinigung" ;
+                owl:disjointWith kdm:JuristischePerson, kdm:RechtsfaehigePersonengesellschaft .
+
+## Kinddatenobjekte
+
+kdm:Eintragung a owl:Class ;
+                rdfs:label "Eintragung"@de ;
+                skos:definition "Dieses Kerndatenobjekt fasst die Daten, mit welchen die Eintragung eines wirtschaftlich Tätigen bzw. einer wirtschaftlichen Tätigkeit in einem Handels-, Genossenschafts-,Gesellschafts-, Vereins-, Partnerschafts- oder Stiftungsregister sowie in einem Stiftungsverzeichnis identifiziert werden kann."@de ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:eintragung" .
+
+kdm:Geburt a owl:Class ;
+                rdfs:label "Geburt"@de ;
+                skos:definition "Angaben zur Geburt einer natürlichen Person."@de ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:geburt" .
+
+kdm:Wirtschaftszweig a owl:Class ;
+                rdfs:label "Wirtschaftszweig"@de ;
+                skos:definition "Dieses Kerndatenobjekt modelliert die Angabe eines Wirtschaftszweigs gemäß der Klassifikation des statistischen Bundesamts. Es umfasst die Angabe des Wirtschaftszweigschlüssels und der angewendeten Version der Klassifikation."@de ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:wirtschaftszweig" .
+
+kdm:Sitz a owl:Class ;
+                rdfs:label "Sitz"@de ;
+                skos:definition "Der Sitz einer Körperschaft, Personenvereinigung oder Vermögensmasse ist der Ort, der durch Gesetz, Gesellschaftsvertrag, Satzung, Stiftungsgeschäft oder dergleichen bestimmt ist."@de ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:sitz" .
+
+kdm:EffektiverVerwaltungssitz a owl:Class ;
+                rdfs:label "Effektiver Verwaltungssitz"@de ;
+                skos:definition "Der effektiver Verwaltungssitz ist - im Unterschied zum Sitz - der Ort, an dem sich die Hauptverwaltung befindet und die Geschäfte tatsächlich geführt werden."@de ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:effektiververwaltungssitz" .
+
+kdm:Staat a owl:Class ;
+                rdfs:label "Staat"@de ;
+                skos:definition "Angabe eines Staats oder eines Staatsgebiets."@de ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:staat" .
+
+kdm:Betriebsstaette a owl:Class ;
+                rdfs:label "Betriebsstätte"@de ;
+                skos:definition "Dieses Kerndatenobjekt identifiziert einen Ort, an welchem eine wirtschaftliche Tätigkeit tatsächlich und grundsätzlich dauerhaft ausgeübt wird."@de ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:betriebsstaette" .
+
+kdm:NameEinerNatuerlichenPerson a owl:Class ;
+                rdfs:label "Name einer natürlichen Person"@de ;
+                skos:definition "Datenobjekt zur Darstellung des Namens einer natürlichen Person in lateinischer Schrift, entsprechend der Vorgaben aus dem Baukasten des Föderalen Informationsmanagements (FIM)."@de ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:namenatuerlicheperson" .
+
+## Anschrift und Kommunikation
+kdm:Anschrift a owl:Class ;
+                rdfs:label "Anschrift"@de ;
+                skos:definition "Abstraktes Kerndatenobjekt. Angaben für die Adressierung. Eine Anschrift ist entweder eine Inlands- oder eine Auslandsanschrift."@de;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:anschrift" .
+
+kdm:AnschriftAusland a owl:Class ;
+                rdfs:label "Anschrift Ausland"@de ;
+                rdfs:subClassOf kdm:Anschrift ;
+                skos:definition "Dies ist eine Konkretisierierung des Kerndatenobjektes Anschrift. Angaben für die Adressierung im Ausland."@de ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:anschriftausland" .
+
+kdm:AnschriftInland a owl:Class ;
+                rdfs:subClassOf kdm:Anschrift ;    
+                rdfs:label "Anschrift Inland"@de ;
+                skos:definition "Dies ist eine Konkretisierierung des Kerndatenobjektes Anschrift. Angaben für die Adressierung im Inland. Eine Inlandsanschrift ist entweder eine Straßenanschrift, eine Postfachanschrift oder eine Großempfängeranschrift."@de ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:anschriftinland" .
+
+kdm:AnschriftInlandStrassenanschrift a owl:Class ;
+                rdfs:subClassOf kdm:AnschriftInland ;
+                rdfs:label "Anschrift Inland Straßenanschrift"@de ;
+                skos:definition "Dies ist eine Konkretisierierung des Kerndatenobjektes Anschrift Inland. Angaben für die Adressierung im Inland, soweit es sich um die Anschrift eines Gebäudes handelt."@de ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:anschriftinlandstrassenanschrift" .
+
+kdm:AnschriftInlandPostfachanschrift a owl:Class ;
+                rdfs:label "Anschrift Inland Postfachanschrift"@de ;
+                rdfs:subClassOf kdm:AnschriftInland ;
+                skos:definition "Dies ist eine Konkretisierierung des Kerndatenobjektes Anschrift Inland. Angaben für die Adressierung im Inland, soweit es sich um die Anschrift eines Postfachs handelt."@de ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:anschriftinlandpostfachanschrift" .
+
+kdm:AnschriftInlandGrossempfaengeranschrift a owl:Class ;
+                rdfs:label "Anschrift Inland Großempfängeranschrift"@de ;
+                rdfs:subClassOf kdm:AnschriftInland ;
+                skos:definition "Dies ist eine Konkretisierierung des Kerndatenobjektes Anschrift Inland. Angaben für die Adressierung im Inland, soweit es sich um die Anschrift eines Großempfängers handelt."@de ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:anschriftinlandgrossempfaenger" .
+
+kdm:Kommunikation a owl:Class ;
+                rdfs:label "Kommunikation"@de ;
+                skos:definition "Abstraktes Kerndatenobjekt. Angaben zu einer elektronischen Erreichbarkeit."@de ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:kommunikation" .
+
+kdm:Telefon a owl:Class ;
+                rdfs:label "Telefon"@de ;
+                rdfs:subClassOf kdm:Kommunikation ;
+                skos:definition "Dies ist eine Konkretisierierung des Kerndatenobjektes Kommunikation. Angabe einer Telefonnummer."@de ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:kommunikation.telefon" .
+
+kdm:Telefax a owl:Class ;
+                rdfs:label "Telefax"@de ;
+                rdfs:subClassOf kdm:Kommunikation ;
+                skos:definition "Dies ist eine Konkretisierierung des Kerndatenobjektes Kommunikation. Angabe einer Telefaxnummer."@de ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:kommunikation.telefax" .
+
+kdm:Email a owl:Class ;
+                rdfs:label "E-Mail"@de ;
+                rdfs:subClassOf kdm:Kommunikation ;
+                skos:definition "Dies ist eine Konkretisierierung des Kerndatenobjektes Kommunikation. Angabe einer E-Mail-Adresse."@de ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:kommunikation.email" .
+
+kdm:Demail a owl:Class ;
+                rdfs:label "De-Mail"@de ;
+                rdfs:subClassOf kdm:Kommunikation ;
+                skos:definition "Dies ist eine Konkretisierierung des Kerndatenobjektes Kommunikation. Angabe einer De-Mail-Adresse."@de ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:kommunikation.demail" .
+
+kdm:WebAdresse a owl:Class ;
+                rdfs:label "Web-Adresse"@de ;
+                rdfs:subClassOf kdm:Kommunikation ;
+                skos:definition "Dies ist eine Konkretisierierung des Kerndatenobjektes Kommunikation. Angabe einer Web-Adresse."@de ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:kommunikation.web" .
+
+## Antrag und Anzeige eines wirtschaftlich Tätigen
+
+kdm:Anzeige a owl:Class ;
+                rdfs:label "Anzeige eines wirtschaftlichen Tätigen"@de ;
+                skos:definition "Abstraktes Kerndatenobjekt. Mit diesem Kerndatenobjekt wird eine an die zuständige öffentliche Stelle gerichtete einseitige empfangsbedürftige Willenserklärung eines wirtschaftlich Tätigen in eigener Sache gefasst."@de ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:anzeige" .
+
+kdm:Antrag a owl:Class ;
+                rdfs:label "Antrag eines wirtschaftlichen Tätigen"@de ;
+                skos:definition "Abstraktes Kerndatenobjekt. Mit diesem Kerndatenobjekt wird ein an eine zuständige öffentliche Stelle gerichteter Antrag eines wirtschaftlich Tätigen auf Durchführung eines Verwaltungsverfahrens in eigener Sache gemäß § 9 VwVfG gefasst."@de ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:antrag" .
+
+### Rollen
+
+kdm:WirtschaftlichTaetiger a owl:Class ;
+                rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000023> ;
+                rdfs:label "Wirtschaftlich Tätiger"@de ;
+                skos:definition "Dies ist eine Rolle, welche die Kerndatenobjekte Natürliche Person, Juristische Person, Rechtsfähige Personengesellschaft und Sonstige Personenvereinigung einnehmen können. Bezogen #auf eine wirtschaftliche Tätigkeit bezeichnet diese Rolle die nach außen am Wirtschaftsleben teilnehmende Person bzw. Personenvereinigung." ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:wirtschaftlichtaetiger" .
+ 
+kdm:GesetzlicherVertreter a owl:Class ;
+                rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000023> ;
+                rdfs:label "Gesetzlicher Vertreter"@de ;
+                skos:definition "Dies ist eine Rolle, welche die Kerndatenobjekte Natürliche Person und Juristische Person einnehmen können. Mit dieser Rolle wird der gesetzliche Vertreter einer juristischen Person oder natürlichen Person gefasst. Es handelt sich hierbei um Vertreter, deren Vertretungsmacht sich allein aus gesetzlichen Bestimmungen ergibt und nicht durch ein Rechtsgeschäft erteilt wurde." ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:gesetzlichervertreter" .
+ 
+kdm:Gesellschafter a owl:Class ;
+                rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000023> ;
+                rdfs:label "Gesellschafter"@de ;
+                skos:definition "Dies ist eine Rolle, welche die Kerndatenobjekte Natürliche Person, Juristische Person und Rechtsfähige Personengesellschaft einnehmen können. Mit dieser Rolle wird ein Gesellschafter einer rechtsfähigen Personengesellschaft gefasst." ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:gesellschafter" ; .
+ 
+kdm:Beteiligter a owl:Class ;
+                rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000023> ;
+                rdfs:label "Beteiligter einer sonstigen Personenvereinigung"@de ;
+                skos:definition "Dies ist eine Rolle, welche das Kerndatenobjekt Natürliche Person einnehmen kann. Mit dieser Rolle wird ein Beteiligter einer sonstigen Personenvereinigung gefasst." ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:beteiligtersonstigepersonenvereinigung" .
+
+
+kdm:Antragsteller a owl:Class ;
+                rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000023> ;
+                rdfs:label "Antragsteller"@de ;
+                skos:definition "Dies ist ist eine Rolle, welche die Kerndatenobjekte Natürliche Person, Juristische Person, Rechtsfähige Personengesellschaft, Sonstige Personenvereinigung und Wirtschaftliche Tätigkeit einnehmen können. Mit dieser Rolle wird die natürliche Person oder juristische Person oder die rechtsfähige Personengesellschaft oder sonstige Personenvereinigung identifiziert, die bei der zuständigen Stelle in eigener Sache den Erlass eines Verwaltungsakts beantragt oder durch einen Vertreter beantragen lässt und so die Durchführung eines Verwaltungsverfahrens im Sinne des § 9 VwVfG veranlasst. Der Antragsteller ist Beteiligter im Verwaltungsverfahren gemäß § 13 VwVfG." ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:antragsteller" .
+
+kdm:Anzeigender a owl:Class ;
+                rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000023> ;
+                rdfs:label "Anzeigender"@de ;
+                skos:definition "Dies ist eine Rolle, welche die Kerndatenobjekte Natürliche Person, Juristische Person, Rechtsfähige Personengesellschaft, Sonstige Personenvereinigung und Wirtschaftliche Tätigkeit einnehmen können. Mit dieser Rolle wird die natürliche Person oder juristische Person oder die rechtsfähige Personengesellschaft oder sonstige Personenvereinigung identifiziert, die bei der zuständigen Stelle in eigener Sache eine Anzeige erstattet oder durch einen Vertreter erstatten lässt." ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:anzeigender" .
+
+kdm:HandelndePerson a owl:Class ;
+                rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000023> ;
+                rdfs:label "Handelnde Person"@de ;
+                skos:definition "Dies ist eine Rolle, welche das Kerndatenobjekt Natürliche Person einnehmen kann. Mit dieser Rolle wird die natürliche Person identifiziert, die im konkreten Vorgang die Verfahrenshandlungen (beispielsweise einen Antrag stellt oder eine Anzeige einreicht) vornimmt." ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:handelndeperson" .
+
+kdm:Ansprechpartner a owl:Class ;
+                rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000023> ;
+                rdfs:label "Ansprechpartner"@de ;
+                skos:definition "Dies ist eine Rolle, welche das Kerndatenobjekt Natürliche Person einnehmen kann. Angaben zu einem Ansprechpartner, welcher von der handelnden Person in einem konkreten Antrag eines wirtschaftlich Tätigen bzw. in einer konkreten Anzeige eines wirtschaftlich Tätigen benannt wird für Rückfragen seitens der zuständigen Stelle." ;
+                dcterms:identifier "urn:xoev-de:xunternehmen:kerndatenobjekt:ansprechpartner" .
+
+            

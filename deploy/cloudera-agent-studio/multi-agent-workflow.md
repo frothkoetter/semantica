@@ -515,6 +515,132 @@ ORDER BY f.year, segments DESC;
 
 ---
 
+## Demo prompt catalog (advanced KPIs)
+
+Copy-paste prompts for Agent Studio conversations. Each should trigger:
+`get_graph_summary` → `get_business_rules` → mapping plan → `execute_query`.
+
+Use ontology terms where noted — they map to `airline_graph.json` and
+`airline_business_rules.yaml`. Tables: `airlinedata.flights`, `airlines`, `airports`, `planes` only.
+
+### On-Time Performance (OTP)
+
+Uses `OnTimeFlight` and FAA **15-minute rule** from `get_business_rules`.
+
+| # | Prompt |
+|---|--------|
+| 1 | Which top-10 carriers by volume had the best and worst OTP each year from 2003–2008? Show year-over-year change. |
+| 2 | Compare OTP during **MorningPeak**, **EveningPeak**, and **Overnight** for Delta and Southwest in 2007. Which time window hurts OTP most? |
+| 3 | For the top 5 **HubAirport** hubs by departures in 2008, which hub has the highest OTP and which the lowest? |
+| 4 | Between 2000 and 2008, which **Plane.manufacturer** had the highest average OTP on segments with at least 50,000 flights? |
+| 5 | What are the 10 **Route** pairs (origin–dest) with at least 1,000 flights in 2008 and the worst OTP? |
+
+### Delay severity
+
+Uses `MinorDelay`, `ModerateDelay`, `SevereDelay`, `DelayedFlight`.
+
+| # | Prompt |
+|---|--------|
+| 6 | For American, United, and JetBlue in 2008: what share of non-cancelled flights were **OnTimeFlight**, **MinorDelay**, **ModerateDelay**, and **SevereDelay**? |
+| 7 | Which airports as **originAirport** had the highest rate of **SevereDelay** flights in 2008 (min 10,000 departures)? |
+| 8 | For delayed flights in 2008, what percentage had arrival delay > departure delay vs the opposite? Break down by **Airline**. |
+
+### Delay attribution (DOT causes)
+
+Uses `delay_reason_priority` and `delay_reason_columns` from business rules.
+
+| # | Prompt |
+|---|--------|
+| 9 | For Southwest in 2008, which **DelayReason** (carrier, weather, NAS, security, late aircraft) accounts for the most total delay minutes? |
+| 10 | Compare total **WeatherDelayReason** vs **CarrierDelayReason** minutes for the five largest carriers in 2008. Who is most weather-sensitive? |
+| 11 | Which carriers have the highest **LateAircraftDelayReason** share of total delay minutes in 2007–2008? |
+
+### Time windows & operations
+
+Uses `MorningPeak`, `Midday`, `EveningPeak`, `Overnight`.
+
+| # | Prompt |
+|---|--------|
+| 12 | Which **TimeWindow** had the most **Flight** departures nationally in 2008? Show counts and share of total. |
+| 13 | Is OTP for **Overnight** flights better or worse than **MorningPeak** for the same carriers in 2008? |
+| 14 | Show OTP by hour of scheduled departure (`crsdeptime`) for 2008 — identify the worst 3 hour bands. |
+
+### Network, routes & logistics
+
+Uses `Route`, `HubAirport`, `Flight.originAirport` / `destinationAirport`.
+
+| # | Prompt |
+|---|--------|
+| 15 | List the top 20 **HubAirport** by departures in 2008. How many unique **Route** destinations does each serve? |
+| 16 | Split **Route** by distance quartile using `distance`. Which quartile has the best OTP in 2008? |
+| 17 | From LAX in 2007: top 10 destinations by volume, average **arrDelay**, and OTP for each. |
+| 18 | Which carriers had the highest **CancelledFlight** rate in 2008 among carriers with ≥100,000 segments? |
+
+### Aircraft & fleet
+
+Uses `Plane`, `Flight.assignedAircraft`.
+
+| # | Prompt |
+|---|--------|
+| 19 | For Boeing vs Airbus segments in 2008: compare average **arrDelay** and OTP (manufacturers with ≥100k flights). |
+| 20 | Which **Airline** operated the most distinct **Plane** tail numbers in 2008? Does fleet diversity correlate with lower average delay? |
+| 21 | Show **Plane.manufacturer** segment share by year 2000–2008. Did Airbus gain share on high-volume routes? |
+
+### Executive / multi-KPI scorecards
+
+| # | Prompt |
+|---|--------|
+| 22 | Build a 2008 scorecard for carriers with ≥50,000 flights: OTP %, avg **arrDelay**, **SevereDelay** rate, cancellation rate, and dominant **DelayReason**. Rank top 5 performers. |
+| 23 | Which carriers improved OTP the most from 2007 to 2008 (min 25k flights each year)? |
+| 24 | Compare **DivertedFlight** and **CancelledFlight** counts by carrier in 2008. Any carrier with unusually high diversions? |
+| 25 | For carriers in the bottom OTP quartile in 2008, is low OTP driven more by **CarrierDelayReason** or **NASDelayReason**? |
+| 26 | Define reliability = 0.5×OTP + 0.3×(1 − severe_delay_rate) + 0.2×(1 − cancellation_rate). Rank airlines in 2008. |
+
+### Reasoning (`run_reasoning` optional)
+
+| # | Prompt |
+|---|--------|
+| 27 | Hawaiian had the best OTP in 2005. Using facts from the query and rules from `get_business_rules`, explain what factors typically drive high OTP for a small carrier. |
+| 28 | If the FAA on-time threshold changed from 15 to 30 minutes, how would **OnTimeFlight** vs **DelayedFlight** classification shift for 2008? Estimate from rules, then validate with SQL. |
+
+### German prompts
+
+| # | Prompt |
+|---|--------|
+| 29 | Welche Carrier hatten 2008 die höchste OTP in der **EveningPeak** — und wie schneiden sie in **MorningPeak** ab? |
+| 30 | Zeige für 2008 die Top-5 **HubAirport** nach Abflügen und deren durchschnittliche **Ankunftsverzögerung**. |
+| 31 | Welcher **DelayReason** dominiert bei **DelayedFlight** für United und Southwest in 2008? |
+
+### Prompt tips
+
+| Technique | Example |
+|-----------|---------|
+| Name ontology classes | "OTP for **OnTimeFlight**", "**operatedBy** Airline" |
+| Set volume filters | "min 5,000 flights", "≥100,000 segments" |
+| Anchor business rules | "Use FAA 15-minute rule from `get_business_rules`" |
+| Request breakdowns | "by year", "by carrier", "by **TimeWindow**" |
+| Business rules only | `get_business_rules` — never ask Hive agent to read YAML |
+
+More worked examples: [`examples/airline_ontology_demo_chats.md`](../../examples/airline_ontology_demo_chats.md)
+
+---
+
+## Troubleshooting: wrong agent or tool
+
+### Business rules → Hive agent
+
+**Symptom:** Manager delegates to "Principal Hive/Iceberg Data Engineer"; agent runs `get_schema` or says YAML is not accessible.
+
+**Fix:** Manager **OFF**. Business rules use semantica **`get_business_rules`** on `ontology_mapper` — not iceberg-hive. Test with prompt: `get_business_rules`.
+
+### Graph empty on new worker
+
+**Symptom:** `get_graph_summary` → `graph_ready: false`, new `hostname`, wrong path like `/workflow_data/config/airline_graph.json`.
+
+**Fix:** Graph file belongs in `/workflow_data/data/airline_graph.json`. Re-copy `workflow_data` on the current worker. See [`README.md`](README.md) §5–6.
+
+---
+
 ## Troubleshooting: `extract_entities` hangs
 
 **Symptom:** Tool log shows `extract_entities` with a long synthetic paragraph; run never completes.
@@ -567,6 +693,8 @@ agent 1 is `ontology_mapper` with the restricted tool list above.
 | Use `/workflow_data/...` MCP paths | `/home/cdsw/semantica/...` in workflow env |
 | One MCP per agent | Both semantica + iceberg-hive on same agent |
 | Abort when `ready_for_sql: false` | Run SQL against empty graph |
+| `get_business_rules` for rules/YAML | Delegate to Hive agent or `get_schema` |
+| Manager **OFF** for rules/graph/SQL | Manager delegates to wrong specialist |
 
 ---
 

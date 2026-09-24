@@ -1,0 +1,83 @@
+# Declarative business rules for XUnternehmen KDM data quality & register analytics.
+# Agents resolve ontology terms via xunternehmen_kg.json + xunternehmen_r2rml_db_mapping.yaml.
+#
+# Namespace: https://w3id.org/kdm/
+
+ontology_namespace: "https://w3id.org/kdm/"
+
+thresholds:
+  idnr_min_length: 11
+  plz_inland_pattern: "^[0-9]{5}$"
+  wz_code_length: 5
+  min_confidence_tier_a: 0.85
+
+# Anschrift subtype (maps to kdm Anschrift subclasses)
+anschrift_type_rules:
+  - class: InlandStrassenanschrift
+    when: "anschrift_typ = 'INLAND_STRASSE' AND strasse IS NOT NULL AND postleitzahl IS NOT NULL AND ort IS NOT NULL"
+  - class: InlandPostfachanschrift
+    when: "anschrift_typ = 'INLAND_POSTFACH' AND postfach IS NOT NULL AND postleitzahl IS NOT NULL"
+  - class: InlandGrossempfaengeranschrift
+    when: "anschrift_typ = 'INLAND_GROSSEMPFAENGER' AND postfach IS NOT NULL"
+  - class: AuslandAnschrift
+    when: "anschrift_typ = 'AUSLAND' AND staat IS NOT NULL AND staat <> '000'"
+
+# Kommunikation channel consistency
+kommunikation_channel_rules:
+  - class: EmailKanal
+    when: "kommunikation_art = 'EMAIL' AND emailadresse IS NOT NULL"
+  - class: TelefonKanal
+    when: "kommunikation_art = 'TELEFON' AND telefonnummer IS NOT NULL"
+  - class: InkonsistenteKommunikation
+    when: "kommunikation_art = 'EMAIL' AND (emailadresse IS NULL OR TRIM(emailadresse) = '')"
+
+# Natürliche Person completeness
+natuerliche_person_completeness_rules:
+  - class: VollstaendigeNatuerlichePerson
+    when: "geschlecht_code IS NOT NULL AND EXISTS name AND EXISTS geburt"
+  - class: UnvollstaendigeNatuerlichePerson
+    when: "NOT (geschlecht_code IS NOT NULL AND EXISTS name AND EXISTS geburt)"
+
+# Organisation / register completeness
+organisation_completeness_rules:
+  - class: RegisterEingetragen
+    when: "EXISTS zuordnung_eintragung"
+  - class: HatSitz
+    when: "EXISTS zuordnung_sitz"
+  - class: VollstaendigeOrganisation
+    when: "eingetragener_name IS NOT NULL AND bundeseinheitliche_wirtschaftsnummer IS NOT NULL AND EXISTS zuordnung_eintragung AND EXISTS zuordnung_sitz"
+
+# Wirtschaftliche Tätigkeit
+wirtschaftliche_taetigkeit_rules:
+  - class: HatHauptbetriebsstaette
+    when: "EXISTS betriebsstaette WHERE art_betriebsstaette_code = '01'"
+  - class: HatWirtschaftszweig
+    when: "EXISTS wirtschaftszweig"
+
+# Data quality tiers (used by record_decision demo + agents)
+data_quality_tier_rules:
+  - class: TierA_Vollstaendig
+    when: "all mandatory KDM blocks present for entity type"
+  - class: TierB_Teilweise
+    when: "core identifier present but secondary links missing"
+  - class: TierC_Minimal
+    when: "only PK and one attribute present"
+
+# Vorgang readiness
+vorgang_readiness_rules:
+  - class: AntragEinreichbar
+    when: "EXISTS rolle_antragsteller AND EXISTS rolle_handelnde_person"
+  - class: AnzeigeVollstaendig
+    when: "EXISTS rolle_anzeigender AND EXISTS rolle_ansprechpartner"
+
+analytics_templates:
+  register_completeness:
+    question: "Anteil juristischer Personen mit Eintragung und Sitz"
+    classes: [JuristischePerson, RegisterEingetragen, HatSitz]
+    kpi: "COUNT(complete) / COUNT(JuristischePerson)"
+  personen_datenqualitaet:
+    question: "Vollständige vs. unvollständige natürliche Personen"
+    classes: [VollstaendigeNatuerlichePerson, UnvollstaendigeNatuerlichePerson]
+  vorgang_bereitschaft:
+    question: "Anträge ohne Antragsteller oder Handelnde Person"
+    classes: [Antrag, AntragEinreichbar]

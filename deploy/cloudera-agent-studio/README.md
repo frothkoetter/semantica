@@ -232,6 +232,9 @@ Smoke test prompt:
 
 Expected: agent resolves `Flight.arrDelay` + `operatedBy` → SQL on `flights` + `airlines`.
 
+Advanced KPI prompts (OTP, delay attribution, hub routes, scorecards): see
+[`multi-agent-workflow.md` — Demo prompt catalog](multi-agent-workflow.md#demo-prompt-catalog-advanced-kpis).
+
 ## 8. Generate config from local Cursor env (optional)
 
 On your laptop (not on Agent Studio):

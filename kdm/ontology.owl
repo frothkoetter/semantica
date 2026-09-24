@@ -1,0 +1,1913 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="https://w3id.org/kdm/"
+     xml:base="https://w3id.org/kdm/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+     xmlns:vann="http://purl.org/vocab/vann/"
+     xmlns:terms="http://purl.org/dc/terms/"
+     xmlns:schema="http://schema.org/">
+    <owl:Ontology rdf:about="https://w3id.org/kdm/">
+        <owl:versionIRI rdf:resource="https://w3id.org/kdm/"/>
+        <terms:abstract xml:lang="de">Diese Ontologie ist die Darstellung des semantischen Datenmodells XUnternehmen.Kerndatenmodell.</terms:abstract>
+        <terms:bibliographicCitation>Rinsche, L.; Strauß, C.; Strupp, A.; Repräsentation des XUnternehmen.Kerndatenmodells als Ontologie (2025)</terms:bibliographicCitation>
+        <terms:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2025-09-29</terms:created>
+        <terms:creator>Annika Strupp</terms:creator>
+        <terms:creator>Cornelia Strauß</terms:creator>
+        <terms:creator>Ludger Rinsche</terms:creator>
+        <terms:description xml:lang="de">Diese Ontologie ist die formale Repräsentation des XUnternehmen.Kerndatenmodells als Ontologie, auf der Basis der Basic Formal Ontology (BFO).</terms:description>
+        <terms:description xml:lang="en">This Ontology is the representation of semantic model XUnternehmen.Kerndatenmodell based on Basic Formal Ontology (BFO).</terms:description>
+        <terms:license rdf:resource="https://creativecommons.org/licenses/by/4.0/"/>
+        <terms:title xml:lang="de">XUnternehmen.Kerndatenmodell als Ontologie</terms:title>
+        <vann:preferredNamespacePrefix>kdm</vann:preferredNamespacePrefix>
+        <schema:codeRepository rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://gitlab.opencode.de/xunternehmen/kerndatenmodell-ontologie-owl</schema:codeRepository>
+        <rdfs:seeAlso rdf:resource="https://www.xrepository.de/details/urn:xoev-de:xunternehmen:standard:basismodul"/>
+        <owl:versionInfo xml:lang="de">Version 1.2</owl:versionInfo>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+    
+
+
+    <!-- http://purl.org/dc/terms/abstract -->
+
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/abstract"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/bibliographicCitation -->
+
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/bibliographicCitation"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/created -->
+
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/created"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/creator -->
+
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/creator"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/description -->
+
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/description"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/identifier -->
+
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/identifier"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/license -->
+
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/license"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/title -->
+
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/title"/>
+    
+
+
+    <!-- http://purl.org/vocab/vann/preferredNamespacePrefix -->
+
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/vocab/vann/preferredNamespacePrefix"/>
+    
+
+
+    <!-- http://schema.org/codeRepository -->
+
+
+    <owl:AnnotationProperty rdf:about="http://schema.org/codeRepository"/>
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#definition -->
+
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2004/02/skos/core#definition"/>
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#note -->
+
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2004/02/skos/core#note"/>
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#scopeNote -->
+
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2004/02/skos/core#scopeNote"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Datatypes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+    
+
+
+    <!-- http://www.w3.org/2001/XMLSchema#date -->
+
+
+    <rdfs:Datatype rdf:about="http://www.w3.org/2001/XMLSchema#date"/>
+    
+
+
+    <!-- urn:de:bund:destatis:bevoelkerungsstatistik:schluessel:ags -->
+
+
+    <rdfs:Datatype rdf:about="urn:de:bund:destatis:bevoelkerungsstatistik:schluessel:ags">
+        <rdfs:seeAlso rdf:resource="https://www.xrepository.de/details/urn:de:bund:destatis:bevoelkerungsstatistik:schluessel:ags"/>
+        <skos:scopeNote xml:lang="de">Mit diesem Datentyp sollen nur Codelistenwerte (= Strings) angegeben werden, die in der Codeliste Amtlicher Gemeindeschlüssel ausgezeichnet werden.</skos:scopeNote>
+        <owl:equivalentClass rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </rdfs:Datatype>
+    
+
+
+    <!-- urn:de:bund:destatis:bevoelkerungsstatistik:schluessel:staatsangehoerigkeit -->
+
+
+    <rdfs:Datatype rdf:about="urn:de:bund:destatis:bevoelkerungsstatistik:schluessel:staatsangehoerigkeit">
+        <rdfs:seeAlso rdf:resource="https://www.xrepository.de/details/urn:de:bund:destatis:bevoelkerungsstatistik:schluessel:staatsangehoerigkeit"/>
+        <skos:scopeNote xml:lang="de">Mit diesem Datentyp sollen nur Codelistenwerte (= Strings) angegeben werden, die in der Codeliste Staatsabgehörigkeit ausgezeichnet werden.</skos:scopeNote>
+        <owl:equivalentClass rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </rdfs:Datatype>
+    
+
+
+    <!-- urn:xoev-de:xinneres:codeliste:geschlecht -->
+
+
+    <rdfs:Datatype rdf:about="urn:xoev-de:xinneres:codeliste:geschlecht">
+        <rdfs:seeAlso rdf:resource="https://www.xrepository.de/details/urn:xoev-de:xinneres:codeliste:geschlecht"/>
+        <skos:scopeNote xml:lang="de">Mit diesem Datentyp sollen nur Codelistenwerte (= Strings) angegeben werden, die in der Codeliste Geschlecht ausgezeichnet werden.</skos:scopeNote>
+        <owl:equivalentClass rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </rdfs:Datatype>
+    
+
+
+    <!-- urn:xoev-de:xunternehmen:codeliste:angabeantragstelleranzeigender -->
+
+
+    <rdfs:Datatype rdf:about="urn:xoev-de:xunternehmen:codeliste:angabeantragstelleranzeigender">
+        <rdfs:seeAlso rdf:resource="https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:angabeantragstelleranzeigender"/>
+        <skos:scopeNote xml:lang="de">Mit diesem Datentyp sollen nur Codelistenwerte (= Strings) angegeben werden, die in der Codeliste Angabe des Antragstellers/Anzeigenden ausgezeichnet werden</skos:scopeNote>
+        <owl:equivalentClass rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </rdfs:Datatype>
+    
+
+
+    <!-- urn:xoev-de:xunternehmen:codeliste:artanschrift -->
+
+
+    <rdfs:Datatype rdf:about="urn:xoev-de:xunternehmen:codeliste:artanschrift">
+        <rdfs:seeAlso rdf:resource="https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:artanschrift"/>
+        <skos:scopeNote xml:lang="de">Mit diesem Datentyp sollen nur Codelistenwerte (= Strings) angegeben werden, die in der Codeliste Art der Anschrift ausgezeichnet werden.</skos:scopeNote>
+        <owl:equivalentClass rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </rdfs:Datatype>
+    
+
+
+    <!-- urn:xoev-de:xunternehmen:codeliste:artdereintragung -->
+
+
+    <rdfs:Datatype rdf:about="urn:xoev-de:xunternehmen:codeliste:artdereintragung">
+        <rdfs:seeAlso rdf:resource="https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:artdereintragung"/>
+        <skos:scopeNote xml:lang="de">Mit diesem Datentyp sollen nur Codelistenwerte (= Strings) angegeben werden, die in der Codeliste Art der Eintragung ausgezeichnet werden.</skos:scopeNote>
+        <owl:equivalentClass rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </rdfs:Datatype>
+    
+
+
+    <!-- urn:xoev-de:xunternehmen:codeliste:artgesellschafterpersonengesellschaft -->
+
+
+    <rdfs:Datatype rdf:about="urn:xoev-de:xunternehmen:codeliste:artgesellschafterpersonengesellschaft">
+        <rdfs:seeAlso rdf:resource="https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:artgesellschafterpersonengesellschaft"/>
+        <skos:scopeNote xml:lang="de">Mit diesem Datentyp sollen nur Codelistenwerte (= Strings) angegeben werden, die in der Codeliste Art eines Gesellschafters einer Personengesellschaft ausgezeichnet werden.</skos:scopeNote>
+        <owl:equivalentClass rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </rdfs:Datatype>
+    
+
+
+    <!-- urn:xoev-de:xunternehmen:codeliste:artgesetzlichervertreter -->
+
+
+    <rdfs:Datatype rdf:about="urn:xoev-de:xunternehmen:codeliste:artgesetzlichervertreter">
+        <rdfs:seeAlso rdf:resource="https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:artgesetzlichervertreter"/>
+        <skos:scopeNote>Mit diesem Datentyp sollen nur Codelistenwerte (= Strings) angegeben werden, die in der Codeliste Art des Gesetzlichen Vertreters ausgezeichnet werden.</skos:scopeNote>
+        <owl:equivalentClass rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </rdfs:Datatype>
+    
+
+
+    <!-- urn:xoev-de:xunternehmen:codeliste:artniederlassung -->
+
+
+    <rdfs:Datatype rdf:about="urn:xoev-de:xunternehmen:codeliste:artniederlassung">
+        <rdfs:seeAlso rdf:resource="https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:artniederlassung"/>
+        <skos:scopeNote xml:lang="de">Mit diesem Datentyp sollen nur Codelistenwerte (= Strings) angegeben werden, die in der Codeliste Art der Niederlassung ausgezeichnet werden.</skos:scopeNote>
+        <owl:equivalentClass rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </rdfs:Datatype>
+    
+
+
+    <!-- urn:xoev-de:xunternehmen:codeliste:klassifikationkommunikation -->
+
+
+    <rdfs:Datatype rdf:about="urn:xoev-de:xunternehmen:codeliste:klassifikationkommunikation">
+        <rdfs:seeAlso rdf:resource="https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:klassifikationkommunikation"/>
+        <skos:scopeNote xml:lang="de">Mit diesem Datentyp sollen nur Codelistenwerte (= Strings) angegeben werden, die in der Codeliste Klassifikation der Kommunikationsangabe ausgezeichnet werden.</skos:scopeNote>
+        <owl:equivalentClass rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </rdfs:Datatype>
+    
+
+
+    <!-- urn:xoev-de:xunternehmen:codeliste:rechtsformen -->
+
+
+    <rdfs:Datatype rdf:about="urn:xoev-de:xunternehmen:codeliste:rechtsformen">
+        <rdfs:seeAlso rdf:resource="https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:rechtsformen"/>
+        <skos:scopeNote xml:lang="de">Mit diesem Datentyp sollen nur Codelistenwerte (= Strings) angegeben werden, die in der Rechtsformen-Codeliste ausgezeichnet werden.</skos:scopeNote>
+        <owl:equivalentClass rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </rdfs:Datatype>
+    
+
+
+    <!-- urn:xoev-de:xunternehmen:codeliste:registergerichte -->
+
+
+    <rdfs:Datatype rdf:about="urn:xoev-de:xunternehmen:codeliste:registergerichte">
+        <rdfs:seeAlso rdf:resource="https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:registergerichte"/>
+        <skos:scopeNote xml:lang="de">Mit diesem Datentyp sollen nur Codelistenwerte (= Strings) angegeben werden, die in der Codeliste Registergericht Code ausgezeichnet werden.</skos:scopeNote>
+        <owl:equivalentClass rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </rdfs:Datatype>
+    
+
+
+    <!-- urn:xoev-de:xunternehmen:codeliste:wirtschaftszweigklassifikationsversion -->
+
+
+    <rdfs:Datatype rdf:about="urn:xoev-de:xunternehmen:codeliste:wirtschaftszweigklassifikationsversion">
+        <rdfs:seeAlso rdf:resource="https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:wirtschaftszweigklassifikationsversion"/>
+        <skos:scopeNote xml:lang="de">Mit diesem Datentyp sollen nur Codelistenwerte (= Strings) angegeben werden, die in der Codeliste Version der Wirtschaftszweigklassifikation ausgezeichnet werden.</skos:scopeNote>
+        <owl:equivalentClass rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </rdfs:Datatype>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+    
+
+
+    <!-- https://w3id.org/kdm/anschrift -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/kdm/anschrift">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://w3id.org/kdm/Betriebsstaette"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/JuristischePerson"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/NatuerlichePerson"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/RechtsfaehigePersonengesellschaft"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/SonstigePersonenvereinigung"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/WirtschaftlicheTaetigkeit"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="https://w3id.org/kdm/Anschrift"/>
+        <rdfs:label xml:lang="de">hat Anschrift</rdfs:label>
+        <skos:definition xml:lang="de">Verweis auf das Datenobjekt Anschrift einer wirtschaftlichen Tätigkeit, einer natürlichen Person, einer juristischen Person, einer rechtsfähigen Personengesellschaft oder einer sonstigen Personenvereinigung, ebenso einer Betriebsstätte einer wirtschaftlichen Tätigkeit.</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/ansprechpartner -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/kdm/ansprechpartner">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://w3id.org/kdm/Antrag"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/Anzeige"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="https://w3id.org/kdm/Ansprechpartner"/>
+        <rdfs:label xml:lang="de">hat Ansprechpartner</rdfs:label>
+        <skos:definition xml:lang="de">Dies ist ein Verweis auf die Rolle Ansprechpartner, welche das Kerndatenobjekt Natürliche Person einnehmen kann.</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/ansprechpartnerID -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/kdm/ansprechpartnerID">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/Ansprechpartner"/>
+        <rdfs:range rdf:resource="https://w3id.org/kdm/NatuerlichePerson"/>
+        <rdfs:label xml:lang="de">Ansprechpartner ist</rdfs:label>
+        <skos:definition xml:lang="de">Diese Eigenschaft dient dem Verweis auf die natürliche Person, die die Rolle des Ansprechpartners einnimmt.</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/antragsteller -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/kdm/antragsteller">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/Antrag"/>
+        <rdfs:range rdf:resource="https://w3id.org/kdm/Antragsteller"/>
+        <rdfs:label xml:lang="de">hat Antragsteller</rdfs:label>
+        <skos:definition xml:lang="de">Dies ist ein Verweis auf die Rolle Antragsteller, welche die Kerndatenobjekte Natürliche Person, Juristische Person, Rechtsfähige Personengesellschaft, Sonstige Personenvereinigung und Wirtschaftliche Tätigkeit einnehmen können.</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/antragstellerID -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/kdm/antragstellerID">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/Antragsteller"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://w3id.org/kdm/JuristischePerson"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/NatuerlichePerson"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/RechtsfaehigePersonengesellschaft"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/SonstigePersonenvereinigung"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/WirtschaftlicheTaetigkeit"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+        <rdfs:label xml:lang="de">Antragsteller ist</rdfs:label>
+        <skos:definition xml:lang="de">Diese Eigenschaft dient dem Verweis auf die Natürliche Person, Juristische Person, Rechtsfähige Personengesellschaft, Sonstige Personenvereinigung oder Wirtschaftliche Tätigkeit, die die Rolle des Antragstellers einnehmen.</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/anzeigender -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/kdm/anzeigender">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/Anzeige"/>
+        <rdfs:range rdf:resource="https://w3id.org/kdm/Anzeigender"/>
+        <rdfs:label xml:lang="de">hat Anzeigenden</rdfs:label>
+        <skos:definition xml:lang="de">Dies ist ein Verweis auf die Rolle Anzeigender.</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/anzeigenderID -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/kdm/anzeigenderID">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/Anzeigender"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://w3id.org/kdm/JuristischePerson"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/NatuerlichePerson"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/RechtsfaehigePersonengesellschaft"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/SonstigePersonenvereinigung"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/WirtschaftlicheTaetigkeit"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+        <rdfs:label xml:lang="de">Anzeigender ist</rdfs:label>
+        <skos:definition xml:lang="de">Diese Eigenschaft dient dem Verweis auf die Natürliche Person, Juristische Person, Rechtsfähige Personengesellschaft, Sonstige Personenvereinigung oder Wirtschaftliche Tätigkeit, die die Rolle des Anzeigenden einnehmen.</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/beteiligter -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/kdm/beteiligter">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/RechtsfaehigePersonengesellschaft"/>
+        <rdfs:range rdf:resource="https://w3id.org/kdm/Beteiligter"/>
+        <rdfs:label xml:lang="de">hat Beteiligten</rdfs:label>
+        <skos:definition xml:lang="de">Dies ist ein Verweis auf die Rolle Beteiligter, welche das Kerndatenobjekt Natürliche Person einnehmen kann. Mit dieser Rolle wird ein Beteiligter einer sonstigen Personenvereinigung gefasst.</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/beteiligterID -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/kdm/beteiligterID">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/Beteiligter"/>
+        <rdfs:range rdf:resource="https://w3id.org/kdm/NatuerlichePerson"/>
+        <rdfs:label xml:lang="de">Beteiligter ist</rdfs:label>
+        <skos:definition xml:lang="de">Diese Eigenschaft dient dem Verweis auf die natürliche Person, die die Rolle des Beteiligten einnimmt.</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/betriebsstaette -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/kdm/betriebsstaette">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/WirtschaftlicheTaetigkeit"/>
+        <rdfs:range rdf:resource="https://w3id.org/kdm/Betriebsstaette"/>
+        <rdfs:label xml:lang="de">hat Betriebsstätte</rdfs:label>
+        <skos:definition xml:lang="de">Verweis auf das Datenobjekt Betriebsstätte einer wirtschaftlichen Tätigkeit.</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/demail -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/kdm/demail">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/Kommunikation"/>
+        <rdfs:range rdf:resource="https://w3id.org/kdm/Demail"/>
+        <rdfs:label xml:lang="de">hat De-Mail</rdfs:label>
+        <skos:definition xml:lang="de">Dies ist ein Verweis auf die Angaben zur Erreichbarkeit per De-Mail.</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/effektiverVerwaltungssitz -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/kdm/effektiverVerwaltungssitz">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://w3id.org/kdm/JuristischePerson"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/RechtsfaehigePersonengesellschaft"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/SonstigePersonenvereinigung"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="https://w3id.org/kdm/EffektiverVerwaltungssitz"/>
+        <rdfs:label xml:lang="de">hat effektiven Verwaltungssitz</rdfs:label>
+        <skos:definition xml:lang="de">Verweis auf das Datenobjekt Effektiver Verwaltungssitz einer juristischen Person, einer rechtsfähigen Personengesellschaft oder einer sonstigen Personenvereinigung.</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/eintragung -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/kdm/eintragung">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://w3id.org/kdm/JuristischePerson"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/RechtsfaehigePersonengesellschaft"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/SonstigePersonenvereinigung"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/WirtschaftlicheTaetigkeit"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="https://w3id.org/kdm/Eintragung"/>
+        <rdfs:label xml:lang="de">hat Eintragung</rdfs:label>
+        <skos:definition xml:lang="de">Verweis auf das Datenobjekt Eintragung einer Wirtschaftlichen Tätigkeit, einer Juristischen Person, einer Rechtsfähigen Personengesellschaft oder einer Sonstigen Personenvereinigung.</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/email -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/kdm/email">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/Kommunikation"/>
+        <rdfs:range rdf:resource="https://w3id.org/kdm/Email"/>
+        <rdfs:label xml:lang="de">hat E-Mail</rdfs:label>
+        <skos:definition xml:lang="de">Dies ist ein Verweis auf die Angaben zur Erreichbarkeit per E-Mail.</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/geburt -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/kdm/geburt">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/NatuerlichePerson"/>
+        <rdfs:range rdf:resource="https://w3id.org/kdm/Geburt"/>
+        <rdfs:label xml:lang="de">hat Geburt</rdfs:label>
+        <skos:definition xml:lang="de">Verweis auf das Datenobjekt Geburt einer natürlichen Person.</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/gesellschafter -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/kdm/gesellschafter">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/Personengesellschaft"/>
+        <rdfs:range rdf:resource="https://w3id.org/kdm/Gesellschafter"/>
+        <rdfs:label xml:lang="de">hat Gesellschafter</rdfs:label>
+        <skos:definition xml:lang="de">Dies ist ein Verweis auf die Rolle Gesellschafter, welche die Kerndatenobjekte Natürliche Person, Juristische Person und Rechtsfähige Personengesellschaft einnehmen können.</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/gesellschafterID -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/kdm/gesellschafterID">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/Gesellschafter"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://w3id.org/kdm/JuristischePerson"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/NatuerlichePerson"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/RechtsfaehigePersonengesellschaft"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+        <rdfs:label xml:lang="de">Gesellschafter ist</rdfs:label>
+        <skos:definition xml:lang="de">Diese Eigenschaft dient dem Verweis auf die natürliche Person, Jjuristische Person oder rechtsfähige Personengesellschaft, die die Rolle des Gesellschafters einnehmen.</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/gesetzlicherVertreter -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/kdm/gesetzlicherVertreter">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/GesetzlicherVertreter"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://w3id.org/kdm/JuristischePerson"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/NatuerlichePerson"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:label xml:lang="de">hat gesetzlichen Vertreter</rdfs:label>
+        <skos:definition xml:lang="de">Dies ist ein Verweis auf die Rolle Gesetzlicher Vertreter, welche die Kerndatenobjekte Natürliche Person und Juristische Person einnehmen können.</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/gesetzlicherVertreterID -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/kdm/gesetzlicherVertreterID">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/GesetzlicherVertreter"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://w3id.org/kdm/JuristischePerson"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/NatuerlichePerson"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+        <rdfs:label xml:lang="de">Gesetzlicher Vertreter ist</rdfs:label>
+        <skos:definition xml:lang="de">Diese Eigenschaft dient dem Verweis auf die natürliche Person oder die juristische Person, die die Rolle des gesetzlichen Vertreters einnehmen.</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/handelndePerson -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/kdm/handelndePerson">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://w3id.org/kdm/Antrag"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/Anzeige"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="https://w3id.org/kdm/HandelndePerson"/>
+        <rdfs:label xml:lang="de">hat handelnde Person</rdfs:label>
+        <skos:definition xml:lang="de">Dies ist ein Verweis auf die Rolle Handelnde Person, welche die Kerndatenobjekte Natürliche Person, Juristische Person, Rechtsfähige Personengesellschaft, Sonstige Personenvereinigung und Wirtschaftliche Tätigkeit einnehmen können.</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/handelndePersonID -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/kdm/handelndePersonID">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/HandelndePerson"/>
+        <rdfs:range rdf:resource="https://w3id.org/kdm/NatuerlichePerson"/>
+        <rdfs:label xml:lang="de">Handelnde Person ist</rdfs:label>
+        <skos:definition xml:lang="de">Diese Eigenschaft dient dem Verweis auf die natürliche Person, die die Rolle der handelnden Person einnimmt.</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/kommunikation -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/kdm/kommunikation">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://w3id.org/kdm/Betriebsstaette"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/JuristischePerson"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/NatuerlichePerson"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/RechtsfaehigePersonengesellschaft"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/SonstigePersonenvereinigung"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/WirtschaftlicheTaetigkeit"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="https://w3id.org/kdm/Kommunikation"/>
+        <rdfs:label xml:lang="de">hat Kommunikation</rdfs:label>
+        <skos:definition xml:lang="de">Verweis auf das Datenobjekt Kommunikation einer wirtschaftlichen Tätigkeit, einer natürlichen Person, einer juristischen Person, einer rechtsfähigen Personengesellschaft oder einer sonstigen Personenvereinigung, ebenso einer Betriebsstätte einer wirtschaftlichen Tätigkeit.</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/nameEinerNatuerlichenPerson -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/kdm/nameEinerNatuerlichenPerson">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/NatuerlichePerson"/>
+        <rdfs:range rdf:resource="https://w3id.org/kdm/NameEinerNatuerlichenPerson"/>
+        <rdfs:label xml:lang="de">hat Namen</rdfs:label>
+        <skos:definition xml:lang="de">Verweis auf das Datenobjekt Name einer natürlichen Person.</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/sitz -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/kdm/sitz">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://w3id.org/kdm/JuristischePerson"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/RechtsfaehigePersonengesellschaft"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/SonstigePersonenvereinigung"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="https://w3id.org/kdm/Sitz"/>
+        <rdfs:label xml:lang="de">hat Sitz</rdfs:label>
+        <skos:definition xml:lang="de">Verweis auf das Datenobjekt Sitz einer juristischen Person, einer rechtsfähigen Personengesellschaft oder einer sonstigen Personenvereinigung.</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/telefax -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/kdm/telefax">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/Kommunikation"/>
+        <rdfs:range rdf:resource="https://w3id.org/kdm/Telefax"/>
+        <rdfs:label xml:lang="de">hat Telefax</rdfs:label>
+        <skos:definition xml:lang="de">Dies ist ein Verweis auf die Angaben zur Erreichbarkeit per Telefax.</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/telefon -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/kdm/telefon">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/Kommunikation"/>
+        <rdfs:range rdf:resource="https://w3id.org/kdm/Telefon"/>
+        <rdfs:label xml:lang="de">hat Telefon</rdfs:label>
+        <skos:definition xml:lang="de">Dies ist ein Verweis auf die Angaben zur telefonischen Erreichbarkeit.</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/web -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/kdm/web">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/Kommunikation"/>
+        <rdfs:range rdf:resource="https://w3id.org/kdm/WebAdresse"/>
+        <rdfs:label xml:lang="de">hat Web-Adresse</rdfs:label>
+        <skos:definition xml:lang="de">Dies ist ein Verweis auf die Angaben zur Erreichbarkeit per Web-Adresse.</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/wirtschaftlichTaetiger -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/kdm/wirtschaftlichTaetiger">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/WirtschaftlicheTaetigkeit"/>
+        <rdfs:range rdf:resource="https://w3id.org/kdm/WirtschaftlichTaetiger"/>
+        <rdfs:label xml:lang="de">hat Wirtschaftlich Tätigen</rdfs:label>
+        <skos:definition xml:lang="de">Dies ist ein Verweis auf die Rolle Wirtschaftlich Tätiger, welche die Kerndatenobjekte Natürliche Person, Juristische Person, Rechtsfähige Personengesellschaft und Sonstige Personenvereinigung einnehmen können.</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/wirtschaftlichTaetigerID -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/kdm/wirtschaftlichTaetigerID">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/WirtschaftlichTaetiger"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://w3id.org/kdm/JuristischePerson"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/NatuerlichePerson"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/RechtsfaehigePersonengesellschaft"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/SonstigePersonenvereinigung"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+        <rdfs:label xml:lang="de">Wirtschaftlich Tätiger ist</rdfs:label>
+        <skos:definition xml:lang="de">Diese Eigenschaft dient dem Verweis auf die natürliche Person, juristische Person, rechtsfähige Personengesellschaft oder sonstige Personenvereinigung, die die Rolle des Wirtschaftlich Tätigen einnehmen.</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/wirtschaftszweig -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/kdm/wirtschaftszweig">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/WirtschaftlicheTaetigkeit"/>
+        <rdfs:range rdf:resource="https://w3id.org/kdm/Wirtschaftszweig"/>
+        <rdfs:label xml:lang="de">hat Wirtschaftszweig</rdfs:label>
+        <skos:definition xml:lang="de">Verweis auf das Datenobjekt Wirtschaftszweig einer wirtschaftlichen Tätigkeit.</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+    
+
+
+    <!-- https://w3id.org/kdm/artAngabeAntragstellerAnzeigenderCode -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/artAngabeAntragstellerAnzeigenderCode">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://w3id.org/kdm/Antragsteller"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/Anzeigender"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="urn:xoev-de:xunternehmen:codeliste:angabeantragstelleranzeigender"/>
+        <rdfs:label xml:lang="de">Art der Angabe des Antragstellers oder des Anzeigenden</rdfs:label>
+        <rdfs:seeAlso rdf:resource="https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:angabeantragstelleranzeigender"/>
+        <skos:definition xml:lang="de">Angabe der Angabenart des Antragstellers oder des Anzeigenden in einem Antrag oder einer Anzeige. Hier wird angegeben, ob die natürliche oder juristische Person bzw. die rechtsfähige Personengesellschaft des Anzeigenden explizit angegeben wird oder ob lediglich seine wirtschaftliche Tätigkeit angegeben wird und der Anzeigende damit implizit bestimmt ist.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/artAnschriftCode -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/artAnschriftCode">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://w3id.org/kdm/AnschriftAusland"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/AnschriftInlandGrossempfaengeranschrift"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/AnschriftInlandPostfachanschrift"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/AnschriftInlandStrassenanschrift"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="urn:xoev-de:xunternehmen:codeliste:artanschrift"/>
+        <rdfs:label xml:lang="de">Art der Anschrift</rdfs:label>
+        <rdfs:seeAlso rdf:resource="https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:artanschrift"/>
+        <skos:definition xml:lang="de">Angabe der Rolle oder Funktion einer Anschrift, z. B. einer Geschäftsanschrift oder Wohnsitzadresse.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/artBetriebsstaetteCode -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/artBetriebsstaetteCode">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/Betriebsstaette"/>
+        <rdfs:range rdf:resource="urn:xoev-de:xunternehmen:codeliste:artniederlassung"/>
+        <rdfs:label xml:lang="de">Art der Betriebsstätte</rdfs:label>
+        <rdfs:seeAlso rdf:resource="https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:artniederlassung"/>
+        <skos:definition xml:lang="de">Nähere Bestimmung der Art der Betriebsstätte. Die möglichen Ausprägungen dieses Attributes sind durch die Codeliste Art einer Niederlassung (https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:artniederlassung) im XRepository bestimmt.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/artEintragungCode -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/artEintragungCode">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/Eintragung"/>
+        <rdfs:range rdf:resource="urn:xoev-de:xunternehmen:codeliste:artdereintragung"/>
+        <rdfs:label xml:lang="de">Art der Eintragung</rdfs:label>
+        <rdfs:seeAlso rdf:resource="https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:artdereintragung"/>
+        <skos:definition xml:lang="de">Angabe der Art des Registers, in welchem ein wirtschaftlich Tätiger bzw. eine wirtschaftliche Tätigkeit geführt wird.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/artGesellschafterCode -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/artGesellschafterCode">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/Gesellschafter"/>
+        <rdfs:range rdf:resource="urn:xoev-de:xunternehmen:codeliste:artgesellschafterpersonengesellschaft"/>
+        <rdfs:label xml:lang="de">Art des Gesellschafters</rdfs:label>
+        <rdfs:seeAlso rdf:resource="https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:artgesellschafterpersonengesellschaft"/>
+        <skos:definition xml:lang="de">Angabe der Art eines Gesellschafters einer Personengesellschaft</skos:definition>
+        <skos:note xml:lang="de">Hier ist der Codelistenwert der Codeliste Art des Gesellschafters (https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:artgesellschafterpersonengesellschaft) anzugeben, beispielsweise 02 für einen persönlich haftenden Gesellschafter.</skos:note>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/artGesetzlicherVertreterCode -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/artGesetzlicherVertreterCode">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/GesetzlicherVertreter"/>
+        <rdfs:range rdf:resource="urn:xoev-de:xunternehmen:codeliste:artgesetzlichervertreter"/>
+        <rdfs:label xml:lang="de">Art des Gesetzlichen Vertreters</rdfs:label>
+        <rdfs:seeAlso rdf:resource="https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:artgesetzlichervertreter"/>
+        <skos:definition xml:lang="de">Angabe der Art des Gesetzlichen Vertreters.</skos:definition>
+        <skos:note xml:lang="de">Hier ist der Codelistenwert (= String) der Codeliste Art des Gesetzlichen Vertreters (https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:artgesetzlichervertreter) anzugeben, beispielsweise 3 für Vorstand.</skos:note>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/bundeseinheitlicheWirtschaftsnummer -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/bundeseinheitlicheWirtschaftsnummer">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://w3id.org/kdm/JuristischePerson"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/RechtsfaehigePersonengesellschaft"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/SonstigePersonenvereinigung"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/WirtschaftlicheTaetigkeit"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="de">Bundeseinheitliche Wirtschaftsnummer</rdfs:label>
+        <skos:definition xml:lang="de">Angabe der bundeseinheitlichen Wirtschaftsnummer für Unternehmen gemäß § 2 UBRegG.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/demailadresse -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/demailadresse">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/Demail"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="de">De-Mail-Adresse</rdfs:label>
+        <skos:definition xml:lang="de">De-Mail-Adresse, strukturiert gemäß BSI TR-01201 De-Mail. Beispiel: erika.mustermann@mustermann.de-mail.de.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/doktorgrad -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/doktorgrad">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/NatuerlichePerson"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="de">Doktorgrad</rdfs:label>
+        <skos:definition xml:lang="de">Es sind nur diejenigen Doktorgrade anzugeben, die in Pässe eingetragen werden dürfen. Sind mehrere Doktorgrade anzugeben, so sind sie durch ein Leerzeichen zu trennen.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/eingetragenerName -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/eingetragenerName">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://w3id.org/kdm/JuristischePerson"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/RechtsfaehigePersonengesellschaft"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/SonstigePersonenvereinigung"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/WirtschaftlicheTaetigkeit"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="de">eingetragenen Namen</rdfs:label>
+        <skos:definition xml:lang="de">Die im Handels-, Genossenschafts- oder Gesellschaftsregister eingetragene Firma eines wirtschaftlich Tätigen oder einer wirtschaftlichen Tätigkeit (z. B. eingetragenes Einzelunternehmen, eingetragene Zweigniederlassung) bzw. der im Vereins-, Partnerschafts- oder Stiftungsregister oder im Stiftungsverzeichnis eingetragene Name.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/eintragungsnummer -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/eintragungsnummer">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/Eintragung"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="de">Eintragungsnummer</rdfs:label>
+        <skos:definition xml:lang="de">Nummer der Eintragung im jeweiligen Register bzw. Aktenzeichen im Stiftungsverzeichnis. Sofern zum Zwecke der Eindeutigkeit der Eintragungsnummer im angegebenen Register ein Ortskennzeichen verwendet wird, wird dieses ebenfalls, durch Leerzeichen getrennt, in diesem Attribut angegeben (Beispiele: 12345 KI, 12345 FL).</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/emailadresse -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/emailadresse">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/Email"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="de">E-Mail-Adresse</rdfs:label>
+        <skos:definition xml:lang="de">E-Mail-Adresse.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/familienname -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/familienname">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/NameEinerNatuerlichenPerson"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="de">Familienname</rdfs:label>
+        <skos:definition xml:lang="de">Familienname einer natürlichen Person bestehend aus Nachname, Zuname bzw. Familienname.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/familiennameNichtVorhanden -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/familiennameNichtVorhanden">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/NameEinerNatuerlichenPerson"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <rdfs:label xml:lang="de">Familienname nicht vorhanden</rdfs:label>
+        <skos:definition xml:lang="de">Angabe, dass die betreffende Person keinen Familiennamen führt.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/fruehererGemeindename -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/fruehererGemeindename">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/AnschriftInlandStrassenanschrift"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="de">Früherer Gemeindename</rdfs:label>
+        <skos:definition xml:lang="de">Der frühere Gemeindename, der als Stadt- bzw. Ortsteilname dem jetzigen Gemeindenamen hinzugefügt wird. Der frühere Gemeindename (jetziger Ortsteil- oder Stadtteilname) ist bei Adressierungen unterhalb des Namens (oberhalb der Straßenbezeichnung) anzugeben.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/geburtsdatum -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/geburtsdatum">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/Geburt"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="de">Die Datumsangabe per xsd:date, xsd:gYear oder xsd:gYearMonth ist im Format zu restriktiv, da an dieser Stelle im XUnternehmen.Kerndatenmodell keine Beschränkungen gemacht werden bzw. auf eine deutsche Datumgsangabe zurückzugreifen ist.</rdfs:comment>
+        <rdfs:label xml:lang="de">Geburtsdatum</rdfs:label>
+        <skos:definition xml:lang="de">Datum der Vollendung der Geburt. Diese Angabe ist als teilbekannte Datumsangabe zu machen. Eine teilbekannte Datumsangabe umfasst die Komponenten Tag, Monat und Jahr, die Komponenten Monat und Jahr oder nur die Komponente Jahr.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/geburtsname -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/geburtsname">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/NameEinerNatuerlichenPerson"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="de">Geburtsname</rdfs:label>
+        <skos:definition xml:lang="de">Der Geburtsname entspricht dem Familiennamen einer natürlichen Person vor der Schließung der ersten Ehe bzw. vor dem Eingehen der ersten Lebenspartnerschaft.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/geburtsnameNichtVorhanden -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/geburtsnameNichtVorhanden">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/NameEinerNatuerlichenPerson"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <rdfs:label xml:lang="de">Geburtsname nicht vorhanden</rdfs:label>
+        <skos:definition xml:lang="de">Angabe, dass vor der Eheschließung oder vor der Begründung der Lebenspartnerschaft nach dem für die Namensführung maßgebenden Recht kein Familienname vorhanden gewesen ist.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/gemeindeschluesselCode -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/gemeindeschluesselCode">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/AnschriftInlandStrassenanschrift"/>
+        <rdfs:range rdf:resource="urn:de:bund:destatis:bevoelkerungsstatistik:schluessel:ags"/>
+        <rdfs:label xml:lang="de">Gemeindeschlüssel</rdfs:label>
+        <rdfs:seeAlso rdf:resource="https://www.xrepository.de/details/urn:de:bund:destatis:bevoelkerungsstatistik:schluessel:ags"/>
+        <skos:definition xml:lang="de">Der vom Statistischen Bundesamt herausgegebene bundeseinheitliche Gemeindeschlüssel der Gemeinde, in welcher die Anschrift liegt.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/geschaeftsbezeichnung -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/geschaeftsbezeichnung">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/WirtschaftlicheTaetigkeit"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="de">Geschäftsbezeichnung</rdfs:label>
+        <skos:definition xml:lang="de">Im Geschäftsverkehr einer wirtschaftlichen Tätigkeit verwendeter Name. Dieser kann abweichen von einem ggf. im Handel-, Genossenschafts-, Gesellschafts-, Partnerschafts- oder Vereinsregister eingetragen Namen.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/geschlechtCode -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/geschlechtCode">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/NatuerlichePerson"/>
+        <rdfs:range rdf:resource="urn:xoev-de:xinneres:codeliste:geschlecht"/>
+        <rdfs:label xml:lang="de">Geschlecht</rdfs:label>
+        <rdfs:seeAlso rdf:resource="https://www.xrepository.de/details/urn:xoev-de:xinneres:codeliste:geschlecht"/>
+        <skos:definition xml:lang="de">Als Geschlechtsangabe zulässig sind: männlich, weiblich, divers, keine Angabe.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/hausnummer -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/hausnummer">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://w3id.org/kdm/AnschriftAusland"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/AnschriftInlandStrassenanschrift"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="de">Hausnummer</rdfs:label>
+        <skos:definition xml:lang="de">Die vollständige Hausnummer, ggf. inkl. Buchstabe/Zusatzziffern und Teilnummer.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/identifikationsnummer -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/identifikationsnummer">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/NatuerlichePerson"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="de">Identifikationsnummer</rdfs:label>
+        <skos:definition xml:lang="de">Identifikationsnummer einer natürlichen Person gemäß IDNrG.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/klassifikationKommunikationCode -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/klassifikationKommunikationCode">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/Kommunikation"/>
+        <rdfs:range rdf:resource="urn:xoev-de:xunternehmen:codeliste:klassifikationkommunikation"/>
+        <rdfs:label xml:lang="de">Klassifikation der Kommunikationsangabe</rdfs:label>
+        <rdfs:seeAlso rdf:resource="https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:klassifikationkommunikation"/>
+        <skos:definition xml:lang="de">Eine Klassifikation der Kommunikationsangabe (privat, geschäftlich, ...).</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/kommunikationHinweis -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/kommunikationHinweis">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/Kommunikation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="de">Hinweis zur Kommunikation</rdfs:label>
+        <skos:definition xml:lang="de">Ein ergänzender Hinweis zur Verwendung dieser Kommunikationsangabe.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/ort -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/ort">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://w3id.org/kdm/AnschriftAusland"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/AnschriftInlandGrossempfaengeranschrift"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/AnschriftInlandPostfachanschrift"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/AnschriftInlandStrassenanschrift"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/EffektiverVerwaltungssitz"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/Eintragung"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/Sitz"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="de">Ort</rdfs:label>
+        <skos:definition xml:lang="de">Der Name des Ortes (Gemeinde, Ortschaft oder Stadt).</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/ortDerGeburt -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/ortDerGeburt">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/Geburt"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="de">Ort der Geburt</rdfs:label>
+        <skos:definition xml:lang="de">Der Ort der Geburt einer natürlichen Person.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/postfach -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/postfach">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/AnschriftInlandGrossempfaengeranschrift"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="de">Postfach</rdfs:label>
+        <skos:definition xml:lang="de">Ein Postfach (oft Postfachnummer) ist ein Schlüssel zur Identifikation eines Postfaches in einer Postfiliale.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/postleitzahl -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/postleitzahl">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://w3id.org/kdm/AnschriftAusland"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/AnschriftInlandGrossempfaengeranschrift"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/AnschriftInlandPostfachanschrift"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/AnschriftInlandStrassenanschrift"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="de">Postleitzahl</rdfs:label>
+        <skos:definition xml:lang="de">Es ist die Postleitzahl anzugeben.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/rechtsformenCode -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/rechtsformenCode">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://w3id.org/kdm/JuristischePerson"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/RechtsfaehigePersonengesellschaft"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/SonstigePersonenvereinigung"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/WirtschaftlicheTaetigkeit"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="urn:xoev-de:xunternehmen:codeliste:rechtsformen"/>
+        <rdfs:label xml:lang="de">Rechtsform</rdfs:label>
+        <rdfs:seeAlso rdf:resource="https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:rechtsformen"/>
+        <skos:definition xml:lang="de">Die Codeliste der Rechtsformen bildet ab Version 2 fachbereichsübergreifend Anforderungen an die Codierung von Rechtsforminformationen ab und ermöglicht deren bereichsübergreifend einheitliche Codierung und Übermittlung. Aktuell werden die Anforderungen aus dem Grundinformationsdienst GINSTER der Steuerverwaltung und damit auch der Codierung im ELSTER-Unternehmenskonto, aus dem Registerportal der Handels-, Genossenschafts-, Partnerschafts- und Vereinsregister, dem Standard XGewerbeanzeige / XGewerbeordnung und damit auch dem Unternehmerverzeichnis der gesetzlichen Unfallversicherung umgesetzt. Auf diese Weise können beispielweise Rechtsforminformationen ohne semantische Brüche aus dem ELSTER-Unternehmenskonto über einen Online-Dienst zur Gewerbeanmeldung an die zuständige Gewerbebehörde übermittelt werden und dort mit Daten aus dem Registerportal der Justiz und (perspektivisch) mit dem Basisregister gemäß UBRegG zusammengeführt werden. Seit Version 2 sind die Codes sechsstellig und hierarchisch gegliedert, um unterschiedliche Granularitäten der Rechtsformdifferenzierung zu unterstützen und Codes einfacher zueinander in Bezug setzen zu können. Die Version 2 der Rechtsformcodierung ist vollständig rückwärtskompatibel zur Version 1 in dem Sinne, dass eine Eins-zu-eins-Umschlüsselung der bisherigen Codes erfolgen kann.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/registergerichtBezeichnung -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/registergerichtBezeichnung">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/Eintragung"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="de">Bezeichnung Registergericht</rdfs:label>
+        <skos:definition xml:lang="de">Bezeichnung des Registergerichts, in dessen Register der wirtschaftlich Tätige bzw. die wirtschaftliche Tätigkeit (z. B. Zweigniederlassung) geführt wird.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/registergerichtCode -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/registergerichtCode">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/Eintragung"/>
+        <rdfs:range rdf:resource="urn:xoev-de:xunternehmen:codeliste:registergerichte"/>
+        <rdfs:label xml:lang="de">Registergericht Code</rdfs:label>
+        <rdfs:seeAlso rdf:resource="https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:registergerichte"/>
+        <skos:definition xml:lang="de">Schlüssel des Registergerichts, in dessen Register der wirtschaftlich Tätige bzw. die wirtschaftliche Tätigkeit (z. B. Zweigniederlassung) geführt wird.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/staat -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/staat">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://w3id.org/kdm/AnschriftAusland"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/EffektiverVerwaltungssitz"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/Eintragung"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/Geburt"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/Sitz"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:staat</terms:identifier>
+        <rdfs:label xml:lang="de">Staat</rdfs:label>
+        <rdfs:seeAlso rdf:resource="https://www.destatis.de/DE/Methoden/Klassifikationen/Staat-Gebietsystematik/staatsangehoerigkeit-gebietsschluessel.html"/>
+        <rdfs:seeAlso rdf:resource="https://www.iso.org/obp/ui/#search"/>
+        <skos:definition xml:lang="de">Angabe eines Staats oder eines Staatsgebiets. Je nach fachlichem und rechtlichem Kontext bzw. dem jeweiligen Ziel der Datenerhebung kann diese Angabe mit unterschiedlich umfangreichen und unterschiedlich fein aufgelösten Codelisten codiert werden. Der Standard XUnternehmen.Kerndatenmodell gibt entsprechend keine einheitliche Codeliste vor, sondern lässt die Verwendung unterschiedlicher Codelisten, im Wesentlichen aus der Staats- und Gebietssystematik (BEV) des Statistischen Bundesamts zu.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/staatsangehoerigkeitCode -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/staatsangehoerigkeitCode">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/NatuerlichePerson"/>
+        <rdfs:range rdf:resource="urn:de:bund:destatis:bevoelkerungsstatistik:schluessel:staatsangehoerigkeit"/>
+        <rdfs:label xml:lang="de">Staatsangehörigkeit Code</rdfs:label>
+        <rdfs:seeAlso rdf:resource="https://www.xrepository.de/details/urn:de:bund:destatis:bevoelkerungsstatistik:schluessel:staatsangehoerigkeit"/>
+        <skos:definition xml:lang="de">Die Staatsangehörigkeit der natürlichen Person gemäß Codierung des statistischen Bundesamts.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/stiftungsverzeichnis -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/stiftungsverzeichnis">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/Eintragung"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="de">Stiftungsverzeichnis in</rdfs:label>
+        <skos:definition xml:lang="de">Bei Einträgen im Stiftungsverzeichnis: Angabe des Bundeslandes bzw. der Behörde, in dessen oder deren Stiftungsverzeichnis der Eintrag geführt wird.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/strasse -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/strasse">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://w3id.org/kdm/AnschriftAusland"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/AnschriftInlandStrassenanschrift"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="de">Straße</rdfs:label>
+        <skos:definition xml:lang="de">Es ist die Bezeichnung der Straße anzugeben.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/taetigkeit -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/taetigkeit">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/WirtschaftlicheTaetigkeit"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="de">Tätigkeit</rdfs:label>
+        <skos:definition xml:lang="de">Benennung bzw. Bezeichnung der ausgeübten Tätigkeit.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/telefaxnummer -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/telefaxnummer">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/Telefax"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="de">Telefaxnummer</rdfs:label>
+        <skos:definition xml:lang="de">Telefaxnummer, strukturiert gemäß ITU E.123. Beispiel: +49 421 1234567, +49 421 123 4567, (0421) 1234567. Die Angabe soll möglichst gemäß DIN 5008 aufgebaut sein.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/telefonnummer -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/telefonnummer">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/Telefon"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="de">Telefonnummer</rdfs:label>
+        <skos:definition xml:lang="de">Telefonnummer, strukturiert gemäß ITU E.123. Beispiel: +49 421 1234567, +49 421 123 4567, (0421) 1234567. Die Angabe soll möglichst gemäß DIN 5008 aufgebaut sein.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/versionWirtschaftszweigschluesselCode -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/versionWirtschaftszweigschluesselCode">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/Wirtschaftszweig"/>
+        <rdfs:range rdf:resource="urn:xoev-de:xunternehmen:codeliste:wirtschaftszweigklassifikationsversion"/>
+        <rdfs:label xml:lang="de">Version der Wirtschaftszweigklassifikation</rdfs:label>
+        <rdfs:seeAlso rdf:resource="https://www.xrepository.de/details/urn:xoev-de:xunternehmen:codeliste:wirtschaftszweigklassifikationsversion"/>
+        <skos:definition xml:lang="de">Version der Klassifikation der Wirtschaftszweige, bspw. WZ-2008. Die möglichen Ausprägungen dieses Attributes sind durch die Codeliste Wirtschaftszweigklassifikation im XRepository bestimmt.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/vornamen -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/vornamen">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/NameEinerNatuerlichenPerson"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="de">Vornamen</rdfs:label>
+        <skos:definition xml:lang="de">Vornamen einer natürlichen Person.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/vornamenNichtVorhanden -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/vornamenNichtVorhanden">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/NameEinerNatuerlichenPerson"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <rdfs:label xml:lang="de">Geburtsname nicht vorhanden</rdfs:label>
+        <skos:definition xml:lang="de">Angabe, dass die betreffende Person keinen Vornamen führt.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/webadresse -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/webadresse">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/WebAdresse"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="de">Web-Adresse</rdfs:label>
+        <skos:definition xml:lang="de">Web-Adresse.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/wirtschaftszweigschluessel -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/wirtschaftszweigschluessel">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/Wirtschaftszweig"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="de">Wirtschaftszweigschlüssel</rdfs:label>
+        <skos:definition xml:lang="de">Wirtschaftszweigschlüssel gemäß der Klassifikation der Wirtschaftszweige des Statistischen Bundesamts. Umsetzungshinweis: Die Angabe erfolgt ausschließlich in Ziffern, ohne Trennzeichen. Es sind bis zu 5 Ziffern zulässig.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/wohnungsinhaber -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/wohnungsinhaber">
+        <rdfs:domain rdf:resource="https://w3id.org/kdm/AnschriftInlandStrassenanschrift"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="de">Wohnungsinhaber</rdfs:label>
+        <skos:definition xml:lang="de">Der Name des Wohnungsinhabers, soweit dies zur Adressierung erforderlich ist. Max Mustermann bei Müller; Max Mustermann c/o Schmidt.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/kdm/zusatzangabenAnschrift -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/kdm/zusatzangabenAnschrift">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://w3id.org/kdm/AnschriftAusland"/>
+                    <rdf:Description rdf:about="https://w3id.org/kdm/AnschriftInlandStrassenanschrift"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label xml:lang="de">Zusatzangaben</rdfs:label>
+        <skos:definition xml:lang="de">Es sind Zusatzangaben zur Anschrift anzugeben. Beispiele: Hinterhaus, Gartenhaus.</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/BFO_0000017 -->
+
+
+    <owl:Class rdf:about="http://purl.obolibrary.org/obo/BFO_0000017"/>
+    
+
+
+    <!-- http://purl.obolibrary.org/obo/BFO_0000023 -->
+
+
+    <owl:Class rdf:about="http://purl.obolibrary.org/obo/BFO_0000023"/>
+    
+
+
+    <!-- http://www.ontologyrepository.com/CommonCoreOntologies/Agent -->
+
+
+    <owl:Class rdf:about="http://www.ontologyrepository.com/CommonCoreOntologies/Agent"/>
+    
+
+
+    <!-- https://w3id.org/kdm/Anschrift -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/Anschrift">
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:anschrift</terms:identifier>
+        <rdfs:label xml:lang="de">Anschrift</rdfs:label>
+        <skos:definition xml:lang="de">Abstraktes Kerndatenobjekt. Angaben für die Adressierung. Eine Anschrift ist entweder eine Inlands- oder eine Auslandsanschrift.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/AnschriftAusland -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/AnschriftAusland">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/kdm/Anschrift"/>
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:anschriftausland</terms:identifier>
+        <rdfs:label xml:lang="de">Anschrift Ausland</rdfs:label>
+        <skos:definition xml:lang="de">Dies ist eine Konkretisierierung des Kerndatenobjektes Anschrift. Angaben für die Adressierung im Ausland.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/AnschriftInland -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/AnschriftInland">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/kdm/Anschrift"/>
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:anschriftinland</terms:identifier>
+        <rdfs:label xml:lang="de">Anschrift Inland</rdfs:label>
+        <skos:definition xml:lang="de">Dies ist eine Konkretisierierung des Kerndatenobjektes Anschrift. Angaben für die Adressierung im Inland. Eine Inlandsanschrift ist entweder eine Straßenanschrift, eine Postfachanschrift oder eine Großempfängeranschrift.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/AnschriftInlandGrossempfaengeranschrift -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/AnschriftInlandGrossempfaengeranschrift">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/kdm/AnschriftInland"/>
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:anschriftinlandgrossempfaenger</terms:identifier>
+        <rdfs:label xml:lang="de">Anschrift Inland Großempfängeranschrift</rdfs:label>
+        <skos:definition xml:lang="de">Dies ist eine Konkretisierierung des Kerndatenobjektes Anschrift Inland. Angaben für die Adressierung im Inland, soweit es sich um die Anschrift eines Großempfängers handelt.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/AnschriftInlandPostfachanschrift -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/AnschriftInlandPostfachanschrift">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/kdm/AnschriftInland"/>
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:anschriftinlandpostfachanschrift</terms:identifier>
+        <rdfs:label xml:lang="de">Anschrift Inland Postfachanschrift</rdfs:label>
+        <skos:definition xml:lang="de">Dies ist eine Konkretisierierung des Kerndatenobjektes Anschrift Inland. Angaben für die Adressierung im Inland, soweit es sich um die Anschrift eines Postfachs handelt.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/AnschriftInlandStrassenanschrift -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/AnschriftInlandStrassenanschrift">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/kdm/AnschriftInland"/>
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:anschriftinlandstrassenanschrift</terms:identifier>
+        <rdfs:label xml:lang="de">Anschrift Inland Straßenanschrift</rdfs:label>
+        <skos:definition xml:lang="de">Dies ist eine Konkretisierierung des Kerndatenobjektes Anschrift Inland. Angaben für die Adressierung im Inland, soweit es sich um die Anschrift eines Gebäudes handelt.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/Ansprechpartner -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/Ansprechpartner">
+        <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000023"/>
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:ansprechpartner</terms:identifier>
+        <rdfs:label xml:lang="de">Ansprechpartner</rdfs:label>
+        <skos:definition>Dies ist eine Rolle, welche das Kerndatenobjekt Natürliche Person einnehmen kann. Angaben zu einem Ansprechpartner, welcher von der handelnden Person in einem konkreten Antrag eines wirtschaftlich Tätigen bzw. in einer konkreten Anzeige eines wirtschaftlich Tätigen benannt wird für Rückfragen seitens der zuständigen Stelle.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/Antrag -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/Antrag">
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:antrag</terms:identifier>
+        <rdfs:label xml:lang="de">Antrag eines wirtschaftlichen Tätigen</rdfs:label>
+        <skos:definition xml:lang="de">Abstraktes Kerndatenobjekt. Mit diesem Kerndatenobjekt wird ein an eine zuständige öffentliche Stelle gerichteter Antrag eines wirtschaftlich Tätigen auf Durchführung eines Verwaltungsverfahrens in eigener Sache gemäß § 9 VwVfG gefasst.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/Antragsteller -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/Antragsteller">
+        <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000023"/>
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:antragsteller</terms:identifier>
+        <rdfs:label xml:lang="de">Antragsteller</rdfs:label>
+        <skos:definition>Dies ist ist eine Rolle, welche die Kerndatenobjekte Natürliche Person, Juristische Person, Rechtsfähige Personengesellschaft, Sonstige Personenvereinigung und Wirtschaftliche Tätigkeit einnehmen können. Mit dieser Rolle wird die natürliche Person oder juristische Person oder die rechtsfähige Personengesellschaft oder sonstige Personenvereinigung identifiziert, die bei der zuständigen Stelle in eigener Sache den Erlass eines Verwaltungsakts beantragt oder durch einen Vertreter beantragen lässt und so die Durchführung eines Verwaltungsverfahrens im Sinne des § 9 VwVfG veranlasst. Der Antragsteller ist Beteiligter im Verwaltungsverfahren gemäß § 13 VwVfG.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/Anzeige -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/Anzeige">
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:anzeige</terms:identifier>
+        <rdfs:label xml:lang="de">Anzeige eines wirtschaftlichen Tätigen</rdfs:label>
+        <skos:definition xml:lang="de">Abstraktes Kerndatenobjekt. Mit diesem Kerndatenobjekt wird eine an die zuständige öffentliche Stelle gerichtete einseitige empfangsbedürftige Willenserklärung eines wirtschaftlich Tätigen in eigener Sache gefasst.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/Anzeigender -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/Anzeigender">
+        <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000023"/>
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:anzeigender</terms:identifier>
+        <rdfs:label xml:lang="de">Anzeigender</rdfs:label>
+        <skos:definition>Dies ist eine Rolle, welche die Kerndatenobjekte Natürliche Person, Juristische Person, Rechtsfähige Personengesellschaft, Sonstige Personenvereinigung und Wirtschaftliche Tätigkeit einnehmen können. Mit dieser Rolle wird die natürliche Person oder juristische Person oder die rechtsfähige Personengesellschaft oder sonstige Personenvereinigung identifiziert, die bei der zuständigen Stelle in eigener Sache eine Anzeige erstattet oder durch einen Vertreter erstatten lässt.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/Beteiligter -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/Beteiligter">
+        <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000023"/>
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:beteiligtersonstigepersonenvereinigung</terms:identifier>
+        <rdfs:label xml:lang="de">Beteiligter einer sonstigen Personenvereinigung</rdfs:label>
+        <skos:definition>Dies ist eine Rolle, welche das Kerndatenobjekt Natürliche Person einnehmen kann. Mit dieser Rolle wird ein Beteiligter einer sonstigen Personenvereinigung gefasst.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/Betriebsstaette -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/Betriebsstaette">
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:betriebsstaette</terms:identifier>
+        <rdfs:label xml:lang="de">Betriebsstätte</rdfs:label>
+        <skos:definition xml:lang="de">Dieses Kerndatenobjekt identifiziert einen Ort, an welchem eine wirtschaftliche Tätigkeit tatsächlich und grundsätzlich dauerhaft ausgeübt wird.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/Demail -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/Demail">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/kdm/Kommunikation"/>
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:kommunikation.demail</terms:identifier>
+        <rdfs:label xml:lang="de">De-Mail</rdfs:label>
+        <skos:definition xml:lang="de">Dies ist eine Konkretisierierung des Kerndatenobjektes Kommunikation. Angabe einer De-Mail-Adresse.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/EffektiverVerwaltungssitz -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/EffektiverVerwaltungssitz">
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:effektiververwaltungssitz</terms:identifier>
+        <rdfs:label xml:lang="de">Effektiver Verwaltungssitz</rdfs:label>
+        <skos:definition xml:lang="de">Der effektiver Verwaltungssitz ist - im Unterschied zum Sitz - der Ort, an dem sich die Hauptverwaltung befindet und die Geschäfte tatsächlich geführt werden.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/Eintragung -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/Eintragung">
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:eintragung</terms:identifier>
+        <rdfs:label xml:lang="de">Eintragung</rdfs:label>
+        <skos:definition xml:lang="de">Dieses Kerndatenobjekt fasst die Daten, mit welchen die Eintragung eines wirtschaftlich Tätigen bzw. einer wirtschaftlichen Tätigkeit in einem Handels-, Genossenschafts-,Gesellschafts-, Vereins-, Partnerschafts- oder Stiftungsregister sowie in einem Stiftungsverzeichnis identifiziert werden kann.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/Email -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/Email">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/kdm/Kommunikation"/>
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:kommunikation.email</terms:identifier>
+        <rdfs:label xml:lang="de">E-Mail</rdfs:label>
+        <skos:definition xml:lang="de">Dies ist eine Konkretisierierung des Kerndatenobjektes Kommunikation. Angabe einer E-Mail-Adresse.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/Geburt -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/Geburt">
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:geburt</terms:identifier>
+        <rdfs:label xml:lang="de">Geburt</rdfs:label>
+        <skos:definition xml:lang="de">Angaben zur Geburt einer natürlichen Person.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/Gesellschafter -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/Gesellschafter">
+        <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000023"/>
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:gesellschafter</terms:identifier>
+        <rdfs:label xml:lang="de">Gesellschafter</rdfs:label>
+        <skos:definition>Dies ist eine Rolle, welche die Kerndatenobjekte Natürliche Person, Juristische Person und Rechtsfähige Personengesellschaft einnehmen können. Mit dieser Rolle wird ein Gesellschafter einer rechtsfähigen Personengesellschaft gefasst.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/GesetzlicherVertreter -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/GesetzlicherVertreter">
+        <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000023"/>
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:gesetzlichervertreter</terms:identifier>
+        <rdfs:label xml:lang="de">Gesetzlicher Vertreter</rdfs:label>
+        <skos:definition>Dies ist eine Rolle, welche die Kerndatenobjekte Natürliche Person und Juristische Person einnehmen können. Mit dieser Rolle wird der gesetzliche Vertreter einer juristischen Person oder natürlichen Person gefasst. Es handelt sich hierbei um Vertreter, deren Vertretungsmacht sich allein aus gesetzlichen Bestimmungen ergibt und nicht durch ein Rechtsgeschäft erteilt wurde.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/HandelndePerson -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/HandelndePerson">
+        <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000023"/>
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:handelndeperson</terms:identifier>
+        <rdfs:label xml:lang="de">Handelnde Person</rdfs:label>
+        <skos:definition>Dies ist eine Rolle, welche das Kerndatenobjekt Natürliche Person einnehmen kann. Mit dieser Rolle wird die natürliche Person identifiziert, die im konkreten Vorgang die Verfahrenshandlungen (beispielsweise einen Antrag stellt oder eine Anzeige einreicht) vornimmt.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/JuristischePerson -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/JuristischePerson">
+        <rdfs:subClassOf rdf:resource="http://www.ontologyrepository.com/CommonCoreOntologies/Agent"/>
+        <owl:disjointWith rdf:resource="https://w3id.org/kdm/SonstigePersonenvereinigung"/>
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:juristischeperson</terms:identifier>
+        <rdfs:label xml:lang="de">Juristische Person</rdfs:label>
+        <skos:definition>Dieses Kerndatenobjekt umfasst die allgemeinen Angaben zu einer juristischen Person des privaten oder öffentlichen Rechts.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/Kommunikation -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/Kommunikation">
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:kommunikation</terms:identifier>
+        <rdfs:label xml:lang="de">Kommunikation</rdfs:label>
+        <skos:definition xml:lang="de">Abstraktes Kerndatenobjekt. Angaben zu einer elektronischen Erreichbarkeit.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/NameEinerNatuerlichenPerson -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/NameEinerNatuerlichenPerson">
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:namenatuerlicheperson</terms:identifier>
+        <rdfs:label xml:lang="de">Name einer natürlichen Person</rdfs:label>
+        <skos:definition xml:lang="de">Datenobjekt zur Darstellung des Namens einer natürlichen Person in lateinischer Schrift, entsprechend der Vorgaben aus dem Baukasten des Föderalen Informationsmanagements (FIM).</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/NatuerlichePerson -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/NatuerlichePerson">
+        <rdfs:subClassOf rdf:resource="http://www.ontologyrepository.com/CommonCoreOntologies/Agent"/>
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:natuerlicheperson</terms:identifier>
+        <rdfs:label xml:lang="de">Natürliche Person</rdfs:label>
+        <skos:definition>Dieses Kerndatenobjekt umfasst die allgemeinen Angaben zu einer natürlichen Person (Mensch), welche im fachlichen Kontext in mindestens einer und gegebenenfalls mehreren Rollen auftritt.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/Personengesellschaft -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/Personengesellschaft"/>
+    
+
+
+    <!-- https://w3id.org/kdm/RechtsfaehigePersonengesellschaft -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/RechtsfaehigePersonengesellschaft">
+        <rdfs:subClassOf rdf:resource="http://www.ontologyrepository.com/CommonCoreOntologies/Agent"/>
+        <owl:disjointWith rdf:resource="https://w3id.org/kdm/SonstigePersonenvereinigung"/>
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:rechtsfaehigepersonengesellschaft</terms:identifier>
+        <rdfs:label xml:lang="de">Rechtsfähige Personengesellschaft</rdfs:label>
+        <skos:definition>Dieses Kerndatenobjekt umfasst die allgemeinen Angaben zu einer rechtsfähigen Personengesellschaft.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/Sitz -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/Sitz">
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:sitz</terms:identifier>
+        <rdfs:label xml:lang="de">Sitz</rdfs:label>
+        <skos:definition xml:lang="de">Der Sitz einer Körperschaft, Personenvereinigung oder Vermögensmasse ist der Ort, der durch Gesetz, Gesellschaftsvertrag, Satzung, Stiftungsgeschäft oder dergleichen bestimmt ist.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/SonstigePersonenvereinigung -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/SonstigePersonenvereinigung">
+        <rdfs:subClassOf rdf:resource="http://www.ontologyrepository.com/CommonCoreOntologies/Agent"/>
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:sonstigepersonenvereinigung</terms:identifier>
+        <rdfs:label xml:lang="de">Sonstige Personenvereinigung</rdfs:label>
+        <skos:definition>Dieses Kerndatenobjekt umfasst die allgemeinen Angaben zu einer sonstigen Personenvereinigung. Unter diesem Kerndatenobjekt werden alle Personenvereinigungen gefasst, die weder unter juristische Personen noch unter rechtsfähige Personengesellschaften fallen.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/Staat -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/Staat">
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:staat</terms:identifier>
+        <rdfs:label xml:lang="de">Staat</rdfs:label>
+        <skos:definition xml:lang="de">Angabe eines Staats oder eines Staatsgebiets.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/Telefax -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/Telefax">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/kdm/Kommunikation"/>
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:kommunikation.telefax</terms:identifier>
+        <rdfs:label xml:lang="de">Telefax</rdfs:label>
+        <skos:definition xml:lang="de">Dies ist eine Konkretisierierung des Kerndatenobjektes Kommunikation. Angabe einer Telefaxnummer.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/Telefon -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/Telefon">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/kdm/Kommunikation"/>
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:kommunikation.telefon</terms:identifier>
+        <rdfs:label xml:lang="de">Telefon</rdfs:label>
+        <skos:definition xml:lang="de">Dies ist eine Konkretisierierung des Kerndatenobjektes Kommunikation. Angabe einer Telefonnummer.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/WebAdresse -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/WebAdresse">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/kdm/Kommunikation"/>
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:kommunikation.web</terms:identifier>
+        <rdfs:label xml:lang="de">Web-Adresse</rdfs:label>
+        <skos:definition xml:lang="de">Dies ist eine Konkretisierierung des Kerndatenobjektes Kommunikation. Angabe einer Web-Adresse.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/WirtschaftlichTaetiger -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/WirtschaftlichTaetiger">
+        <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000023"/>
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:wirtschaftlichtaetiger</terms:identifier>
+        <rdfs:label xml:lang="de">Wirtschaftlich Tätiger</rdfs:label>
+        <skos:definition>Dies ist eine Rolle, welche die Kerndatenobjekte Natürliche Person, Juristische Person, Rechtsfähige Personengesellschaft und Sonstige Personenvereinigung einnehmen können. Bezogen #auf eine wirtschaftliche Tätigkeit bezeichnet diese Rolle die nach außen am Wirtschaftsleben teilnehmende Person bzw. Personenvereinigung.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/WirtschaftlicheTaetigkeit -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/WirtschaftlicheTaetigkeit">
+        <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/BFO_0000017"/>
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:wirtschaftlichetaetigkeit</terms:identifier>
+        <rdfs:label xml:lang="de">Wirtschaftliche Tätigkeit</rdfs:label>
+        <skos:definition xml:lang="de">Das Kerndatenobjekt Wirtschaftliche Tätigkeit umfasst in generischer Weise eine planmäßige, für eine gewisse Dauer bestimmte, selbstständige wirtschaftliche Tätigkeit eines wirtschaftlich Tätigen.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/kdm/Wirtschaftszweig -->
+
+
+    <owl:Class rdf:about="https://w3id.org/kdm/Wirtschaftszweig">
+        <terms:identifier>urn:xoev-de:xunternehmen:kerndatenobjekt:wirtschaftszweig</terms:identifier>
+        <rdfs:label xml:lang="de">Wirtschaftszweig</rdfs:label>
+        <skos:definition xml:lang="de">Dieses Kerndatenobjekt modelliert die Angabe eines Wirtschaftszweigs gemäß der Klassifikation des statistischen Bundesamts. Es umfasst die Angabe des Wirtschaftszweigschlüssels und der angewendeten Version der Klassifikation.</skos:definition>
+    </owl:Class>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 5.1.18) https://github.com/owlcs/owlapi/ -->
+
+

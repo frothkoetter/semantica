@@ -23,6 +23,9 @@ These demos show **ontology-first** analytics: the user speaks in domain terms (
 
 Runnable script (same logic as below): `python examples/airline_ontology_analytics_demo.py`
 
+Agent Studio workflow: 31 advanced KPI prompts in
+[`deploy/cloudera-agent-studio/multi-agent-workflow.md`](../deploy/cloudera-agent-studio/multi-agent-workflow.md#demo-prompt-catalog-advanced-kpis).
+
 ---
 
 ## Demo Chat 1 — Carrier delay ranking
