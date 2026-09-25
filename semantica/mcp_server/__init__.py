@@ -450,9 +450,70 @@ def _local_name(uri: str) -> str:
     return uri.rstrip("/").rsplit("/", 1)[-1]
 
 
+def _graph_summary_rules_meta() -> tuple:
+    """Business-rules path metadata for graph summary (YAML only, no ContextGraph)."""
+    rules_path = None
+    rules_exists = False
+    rules_summary: dict = {}
+    try:
+        from semantica.mcp_server.business_rules import (
+            load_business_rules,
+            resolve_business_rules_path,
+            summarize_business_rules,
+        )
+
+        rules_path = resolve_business_rules_path()
+        rules_exists = bool(rules_path and os.path.exists(rules_path))
+        loaded_rules = load_business_rules()
+        if loaded_rules:
+            rules_summary = summarize_business_rules(loaded_rules)
+    except Exception:
+        pass
+    return rules_path, rules_exists, rules_summary
+
+
+def _graph_summary_envelope(stats: dict) -> dict:
+    """Attach env paths, hostname, and business-rules metadata to summary stats."""
+    import socket
+
+    rules_path, rules_exists, rules_summary = _graph_summary_rules_meta()
+    kg_path = (os.environ.get("SEMANTICA_KG_PATH") or "").strip() or None
+    kg_exists = bool(kg_path and os.path.exists(kg_path))
+    stats.update(
+        {
+            "business_rules_path": rules_path,
+            "business_rules_path_exists": rules_exists,
+            "business_rules_summary": rules_summary or None,
+            "kg_path": kg_path,
+            "kg_path_exists": kg_exists,
+            "kg_loaded": bool(_graph_loaded_from),
+            "hostname": socket.gethostname(),
+            "cwd": os.getcwd(),
+            "load_hint": (
+                "SEMANTICA_KG_PATH is set but file not visible in this MCP process "
+                "(Agent Studio may run MCP on a different worker than your shell). "
+                "Run ls on the same host shown in hostname, or copy the graph into the project path."
+                if kg_path and not kg_exists
+                else None
+            ),
+        }
+    )
+    if "graph_ready" not in stats:
+        stats["graph_ready"] = bool(stats.get("node_count", 0) > 0)
+    return stats
+
+
 def _tool_get_graph_summary(args: dict) -> dict:
     """Return a high-level summary of the current graph."""
-    import socket
+    load_graph = bool(args.get("load_graph"))
+
+    # Fast path: read SEMANTICA_KG_PATH JSON directly (no torch/transformers import).
+    if not load_graph and _graph is None:
+        from semantica.mcp_server.kg_snapshot import fast_kg_stats
+
+        snapshot = fast_kg_stats()
+        if snapshot is not None:
+            return _graph_summary_envelope(snapshot)
 
     graph = _get_graph()
     try:
@@ -463,58 +524,26 @@ def _tool_get_graph_summary(args: dict) -> dict:
         db_tables = list(graph.find_nodes(node_type="DatabaseTable"))
         db_columns = list(graph.find_nodes(node_type="DatabaseColumn"))
         business_rules = list(graph.find_nodes(node_type="BusinessRule"))
-        rules_path = None
-        rules_exists = False
-        rules_summary = {}
-        try:
-            from semantica.mcp_server.business_rules import (
-                load_business_rules,
-                resolve_business_rules_path,
-                summarize_business_rules,
-            )
-
-            rules_path = resolve_business_rules_path()
-            rules_exists = bool(rules_path and os.path.exists(rules_path))
-            loaded_rules = load_business_rules()
-            if loaded_rules:
-                rules_summary = summarize_business_rules(loaded_rules)
-        except Exception:
-            pass
-
-        kg_path = (os.environ.get("SEMANTICA_KG_PATH") or "").strip() or None
-        kg_exists = bool(kg_path and os.path.exists(kg_path))
-        return {
-            "node_count": node_count,
-            "decision_count": len(decisions),
-            "ontology_class_count": len(ontology_classes),
-            "database_table_count": len(db_tables),
-            "database_column_count": len(db_columns),
-            "business_rule_count": len(business_rules),
-            "ontology_classes": [
-                n.get("label") or n.get("content") or _local_name(str(n.get("uri") or n.get("id", "")))
-                for n in ontology_classes[:50]
-            ],
-            "database_tables": [
-                n.get("table_name") or n.get("content") or _local_name(str(n.get("id", "")))
-                for n in db_tables[:50]
-            ],
-            "business_rules_path": rules_path,
-            "business_rules_path_exists": rules_exists,
-            "business_rules_summary": rules_summary or None,
-            "kg_path": kg_path,
-            "kg_path_exists": kg_exists,
-            "kg_loaded": bool(_graph_loaded_from),
-            "hostname": socket.gethostname(),
-            "cwd": os.getcwd(),
-            "graph_ready": node_count > 0,
-            "load_hint": (
-                "SEMANTICA_KG_PATH is set but file not visible in this MCP process "
-                "(Agent Studio may run MCP on a different worker than your shell). "
-                "Run ls on the same host shown in hostname, or copy the graph into the project path."
-                if kg_path and not kg_exists
-                else None
-            ),
-        }
+        return _graph_summary_envelope(
+            {
+                "node_count": node_count,
+                "decision_count": len(decisions),
+                "ontology_class_count": len(ontology_classes),
+                "database_table_count": len(db_tables),
+                "database_column_count": len(db_columns),
+                "business_rule_count": len(business_rules),
+                "ontology_classes": [
+                    n.get("label") or n.get("content") or _local_name(str(n.get("uri") or n.get("id", "")))
+                    for n in ontology_classes[:50]
+                ],
+                "database_tables": [
+                    n.get("table_name") or n.get("content") or _local_name(str(n.get("id", "")))
+                    for n in db_tables[:50]
+                ],
+                "graph_ready": node_count > 0,
+                "source": "context_graph",
+            }
+        )
     except Exception as exc:
         return {"error": str(exc), "graph_ready": False}
 
@@ -545,8 +574,22 @@ def _tool_get_business_rules(args: dict) -> dict:
     if not rules:
         return build_business_rules_payload({}, rules_path=rules_path)
 
+    sync_graph = bool(args.get("sync_graph"))
+    payload = build_business_rules_payload(rules, rules_path=rules_path)
+
+    # Fast path: count BusinessRule nodes from KG file without loading ContextGraph.
+    if not sync_graph and _graph is None:
+        from semantica.mcp_server.kg_snapshot import fast_kg_stats
+
+        snapshot = fast_kg_stats()
+        if snapshot is not None:
+            payload["graph_business_rule_count"] = snapshot.get("business_rule_count", 0)
+            payload["graph_ready"] = snapshot.get("graph_ready", False)
+            payload["kg_snapshot"] = True
+            return payload
+
     graph = _get_graph()
-    if not list(graph.find_nodes(node_type="BusinessRule")):
+    if sync_graph or not list(graph.find_nodes(node_type="BusinessRule")):
         stats = ingest_business_rules_into_graph(
             graph,
             rules,
@@ -554,10 +597,10 @@ def _tool_get_business_rules(args: dict) -> dict:
         )
         log.info("Ingested business rules into graph: %s", stats)
 
-    payload = build_business_rules_payload(rules, rules_path=rules_path)
     payload["graph_business_rule_count"] = len(
         list(graph.find_nodes(node_type="BusinessRule"))
     )
+    payload["kg_snapshot"] = False
     return payload
 
 

@@ -409,6 +409,30 @@ Von den juristischen Personen im Kerndatenmodell haben X % sowohl eine Eintragun
 
 ---
 
+## Troubleshooting: MCP init or get_graph_summary takes minutes
+
+**Symptom:** `Initializing MCP servers... semantica (4m)` or first `get_graph_summary` / `get_business_rules` very slow.
+
+**Causes:**
+
+1. **`uvx --from git+https://...`** installs the full Semantica package (torch, transformers, opencv, …) on every cold start — often **2–5 minutes** on CDSW.
+2. **Old MCP behaviour:** `get_graph_summary` imported `ContextGraph` → pulled in **torch/sentence-transformers** (~5–30s) even for a 198-node JSON file.
+3. Agent Studio **sandbox** may not persist `uvx` cache between sessions.
+
+**Fixes:**
+
+| Fix | Effect |
+|---|---|
+| Use **local clone** MCP: `"args": ["--from", "/home/cdsw/semantica", "semantica-mcp"]` | No git fetch; reuse workbench install |
+| Pre-install once: `cd /home/cdsw/semantica && uv sync` | Warm deps on the worker |
+| `SEMANTICA_MCP_TOOLSET=preloaded_graph` + `SEMANTICA_MCP_DISABLE_ML=true` | Blocks NER tools |
+| **Updated semantica** (kg_snapshot fast path): `get_graph_summary` / `get_business_rules` read JSON/YAML only (~50ms) | No torch on status checks |
+| For “Ist der Graph geladen?” use `get_graph_summary` — fast path returns `source: kg_file_snapshot` | |
+
+**Expected after fix:** MCP subprocess start ~1–3s (local clone); `get_graph_summary` **&lt;1s**; first analytics question still loads ContextGraph only when tools like `record_decision` need the in-memory graph.
+
+---
+
 ## Troubleshooting: sql_executor skips ontology
 
 | Symptom | Fix |
