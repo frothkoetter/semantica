@@ -1,0 +1,30 @@
+# Cloudera Agent Studio — XUnternehmen KDM workflow environment
+# Paste real HIVE_* values when attaching iceberg-hive MCP to the workflow.
+#
+# Copy deploy bundle into workflow_data first:
+#   upload/kdm/config/xunternehmen_kg_with_decisions.json
+#   upload/kdm/config/xunternehmen_business_rules.yaml
+#   upload/kdm/config/xunternehmen_r2rml_db_mapping.yaml
+#
+# See multi-agent-workflow-kdm.md
+
+ALLOW_AGENT_STUDIO_INSECURE_TOOL_EXECUTION=true
+
+# --- semantica MCP (ontology_mapper, optional answer_synthesizer) ---
+SEMANTICA_KG_PATH=/workflow_data/config/xunternehmen_kg_with_decisions.json
+SEMANTICA_MAPPING_CONFIG=/workflow_data/config/xunternehmen_r2rml_db_mapping.yaml
+SEMANTICA_BUSINESS_RULES=/workflow_data/config/xunternehmen_business_rules.yaml
+SEMANTICA_MCP_TOOLSET=preloaded_graph
+SEMANTICA_MCP_DISABLE_ML=true
+SEMANTICA_LOG_LEVEL=INFO
+
+# --- iceberg-hive MCP (sql_executor only) ---
+HIVE_HOST=
+HIVE_PORT=443
+HIVE_USER=
+HIVE_PASSWORD=
+HIVE_DATABASE=xunternehmen
+HIVE_USE_HTTP_TRANSPORT=true
+HIVE_HTTP_PATH=cliservice
+HIVE_USE_SSL=true
+HIVE_AUTH_MECHANISM=LDAP

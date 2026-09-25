@@ -75,7 +75,9 @@ Key tools: `execute_query`, `get_schema`, `list_databases`, Iceberg branch tools
 
 ## 3. Workflow setup (multi-agent)
 
-See [`multi-agent-workflow.md`](multi-agent-workflow.md).
+**Airline demo:** [`multi-agent-workflow.md`](multi-agent-workflow.md)
+
+**XUnternehmen KDM:** [`multi-agent-workflow-kdm.md`](multi-agent-workflow-kdm.md) · env template [`workflow-env-kdm.template`](workflow-env-kdm.template)
 
 1. Create workflow → **Manager OFF**, **Sequential**, **Conversational ON**
 2. Add agents: `ontology_mapper` (semantica only), `sql_executor` (iceberg only)

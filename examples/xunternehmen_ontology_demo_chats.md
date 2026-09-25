@@ -28,6 +28,9 @@ Runnable script: `python examples/xunternehmen_ontology_analytics_demo.py`
 
 Build graph + decisions: `python kdm/build_xunternehmen_graph.py`
 
+Agent Studio multi-agent workflow (ontology_mapper → sql_executor → answer_synthesizer):
+[`deploy/cloudera-agent-studio/multi-agent-workflow-kdm.md`](../deploy/cloudera-agent-studio/multi-agent-workflow-kdm.md)
+
 ---
 
 ## Demo Chat 1 — Register completeness
