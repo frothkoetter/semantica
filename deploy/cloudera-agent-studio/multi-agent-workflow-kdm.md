@@ -415,8 +415,9 @@ Von den juristischen Personen im Kerndatenmodell haben X % sowohl eine Eintragun
 
 **Causes:**
 
-1. **`uvx --from git+https://...`** installs the full Semantica package (torch, transformers, opencv, …) on every cold start — often **2–5 minutes** on CDSW.
-2. **Old MCP behaviour:** `get_graph_summary` imported `ContextGraph` → pulled in **torch/sentence-transformers** (~5–30s) even for a 198-node JSON file.
+1. **`uvx --from git+https://...`** installs Semantica without torch by default (base deps use FastEmbed/onnxruntime). Cold start is much faster than the old torch bundle.
+2. **MCP fast path:** `get_graph_summary` / `get_business_rules` read `SEMANTICA_KG_PATH` JSON directly (~50ms) — no `ContextGraph` / torch import.
+3. **Optional torch:** only needed for HuggingFace models / sentence-transformers: `pip install semantica[models-huggingface]`.
 3. Agent Studio **sandbox** may not persist `uvx` cache between sessions.
 
 **Fixes:**

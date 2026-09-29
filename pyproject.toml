@@ -50,9 +50,6 @@ dependencies = [
   "scikit-learn>=1.7.2",
   "umap-learn>=0.5.12",
   "spacy>=3.4.0",
-  "transformers>=4.20.0",
-  "torch>=1.13.1",
-  "sentence-transformers>=2.2.0",
   "rdflib>=6.2.0",
   "networkx>=2.8.0",
   "matplotlib>=3.9.4",
@@ -130,10 +127,11 @@ db-all = [
   "semantica[db-snowflake,db-databricks,db-arrow]"
 ]
 
-# ---- Embedding / Models ----
+# ---- Embedding / Models (torch — install only when using HF models) ----
 models-huggingface = [
   "transformers>=4.20.0",
-  "torch>=1.13.1"
+  "torch>=1.13.1",
+  "sentence-transformers>=2.2.0",
 ]
 
 # ---- Graph Backends ----

@@ -141,7 +141,7 @@ def generate_embeddings(
 
 
 def embed_text(
-    text: Union[str, List[str]], method: str = "sentence_transformers", **kwargs
+    text: Union[str, List[str]], method: str = "fastembed", **kwargs
 ) -> np.ndarray:
     """
     Generate text embeddings (convenience function).
@@ -150,7 +150,7 @@ def embed_text(
 
     Args:
         text: Input text string or list of texts
-        method: Text embedding method (default: "sentence_transformers")
+        method: Text embedding method (default: "fastembed")
             - "sentence_transformers": Sentence-transformers model-based embedding
             - "fastembed": FastEmbed model-based embedding (fast and efficient)
             - "fallback": Hash-based fallback embedding
@@ -345,19 +345,10 @@ def check_available_providers() -> Dict[str, bool]:
     """
     providers = {}
 
-    # Check sentence-transformers
-    try:
-        import sentence_transformers
-        providers["sentence_transformers"] = True
-    except (ImportError, OSError):
-        providers["sentence_transformers"] = False
+    from ..utils.helpers import package_available
 
-    # Check FastEmbed
-    try:
-        import fastembed
-        providers["fastembed"] = True
-    except (ImportError, OSError):
-        providers["fastembed"] = False
+    providers["sentence_transformers"] = package_available("sentence_transformers")
+    providers["fastembed"] = package_available("fastembed")
 
     # Check OpenAI
     try:

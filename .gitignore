@@ -139,5 +139,6 @@ kdm/hive/hive.env.local
 
 # Regeneratable KDM outputs
 kdm/hive/xunternehmen_seed_large.sql
+# medium seed is tracked (~230KB); regenerate with generate_xunternehmen_seed.py --scale 0.02
 kdm/viz/*.html
 kdm/xunternehmen_kg_with_decisions.json

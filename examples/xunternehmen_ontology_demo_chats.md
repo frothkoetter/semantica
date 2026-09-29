@@ -137,6 +137,129 @@ Deploy bundle is refreshed by `python kdm/sync_upload_config.py` (also runs at e
 
 ---
 
+## Audit, explainability, and comparing outcomes
+
+Three layers participate in every Agent Studio turn. Only some are durable.
+
+| Layer | What is stored | Durable? | Audit use |
+|---|---|---|---|
+| **A — Conversation** | Mapping plan, SQL, rows, chat answer | Session only | Agent Studio logs / export |
+| **B — Semantica graph** | Ontology, BusinessRule, `decision` nodes, causal edges | Yes (`xunternehmen_kg_with_decisions.json`) | Precedents, causal chains |
+| **C — Hive/Iceberg** | Live KDM tables | Yes (DB) | Re-run SQL; point-in-time counts |
+
+Analytics demos (Chats 1–6) explain via **rules + mapping + SQL** (layers A + C). Governance demos (Chat 7) explain via **decision nodes** (layer B). Analytics turns are **not** written to the graph unless you call `record_decision`.
+
+### Explainability chain (analytics)
+
+```text
+User question
+  → get_business_rules (data_quality_tier_rules, anschrift_type_rules, …)
+  → mapping plan (ontology_terms, business_rules_applied, tables, joins, metrics)
+  → execute_query (SQL + rows)
+  → answer_synthesizer (KDM-language reply)
+```
+
+Reproduce any analytics answer from the mapping plan JSON + SQL in the chat trace.
+
+### Decision record shape (governance)
+
+Each `decision` node in the graph stores:
+
+| Field | Example |
+|---|---|
+| `category` | `vorgang_readiness`, `data_quality_tier`, `register_completeness` |
+| `scenario` | *Antrag an-001902: Antragsteller jp-000519 ohne Register-Eintragung* |
+| `reasoning` | *Antragsteller hat TierB_Teilweise — Einreichung blockiert…* |
+| `outcome` | `AntragBlockiert_RegisterUnvollstaendig` |
+| `confidence` | `0.89` |
+| `decision_maker` | `kdm_vorgang_agent` |
+| `entities` | Linked via `involves` edges (e.g. `Antrag/an-001902`, `JuristischePerson/jp-000519`) |
+
+Causal links (demo): `jp_tier_b` —**CAUSED**→ `antrag_block`.
+
+Reload demo decisions and run precedent comparison locally:
+
+```bash
+python kdm/record_xunternehmen_decisions.py --reload-demo --compare
+```
+
+### MCP tools for audit
+
+| Tool | Agent | Purpose |
+|---|---|---|
+| `get_business_rules` | `ontology_mapper` | Declarative *why* (tiers, Anschrift, Vorgang rules) |
+| `find_precedents` | `answer_synthesizer` | Similar past decisions by scenario text |
+| `query_decisions` | `answer_synthesizer` | List/filter decisions by query or category |
+| `get_causal_chain` | `answer_synthesizer` | Upstream/downstream *because-of* chain |
+| `record_decision` | `answer_synthesizer` | Persist a new audited outcome (+ optional causal link) |
+
+**Chat 7 — correct MCP trace (no SQL):**
+
+```text
+find_precedents({ "scenario": "Antragsteller ohne Register-Eintragung" })
+get_causal_chain({ "decision_id": "<antrag_block uuid>", "direction": "upstream" })
+```
+
+### Comparing outcomes over time
+
+**Analytics (SQL KPIs)** — data or rules may change between runs:
+
+| Compare | How |
+|---|---|
+| Same question, different day | Re-run workflow; diff `sql` + `rows` from chat or Agent Ops logs |
+| Rule change | Diff `xunternehmen_business_rules.yaml`; check `business_rules_applied` in mapping plan |
+| Ontology/mapping change | Diff KG JSON + `xunternehmen_r2rml_db_mapping.yaml` |
+
+**Governance (decisions)** — compare in the graph:
+
+| Compare | How |
+|---|---|
+| Similar scenario, different outcome | `find_precedents` → similarity score + outcome/reasoning side by side |
+| Root cause for one Antrag | `get_causal_chain` upstream (e.g. `TierB` → `AntragBlockiert`) |
+| All Vorgang decisions | `query_decisions({ "category": "vorgang_readiness" })` |
+
+### Recording analytics runs for audit (optional)
+
+High-stakes KPI runs are not auto-persisted. Call `record_decision` after `sql_executor` to create a durable audit entry:
+
+```json
+{
+  "category": "data_quality_tier",
+  "scenario": "Tier-Verteilung JuristischePerson — Agent Studio 2026-09-25",
+  "reasoning": "Runtime CASE from data_quality_tier_rules; JOIN zuordnung_eintragung + zuordnung_sitz; TierA=222, TierB=1163, TierC=1615",
+  "outcome": "TierA_Vollstaendig:222,TierB_Teilweise:1163,TierC_Minimal:1615",
+  "confidence": 0.95,
+  "entities": ["https://w3id.org/kdm/JuristischePerson"],
+  "decision_maker": "kdm_analytics_agent"
+}
+```
+
+Later: `query_decisions({ "query": "Tier-Verteilung JuristischePerson" })`.
+
+### Full audit bundle (one turn)
+
+For compliance or post-mortem, capture:
+
+1. **Mapping plan** — `ontology_terms`, `business_rules_applied`, `ready_for_sql`
+2. **SQL** — exact query from `sql_executor`
+3. **Rows** — Hive result at time T
+4. **Decision** (if governance) — `scenario`, `reasoning`, `outcome`, `confidence`
+5. **Causal chain** — `get_causal_chain` for linked decisions
+6. **Artifact versions** — paths/mtimes of `xunternehmen_business_rules.yaml`, `xunternehmen_kg_with_decisions.json`, mapping YAML
+
+Items 1–3 live in Agent Studio conversation context unless exported. Items 4–5 live in the graph (demo + any `record_decision` calls). Item 6 is under `/workflow_data/config/`.
+
+### Agent routing for audit
+
+| Question type | Path | Do not use |
+|---|---|---|
+| KPI / distribution / counts | `ontology_mapper` → `sql_executor` → `answer_synthesizer` | `find_precedents` alone |
+| Warum blockiert / governance | `ontology_mapper` → `answer_synthesizer` + decision MCP tools | SQL on `vorgang` (table does not exist) |
+
+Workflow: [`multi-agent-workflow-kdm.md`](../deploy/cloudera-agent-studio/multi-agent-workflow-kdm.md) — sequential, Manager OFF, one MCP per agent.
+
+---
+
 ## Agent playbook (ontology-first)
 
 ```text

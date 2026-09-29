@@ -27,22 +27,27 @@ from typing import Any, Dict, List, Optional, Union
 import numpy as np
 
 from ..utils.exceptions import ProcessingError
+from ..utils.helpers import package_available
 from ..utils.logging import get_logger
 from ..utils.progress_tracker import get_progress_tracker
 
-try:
+# Availability via find_spec — no torch import at module load. Tests may patch this.
+SENTENCE_TRANSFORMERS_AVAILABLE = package_available("sentence_transformers")
+FASTEMBED_AVAILABLE = package_available("fastembed")
+
+
+def _get_sentence_transformer(model_name: str, device: str):
+    """Lazy-load SentenceTransformer (imports torch only when used)."""
     from sentence_transformers import SentenceTransformer
 
-    SENTENCE_TRANSFORMERS_AVAILABLE = True
-except (ImportError, OSError):
-    SENTENCE_TRANSFORMERS_AVAILABLE = False
+    return SentenceTransformer(model_name, device=device)
 
-try:
+
+def _get_fastembed_model(model_name: str):
+    """Lazy-load FastEmbed TextEmbedding."""
     from fastembed import TextEmbedding
 
-    FASTEMBED_AVAILABLE = True
-except (ImportError, OSError):
-    FASTEMBED_AVAILABLE = False
+    return TextEmbedding(model_name=model_name)
 
 
 class TextEmbedder:
@@ -134,7 +139,7 @@ class TextEmbedder:
                     fastembed_model_name = self.config.get(
                         "fastembed_model_name", self.model_name
                     )
-                    self.fastembed_model = TextEmbedding(model_name=fastembed_model_name)
+                    self.fastembed_model = _get_fastembed_model(fastembed_model_name)
                     
                     # Detect dimension from model
                     try:
@@ -163,7 +168,7 @@ class TextEmbedder:
             # Default to sentence-transformers
             if SENTENCE_TRANSFORMERS_AVAILABLE:
                 try:
-                    self.model = SentenceTransformer(self.model_name, device=self.device)
+                    self.model = _get_sentence_transformer(self.model_name, self.device)
                     self.embedding_dimension = self.model.get_sentence_embedding_dimension()
                     self.logger.info(
                         f"Loaded sentence-transformers model: {self.model_name} "
@@ -178,7 +183,7 @@ class TextEmbedder:
             else:
                 self.logger.warning(
                     "sentence-transformers not available. "
-                    "Install with: pip install sentence-transformers. "
+                    "Install with: pip install semantica[models-huggingface]. "
                     "Using fallback embedding method."
                 )
         

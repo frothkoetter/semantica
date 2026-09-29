@@ -90,7 +90,7 @@ from dataclasses import dataclass
 from typing import Any, Callable, Dict, List, Optional, Union
 
 from ..utils.exceptions import ProcessingError
-from ..utils.helpers import safe_import
+from ..utils.helpers import package_available, safe_import
 from ..utils.logging import get_logger
 from .semantic_chunker import Chunk
 
@@ -101,16 +101,21 @@ _, SPACY_AVAILABLE = safe_import("spacy")
 
 nltk, NLTK_AVAILABLE = safe_import("nltk")
 tiktoken, TIKTOKEN_AVAILABLE = safe_import("tiktoken")
-_sentence_transformers, SENTENCE_TRANSFORMER_AVAILABLE = safe_import("sentence_transformers")
-if SENTENCE_TRANSFORMER_AVAILABLE:
+
+SENTENCE_TRANSFORMER_AVAILABLE = package_available("sentence_transformers")
+TRANSFORMERS_AVAILABLE = package_available("transformers")
+
+
+def _load_sentence_transformer(model: str):
     from sentence_transformers import SentenceTransformer
-else:
-    SentenceTransformer = None
-_transformers, TRANSFORMERS_AVAILABLE = safe_import("transformers")
-if TRANSFORMERS_AVAILABLE:
+
+    return SentenceTransformer(model)
+
+
+def _load_auto_tokenizer(model: str):
     from transformers import AutoTokenizer
-else:
-    AutoTokenizer = None
+
+    return AutoTokenizer.from_pretrained(model)
 
 networkx, NETWORKX_AVAILABLE = safe_import("networkx")
 if NETWORKX_AVAILABLE:
@@ -264,7 +269,7 @@ def split_by_tokens(
             tokens = enc.encode(text)
     elif TRANSFORMERS_AVAILABLE:
         try:
-            tokenizer_obj = AutoTokenizer.from_pretrained(tokenizer)
+            tokenizer_obj = _load_auto_tokenizer(tokenizer)
             tokens = tokenizer_obj.encode(text, add_special_tokens=False)
         except Exception:
             # Fallback to simple word splitting
@@ -613,7 +618,7 @@ def split_semantic_transformer(
 
     try:
         # Load model
-        model_obj = SentenceTransformer(model)
+        model_obj = _load_sentence_transformer(model)
 
         # Split into sentences first
         sentences = _split_sentences_regex(text)
@@ -816,7 +821,7 @@ def split_huggingface(
         return split_by_tokens(text, chunk_size=chunk_size, **kwargs)
 
     try:
-        tokenizer = AutoTokenizer.from_pretrained(model)
+        _load_auto_tokenizer(model)
         return split_by_tokens(text, chunk_size=chunk_size, tokenizer=model, **kwargs)
     except Exception as e:
         logger.warning(

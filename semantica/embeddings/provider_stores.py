@@ -105,17 +105,20 @@ class BGEStore(ProviderStore):
         self.model_name = config.get("model_name", "BAAI/bge-small-en-v1.5")
         self.model = None
 
-        self._initialize_model()
-
     def _initialize_model(self):
-        """Initialize BGE model."""
+        """Initialize BGE model on first use (lazy — avoids torch at import)."""
+        if self.model is not None:
+            return
         try:
             from sentence_transformers import SentenceTransformer
 
             self.model = SentenceTransformer(self.model_name)
             self.logger.info(f"Loaded BGE model: {self.model_name}")
         except (ImportError, OSError):
-            self.logger.warning("sentence-transformers not available for BGE")
+            self.logger.warning(
+                "sentence-transformers not available for BGE; "
+                "install semantica[models-huggingface]"
+            )
         except Exception as e:
             self.logger.warning(f"Failed to load BGE model: {e}")
 
@@ -130,6 +133,7 @@ class BGEStore(ProviderStore):
         Returns:
             np.ndarray: Embedding vector
         """
+        self._initialize_model()
         if not self.model:
             raise ProcessingError("BGE model not initialized")
 

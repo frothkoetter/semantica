@@ -15,10 +15,10 @@ class TestModelSwitching(unittest.TestCase):
 
     def setUp(self):
         # Mock dependencies
-        self.mock_st_patcher = patch('semantica.embeddings.text_embedder.SentenceTransformer')
+        self.mock_st_patcher = patch('semantica.embeddings.text_embedder._get_sentence_transformer')
         self.mock_st_class = self.mock_st_patcher.start()
         
-        self.mock_fe_patcher = patch('semantica.embeddings.text_embedder.TextEmbedding')
+        self.mock_fe_patcher = patch('semantica.embeddings.text_embedder._get_fastembed_model')
         self.mock_fe_class = self.mock_fe_patcher.start()
         
         # Patch availability flags

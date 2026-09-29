@@ -11,11 +11,11 @@ class TestTextEmbedder(unittest.TestCase):
     
     def setUp(self):
         # Create a mock for sentence_transformers.SentenceTransformer
-        self.mock_st_patcher = patch('semantica.embeddings.text_embedder.SentenceTransformer')
+        self.mock_st_patcher = patch('semantica.embeddings.text_embedder._get_sentence_transformer')
         self.mock_st_class = self.mock_st_patcher.start()
         
-        # Create a mock for fastembed.TextEmbedding
-        self.mock_fe_patcher = patch('semantica.embeddings.text_embedder.TextEmbedding')
+        # Create a mock for fastembed lazy loader
+        self.mock_fe_patcher = patch('semantica.embeddings.text_embedder._get_fastembed_model')
         self.mock_fe_class = self.mock_fe_patcher.start()
         
         # Patch availability flags

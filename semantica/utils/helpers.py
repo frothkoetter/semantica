@@ -548,6 +548,22 @@ def set_nested_value(
     d[keys[-1]] = value
 
 
+def package_available(module_name: str) -> bool:
+    """
+    Check whether an optional package is installed without importing it.
+
+    Unlike ``safe_import``, this does not load the module (and therefore avoids
+    pulling in heavy transitive deps such as torch when only checking for
+    sentence-transformers).
+    """
+    try:
+        import importlib.util
+
+        return importlib.util.find_spec(module_name) is not None
+    except (ImportError, ModuleNotFoundError, ValueError, AttributeError):
+        return False
+
+
 def safe_import(
     module_name: str,
     package: Optional[str] = None,
