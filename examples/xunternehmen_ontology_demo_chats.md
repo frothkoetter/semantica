@@ -33,6 +33,137 @@ Agent Studio multi-agent workflow (ontology_mapper → sql_executor → answer_s
 
 ---
 
+## Agent Studio — Vollständiger Beispiel-Chat (Analytics)
+
+**Workflow:** Manager OFF · Sequential · Agent 1 `ontology_mapper` (semantica) → Agent 2 `sql_executor` (iceberg-hive)
+
+**MCP env (semantica):**
+
+```
+SEMANTICA_KG_PATH=/workflow_data/config/xunternehmen_kg_with_decisions.json
+SEMANTICA_MAPPING_CONFIG=/workflow_data/config/xunternehmen_r2rml_db_mapping.yaml
+SEMANTICA_BUSINESS_RULES=/workflow_data/config/xunternehmen_business_rules.yaml
+HIVE_DATABASE=xunternehmen   # nur auf iceberg-hive Agent
+```
+
+### User
+
+```
+Wie viele juristische Personen haben sowohl eine Eintragung als auch einen Sitz?
+Nutze die Business Rules aus dem Knowledge Graph.
+```
+
+### Agent 1 — ontology_mapper
+
+**Tool:** `get_graph_summary` → `graph_ready: true`, OntologyClass `JuristischePerson`, …
+
+**Tool:** `get_business_rules` → `RegisterEingetragen`, `HatSitz`, `organisation_completeness_rules`
+
+**Output (Mapping Plan):**
+
+```json
+{
+  "ready_for_sql": true,
+  "question_intent": "Register-Vollständigkeit JuristischePerson",
+  "ontology_terms": ["JuristischePerson", "Eintragung", "Sitz", "RegisterEingetragen", "HatSitz"],
+  "business_rules_applied": ["RegisterEingetragen", "HatSitz"],
+  "database": "xunternehmen",
+  "tables": ["juristische_person", "zuordnung_eintragung", "zuordnung_sitz"],
+  "joins": [
+    {"from": "juristische_person jp", "to": "zuordnung_eintragung ze",
+     "on": "ze.owner_id = jp.id AND ze.owner_typ = 'JuristischePerson'"},
+    {"from": "juristische_person jp", "to": "zuordnung_sitz zs",
+     "on": "zs.owner_id = jp.id AND zs.owner_typ = 'JuristischePerson'"}
+  ],
+  "metrics": [
+    {"name": "juristische_personen", "expr": "COUNT(*)"},
+    {"name": "vollstaendig_register",
+     "expr": "SUM(CASE WHEN ze.eintragung_id IS NOT NULL AND zs.sitz_id IS NOT NULL THEN 1 ELSE 0 END)"}
+  ]
+}
+```
+
+### Agent 2 — sql_executor
+
+**Tool:** `execute_query`
+
+```sql
+SELECT
+  COUNT(*) AS juristische_personen,
+  SUM(CASE WHEN ze.eintragung_id IS NOT NULL AND zs.sitz_id IS NOT NULL THEN 1 ELSE 0 END) AS vollstaendig_register,
+  ROUND(100.0 * SUM(CASE WHEN ze.eintragung_id IS NOT NULL AND zs.sitz_id IS NOT NULL THEN 1 ELSE 0 END)
+    / NULLIF(COUNT(*), 0), 1) AS pct_vollstaendig
+FROM xunternehmen.juristische_person jp
+LEFT JOIN xunternehmen.zuordnung_eintragung ze
+  ON ze.owner_id = jp.id AND ze.owner_typ = 'JuristischePerson'
+LEFT JOIN xunternehmen.zuordnung_sitz zs
+  ON zs.owner_id = jp.id AND zs.owner_typ = 'JuristischePerson';
+```
+
+### Agent 3 — Antwort (Beispiel)
+
+```
+Von den juristischen Personen im Kerndatenmodell haben X % sowohl eine Eintragung
+(RegisterEingetragen) als auch einen Sitz (HatSitz) — Y von Z Personen insgesamt.
+Die Zuordnung läuft über zuordnung_eintragung und zuordnung_sitz mit owner_typ = 'JuristischePerson'.
+```
+
+### Phoenix — erwartete Tool-Kette
+
+```text
+semantica     → get_graph_summary
+semantica     → get_business_rules
+iceberg-hive  → execute_query
+```
+
+**Nicht:** `extract_entities`, `get_schema` vor Mapping Plan, Hive-Agent für YAML.
+
+---
+
+## Agent Studio — Beispiel-Chat (Governance / Entscheidung)
+
+**User:**
+
+```
+Warum wurde Antrag an-001902 blockiert?
+```
+
+### Agent 1 — ontology_mapper
+
+**Tool:** `get_graph_summary` → Graph enthält `decision`-Knoten
+
+**Tool:** `get_business_rules` → `vorgang_readiness_rules`, `AntragEinreichbar`
+
+**Output:** `ready_for_sql: false` — Governance-Frage, keine SQL nötig; Kontext an Agent 3.
+
+### Agent 3 — answer_synthesizer (semantica)
+
+**Tool:** `find_precedents`
+
+```json
+{ "scenario": "Antragsteller ohne Register-Eintragung" }
+```
+
+**Tool:** `get_causal_chain`
+
+```json
+{ "decision_id": "<antrag_block uuid>", "direction": "upstream" }
+```
+
+### Antwort (Beispiel)
+
+```
+Antrag an-001902 wurde blockiert, weil der Antragsteller (JuristischePerson jp-000519)
+nur Tier B (TierB_Teilweise) hat — keine Register-Eintragung (RegisterEingetragen fehlt).
+Kausale Kette: register_completeness → TierB_Teilweise → AntragBlockiert_RegisterUnvollstaendig.
+```
+
+**Kein** `execute_query` — Vorgangsdaten liegen im Graph (`decision`-Knoten), nicht als Hive-Tabelle `vorgang`.
+
+Demo laden: `python kdm/record_xunternehmen_decisions.py --reload-demo`
+
+---
+
 ## Demo Chat 1 — Register completeness
 
 **User:** Wie viele juristische Personen haben sowohl eine Eintragung als auch einen Sitz?

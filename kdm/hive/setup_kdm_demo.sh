@@ -51,18 +51,17 @@ case "$PROFILE" in
     ;;
   medium)
     SEED="$HIVE_DIR/xunternehmen_seed_medium.sql"
-    if [[ ! -f "$SEED" ]]; then
-      echo "Generating medium seed (scale 0.02)..."
-      "$PYTHON" "$HIVE_DIR/generate_xunternehmen_seed.py" \
-        --scale 0.02 --output "$SEED"
-    fi
+    echo "Generating medium seed (~800 NP / 600 JP, all 29 tables)..."
+    "$PYTHON" "$HIVE_DIR/generate_xunternehmen_seed.py" \
+      --profile medium --output "$SEED" --force
     run_sql "$SEED"
     ;;
   large)
     SEED="$HIVE_DIR/xunternehmen_seed_large.sql"
     if [[ ! -f "$SEED" ]]; then
       echo "Generating large seed (may take a minute)..."
-      "$PYTHON" "$HIVE_DIR/generate_xunternehmen_seed.py" --output "$SEED"
+      "$PYTHON" "$HIVE_DIR/generate_xunternehmen_seed.py" \
+        --profile large --output "$SEED" --force
     fi
     run_sql "$SEED"
     ;;

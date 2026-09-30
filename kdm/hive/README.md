@@ -8,7 +8,7 @@ Datenbank **`xunternehmen`**: 29 Iceberg-Tabellen aligned to `kdm/ontology.owl` 
 |---|---|
 | `xunternehmen_ddl.sql` | `CREATE DATABASE` + 29 `CREATE TABLE … STORED BY ICEBERG` |
 | `xunternehmen_seed.sql` | Kleines Hand-Demo (~4 NP, 1 JP, Antrag `an-001`) |
-| `xunternehmen_seed_medium.sql` | ~2.800 Zeilen, scale 0.02 (schneller Load) |
+| `xunternehmen_seed_medium.sql` | ~18k Zeilen, 800 NP / 600 JP, alle 29 Tabellen + Governance-Anker |
 | `xunternehmen_seed_large.sql` | ~90k Zeilen, volle Demo (inkl. `an-001902`, Tier-Analytics) |
 | `generate_xunternehmen_seed.py` | Generator für medium/large |
 | `run_hive_sql.py` | DDL/DML via impyla (HIVE_* env) |
@@ -42,7 +42,7 @@ export HIVE_DATABASE=xunternehmen
 # Kleines Demo (Tutorial, wenige Zeilen)
 ./kdm/hive/setup_kdm_demo.sh small
 
-# Mittleres Demo (~100 Zeilen/Kernentität, empfohlen für Dev)
+# Mittleres Demo (~500–800 Zeilen/Kernentität, empfohlen für Dev + Agent Studio)
 ./kdm/hive/setup_kdm_demo.sh medium
 
 # Volles Demo (~3k JP, Tier-Verteilung, an-001902 — Agent Studio)
@@ -75,14 +75,16 @@ Iceberg MCP: `HIVE_DATABASE=xunternehmen`, dann `execute_query`.
 | Profil | Datei | JP | NP | Use case |
 |---|---|---:|---:|---|
 | `small` | `xunternehmen_seed.sql` | 1 | 4 | Ontologie-Smoke-Test |
-| `medium` | `xunternehmen_seed_medium.sql` | 60 | 100 | Dev / schneller Load |
-| `large` | `xunternehmen_seed_large.sql` | 3.000 | 5.000 | Demo-Chats, Tier-KPIs, `an-001902` |
+| `medium` | `xunternehmen_seed_medium.sql` | 600 | 800 | Dev, Agent Studio, `jp-000519` / `an-001902` |
+| `large` | `xunternehmen_seed_large.sql` | 3.000 | 5.000 | Volle Tier-Analytics, alle Demo-IDs |
 
-Large neu erzeugen:
+Seed neu erzeugen:
 
 ```bash
-python kdm/hive/generate_xunternehmen_seed.py
-python kdm/hive/generate_xunternehmen_seed.py --scale 0.02 --output kdm/hive/xunternehmen_seed_medium.sql
+python kdm/hive/generate_xunternehmen_seed.py --profile medium \
+  --output kdm/hive/xunternehmen_seed_medium.sql --force
+python kdm/hive/generate_xunternehmen_seed.py --profile large \
+  --output kdm/hive/xunternehmen_seed_large.sql --force
 ```
 
 ## Zuordnung-Konvention
