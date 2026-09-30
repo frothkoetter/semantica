@@ -15,7 +15,6 @@ SEMANTICA_KG_PATH=/workflow_data/config/xunternehmen_kg_with_decisions.json
 SEMANTICA_MAPPING_CONFIG=/workflow_data/config/xunternehmen_r2rml_db_mapping.yaml
 SEMANTICA_BUSINESS_RULES=/workflow_data/config/xunternehmen_business_rules.yaml
 SEMANTICA_MCP_TOOLSET=preloaded_graph
-SEMANTICA_MCP_DISABLE_ML=true
 SEMANTICA_LOG_LEVEL=INFO
 
 # --- iceberg-hive MCP (sql_executor only) ---

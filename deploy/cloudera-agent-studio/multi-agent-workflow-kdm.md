@@ -179,7 +179,6 @@ SEMANTICA_KG_PATH=/workflow_data/config/xunternehmen_kg_with_decisions.json
 SEMANTICA_MAPPING_CONFIG=/workflow_data/config/xunternehmen_r2rml_db_mapping.yaml
 SEMANTICA_BUSINESS_RULES=/workflow_data/config/xunternehmen_business_rules.yaml
 SEMANTICA_MCP_TOOLSET=preloaded_graph
-SEMANTICA_MCP_DISABLE_ML=true
 SEMANTICA_LOG_LEVEL=INFO
 ```
 
@@ -426,7 +425,7 @@ Von den juristischen Personen im Kerndatenmodell haben X % sowohl eine Eintragun
 |---|---|
 | Use **local clone** MCP: `"args": ["--from", "/home/cdsw/semantica", "semantica-mcp"]` | No git fetch; reuse workbench install |
 | Pre-install once: `cd /home/cdsw/semantica && uv sync` | Warm deps on the worker |
-| `SEMANTICA_MCP_TOOLSET=preloaded_graph` + `SEMANTICA_MCP_DISABLE_ML=true` | Blocks NER tools |
+| `SEMANTICA_MCP_TOOLSET=preloaded_graph` | Exposes only graph/rules/reasoning tools (no NER) |
 | **Updated semantica** (kg_snapshot fast path): `get_graph_summary` / `get_business_rules` read JSON/YAML only (~50ms) | No torch on status checks |
 | For “Ist der Graph geladen?” use `get_graph_summary` — fast path returns `source: kg_file_snapshot` | |
 

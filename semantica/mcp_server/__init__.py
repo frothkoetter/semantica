@@ -505,10 +505,8 @@ def _graph_summary_envelope(stats: dict) -> dict:
 
 def _tool_get_graph_summary(args: dict) -> dict:
     """Return a high-level summary of the current graph."""
-    load_graph = bool(args.get("load_graph"))
-
     # Fast path: read SEMANTICA_KG_PATH JSON directly (no torch/transformers import).
-    if not load_graph and _graph is None:
+    if _graph is None:
         from semantica.mcp_server.kg_snapshot import fast_kg_stats
 
         snapshot = fast_kg_stats()
@@ -574,11 +572,10 @@ def _tool_get_business_rules(args: dict) -> dict:
     if not rules:
         return build_business_rules_payload({}, rules_path=rules_path)
 
-    sync_graph = bool(args.get("sync_graph"))
     payload = build_business_rules_payload(rules, rules_path=rules_path)
 
     # Fast path: count BusinessRule nodes from KG file without loading ContextGraph.
-    if not sync_graph and _graph is None:
+    if _graph is None:
         from semantica.mcp_server.kg_snapshot import fast_kg_stats
 
         snapshot = fast_kg_stats()
@@ -589,7 +586,7 @@ def _tool_get_business_rules(args: dict) -> dict:
             return payload
 
     graph = _get_graph()
-    if sync_graph or not list(graph.find_nodes(node_type="BusinessRule")):
+    if not list(graph.find_nodes(node_type="BusinessRule")):
         stats = ingest_business_rules_into_graph(
             graph,
             rules,
