@@ -128,17 +128,21 @@ kdm/hive/.batch.json
 kdm/hive/.batch_manifest.json
 kdm/hive/.chunks/
 kdm/hive/.chunks250/
+kdm/hive/.chunks250_medium/
 kdm/hive/.chunk_json/
 kdm/hive/.chunk_*.json
 kdm/hive/.mcp_payload/
 kdm/hive/.mcp_batch.json
 kdm/hive/.load_progress.json
+kdm/hive/.load_progress_medium.json
 kdm/hive/.seed_statements.json
 kdm/hive/.next_stmt.json
+kdm/hive/.stmts/
+kdm/hive/.current_query.sql
 kdm/hive/hive.env.local
 
-# Regeneratable KDM outputs
+# Regeneratable KDM seed SQL (generate_xunternehmen_seed.py --profile medium|large)
+kdm/hive/xunternehmen_seed_medium.sql
 kdm/hive/xunternehmen_seed_large.sql
-# medium seed is tracked (~230KB); regenerate with generate_xunternehmen_seed.py --scale 0.02
 kdm/viz/*.html
 kdm/xunternehmen_kg_with_decisions.json

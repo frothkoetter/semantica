@@ -114,5 +114,6 @@ Workflow: `HIVE_DATABASE=xunternehmen` auf iceberg-hive MCP.
 ## Hinweise
 
 - DDL verwendet **Iceberg** (`STORED BY ICEBERG`) — CDW/Hive 3.x erforderlich.
-- `xunternehmen_seed_large.sql` ist in `.gitignore` (generieren lokal).
+- `xunternehmen_seed_medium.sql` und `xunternehmen_seed_large.sql` sind in `.gitignore` (lokal generieren).
+- Ephemere Load-Artefakte (`.stmts/`, `.chunks250_medium/`, …) nicht committen.
 - Ephemere Load-Artefakte (`.stmts/`, `.chunks/`) nicht committen.

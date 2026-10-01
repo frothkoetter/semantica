@@ -5,8 +5,11 @@ venv/
 kdm/hive/.batches/
 kdm/hive/.chunks/
 kdm/hive/.chunks250/
+kdm/hive/.chunks250_medium/
 kdm/hive/.chunk_json/
 kdm/hive/.mcp_payload/
+kdm/hive/.stmts/
+kdm/hive/xunternehmen_seed_medium.sql
 kdm/hive/xunternehmen_seed_large.sql
 kdm/viz/
 data/airline_graph.json
