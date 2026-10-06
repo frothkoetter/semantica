@@ -72,11 +72,19 @@
         "label": "operatedBy",
         "ontology_uri": "https://w3id.org/demo/airline#",
         "property_kind": "object",
-        "description": null,
+        "description": "Flight → Airline. JOIN flights.uniquecarrier = airlines.code (NOT flights.carrier).",
         "domain": "https://w3id.org/demo/airline#Flight",
         "range": "https://w3id.org/demo/airline#Airline",
         "source": "ontology_import",
-        "content": "operatedBy"
+        "content": "operatedBy",
+        "join_hint": {
+          "from_table": "flights",
+          "from_column": "uniquecarrier",
+          "to_table": "airlines",
+          "to_column": "code",
+          "airline_name_column": "description",
+          "join_on": "flights.uniquecarrier = airlines.code"
+        }
       }
     },
     {
@@ -87,11 +95,18 @@
         "label": "assignedAircraft",
         "ontology_uri": "https://w3id.org/demo/airline#",
         "property_kind": "object",
-        "description": null,
+        "description": "Flight → Plane. JOIN flights.tailnum = planes.tailnum.",
         "domain": "https://w3id.org/demo/airline#Flight",
         "range": "https://w3id.org/demo/airline#Plane",
         "source": "ontology_import",
-        "content": "assignedAircraft"
+        "content": "assignedAircraft",
+        "join_hint": {
+          "from_table": "flights",
+          "from_column": "tailnum",
+          "to_table": "planes",
+          "to_column": "tailnum",
+          "join_on": "flights.tailnum = planes.tailnum"
+        }
       }
     },
     {
@@ -102,11 +117,18 @@
         "label": "originAirport",
         "ontology_uri": "https://w3id.org/demo/airline#",
         "property_kind": "object",
-        "description": null,
+        "description": "Flight → origin Airport. JOIN flights.origin = airports.iata.",
         "domain": "https://w3id.org/demo/airline#Flight",
         "range": "https://w3id.org/demo/airline#Airport",
         "source": "ontology_import",
-        "content": "originAirport"
+        "content": "originAirport",
+        "join_hint": {
+          "from_table": "flights",
+          "from_column": "origin",
+          "to_table": "airports",
+          "to_column": "iata",
+          "join_on": "flights.origin = airports.iata"
+        }
       }
     },
     {
@@ -117,11 +139,18 @@
         "label": "destinationAirport",
         "ontology_uri": "https://w3id.org/demo/airline#",
         "property_kind": "object",
-        "description": null,
+        "description": "Flight → destination Airport. JOIN flights.dest = airports.iata.",
         "domain": "https://w3id.org/demo/airline#Flight",
         "range": "https://w3id.org/demo/airline#Airport",
         "source": "ontology_import",
-        "content": "destinationAirport"
+        "content": "destinationAirport",
+        "join_hint": {
+          "from_table": "flights",
+          "from_column": "dest",
+          "to_table": "airports",
+          "to_column": "iata",
+          "join_on": "flights.dest = airports.iata"
+        }
       }
     },
     {

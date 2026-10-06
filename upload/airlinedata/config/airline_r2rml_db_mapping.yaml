@@ -1,8 +1,27 @@
 # Derived from data/airline_mapping.ttl (R2RML → Semantica YAML bridge)
 # Keys are normalized: lowercase, no underscores/hyphens.
 # Namespace: https://w3id.org/demo/airline#
+#
+# Physical Hive database: airlinedata (tables flights, airlines, airports, planes)
 
 ontology_namespace: "https://w3id.org/demo/airline#"
+
+database: airlinedata
+
+# Ontology class → materialized Hive table (never *_csv in Agent Studio SQL)
+preferred_tables:
+  Flight: flights
+  Airline: airlines
+  Airport: airports
+  Plane: planes
+
+# Columns agents often guess incorrectly — they do NOT exist on airlinedata
+invalid_columns:
+  flights:
+    - carrier  # use uniquecarrier (Flight.uniqueCarrier / operatedBy)
+  airlines:
+    - iata  # use code (Airline.airlineCode)
+    - name  # use description (Airline.description)
 
 tables:
   flights: Flight
@@ -72,22 +91,70 @@ columns:
     delayseverity: delaySeverity
     primarydelayreason: primaryDelayReason
 
+# Ontology object properties → SQL JOIN (Flight.operatedBy uses uniquecarrier, NOT carrier)
 foreign_keys:
-  - source_table: flights_csv
-    target_table: airlines
-    edge_type: operatedBy
-  - source_table: flights_csv
-    target_table: planes
-    edge_type: assignedAircraft
-  - source_table: flights_csv
-    target_table: airports
-    edge_type: originAirport
   - source_table: flights
     target_table: airlines
     edge_type: operatedBy
+    from_class: Flight
+    to_class: Airline
+    from_column: uniquecarrier
+    to_column: code
+    join_on: "flights.uniquecarrier = airlines.code"
   - source_table: flights
     target_table: planes
     edge_type: assignedAircraft
+    from_class: Flight
+    to_class: Plane
+    from_column: tailnum
+    to_column: tailnum
+    join_on: "flights.tailnum = planes.tailnum"
   - source_table: flights
     target_table: airports
     edge_type: originAirport
+    from_class: Flight
+    to_class: Airport
+    from_column: origin
+    to_column: iata
+    join_on: "flights.origin = airports.iata"
+  - source_table: flights
+    target_table: airports
+    edge_type: destinationAirport
+    from_class: Flight
+    to_class: Airport
+    from_column: dest
+    to_column: iata
+    join_on: "flights.dest = airports.iata"
+  # Legacy CSV table names (same join columns as flights)
+  - source_table: flights_csv
+    target_table: airlines
+    edge_type: operatedBy
+    from_class: Flight
+    to_class: Airline
+    from_column: uniquecarrier
+    to_column: code
+    join_on: "flights.uniquecarrier = airlines.code"
+  - source_table: flights_csv
+    target_table: planes
+    edge_type: assignedAircraft
+    from_class: Flight
+    to_class: Plane
+    from_column: tailnum
+    to_column: tailnum
+    join_on: "flights.tailnum = planes.tailnum"
+  - source_table: flights_csv
+    target_table: airports
+    edge_type: originAirport
+    from_class: Flight
+    to_class: Airport
+    from_column: origin
+    to_column: iata
+    join_on: "flights.origin = airports.iata"
+  - source_table: flights_csv
+    target_table: airports
+    edge_type: destinationAirport
+    from_class: Flight
+    to_class: Airport
+    from_column: dest
+    to_column: iata
+    join_on: "flights.dest = airports.iata"

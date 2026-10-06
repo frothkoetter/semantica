@@ -1,10 +1,65 @@
 # Declarative business rules for airline ontology analytics.
-# Agents resolve ontology terms → flights columns via airline_graph.json,
+# Agents resolve ontology terms → flights columns via airline_graph.json + this file,
 # then apply these rules as SQL CASE/WHERE or post-query classification.
 #
 # Namespace: https://w3id.org/demo/airline#
 
 ontology_namespace: "https://w3id.org/demo/airline#"
+
+database: airlinedata
+
+# ── SQL agent hints (read before generating JOINs) ───────────────────────────
+sql_agent_hints:
+  summary: >
+    Flight.operatedBy joins flights.uniquecarrier to airlines.code.
+    There is NO flights.carrier column. airlines has code + description only (no iata, no name).
+  carrier_identifier_column: uniquecarrier
+  carrier_identifier_property: uniqueCarrier
+  airline_code_column: code
+  airline_name_column: description
+  do_not_use:
+    - "flights.carrier — column does not exist; use uniquecarrier"
+    - "airlines.iata — column does not exist on airlinedata.airlines; use code"
+    - "airlines.name — column does not exist; use description"
+  delay_note: >
+    carrierdelay is delay MINUTES (CarrierDelayReason), not a carrier ID.
+    Do not confuse with uniquecarrier.
+
+# Ontology object property → physical JOIN (canonical for sql_executor)
+object_property_joins:
+  operatedBy:
+    from_class: Flight
+    from_table: flights
+    from_column: uniquecarrier
+    to_class: Airline
+    to_table: airlines
+    to_column: code
+    airline_name_column: description
+    join_sql: "JOIN {database}.airlines a ON f.uniquecarrier = a.code"
+  assignedAircraft:
+    from_class: Flight
+    from_table: flights
+    from_column: tailnum
+    to_class: Plane
+    to_table: planes
+    to_column: tailnum
+    join_sql: "JOIN {database}.planes p ON f.tailnum = p.tailnum"
+  originAirport:
+    from_class: Flight
+    from_table: flights
+    from_column: origin
+    to_class: Airport
+    to_table: airports
+    to_column: iata
+    join_sql: "JOIN {database}.airports o ON f.origin = o.iata"
+  destinationAirport:
+    from_class: Flight
+    from_table: flights
+    from_column: dest
+    to_class: Airport
+    to_table: airports
+    to_column: iata
+    join_sql: "JOIN {database}.airports d ON f.dest = d.iata"
 
 # FAA / DOT thresholds (minutes)
 thresholds:
@@ -78,7 +133,6 @@ logistics:
     distance_column: distance
   hub_airport:
     class: HubAirport
-    # Derived: airports in top N by departures in reference year
     metric: "COUNT(*) departures WHERE origin = airport.iata"
     default_top_n: 20
     default_reference_year: 2008
@@ -86,14 +140,23 @@ logistics:
 # Example ontology-first analytics (agent playbook)
 analytics_templates:
   on_time_performance:
-    question: "OTP by carrier in peak hours"
+    question: "OTP by airline (unique carrier) in peak hours"
     classes: [OnTimeFlight, Flight, Airline, EveningPeak]
+    join: operatedBy
+    group_by: [airlines.code, airlines.description]
     kpi: "COUNT(OnTimeFlight) / COUNT(Flight WHERE cancelled=0)"
   delay_attribution:
-    question: "Which delay reason dominates for a carrier?"
+    question: "Which delay reason dominates for an airline?"
     classes: [DelayReason, DelayedFlight, Airline]
+    join: operatedBy
     kpi: "SUM per delay_reason_columns / SUM(arrdelay)"
   peak_hour_volume:
     question: "Busiest business hour band by departure count"
     classes: [TimeWindow, Flight]
     group_by: scheduledInWindow
+  top_airlines_by_volume:
+    question: "Top N airlines by flight count"
+    classes: [Flight, Airline]
+    join: operatedBy
+    group_by: [flights.uniquecarrier, airlines.code, airlines.description]
+    note: "Rank by COUNT(*) GROUP BY uniquecarrier; join airlines ON uniquecarrier = code"

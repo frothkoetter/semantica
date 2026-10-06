@@ -42,6 +42,9 @@ Environment variables:
     SEMANTICA_MCP_TOOLS        — comma-separated tool names (overrides SEMANTICA_MCP_TOOLSET)
     SEMANTICA_MCP_DISABLE_ML   — if true, extract_entities/extract_relations fail fast (no spaCy load)
     SEMANTICA_LOG_LEVEL        — log level: DEBUG, INFO, WARNING (default: WARNING)
+    SEMANTICA_DECISION_STORE   — JSONL decision audit log directory (default: ~/.semantica/decisions)
+    SEMANTICA_DECISION_STORE_INDEX — auto | sqlite | none (default: auto)
+    SEMANTICA_DECISION_BLOB_MAX_INLINE — max inline bytes before blob offload (default: 8192)
 
 Hive/Iceberg SQL and schema introspection: use iceberg-mcp-server-hive (not this server).
 """
@@ -172,75 +175,14 @@ def _tool_extract_relations(args: dict) -> dict:
     }
 
 
-def _tool_record_decision(args: dict) -> dict:
-    """Record a decision with full context into the graph."""
-    required = ["category", "scenario", "reasoning", "outcome", "confidence"]
-    for field in required:
-        if field not in args:
-            return {"error": f"missing required field: {field}"}
-    graph = _get_graph()
-    decision_id = graph.record_decision(
-        category=args["category"],
-        scenario=args["scenario"],
-        reasoning=args["reasoning"],
-        outcome=args["outcome"],
-        confidence=float(args["confidence"]),
-        entities=args.get("entities", []),
-        decision_maker=args.get("decision_maker", "mcp_client"),
-        valid_from=args.get("valid_from"),
-        valid_until=args.get("valid_until"),
-    )
-    return {"decision_id": decision_id, "status": "recorded"}
+from semantica.mcp_server import decision_store_tools as _decision_store
 
-
-def _tool_query_decisions(args: dict) -> dict:
-    """Query decisions by natural language or structured filters."""
-    query = args.get("query", "")
-    category = args.get("category")
-    limit = int(args.get("limit", 10))
-    graph = _get_graph()
-    try:
-        if query:
-            results = graph.find_similar_decisions(query, max_results=limit)
-        elif category:
-            nodes = graph.find_nodes(node_type="decision")
-            results = [n for n in nodes if n.get("category") == category][:limit]
-        else:
-            results = graph.find_nodes(node_type="decision")[:limit]
-        return {"decisions": results if isinstance(results, list) else list(results)}
-    except Exception as exc:
-        return {"error": str(exc), "decisions": []}
-
-
-def _tool_find_precedents(args: dict) -> dict:
-    """Find past decisions similar to a given scenario."""
-    scenario = args.get("scenario", "")
-    if not scenario:
-        return {"error": "scenario is required"}
-    max_results = int(args.get("max_results", 5))
-    graph = _get_graph()
-    try:
-        precedents = graph.find_similar_decisions(scenario, max_results=max_results)
-        return {"precedents": precedents if isinstance(precedents, list) else list(precedents)}
-    except Exception as exc:
-        return {"error": str(exc), "precedents": []}
-
-
-def _tool_get_causal_chain(args: dict) -> dict:
-    """Get the causal chain for a decision."""
-    decision_id = args.get("decision_id", "")
-    if not decision_id:
-        return {"error": "decision_id is required"}
-    direction = args.get("direction", "downstream")
-    max_depth = int(args.get("max_depth", 5))
-    graph = _get_graph()
-    try:
-        from semantica.context.causal_analyzer import CausalChainAnalyzer
-        analyzer = CausalChainAnalyzer(graph_store=graph)
-        chain = analyzer.get_causal_chain(decision_id, direction=direction, max_depth=max_depth)
-        return {"chain": chain if isinstance(chain, list) else list(chain)}
-    except Exception as exc:
-        return {"error": str(exc), "chain": []}
+_tool_record_decision = _decision_store.handle_record_decision
+_tool_query_decisions = _decision_store.handle_query_decisions
+_tool_find_precedents = _decision_store.handle_find_precedents
+_tool_get_causal_chain = _decision_store.handle_get_causal_chain
+_tool_compare_with_history = _decision_store.handle_compare_with_history
+_tool_explain_decision_delta = _decision_store.handle_explain_decision_delta
 
 
 def _tool_add_entity(args: dict) -> dict:
@@ -632,26 +574,68 @@ TOOLS = [
     },
     {
         "name": "record_decision",
-        "description": "Record a decision into the Semantica knowledge graph with full context, causal links, and metadata.",
+        "description": "Record a decision to the JSONL Decision Store (not the knowledge graph). Returns decision_id and query_fingerprint for history comparison.",
         "inputSchema": {
             "type": "object",
             "properties": {
-                "category":      {"type": "string", "description": "Decision category, e.g. 'loan_approval'"},
+                "category":      {"type": "string", "description": "Decision category, e.g. 'airline_analytics'"},
                 "scenario":      {"type": "string", "description": "Natural-language situation description"},
                 "reasoning":     {"type": "string", "description": "Why this decision was made"},
-                "outcome":       {"type": "string", "description": "Decision outcome, e.g. 'approved'"},
+                "outcome":       {"type": "string", "description": "Decision outcome, e.g. 'ATL, ORD, DFW'"},
                 "confidence":    {"type": "number", "description": "Confidence score 0–1"},
                 "decision_maker":{"type": "string", "description": "Who/what made the decision"},
                 "valid_from":    {"type": "string", "description": "ISO date validity start (optional)"},
                 "valid_until":   {"type": "string", "description": "ISO date validity end (optional)"},
+                "query_intent":  {"type": "string", "description": "Normalized intent slug for fingerprinting"},
+                "query_params":  {"type": "object", "description": "Structured query filters (year, top_k, …)"},
+                "sql_text":      {"type": "string", "description": "SQL executed (hashed; large SQL offloaded to blobs/)"},
+                "result_metrics": {"type": "object", "description": "Slim key figures, e.g. {\"ATL\": 142003}"},
+                "result_row_count": {"type": "integer", "description": "Number of result rows"},
+                "session_id":    {"type": "string", "description": "Agent Studio / MCP session id"},
+                "tool_chain":    {"type": "array", "items": {"type": "string"}, "description": "MCP tools invoked before record"},
+                "causal_parent_ids": {"type": "array", "items": {"type": "string"}, "description": "Prior decision_ids in the store"},
             },
             "required": ["category", "scenario", "reasoning", "outcome", "confidence"],
         },
         "_handler": _tool_record_decision,
     },
     {
+        "name": "compare_with_history",
+        "description": "Find prior decisions with the same query fingerprint/intent and compute result metric deltas.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "query_fingerprint": {"type": "string", "description": "From record_decision response"},
+                "query_intent":  {"type": "string", "description": "Normalized intent slug"},
+                "query_params":  {"type": "object", "description": "Structured filters"},
+                "sql_text":      {"type": "string", "description": "SQL for fingerprint when query_fingerprint omitted"},
+                "category":      {"type": "string", "description": "Decision category filter"},
+                "decision_id":   {"type": "string", "description": "Current decision to exclude from matches"},
+                "result_metrics": {"type": "object", "description": "Current metrics for delta computation"},
+                "lookback_days": {"type": "integer", "description": "How far back to search (default 90)"},
+                "match_mode":    {"type": "string", "enum": ["fingerprint", "intent", "scenario"], "description": "Match strategy"},
+                "limit":         {"type": "integer", "description": "Max prior matches (default 5)"},
+            },
+        },
+        "_handler": _tool_compare_with_history,
+    },
+    {
+        "name": "explain_decision_delta",
+        "description": "Natural-language explanation of changes between a decision and a baseline prior run.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "decision_id": {"type": "string", "description": "Current decision id"},
+                "baseline_decision_id": {"type": "string", "description": "Explicit baseline (optional)"},
+                "auto_baseline": {"type": "boolean", "description": "Pick latest fingerprint match as baseline"},
+            },
+            "required": ["decision_id"],
+        },
+        "_handler": _tool_explain_decision_delta,
+    },
+    {
         "name": "query_decisions",
-        "description": "Query recorded decisions by natural language, category, or get all recent decisions.",
+        "description": "Query recorded decisions from the Decision Store by text, category, or recency.",
         "inputSchema": {
             "type": "object",
             "properties": {
@@ -664,7 +648,7 @@ TOOLS = [
     },
     {
         "name": "find_precedents",
-        "description": "Find past decisions similar to a given scenario using hybrid similarity search.",
+        "description": "Find past decisions in the Decision Store similar to a given scenario (token overlap).",
         "inputSchema": {
             "type": "object",
             "properties": {
@@ -677,7 +661,7 @@ TOOLS = [
     },
     {
         "name": "get_causal_chain",
-        "description": "Trace the causal chain upstream or downstream from a decision.",
+        "description": "Trace the causal chain upstream or downstream via causal_parent_ids in the Decision Store.",
         "inputSchema": {
             "type": "object",
             "properties": {
@@ -869,6 +853,8 @@ _PRELOADED_GRAPH_TOOLS = [
     "get_business_rules",
     "run_reasoning",
     "record_decision",
+    "compare_with_history",
+    "query_decisions",
 ]
 MCP_TOOLSETS: dict[str, list[str]] = {
     "preloaded_graph": _PRELOADED_GRAPH_TOOLS,
@@ -921,7 +907,7 @@ RESOURCES = [
     {
         "uri": "semantica://decisions/list",
         "name": "Decisions",
-        "description": "List of all recorded decisions in the graph",
+        "description": "List of recent decisions from the Decision Store",
         "mimeType": "application/json",
     },
     {
