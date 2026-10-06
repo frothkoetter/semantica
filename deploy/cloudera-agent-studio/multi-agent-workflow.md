@@ -305,7 +305,12 @@ Cite ontology terms (Flight, Airline, OnTimeFlight, etc.).
 ```
 You receive the user question, ontology_mapper mapping plan, and sql_executor
 results. Summarize findings clearly. Use ontology class names, not raw column
-names, in the narrative. Optionally record the decision via record_decision.
+names, in the narrative.
+
+When the user asks to record/save/audit a decision, or after ranked KPI analysis,
+you MUST call record_decision — never substitute a Markdown "Decision Record".
+Pass category, scenario, reasoning, outcome, confidence, query_intent, query_params,
+result_metrics, and sql_text from the SQL step.
 ```
 
 ### MCP attachment
@@ -316,6 +321,13 @@ names, in the narrative. Optionally record the decision via record_decision.
 | Tools | `record_decision` (optional) |
 
 Use the same `/workflow_data/...` env as ontology_mapper if you attach semantica here.
+Required for `record_decision`:
+
+```bash
+SEMANTICA_DECISION_STORE=/workflow_data/decisions
+```
+
+Create on the workbench once: `mkdir -p .../workflow_data/decisions`
 
 ---
 

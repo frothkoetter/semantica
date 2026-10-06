@@ -183,6 +183,7 @@ _tool_find_precedents = _decision_store.handle_find_precedents
 _tool_get_causal_chain = _decision_store.handle_get_causal_chain
 _tool_compare_with_history = _decision_store.handle_compare_with_history
 _tool_explain_decision_delta = _decision_store.handle_explain_decision_delta
+_tool_get_decision_store_status = _decision_store.handle_get_decision_store_status
 
 
 def _tool_add_entity(args: dict) -> dict:
@@ -620,6 +621,12 @@ TOOLS = [
         "_handler": _tool_compare_with_history,
     },
     {
+        "name": "get_decision_store_status",
+        "description": "Check Decision Store path, writability, and record count (diagnose record_decision failures).",
+        "inputSchema": {"type": "object", "properties": {}},
+        "_handler": _tool_get_decision_store_status,
+    },
+    {
         "name": "explain_decision_delta",
         "description": "Natural-language explanation of changes between a decision and a baseline prior run.",
         "inputSchema": {
@@ -855,6 +862,7 @@ _PRELOADED_GRAPH_TOOLS = [
     "record_decision",
     "compare_with_history",
     "query_decisions",
+    "get_decision_store_status",
 ]
 MCP_TOOLSETS: dict[str, list[str]] = {
     "preloaded_graph": _PRELOADED_GRAPH_TOOLS,
@@ -966,6 +974,19 @@ def _handle(req: dict) -> dict | None:
         return None
 
     if method == "initialize":
+        try:
+            from semantica.decision_store.store import check_store_writability
+            ds = check_store_writability()
+            log.info(
+                "Decision Store: root=%s writable=%s configured_via_env=%s",
+                ds.get("store_root"),
+                ds.get("writable"),
+                ds.get("configured_via_env"),
+            )
+            if not ds.get("writable"):
+                log.warning("Decision Store not writable: %s", ds.get("error") or ds.get("hint"))
+        except Exception as exc:
+            log.warning("Decision Store status check failed: %s", exc)
         return ok({
             "protocolVersion": "2024-11-05",
             "capabilities": CAPABILITIES,

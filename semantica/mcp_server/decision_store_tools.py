@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import Any, Dict, Optional
 
 from semantica.decision_store import DecisionStore
+from semantica.decision_store.store import check_store_writability, default_store_root
 
 _store: Optional[DecisionStore] = None
 
@@ -16,6 +17,21 @@ def _get_store() -> DecisionStore:
     return _store
 
 
+def handle_get_decision_store_status(_args: dict) -> dict:
+    """Report Decision Store path, writability, and env configuration."""
+    status = check_store_writability()
+    status["index_mode"] = (
+        __import__("os").environ.get("SEMANTICA_DECISION_STORE_INDEX") or "auto"
+    )
+    if status.get("writable"):
+        try:
+            store = _get_store()
+            status["record_count"] = len(store._scan_jsonl())
+        except Exception as exc:
+            status["record_count_error"] = str(exc)
+    return status
+
+
 def _strip_internal(record: Dict[str, Any]) -> Dict[str, Any]:
     return {k: v for k, v in record.items() if not k.startswith("_")}
 
@@ -25,13 +41,21 @@ def handle_record_decision(args: dict) -> dict:
     for field in required:
         if field not in args:
             return {"error": f"missing required field: {field}"}
-    store = _get_store()
     try:
+        store = _get_store()
         return store.record(**args)
     except ValueError as exc:
         return {"error": str(exc)}
     except OSError as exc:
-        return {"error": f"could not write decision store: {exc}"}
+        root = default_store_root()
+        hint = (
+            f"Decision Store path not writable: {root}. "
+            "Set SEMANTICA_DECISION_STORE=/workflow_data/decisions in the semantica MCP "
+            "workflow env and create that directory under workflow_data on the host."
+        )
+        if "read-only" in str(exc).lower() or exc.errno in (30, 13):  # EROFS, EACCES
+            return {"error": hint, "detail": str(exc)}
+        return {"error": f"could not write decision store: {exc}", "store_path": root}
 
 
 def handle_query_decisions(args: dict) -> dict:

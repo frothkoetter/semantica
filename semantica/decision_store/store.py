@@ -62,6 +62,33 @@ def _mapping_hash() -> str:
     return hash_file(path) if path and os.path.exists(path) else ""
 
 
+def check_store_writability(store_root: Optional[str] = None) -> Dict[str, Any]:
+    """Probe whether the Decision Store path can be created and written."""
+    root = store_root or default_store_root()
+    jsonl = jsonl_path(root)
+    probe = os.path.join(root, ".write_probe")
+    result: Dict[str, Any] = {
+        "store_root": root,
+        "configured_via_env": bool((os.environ.get("SEMANTICA_DECISION_STORE") or "").strip()),
+        "jsonl_path": jsonl,
+        "jsonl_exists": os.path.exists(jsonl),
+        "writable": False,
+    }
+    try:
+        ensure_store_dir(root)
+        with open(probe, "w", encoding="utf-8") as fh:
+            fh.write("ok")
+        os.remove(probe)
+        result["writable"] = True
+    except OSError as exc:
+        result["error"] = str(exc)
+        result["hint"] = (
+            "Set SEMANTICA_DECISION_STORE=/workflow_data/decisions in the semantica MCP "
+            "workflow env (not the default ~/.semantica/decisions)."
+        )
+    return result
+
+
 class DecisionStore:
     def __init__(
         self,
@@ -74,7 +101,6 @@ class DecisionStore:
         if index_enabled is None:
             index_enabled = mode != "none"
         self._index = DecisionIndex(self.store_root, enabled=index_enabled)
-        ensure_store_dir(self.store_root)
 
     def close(self) -> None:
         self._index.close()

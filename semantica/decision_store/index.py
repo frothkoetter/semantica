@@ -41,9 +41,10 @@ class DecisionIndex:
         self.enabled = enabled
         self._conn: Optional[sqlite3.Connection] = None
 
-    def _connect(self) -> sqlite3.Connection:
+    def _connect(self, *, write: bool = False) -> sqlite3.Connection:
         if self._conn is None:
-            os.makedirs(self.store_root, exist_ok=True)
+            if write:
+                os.makedirs(self.store_root, exist_ok=True)
             self._conn = sqlite3.connect(index_path(self.store_root))
             self._conn.row_factory = sqlite3.Row
             self._conn.executescript(_SCHEMA)
@@ -57,7 +58,7 @@ class DecisionIndex:
     def upsert(self, record: Dict[str, Any], json_line_offset: int) -> None:
         if not self.enabled:
             return
-        conn = self._connect()
+        conn = self._connect(write=True)
         conn.execute(
             """
             INSERT OR REPLACE INTO decisions (
