@@ -110,7 +110,7 @@ process. For workflow runs, **`workflow_data` is bind-mounted at `/workflow_data
 | Airline graph | `/workflow_data/data/airline_graph.json` |
 | Mapping YAML | `/workflow_data/config/airline_r2rml_db_mapping.yaml` |
 | Business rules | `/workflow_data/config/airline_business_rules.yaml` |
-| Decision Store (JSONL) | `/workflow_data/decisions` (`SEMANTICA_DECISION_STORE`) |
+| Decision Store (JSONL, **writable**) | `/workspace/decisions` (`SEMANTICA_DECISION_STORE`) |
 
 Example workflow env block (see [`workflow-env.template`](workflow-env.template)):
 
@@ -119,7 +119,7 @@ ALLOW_AGENT_STUDIO_INSECURE_TOOL_EXECUTION=true
 SEMANTICA_KG_PATH=/workflow_data/data/airline_graph.json
 SEMANTICA_MAPPING_CONFIG=/workflow_data/config/airline_r2rml_db_mapping.yaml
 SEMANTICA_BUSINESS_RULES=/workflow_data/config/airline_business_rules.yaml
-SEMANTICA_DECISION_STORE=/workflow_data/decisions
+SEMANTICA_DECISION_STORE=/workspace/decisions
 SEMANTICA_LOG_LEVEL=INFO
 ```
 
@@ -159,8 +159,7 @@ workbench (replace `<workflow_dir>` with your folder, e.g. `semanticus__eoNcbDVo
 ```bash
 WORKFLOW_DIR=/home/cdsw/agent-studio/studio-data/workflows/<workflow_dir>
 mkdir -p "$WORKFLOW_DIR/workflow_data/data" \
-         "$WORKFLOW_DIR/workflow_data/config" \
-         "$WORKFLOW_DIR/workflow_data/decisions"
+         "$WORKFLOW_DIR/workflow_data/config"
 
 cp /home/cdsw/semantica/data/airline_graph.json \
    "$WORKFLOW_DIR/workflow_data/data/"
@@ -196,7 +195,7 @@ missing build.
 | `kg_path_exists: false` after env change | Stale MCP subprocess | Re-attach semantica MCP; restart workflow session |
 | File missing entirely | `build_airline_graph.py` not run | `cd /home/cdsw/semantica && uv run python scripts/build_airline_graph.py` |
 | `kg_path_exists: true` but `node_count: 0` | Corrupt JSON or load failed silently | Set `SEMANTICA_LOG_LEVEL=INFO`, check stderr for load warnings |
-| `record_decision` → read-only file system | `SEMANTICA_DECISION_STORE` unset; default `~/.semantica/decisions` not writable in sandbox | Set `SEMANTICA_DECISION_STORE=/workflow_data/decisions`; `mkdir -p workflow_data/decisions` on host (§5); restart session |
+| `record_decision` → read-only file system on `/workflow_data/decisions` | **`/workflow_data` is read-only** in Agent Studio sandbox (Cloudera docs); only `/workspace` is writable | Set `SEMANTICA_DECISION_STORE=/workspace/decisions`; restart session; verify with `get_decision_store_status` |
 
 `ALLOW_AGENT_STUDIO_INSECURE_TOOL_EXECUTION=true` can disable bubblewrap so host paths like
 `/home/cdsw/semantica/data/` are visible. Prefer `/workflow_data/...` first — it works with the

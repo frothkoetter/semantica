@@ -50,8 +50,8 @@ def handle_record_decision(args: dict) -> dict:
         root = default_store_root()
         hint = (
             f"Decision Store path not writable: {root}. "
-            "Set SEMANTICA_DECISION_STORE=/workflow_data/decisions in the semantica MCP "
-            "workflow env and create that directory under workflow_data on the host."
+            "In Agent Studio use SEMANTICA_DECISION_STORE=/workspace/decisions "
+            "(/workflow_data is read-only in the MCP sandbox)."
         )
         if "read-only" in str(exc).lower() or exc.errno in (30, 13):  # EROFS, EACCES
             return {"error": hint, "detail": str(exc)}

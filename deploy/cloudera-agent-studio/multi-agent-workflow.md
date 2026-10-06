@@ -324,10 +324,12 @@ Use the same `/workflow_data/...` env as ontology_mapper if you attach semantica
 Required for `record_decision`:
 
 ```bash
-SEMANTICA_DECISION_STORE=/workflow_data/decisions
+SEMANTICA_DECISION_STORE=/workspace/decisions
 ```
 
-Create on the workbench once: `mkdir -p .../workflow_data/decisions`
+> **Important:** `/workflow_data` is **read-only** in the MCP sandbox. Decisions must
+> be written to `/workspace/decisions` (session artifacts, visible in Agent Studio UI).
+> Do not use `/workflow_data/decisions` — it will always fail with EROFS.
 
 ---
 

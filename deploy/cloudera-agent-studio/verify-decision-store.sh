@@ -2,7 +2,7 @@
 # Verify Decision Store path is writable (same env as semantica MCP in Agent Studio workflow).
 set -euo pipefail
 
-STORE="${SEMANTICA_DECISION_STORE:-/workflow_data/decisions}"
+STORE="${SEMANTICA_DECISION_STORE:-/workspace/decisions}"
 
 echo "=== Decision Store verification ==="
 echo "SEMANTICA_DECISION_STORE: ${STORE}"
@@ -22,4 +22,5 @@ fi
 
 echo
 echo "Note: workflow MCP runs in bubblewrap — validate in Agent Studio with get_decision_store_status."
-echo "Required workflow env: SEMANTICA_DECISION_STORE=/workflow_data/decisions"
+echo "Required Agent Studio env: SEMANTICA_DECISION_STORE=/workspace/decisions"
+echo "Do NOT use /workflow_data/decisions — that mount is read-only in the sandbox."

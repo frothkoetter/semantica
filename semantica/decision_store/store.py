@@ -33,9 +33,20 @@ SCHEMA_VERSION = "1.0"
 
 
 def default_store_root() -> str:
+    """Resolve Decision Store directory.
+
+    Agent Studio mounts ``/workflow_data`` read-only; the writable sandbox CWD is
+    ``/workspace`` (also exposed as ``SESSION_DIRECTORY``). See Cloudera tool-execution docs.
+    """
     env = (os.environ.get("SEMANTICA_DECISION_STORE") or "").strip()
     if env:
         return os.path.expanduser(env)
+    session = (os.environ.get("SESSION_DIRECTORY") or "").strip()
+    if session:
+        return os.path.join(session, "decisions")
+    workspace = "/workspace"
+    if os.path.isdir(workspace) and os.access(workspace, os.W_OK):
+        return os.path.join(workspace, "decisions")
     return os.path.expanduser("~/.semantica/decisions")
 
 
@@ -83,8 +94,9 @@ def check_store_writability(store_root: Optional[str] = None) -> Dict[str, Any]:
     except OSError as exc:
         result["error"] = str(exc)
         result["hint"] = (
-            "Set SEMANTICA_DECISION_STORE=/workflow_data/decisions in the semantica MCP "
-            "workflow env (not the default ~/.semantica/decisions)."
+            "In Agent Studio, /workflow_data is read-only. Set "
+            "SEMANTICA_DECISION_STORE=/workspace/decisions (writable sandbox) or use "
+            "SESSION_DIRECTORY/decisions. Do not use /workflow_data/decisions for writes."
         )
     return result
 

@@ -42,11 +42,16 @@ ${SEMANTICA_DECISION_STORE}/
 ~/.semantica/decisions/
 ```
 
-For Cloudera Agent Studio / workbench deployments, mount a persistent volume:
+For Cloudera Agent Studio, the MCP sandbox mounts **`/workflow_data` read-only**
+(inputs only). The **writable** location is **`/workspace`** (session artifacts):
 
 ```bash
-SEMANTICA_DECISION_STORE=/workflow_data/decisions
+SEMANTICA_DECISION_STORE=/workspace/decisions
 ```
+
+Decisions appear under session artifacts in the Agent Studio UI. For long-term
+workflow-level archive, copy `decisions.jsonl` from the session directory on the
+host (or use Iceberg `decision_audit` in CDW deployments).
 
 ### JSONL append semantics
 
@@ -250,7 +255,7 @@ Existing vars unchanged:
       "env": {
         "SEMANTICA_KG_PATH": "/workflow_data/config/airline_graph.json",
         "SEMANTICA_MAPPING_CONFIG": "/workflow_data/config/airline_r2rml_db_mapping.yaml",
-        "SEMANTICA_DECISION_STORE": "/workflow_data/decisions"
+        "SEMANTICA_DECISION_STORE": "/workspace/decisions"
       }
     }
   }
