@@ -89,6 +89,7 @@ def main() -> int:
     for ttl in (
         REPO / "data" / "airline_demo_ontology.ttl",
         REPO / "data" / "airline_business_ontology.ttl",
+        REPO / "data" / "airline_kpi_ontology.ttl",
     ):
         print(f"Importing {ttl.name} ...")
         result = handle_import_ontology(

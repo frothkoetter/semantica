@@ -144,13 +144,18 @@ MANDATORY tool order:
 3. Call get_business_rules before building the mapping plan.
 4. Every mapping plan MUST include display_columns and invalid_columns_avoided
    (from sql_agent_hints.do_not_use) for any human-readable labels in results.
+5. Set sql_patterns when flights is involved: single_edge_join for originAirport-only
+   questions; aggregate_fact_first when both origin and destination are required.
+   Never plan JOIN ... ON (origin = iata OR dest = iata).
 
 NEVER call extract_entities or extract_relations. The graph and business rules
 are already loaded — NER/extraction tools load heavy ML models and will timeout.
 For OTP questions, use get_business_rules (on_time_max_delay: 15), not NER.
 
 Business semantics (OTP, peak hours, delay severity) come from get_business_rules:
-- On-time = FAA 15-minute rule (arrdelay and depdelay <= 15, cancelled = 0)
+- OTP → ontology class OTP (equivalent OnTimePerformance); use otp.sql.expr for otp_pct
+- 50 industry KPIs in get_business_rules → kpi_catalog (D0, A0, SevereDelayRate, ASM, …)
+- On-time flight = OnTimeFlight: FAA 15-minute rule (arrdelay and depdelay <= 15, cancelled = 0)
 - Derived classes: OnTimeFlight, DelayedFlight, MorningPeak, etc.
 
 Common ontology links:
@@ -237,6 +242,11 @@ For every user question:
   ],
   "group_by": ["airlines.code", "airlines.description"],
   "order_by": "avg_arr_delay DESC",
+  "sql_patterns": {
+    "strategy": "single_edge_join",
+    "avoid": ["OR in JOIN predicate"],
+    "notes": "One equality join; filter year and cancelled before join"
+  },
   "reasoning_summary": "<1-3 sentences>"
 }
 
@@ -282,6 +292,15 @@ Use ONLY column names from mapping plan display_columns and group_by — never i
 "name" for airlines or airports (use description / airport per sql_agent_hints).
 Call get_schema only after a compile error, not for discovery when the plan is complete.
 
+EFFICIENT SQL (flights has ~86M rows; airports ~300):
+- Filter early: year, crsdeptime, cancelled = 0 BEFORE any join.
+- Equality joins only — NEVER: JOIN airports a ON (f.origin = a.iata OR f.dest = a.iata).
+- Aggregate on fact keys first, then join small result to airports/airlines.
+- Do not use COUNT(CASE WHEN f.origin = a.iata THEN 1 END) when the join already
+  encodes the match — that pattern usually means the join design is wrong.
+- If the mapping plan says originAirport only, do not add destinationAirport.
+- Follow sql_patterns.strategy in the mapping plan (see § Efficient SQL patterns).
+
 Pass result rows to the next agent.
 ```
 
@@ -313,9 +332,134 @@ HIVE_AUTH_MECHANISM=LDAP
 2. If ready_for_sql is not true, return {"status": "aborted"} and STOP.
 3. Compose Hive SQL from tables, joins, filters, metrics, group_by, order_by.
    Use display_columns for SELECT labels — never airports.name or airlines.name.
+   Apply efficient SQL patterns (§ below) — reject OR-join designs on flights.
 4. Call execute_query with the SQL.
 5. Return {"status": "ok", "sql": "<query>", "rows": <result>}.
 ```
+
+---
+
+## Efficient SQL patterns (airline / Hive)
+
+`airlinedata.flights` is ~86M rows; `airports` and `airlines` are small dimensions.
+Agents must **not** join the full fact table to a dimension with `OR`, then aggregate.
+
+### Anti-pattern (slow — nested loop / row explosion)
+
+```sql
+-- BAD: OR join + redundant CASE — minutes to hours on 86M rows
+SELECT a.iata, a.airport,
+  COUNT(CASE WHEN f.origin = a.iata THEN 1 END) AS total_departures,
+  COUNT(CASE WHEN f.dest = a.iata THEN 1 END) AS total_arrivals
+FROM airlinedata.flights f
+LEFT JOIN airlinedata.airports a
+  ON (f.origin = a.iata OR f.dest = a.iata)
+WHERE f.year BETWEEN 2000 AND 2005
+  AND f.crsdeptime BETWEEN 1000 AND 1659
+GROUP BY a.iata, a.airport;
+```
+
+| Problem | Effect |
+|---------|--------|
+| `OR` in JOIN | Optimizer cannot hash-join; scans/flights × airports |
+| Join before aggregate | Millions of intermediate rows |
+| `CASE` inside `COUNT` | Extra expression eval on inflated row set |
+
+### Pattern A — origin only (`originAirport` / congestion at departure)
+
+Use when the question says congestion, severe delay, or hub departures **at** an airport
+(ontology: `Flight.originAirport` → `flights.origin = airports.iata`).
+
+```sql
+SELECT
+  a.iata AS airport_code,
+  a.airport AS airport_name,
+  COUNT(*) AS total_departures,
+  SUM(CASE WHEN GREATEST(COALESCE(f.arrdelay, 0), COALESCE(f.depdelay, 0)) > 60
+           THEN 1 ELSE 0 END) AS severe_delay_departures
+FROM airlinedata.flights f
+JOIN airlinedata.airports a ON f.origin = a.iata
+WHERE f.year BETWEEN 2000 AND 2005
+  AND f.crsdeptime BETWEEN 1000 AND 1659
+  AND f.cancelled = 0
+GROUP BY a.iata, a.airport
+ORDER BY severe_delay_departures DESC
+LIMIT 10;
+```
+
+One fact scan · one equality join · ~300 groups.
+
+### Pattern B — departures **and** arrivals (both edges)
+
+Use when the user explicitly asks for **both** departures and arrivals. Split into two
+pre-aggregations; join ~300-row summaries to `airports` — never OR-join the fact table.
+
+```sql
+WITH dep AS (
+  SELECT
+    f.origin AS iata,
+    COUNT(*) AS total_departures,
+    SUM(CASE WHEN GREATEST(COALESCE(f.arrdelay, 0), COALESCE(f.depdelay, 0)) > 60
+             THEN 1 ELSE 0 END) AS severe_delay_departures
+  FROM airlinedata.flights f
+  WHERE f.year BETWEEN 2000 AND 2005
+    AND f.crsdeptime BETWEEN 1000 AND 1659
+    AND f.cancelled = 0
+  GROUP BY f.origin
+),
+arr AS (
+  SELECT
+    f.dest AS iata,
+    COUNT(*) AS total_arrivals,
+    SUM(CASE WHEN GREATEST(COALESCE(f.arrdelay, 0), COALESCE(f.depdelay, 0)) > 60
+             THEN 1 ELSE 0 END) AS severe_delay_arrivals
+  FROM airlinedata.flights f
+  WHERE f.year BETWEEN 2000 AND 2005
+    AND f.crsdeptime BETWEEN 1000 AND 1659
+    AND f.cancelled = 0
+  GROUP BY f.dest
+)
+SELECT
+  a.iata AS airport_code,
+  a.airport AS airport_name,
+  COALESCE(d.total_departures, 0) AS total_departures,
+  COALESCE(r.total_arrivals, 0) AS total_arrivals,
+  COALESCE(d.severe_delay_departures, 0) AS severe_delay_departures,
+  COALESCE(r.severe_delay_arrivals, 0) AS severe_delay_arrivals
+FROM airlinedata.airports a
+LEFT JOIN dep d ON a.iata = d.iata
+LEFT JOIN arr r ON a.iata = r.iata
+ORDER BY total_departures DESC
+LIMIT 20;
+```
+
+Two filtered scans · two hash aggregates · tiny dimension join.
+
+### Mapping plan hint (`sql_patterns`)
+
+ontology_mapper should set this when both origin and destination are needed:
+
+```json
+"sql_patterns": {
+  "strategy": "aggregate_fact_first",
+  "avoid": ["JOIN airports ON (origin = iata OR dest = iata)"],
+  "aggregation_keys": [
+    {"edge": "originAirport", "group_by": "flights.origin"},
+    {"edge": "destinationAirport", "group_by": "flights.dest"}
+  ],
+  "notes": "Pre-aggregate dep and arr CTEs; join airports last"
+}
+```
+
+For origin-only questions: `"strategy": "single_edge_join"`, one join in `joins[]`.
+
+### Physical tuning (optional, table design)
+
+| Lever | Benefit |
+|-------|---------|
+| Partition `flights` by `year` | Prunes to 2000–2005 slice |
+| Iceberg sort on `(year, origin)` | Faster departure aggregations |
+| Always filter `cancelled = 0` | Matches business rules, fewer rows |
 
 ---
 

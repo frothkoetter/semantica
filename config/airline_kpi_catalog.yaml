@@ -1,0 +1,438 @@
+# 50 industry-specific airline KPIs for US DOT airlinedata (Hive/Iceberg).
+# Merged into get_business_rules as kpi_catalog. Ontology: data/airline_kpi_ontology.ttl
+#
+# SQL placeholders use unqualified flights columns; sql_executor qualifies as airlinedata.flights.
+
+ontology_namespace: "https://w3id.org/demo/airline#"
+kpi_count: 50
+
+categories:
+  PunctualityKPI: { label_en: "Punctuality", label_de: "Pünktlichkeit" }
+  DelayMagnitudeKPI: { label_en: "Delay magnitude", label_de: "Verzögerungsausmaß" }
+  DelayAttributionKPI: { label_en: "Delay attribution", label_de: "Verzögerungsursachen" }
+  TurnaroundKPI: { label_en: "Turnaround & block", label_de: "Turnaround & Blockzeit" }
+  NetworkCapacityKPI: { label_en: "Network & capacity", label_de: "Netz & Kapazität" }
+  CompositeReliabilityKPI: { label_en: "Composite reliability", label_de: "Composite-Zuverlässigkeit" }
+
+# Shared fragments
+_fragments:
+  completed: "cancelled = 0"
+  scheduled_all: "1=1"
+  max_delay: "GREATEST(COALESCE(arrdelay,0), COALESCE(depdelay,0))"
+  on_time_both: "cancelled = 0 AND COALESCE(arrdelay,0) <= 15 AND COALESCE(depdelay,0) <= 15"
+  delayed_faa: "cancelled = 0 AND (COALESCE(arrdelay,0) > 15 OR COALESCE(depdelay,0) > 15)"
+  severe: "cancelled = 0 AND GREATEST(COALESCE(arrdelay,0), COALESCE(depdelay,0)) > 60"
+  moderate: "cancelled = 0 AND GREATEST(COALESCE(arrdelay,0), COALESCE(depdelay,0)) BETWEEN 31 AND 60"
+  minor: "cancelled = 0 AND GREATEST(COALESCE(arrdelay,0), COALESCE(depdelay,0)) BETWEEN 16 AND 30"
+  extreme: "cancelled = 0 AND GREATEST(COALESCE(arrdelay,0), COALESCE(depdelay,0)) > 180"
+  attr_sum: "COALESCE(carrierdelay,0)+COALESCE(weatherdelay,0)+COALESCE(nasdelay,0)+COALESCE(securitydelay,0)+COALESCE(lateaircraftdelay,0)"
+  pct_num: "ROUND(100.0 * SUM(CASE WHEN {pred} THEN 1 ELSE 0 END) / NULLIF(COUNT(*), 0), 2)"
+
+kpis:
+
+  # ── Punctuality (10) ─────────────────────────────────────────────────────
+
+  D0DepartureOTP:
+    category: PunctualityKPI
+    label_en: "D0 departure OTP"
+    label_de: "Abflug-Pünktlichkeit D0"
+    alt_labels: [D0, departure OTP, Abflug-OTP]
+    definition: "Percentage of completed flights with departure delay <= 15 minutes."
+    unit: percent
+    sql: { expr: "ROUND(100.0 * SUM(CASE WHEN cancelled = 0 AND COALESCE(depdelay,0) <= 15 THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN cancelled = 0 THEN 1 ELSE 0 END), 0), 2)", alias: d0_pct }
+
+  A0ArrivalOTP:
+    category: PunctualityKPI
+    label_en: "A0 arrival OTP"
+    label_de: "Ankunfts-Pünktlichkeit A0"
+    alt_labels: [A0, arrival OTP, Ankunfts-OTP]
+    definition: "Percentage of completed flights with arrival delay <= 15 minutes."
+    unit: percent
+    sql: { expr: "ROUND(100.0 * SUM(CASE WHEN cancelled = 0 AND COALESCE(arrdelay,0) <= 15 THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN cancelled = 0 THEN 1 ELSE 0 END), 0), 2)", alias: a0_pct }
+
+  CompletionRate:
+    category: PunctualityKPI
+    label_en: "Completion rate"
+    label_de: "Durchführungsquote"
+    definition: "Share of scheduled flights that were not cancelled."
+    unit: percent
+    sql: { expr: "ROUND(100.0 * SUM(CASE WHEN cancelled = 0 THEN 1 ELSE 0 END) / NULLIF(COUNT(*), 0), 2)", alias: completion_pct }
+
+  CancellationRate:
+    category: PunctualityKPI
+    label_en: "Cancellation rate"
+    label_de: "Annullierungsquote"
+    definition: "Share of scheduled flights cancelled."
+    unit: percent
+    sql: { expr: "ROUND(100.0 * SUM(CASE WHEN cancelled = 1 THEN 1 ELSE 0 END) / NULLIF(COUNT(*), 0), 2)", alias: cancellation_pct }
+
+  DiversionRate:
+    category: PunctualityKPI
+    label_en: "Diversion rate"
+    label_de: "Umleitungsquote"
+    definition: "Share of completed flights diverted."
+    unit: percent
+    sql: { expr: "ROUND(100.0 * SUM(CASE WHEN cancelled = 0 AND (diverted = '1' OR diverted = 'Y') THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN cancelled = 0 THEN 1 ELSE 0 END), 0), 2)", alias: diversion_pct }
+
+  ZeroMinuteDelayRate:
+    category: PunctualityKPI
+    label_en: "Zero-minute delay rate"
+    label_de: "Pünktlichkeitsquote exakt"
+    definition: "Completed flights with exactly zero arrival and departure delay."
+    unit: percent
+    sql: { expr: "ROUND(100.0 * SUM(CASE WHEN cancelled = 0 AND COALESCE(arrdelay,0) = 0 AND COALESCE(depdelay,0) = 0 THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN cancelled = 0 THEN 1 ELSE 0 END), 0), 2)", alias: zero_delay_pct }
+
+  DelayedFlightRate:
+    category: PunctualityKPI
+    label_en: "Delayed flight rate"
+    label_de: "Verspätungsquote"
+    definition: "FAA delayed flight share (>15 min on arrival or departure)."
+    unit: percent
+    related_classes: [DelayedFlight]
+    sql: { expr: "ROUND(100.0 * SUM(CASE WHEN cancelled = 0 AND (COALESCE(arrdelay,0) > 15 OR COALESCE(depdelay,0) > 15) THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN cancelled = 0 THEN 1 ELSE 0 END), 0), 2)", alias: delayed_pct }
+
+  EarlyArrivalRate:
+    category: PunctualityKPI
+    label_en: "Early arrival rate"
+    label_de: "Frühankunftsquote"
+    definition: "Completed flights arriving ahead of schedule (arrDelay < 0)."
+    unit: percent
+    sql: { expr: "ROUND(100.0 * SUM(CASE WHEN cancelled = 0 AND COALESCE(arrdelay,0) < 0 THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN cancelled = 0 THEN 1 ELSE 0 END), 0), 2)", alias: early_arrival_pct }
+
+  EarlyDepartureRate:
+    category: PunctualityKPI
+    label_en: "Early departure rate"
+    label_de: "Frühabflugsquote"
+    definition: "Completed flights departing ahead of schedule (depDelay < 0)."
+    unit: percent
+    sql: { expr: "ROUND(100.0 * SUM(CASE WHEN cancelled = 0 AND COALESCE(depdelay,0) < 0 THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN cancelled = 0 THEN 1 ELSE 0 END), 0), 2)", alias: early_departure_pct }
+
+  DepartureDelayDominantRate:
+    category: PunctualityKPI
+    label_en: "Departure-delay-dominant rate"
+    label_de: "Abflugverzögerung-dominant"
+    definition: "Among delayed flights, share where depDelay exceeds arrDelay."
+    unit: percent
+    sql: { expr: "ROUND(100.0 * SUM(CASE WHEN cancelled = 0 AND COALESCE(depdelay,0) > 15 AND COALESCE(depdelay,0) > COALESCE(arrdelay,0) THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN cancelled = 0 AND (COALESCE(arrdelay,0) > 15 OR COALESCE(depdelay,0) > 15) THEN 1 ELSE 0 END), 0), 2)", alias: dep_dominant_pct }
+
+  # ── Delay magnitude (10) ─────────────────────────────────────────────────
+
+  AverageDepartureDelay:
+    category: DelayMagnitudeKPI
+    label_en: "Average departure delay"
+    label_de: "Ø Abflugverzögerung"
+    unit: minutes
+    sql: { expr: "ROUND(AVG(CASE WHEN cancelled = 0 THEN COALESCE(depdelay,0) END), 2)", alias: avg_dep_delay }
+
+  AverageMaxDelayMinutes:
+    category: DelayMagnitudeKPI
+    label_en: "Average max delay"
+    label_de: "Ø maximale Verspätung"
+    unit: minutes
+    sql: { expr: "ROUND(AVG(CASE WHEN cancelled = 0 THEN GREATEST(COALESCE(arrdelay,0), COALESCE(depdelay,0)) END), 2)", alias: avg_max_delay }
+
+  TotalDelayMinutes:
+    category: DelayMagnitudeKPI
+    label_en: "Total delay minutes"
+    label_de: "Summe Verspätungsminuten"
+    unit: minutes
+    sql: { expr: "SUM(CASE WHEN cancelled = 0 THEN GREATEST(COALESCE(arrdelay,0), COALESCE(depdelay,0)) ELSE 0 END)", alias: total_delay_min }
+
+  TotalArrivalDelayMinutes:
+    category: DelayMagnitudeKPI
+    label_en: "Total arrival delay minutes"
+    label_de: "Summe Ankunftsverzögerung"
+    unit: minutes
+    sql: { expr: "SUM(CASE WHEN cancelled = 0 AND COALESCE(arrdelay,0) > 0 THEN COALESCE(arrdelay,0) ELSE 0 END)", alias: total_arr_delay_min }
+
+  TotalDepartureDelayMinutes:
+    category: DelayMagnitudeKPI
+    label_en: "Total departure delay minutes"
+    label_de: "Summe Abflugverzögerung"
+    unit: minutes
+    sql: { expr: "SUM(CASE WHEN cancelled = 0 AND COALESCE(depdelay,0) > 0 THEN COALESCE(depdelay,0) ELSE 0 END)", alias: total_dep_delay_min }
+
+  SevereDelayRate:
+    category: DelayMagnitudeKPI
+    label_en: "Severe delay rate"
+    label_de: "Schwere-Verspätungsquote"
+    related_classes: [SevereDelay]
+    unit: percent
+    sql: { expr: "ROUND(100.0 * SUM(CASE WHEN cancelled = 0 AND GREATEST(COALESCE(arrdelay,0), COALESCE(depdelay,0)) > 60 THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN cancelled = 0 THEN 1 ELSE 0 END), 0), 2)", alias: severe_delay_pct }
+
+  ModerateDelayRate:
+    category: DelayMagnitudeKPI
+    label_en: "Moderate delay rate"
+    label_de: "Mittlere-Verspätungsquote"
+    related_classes: [ModerateDelay]
+    unit: percent
+    sql: { expr: "ROUND(100.0 * SUM(CASE WHEN cancelled = 0 AND GREATEST(COALESCE(arrdelay,0), COALESCE(depdelay,0)) BETWEEN 31 AND 60 THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN cancelled = 0 THEN 1 ELSE 0 END), 0), 2)", alias: moderate_delay_pct }
+
+  MinorDelayRate:
+    category: DelayMagnitudeKPI
+    label_en: "Minor delay rate"
+    label_de: "Leichte-Verspätungsquote"
+    related_classes: [MinorDelay]
+    unit: percent
+    sql: { expr: "ROUND(100.0 * SUM(CASE WHEN cancelled = 0 AND GREATEST(COALESCE(arrdelay,0), COALESCE(depdelay,0)) BETWEEN 16 AND 30 THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN cancelled = 0 THEN 1 ELSE 0 END), 0), 2)", alias: minor_delay_pct }
+
+  ExtremeDelayRate:
+    category: DelayMagnitudeKPI
+    label_en: "Extreme delay rate"
+    label_de: "Extremverspätungsquote"
+    definition: "Flights with max delay exceeding 180 minutes."
+    unit: percent
+    sql: { expr: "ROUND(100.0 * SUM(CASE WHEN cancelled = 0 AND GREATEST(COALESCE(arrdelay,0), COALESCE(depdelay,0)) > 180 THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN cancelled = 0 THEN 1 ELSE 0 END), 0), 2)", alias: extreme_delay_pct }
+
+  ArrivalDelayDominantRate:
+    category: DelayMagnitudeKPI
+    label_en: "Arrival-delay-dominant rate"
+    label_de: "Ankunftsverzögerung-dominant"
+    unit: percent
+    sql: { expr: "ROUND(100.0 * SUM(CASE WHEN cancelled = 0 AND COALESCE(arrdelay,0) > 15 AND COALESCE(arrdelay,0) > COALESCE(depdelay,0) THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN cancelled = 0 AND (COALESCE(arrdelay,0) > 15 OR COALESCE(depdelay,0) > 15) THEN 1 ELSE 0 END), 0), 2)", alias: arr_dominant_pct }
+
+  # ── Delay attribution (10) ───────────────────────────────────────────────
+
+  CarrierDelayShare:
+    category: DelayAttributionKPI
+    label_en: "Carrier delay share"
+    label_de: "Carrier-Verzögerungsanteil"
+    related_classes: [CarrierDelayReason]
+    unit: percent
+    sql: { expr: "ROUND(100.0 * SUM(COALESCE(carrierdelay,0)) / NULLIF(SUM(COALESCE(carrierdelay,0)+COALESCE(weatherdelay,0)+COALESCE(nasdelay,0)+COALESCE(securitydelay,0)+COALESCE(lateaircraftdelay,0)), 0), 2)", alias: carrier_delay_share_pct }
+
+  WeatherDelayShare:
+    category: DelayAttributionKPI
+    label_en: "Weather delay share"
+    label_de: "Wetter-Verzögerungsanteil"
+    related_classes: [WeatherDelayReason]
+    unit: percent
+    sql: { expr: "ROUND(100.0 * SUM(COALESCE(weatherdelay,0)) / NULLIF(SUM(COALESCE(carrierdelay,0)+COALESCE(weatherdelay,0)+COALESCE(nasdelay,0)+COALESCE(securitydelay,0)+COALESCE(lateaircraftdelay,0)), 0), 2)", alias: weather_delay_share_pct }
+
+  NASDelayShare:
+    category: DelayAttributionKPI
+    label_en: "NAS delay share"
+    label_de: "NAS/ATC-Verzögerungsanteil"
+    related_classes: [NASDelayReason]
+    unit: percent
+    sql: { expr: "ROUND(100.0 * SUM(COALESCE(nasdelay,0)) / NULLIF(SUM(COALESCE(carrierdelay,0)+COALESCE(weatherdelay,0)+COALESCE(nasdelay,0)+COALESCE(securitydelay,0)+COALESCE(lateaircraftdelay,0)), 0), 2)", alias: nas_delay_share_pct }
+
+  SecurityDelayShare:
+    category: DelayAttributionKPI
+    label_en: "Security delay share"
+    label_de: "Security-Verzögerungsanteil"
+    related_classes: [SecurityDelayReason]
+    unit: percent
+    sql: { expr: "ROUND(100.0 * SUM(COALESCE(securitydelay,0)) / NULLIF(SUM(COALESCE(carrierdelay,0)+COALESCE(weatherdelay,0)+COALESCE(nasdelay,0)+COALESCE(securitydelay,0)+COALESCE(lateaircraftdelay,0)), 0), 2)", alias: security_delay_share_pct }
+
+  LateAircraftDelayShare:
+    category: DelayAttributionKPI
+    label_en: "Late aircraft delay share"
+    label_de: "Vorflug-Verzögerungsanteil"
+    related_classes: [LateAircraftDelayReason]
+    unit: percent
+    sql: { expr: "ROUND(100.0 * SUM(COALESCE(lateaircraftdelay,0)) / NULLIF(SUM(COALESCE(carrierdelay,0)+COALESCE(weatherdelay,0)+COALESCE(nasdelay,0)+COALESCE(securitydelay,0)+COALESCE(lateaircraftdelay,0)), 0), 2)", alias: late_aircraft_share_pct }
+
+  ControllableDelayShare:
+    category: DelayAttributionKPI
+    label_en: "Controllable delay share"
+    label_de: "Beeinflussbarer Verzögerungsanteil"
+    definition: "Carrier + late-aircraft attributed minutes as share of total attributed delay."
+    unit: percent
+    sql: { expr: "ROUND(100.0 * SUM(COALESCE(carrierdelay,0)+COALESCE(lateaircraftdelay,0)) / NULLIF(SUM(COALESCE(carrierdelay,0)+COALESCE(weatherdelay,0)+COALESCE(nasdelay,0)+COALESCE(securitydelay,0)+COALESCE(lateaircraftdelay,0)), 0), 2)", alias: controllable_delay_share_pct }
+
+  UncontrollableDelayShare:
+    category: DelayAttributionKPI
+    label_en: "Uncontrollable delay share"
+    label_de: "Unbeeinflussbarer Verzögerungsanteil"
+    definition: "Weather + NAS + security attributed minutes share."
+    unit: percent
+    sql: { expr: "ROUND(100.0 * SUM(COALESCE(weatherdelay,0)+COALESCE(nasdelay,0)+COALESCE(securitydelay,0)) / NULLIF(SUM(COALESCE(carrierdelay,0)+COALESCE(weatherdelay,0)+COALESCE(nasdelay,0)+COALESCE(securitydelay,0)+COALESCE(lateaircraftdelay,0)), 0), 2)", alias: uncontrollable_delay_share_pct }
+
+  AverageCarrierDelayMinutes:
+    category: DelayAttributionKPI
+    label_en: "Average carrier-attributed delay"
+    label_de: "Ø Carrier-Verzögerung"
+    unit: minutes
+    sql: { expr: "ROUND(AVG(CASE WHEN cancelled = 0 THEN COALESCE(carrierdelay,0) END), 2)", alias: avg_carrier_delay_min }
+
+  AverageWeatherDelayMinutes:
+    category: DelayAttributionKPI
+    label_en: "Average weather-attributed delay"
+    label_de: "Ø Wetter-Verzögerung"
+    unit: minutes
+    sql: { expr: "ROUND(AVG(CASE WHEN cancelled = 0 THEN COALESCE(weatherdelay,0) END), 2)", alias: avg_weather_delay_min }
+
+  AttributedDelayCoverageRate:
+    category: DelayAttributionKPI
+    label_en: "Attributed delay coverage rate"
+    label_de: "Attributionsabdeckung"
+    definition: "Delayed flights with any DOT cause minutes recorded."
+    unit: percent
+    sql: { expr: "ROUND(100.0 * SUM(CASE WHEN cancelled = 0 AND (COALESCE(carrierdelay,0)+COALESCE(weatherdelay,0)+COALESCE(nasdelay,0)+COALESCE(securitydelay,0)+COALESCE(lateaircraftdelay,0)) > 0 THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN cancelled = 0 AND (COALESCE(arrdelay,0) > 15 OR COALESCE(depdelay,0) > 15) THEN 1 ELSE 0 END), 0), 2)", alias: attribution_coverage_pct }
+
+  # ── Turnaround & block (10) ──────────────────────────────────────────────
+
+  AverageTaxiOut:
+    category: TurnaroundKPI
+    label_en: "Average taxi-out time"
+    label_de: "Ø Rollzeit Abflug"
+    unit: minutes
+    sql: { expr: "ROUND(AVG(CASE WHEN cancelled = 0 THEN COALESCE(taxiout,0) END), 2)", alias: avg_taxi_out }
+
+  AverageTaxiIn:
+    category: TurnaroundKPI
+    label_en: "Average taxi-in time"
+    label_de: "Ø Rollzeit Ankunft"
+    unit: minutes
+    sql: { expr: "ROUND(AVG(CASE WHEN cancelled = 0 THEN COALESCE(taxiin,0) END), 2)", alias: avg_taxi_in }
+
+  AverageAirTime:
+    category: TurnaroundKPI
+    label_en: "Average air time"
+    label_de: "Ø Flugzeit"
+    unit: minutes
+    sql: { expr: "ROUND(AVG(CASE WHEN cancelled = 0 THEN COALESCE(airtime,0) END), 2)", alias: avg_air_time }
+
+  AverageActualElapsedTime:
+    category: TurnaroundKPI
+    label_en: "Average actual elapsed time"
+    label_de: "Ø Blockzeit ist"
+    unit: minutes
+    sql: { expr: "ROUND(AVG(CASE WHEN cancelled = 0 THEN COALESCE(actualelapsedtime,0) END), 2)", alias: avg_block_time }
+
+  AverageBlockTimeVariance:
+    category: TurnaroundKPI
+    label_en: "Average block-time variance"
+    label_de: "Ø Blockzeit-Abweichung"
+    definition: "Mean (actualElapsedTime - crsElapsedTime) on completed flights."
+    unit: minutes
+    sql: { expr: "ROUND(AVG(CASE WHEN cancelled = 0 THEN COALESCE(actualelapsedtime,0) - COALESCE(crselapsedtime,0) END), 2)", alias: avg_block_variance }
+
+  LongTaxiOutRate:
+    category: TurnaroundKPI
+    label_en: "Long taxi-out rate"
+    label_de: "Lange Rollzeit Abflug"
+    definition: "Share of flights with taxiOut > 20 minutes."
+    unit: percent
+    sql: { expr: "ROUND(100.0 * SUM(CASE WHEN cancelled = 0 AND COALESCE(taxiout,0) > 20 THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN cancelled = 0 THEN 1 ELSE 0 END), 0), 2)", alias: long_taxi_out_pct }
+
+  LongTaxiInRate:
+    category: TurnaroundKPI
+    label_en: "Long taxi-in rate"
+    label_de: "Lange Rollzeit Ankunft"
+    definition: "Share of flights with taxiIn > 10 minutes."
+    unit: percent
+    sql: { expr: "ROUND(100.0 * SUM(CASE WHEN cancelled = 0 AND COALESCE(taxiin,0) > 10 THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN cancelled = 0 THEN 1 ELSE 0 END), 0), 2)", alias: long_taxi_in_pct }
+
+  ExtendedBlockTimeRate:
+    category: TurnaroundKPI
+    label_en: "Extended block-time rate"
+    label_de: "Verlängerte Blockzeit"
+    definition: "actualElapsedTime exceeds scheduled block by more than 15 minutes."
+    unit: percent
+    sql: { expr: "ROUND(100.0 * SUM(CASE WHEN cancelled = 0 AND COALESCE(actualelapsedtime,0) > COALESCE(crselapsedtime,0) + 15 THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN cancelled = 0 THEN 1 ELSE 0 END), 0), 2)", alias: extended_block_pct }
+
+  TaxiOutShareOfBlock:
+    category: TurnaroundKPI
+    label_en: "Taxi-out share of block"
+    label_de: "Rollzeit-Anteil an Block"
+    unit: ratio
+    sql: { expr: "ROUND(AVG(CASE WHEN cancelled = 0 AND COALESCE(actualelapsedtime,0) > 0 THEN COALESCE(taxiout,0) * 1.0 / actualelapsedtime END), 4)", alias: taxi_out_block_ratio }
+
+  BlockCompletionRate:
+    category: TurnaroundKPI
+    label_en: "Block completion rate"
+    label_de: "Blockzeit-Einhaltung"
+    definition: "Flights completed within scheduled block + 15 minutes."
+    unit: percent
+    sql: { expr: "ROUND(100.0 * SUM(CASE WHEN cancelled = 0 AND COALESCE(actualelapsedtime,0) <= COALESCE(crselapsedtime,0) + 15 THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN cancelled = 0 THEN 1 ELSE 0 END), 0), 2)", alias: block_completion_pct }
+
+  # ── Network & capacity (9) ───────────────────────────────────────────────
+
+  AvailableSeatMiles:
+    category: NetworkCapacityKPI
+    label_en: "Available seat miles (proxy)"
+    label_de: "Available Seat Miles (Proxy)"
+    alt_labels: [ASM]
+    definition: "SUM(distance) — ASM proxy without seats column in DOT data."
+    unit: miles
+    sql: { expr: "SUM(CASE WHEN cancelled = 0 THEN COALESCE(distance,0) ELSE 0 END)", alias: asm_proxy }
+
+  AverageStageLength:
+    category: NetworkCapacityKPI
+    label_en: "Average stage length"
+    label_de: "Ø Streckenlänge"
+    unit: miles
+    sql: { expr: "ROUND(AVG(CASE WHEN cancelled = 0 THEN COALESCE(distance,0) END), 1)", alias: avg_stage_length }
+
+  LongHaulFlightShare:
+    category: NetworkCapacityKPI
+    label_en: "Long-haul flight share"
+    label_de: "Langstreckenanteil"
+    definition: "Completed flights with distance >= 1500 miles."
+    unit: percent
+    sql: { expr: "ROUND(100.0 * SUM(CASE WHEN cancelled = 0 AND COALESCE(distance,0) >= 1500 THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN cancelled = 0 THEN 1 ELSE 0 END), 0), 2)", alias: long_haul_pct }
+
+  ShortHaulFlightShare:
+    category: NetworkCapacityKPI
+    label_en: "Short-haul flight share"
+    label_de: "Kurzstreckenanteil"
+    definition: "Completed flights with distance < 500 miles."
+    unit: percent
+    sql: { expr: "ROUND(100.0 * SUM(CASE WHEN cancelled = 0 AND COALESCE(distance,0) < 500 THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN cancelled = 0 THEN 1 ELSE 0 END), 0), 2)", alias: short_haul_pct }
+
+  DepartureOperationCount:
+    category: NetworkCapacityKPI
+    label_en: "Departure operation count"
+    label_de: "Abflugbewegungen"
+    unit: count
+    sql: { expr: "COUNT(*)", alias: departure_count }
+
+  ArrivalOperationCount:
+    category: NetworkCapacityKPI
+    label_en: "Arrival operation count"
+    label_de: "Ankunftsbewegungen"
+    unit: count
+    note: "Use dest column when aggregating arrivals; same expr on arrival-filtered dataset."
+    sql: { expr: "COUNT(*)", alias: arrival_count }
+
+  UniqueRoutePairCount:
+    category: NetworkCapacityKPI
+    label_en: "Unique route pair count"
+    label_de: "Anzahl Streckenpaare"
+    unit: count
+    sql: { expr: "COUNT(DISTINCT CONCAT(origin, '-', dest))", alias: unique_routes }
+
+  FleetActiveTailCount:
+    category: NetworkCapacityKPI
+    label_en: "Active fleet tail count"
+    label_de: "Aktive Flugzeuge (Tail)"
+    unit: count
+    sql: { expr: "COUNT(DISTINCT CASE WHEN cancelled = 0 AND tailnum IS NOT NULL AND tailnum != '' THEN tailnum END)", alias: active_tail_count }
+
+  FlightsPerAircraftTail:
+    category: NetworkCapacityKPI
+    label_en: "Flights per aircraft tail"
+    label_de: "Flüge pro Flugzeug"
+    unit: ratio
+    sql: { expr: "ROUND(SUM(CASE WHEN cancelled = 0 THEN 1 ELSE 0 END) * 1.0 / NULLIF(COUNT(DISTINCT CASE WHEN cancelled = 0 AND tailnum IS NOT NULL AND tailnum != '' THEN tailnum END), 0), 2)", alias: flights_per_tail }
+
+  # ── Composite (1) ────────────────────────────────────────────────────────
+
+  ReliabilityCompositeScore:
+    category: CompositeReliabilityKPI
+    label_en: "Reliability composite score"
+    label_de: "Zuverlässigkeits-Composite"
+    alt_labels: [Reliability Index, reliability score]
+    definition: "0.5×OTP + 0.3×(1−severeDelayRate) + 0.2×(1−cancellationRate), scaled 0–100."
+    unit: score
+    related_classes: [OTP, SevereDelay, CancelledFlight]
+    sql:
+      expr: >
+        ROUND(
+          0.5 * (100.0 * SUM(CASE WHEN cancelled = 0 AND COALESCE(arrdelay,0) <= 15 AND COALESCE(depdelay,0) <= 15 THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN cancelled = 0 THEN 1 ELSE 0 END), 0))
+        + 0.3 * (100.0 - 100.0 * SUM(CASE WHEN cancelled = 0 AND GREATEST(COALESCE(arrdelay,0), COALESCE(depdelay,0)) > 60 THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN cancelled = 0 THEN 1 ELSE 0 END), 0))
+        + 0.2 * (100.0 - 100.0 * SUM(CASE WHEN cancelled = 1 THEN 1 ELSE 0 END) / NULLIF(COUNT(*), 0))
+        , 2)
+      alias: reliability_score

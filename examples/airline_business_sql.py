@@ -5,16 +5,16 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-import yaml
-
 REPO = Path(__file__).resolve().parents[1]
 DEFAULT_RULES_PATH = REPO / "config" / "airline_business_rules.yaml"
 
 
 def load_business_rules(path: Optional[str] = None) -> Dict[str, Any]:
-    config_path = Path(path) if path else DEFAULT_RULES_PATH
-    with open(config_path, encoding="utf-8") as fh:
-        return yaml.safe_load(fh) or {}
+    """Load business rules + merged airline_kpi_catalog.yaml when present."""
+    from semantica.mcp_server.business_rules import load_business_rules as _load
+
+    config_path = str(path) if path else str(DEFAULT_RULES_PATH)
+    return _load(config_path)
 
 
 def sql_time_window_expr(
@@ -98,6 +98,81 @@ def sql_route_expr(
     alias: str = "route_id",
 ) -> str:
     return f"CONCAT({origin_col}, '-', {dest_col}) AS {alias}"
+
+
+def sql_otp_expr(
+    rules: Optional[Dict[str, Any]] = None,
+    alias: Optional[str] = None,
+) -> str:
+    """OTP percentage (ontology class OTP / OnTimePerformance) from business rules."""
+    cfg = rules or load_business_rules()
+    otp = cfg.get("otp") or {}
+    sql_cfg = otp.get("sql") or {}
+    expr = sql_cfg.get("expr")
+    if not expr:
+        threshold = (cfg.get("thresholds") or {}).get("on_time_max_delay", 15)
+        expr = (
+            f"ROUND(100.0 * SUM(CASE WHEN cancelled = 0 "
+            f"AND COALESCE(arrdelay,0) <= {threshold} "
+            f"AND COALESCE(depdelay,0) <= {threshold} THEN 1 ELSE 0 END) "
+            f"/ NULLIF(SUM(CASE WHEN cancelled = 0 THEN 1 ELSE 0 END), 0), 2)"
+        )
+    out_alias = alias or sql_cfg.get("alias") or "otp_pct"
+    return f"{expr} AS {out_alias}"
+
+
+def sql_otp_having_min_completed(
+    rules: Optional[Dict[str, Any]] = None,
+) -> int:
+    """Minimum completed flights for OTP rankings (HAVING clause guidance)."""
+    cfg = rules or load_business_rules()
+    otp = cfg.get("otp") or {}
+    return int(otp.get("default_having_min_completed") or 1000)
+
+
+def list_kpi_catalog(rules: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    """Return merged KPI catalog from business rules."""
+    cfg = rules or load_business_rules()
+    return cfg.get("kpi_catalog") or {}
+
+
+def sql_kpi_expr(
+    kpi_class: str,
+    rules: Optional[Dict[str, Any]] = None,
+    alias: Optional[str] = None,
+) -> str:
+    """Build SELECT expression for a named KPI class (e.g. SevereDelayRate, D0DepartureOTP)."""
+    cfg = rules or load_business_rules()
+    catalog = (cfg.get("kpi_catalog") or {}).get("kpis") or {}
+    spec = catalog.get(kpi_class)
+    if not spec:
+        raise KeyError(f"KPI '{kpi_class}' not in kpi_catalog ({len(catalog)} defined)")
+    sql_cfg = spec.get("sql") or {}
+    expr = sql_cfg.get("expr")
+    if not expr:
+        raise ValueError(f"KPI '{kpi_class}' has no sql.expr")
+    out_alias = alias or sql_cfg.get("alias") or kpi_class
+    return f"{expr.strip()} AS {out_alias}"
+
+
+def resolve_kpi_by_alias(
+    term: str,
+    rules: Optional[Dict[str, Any]] = None,
+) -> Optional[str]:
+    """Map user term (D0, ASM, cancellation rate) → KPI class name."""
+    needle = term.strip().lower().replace(" ", "_").replace("-", "_")
+    cfg = rules or load_business_rules()
+    catalog = (cfg.get("kpi_catalog") or {}).get("kpis") or {}
+    for class_name, spec in catalog.items():
+        if class_name.lower() == needle:
+            return class_name
+        labels = [spec.get("label_en", ""), spec.get("label_de", "")]
+        labels.extend(spec.get("alt_labels") or [])
+        for label in labels:
+            norm = str(label).lower().replace(" ", "_").replace("-", "_")
+            if norm == needle:
+                return class_name
+    return None
 
 
 def sql_runtime_flight_subquery(

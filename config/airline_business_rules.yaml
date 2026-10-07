@@ -29,6 +29,13 @@ sql_agent_hints:
   delay_note: >
     carrierdelay is delay MINUTES (CarrierDelayReason), not a carrier ID.
     Do not confuse with uniquecarrier.
+  otp_note: >
+    User "OTP" / "on-time performance" → ontology class OTP (equivalent OnTimePerformance).
+    Use otp.sql.expr from business rules; threshold 15 min on BOTH arrdelay and depdelay; denominator cancelled = 0 only.
+  kpi_catalog_note: >
+    50 industry KPIs in kpi_catalog (from airline_kpi_catalog.yaml): D0, A0, SevereDelayRate,
+    CarrierDelayShare, ASM proxy, ReliabilityCompositeScore, etc. Resolve user KPI terms to
+    kpi_catalog.kpis.<ClassName>.sql.expr — never invent formulas when catalog entry exists.
 
 # Ontology object property → physical JOIN (canonical for sql_executor)
 object_property_joins:
@@ -73,6 +80,26 @@ thresholds:
   on_time_max_delay: 15
   minor_delay_max: 30
   moderate_delay_max: 60
+
+# On-Time Performance (OTP) — ontology class OTP ≡ OnTimePerformance
+# Agents: resolve user "OTP" → OTP / OnTimeFlight / thresholds.on_time_max_delay
+otp:
+  ontology_class: OTP
+  equivalent_classes: [OnTimePerformance]
+  alt_labels: [OTP, "on-time performance", on_time_performance]
+  threshold_minutes: 15
+  threshold_ref: on_time_max_delay
+  definition: >
+    OTP = percentage of completed flights (cancelled = 0) where arrDelay and depDelay
+    are both <= 15 minutes (OnTimeFlight / FAA 15-minute rule).
+  on_time_flight_rule_ref: flight_status_rules.OnTimeFlight
+  sql:
+    on_time_predicate: "cancelled = 0 AND COALESCE(arrdelay,0) <= 15 AND COALESCE(depdelay,0) <= 15"
+    numerator: "SUM(CASE WHEN cancelled = 0 AND COALESCE(arrdelay,0) <= 15 AND COALESCE(depdelay,0) <= 15 THEN 1 ELSE 0 END)"
+    denominator: "NULLIF(SUM(CASE WHEN cancelled = 0 THEN 1 ELSE 0 END), 0)"
+    expr: "ROUND(100.0 * SUM(CASE WHEN cancelled = 0 AND COALESCE(arrdelay,0) <= 15 AND COALESCE(depdelay,0) <= 15 THEN 1 ELSE 0 END) / NULLIF(SUM(CASE WHEN cancelled = 0 THEN 1 ELSE 0 END), 0), 2)"
+    alias: otp_pct
+  default_having_min_completed: 1000
 
 # Peak business hours on scheduled departure (crsDepTime, local airport HHMM integer)
 time_windows:
@@ -149,8 +176,11 @@ logistics:
 analytics_templates:
   on_time_performance:
     question: "OTP by carrier in peak hours"
-    classes: [OnTimeFlight, Flight, Airline, EveningPeak]
-    kpi: "COUNT(OnTimeFlight) / COUNT(Flight WHERE cancelled=0)"
+    classes: [OTP, OnTimePerformance, OnTimeFlight, Flight, Airline, EveningPeak]
+    join: operatedBy
+    group_by: [airlines.code, airlines.description]
+    kpi: "otp.sql.expr → otp_pct (percentage)"
+    note: "Use get_business_rules otp section; never invent a different on-time threshold"
   delay_attribution:
     question: "Which delay reason dominates for a carrier?"
     classes: [DelayReason, DelayedFlight, Airline]

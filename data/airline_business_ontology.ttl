@@ -212,14 +212,50 @@
 # KPIs & service levels (ontology terms for analytics queries)
 # ---------------------------------------------------------------------------
 
+:ServiceLevelKPI a owl:Class ;
+    rdfs:label "Service level KPI" ;
+    rdfs:comment "Derived aggregate metric over Flight populations (not a Hive column)." .
+
+:OTP a owl:Class ;
+    rdfs:subClassOf :ServiceLevelKPI ;
+    rdfs:label "On-Time Performance (OTP)" ;
+    skos:altLabel "OTP"@en ;
+    skos:altLabel "on-time performance"@en ;
+    rdfs:comment "Percentage of OnTimeFlight among completed Flight in a scope (carrier, route, airport, time window). FAA/DOT 15-minute rule: arrDelay and depDelay both <= 15, cancelled = 0." ;
+    owl:equivalentClass :OnTimePerformance .
+
 :OnTimePerformance a owl:Class ;
+    rdfs:subClassOf :ServiceLevelKPI ;
     rdfs:label "On-time performance KPI" ;
-    rdfs:comment "Ratio of OnTimeFlight to completed Flight in a scope (carrier, route, window)." .
+    skos:altLabel "OTP"@en ;
+    rdfs:comment "Ratio of OnTimeFlight to completed Flight in a scope (carrier, route, window). Same concept as OTP." ;
+    owl:equivalentClass :OTP .
+
+:otpPercentage a owl:DatatypeProperty ;
+    rdfs:domain :OTP ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "OTP percentage" ;
+    rdfs:comment "100 * COUNT(OnTimeFlight) / COUNT(completed Flight); see airline_business_rules.yaml otp.sql.expr." .
+
+:onTimeThresholdMinutes a owl:DatatypeProperty ;
+    rdfs:domain :OTP ;
+    rdfs:range xsd:integer ;
+    rdfs:label "on-time threshold (minutes)" ;
+    rdfs:comment "Maximum arrDelay and depDelay for OnTimeFlight (FAA default 15)." .
+
+:hasOTP a owl:ObjectProperty ;
+    rdfs:subPropertyOf :measuresKPI ;
+    rdfs:domain :Flight ;
+    rdfs:range :OTP ;
+    rdfs:label "has on-time performance" ;
+    rdfs:comment "Aggregate OTP metric computed over a flight population at query time." .
 
 :AverageArrivalDelay a owl:Class ;
+    rdfs:subClassOf :ServiceLevelKPI ;
     rdfs:label "Average arrival delay KPI" .
 
 :DelayAttributionShare a owl:Class ;
+    rdfs:subClassOf :ServiceLevelKPI ;
     rdfs:label "Delay attribution share KPI" ;
     rdfs:comment "Share of total delay minutes by DelayReason in a scope." .
 

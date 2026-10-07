@@ -9,6 +9,7 @@ specific domain belongs in application code (e.g. examples/airline_business_sql.
 from __future__ import annotations
 
 import os
+from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
 from semantica.mcp_server.schema_mappings import ontology_uri
@@ -26,6 +27,24 @@ def resolve_business_rules_path(path: Optional[str] = None) -> Optional[str]:
     return None
 
 
+def _merge_kpi_catalog(rules: Dict[str, Any], business_rules_path: str) -> None:
+    """Attach airline_kpi_catalog.yaml from the same directory when present."""
+    kpi_path = Path(business_rules_path).parent / "airline_kpi_catalog.yaml"
+    if not kpi_path.is_file():
+        return
+    import yaml
+
+    with open(kpi_path, encoding="utf-8") as fh:
+        kpi_data = yaml.safe_load(fh) or {}
+    kpis = kpi_data.get("kpis") or {}
+    rules["kpi_catalog"] = {
+        "source": str(kpi_path),
+        "kpi_count": kpi_data.get("kpi_count") or len(kpis),
+        "categories": kpi_data.get("categories") or {},
+        "kpis": kpis,
+    }
+
+
 def load_business_rules(path: Optional[str] = None) -> Dict[str, Any]:
     """Load business rules YAML. Returns empty dict when no file is configured."""
     import yaml
@@ -34,7 +53,9 @@ def load_business_rules(path: Optional[str] = None) -> Dict[str, Any]:
     if not config_path:
         return {}
     with open(config_path, encoding="utf-8") as fh:
-        return yaml.safe_load(fh) or {}
+        rules = yaml.safe_load(fh) or {}
+    _merge_kpi_catalog(rules, config_path)
+    return rules
 
 
 def _normalize_token(value: str) -> str:
@@ -175,6 +196,11 @@ def summarize_business_rules(rules: Dict[str, Any]) -> Dict[str, Any]:
     }
     if isinstance(rules.get("thresholds"), dict):
         summary["thresholds"] = rules["thresholds"]
+    kpi_catalog = rules.get("kpi_catalog")
+    if isinstance(kpi_catalog, dict):
+        summary["kpi_catalog_count"] = kpi_catalog.get("kpi_count") or len(
+            kpi_catalog.get("kpis") or {}
+        )
     for key, value in rules.items():
         if key in _RESERVED_KEYS:
             continue

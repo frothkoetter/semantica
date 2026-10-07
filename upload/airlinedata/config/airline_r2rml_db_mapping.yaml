@@ -92,6 +92,9 @@ columns:
     flightstatus: flightStatus
     delayseverity: delaySeverity
     primarydelayreason: primaryDelayReason
+    otppct: otpPercentage
+    otp: OTP
+    otppercentage: otpPercentage
 
 # Ontology object properties → SQL JOIN (Flight.operatedBy uses uniquecarrier, NOT carrier)
 foreign_keys:

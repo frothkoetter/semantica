@@ -1,0 +1,233 @@
+@prefix : <https://w3id.org/demo/airline#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+# Industry KPI extension for US DOT airlinedata analytics (50 KPI classes).
+# Executable SQL: config/airline_kpi_catalog.yaml → merged into get_business_rules.
+
+# ── KPI category superclasses ────────────────────────────────────────────────
+
+:PunctualityKPI a owl:Class ;
+    rdfs:subClassOf :ServiceLevelKPI ;
+    rdfs:label "Punctuality KPI" ;
+    skos:altLabel "Pünktlichkeits-KPI"@de .
+
+:DelayMagnitudeKPI a owl:Class ;
+    rdfs:subClassOf :ServiceLevelKPI ;
+    rdfs:label "Delay magnitude KPI" ;
+    skos:altLabel "Verzögerungsausmaß-KPI"@de .
+
+:DelayAttributionKPI a owl:Class ;
+    rdfs:subClassOf :ServiceLevelKPI ;
+    rdfs:label "Delay attribution KPI" ;
+    skos:altLabel "Verzögerungsursachen-KPI"@de .
+
+:TurnaroundKPI a owl:Class ;
+    rdfs:subClassOf :ServiceLevelKPI ;
+    rdfs:label "Turnaround & block-time KPI" ;
+    skos:altLabel "Turnaround-KPI"@de .
+
+:NetworkCapacityKPI a owl:Class ;
+    rdfs:subClassOf :ServiceLevelKPI ;
+    rdfs:label "Network & capacity KPI" ;
+    skos:altLabel "Netzwerk-KPI"@de .
+
+:CompositeReliabilityKPI a owl:Class ;
+    rdfs:subClassOf :ServiceLevelKPI ;
+    rdfs:label "Composite reliability KPI" ;
+    skos:altLabel "Composite-Zuverlässigkeit"@de .
+
+# ── 50 industry KPI classes ────────────────────────────────────────────────
+
+:D0DepartureOTP a owl:Class ; rdfs:subClassOf :PunctualityKPI ;
+    rdfs:label "D0 departure OTP" ; skos:altLabel "D0"@en , "Abflug-OTP"@de ;
+    rdfs:comment "Share of completed flights with depDelay <= 15 min (FAA D0)." .
+
+:A0ArrivalOTP a owl:Class ; rdfs:subClassOf :PunctualityKPI ;
+    rdfs:label "A0 arrival OTP" ; skos:altLabel "A0"@en , "Ankunfts-OTP"@de ;
+    rdfs:comment "Share of completed flights with arrDelay <= 15 min (FAA A0)." .
+
+:CompletionRate a owl:Class ; rdfs:subClassOf :PunctualityKPI ;
+    rdfs:label "Completion rate" ; skos:altLabel "Durchführungsquote"@de ;
+    rdfs:comment "Completed flights (cancelled=0) / all scheduled departures." .
+
+:CancellationRate a owl:Class ; rdfs:subClassOf :PunctualityKPI ;
+    rdfs:label "Cancellation rate" ; skos:altLabel "Annullierungsquote"@de ;
+    rdfs:comment "Cancelled flights / all scheduled departures." .
+
+:DiversionRate a owl:Class ; rdfs:subClassOf :PunctualityKPI ;
+    rdfs:label "Diversion rate" ; skos:altLabel "Umleitungsquote"@de ;
+    rdfs:comment "Diverted flights / completed flights." .
+
+:ZeroMinuteDelayRate a owl:Class ; rdfs:subClassOf :PunctualityKPI ;
+    rdfs:label "Zero-minute delay rate" ;
+    rdfs:comment "Flights with arrDelay=0 AND depDelay=0 among completed." .
+
+:DelayedFlightRate a owl:Class ; rdfs:subClassOf :PunctualityKPI ;
+    rdfs:label "Delayed flight rate" ; skos:altLabel "Verspätungsquote"@de ;
+    rdfs:comment "DelayedFlight share (FAA >15 min on arr or dep)." .
+
+:EarlyArrivalRate a owl:Class ; rdfs:subClassOf :PunctualityKPI ;
+    rdfs:label "Early arrival rate" ;
+    rdfs:comment "Completed flights with arrDelay < 0." .
+
+:EarlyDepartureRate a owl:Class ; rdfs:subClassOf :PunctualityKPI ;
+    rdfs:label "Early departure rate" ;
+    rdfs:comment "Completed flights with depDelay < 0." .
+
+:DepartureDelayDominantRate a owl:Class ; rdfs:subClassOf :PunctualityKPI ;
+    rdfs:label "Departure-delay-dominant rate" ;
+    rdfs:comment "Delayed flights where depDelay > arrDelay." .
+
+:AverageDepartureDelay a owl:Class ; rdfs:subClassOf :DelayMagnitudeKPI ;
+    rdfs:label "Average departure delay" ; skos:altLabel "Ø Abflugverzögerung"@de ;
+    rdfs:comment "Mean depDelay on completed flights." .
+
+:AverageMaxDelayMinutes a owl:Class ; rdfs:subClassOf :DelayMagnitudeKPI ;
+    rdfs:label "Average max delay" ;
+    rdfs:comment "Mean of GREATEST(arrDelay, depDelay) on completed flights." .
+
+:TotalDelayMinutes a owl:Class ; rdfs:subClassOf :DelayMagnitudeKPI ;
+    rdfs:label "Total delay minutes" ;
+    rdfs:comment "Sum of GREATEST(arrDelay, depDelay) on completed delayed flights." .
+
+:TotalArrivalDelayMinutes a owl:Class ; rdfs:subClassOf :DelayMagnitudeKPI ;
+    rdfs:label "Total arrival delay minutes" .
+
+:TotalDepartureDelayMinutes a owl:Class ; rdfs:subClassOf :DelayMagnitudeKPI ;
+    rdfs:label "Total departure delay minutes" .
+
+:SevereDelayRate a owl:Class ; rdfs:subClassOf :DelayMagnitudeKPI ;
+    rdfs:label "Severe delay rate" ; skos:altLabel "Schwere-Verspätungsquote"@de ;
+    rdfs:comment "SevereDelay class share (>60 min max delay)." .
+
+:ModerateDelayRate a owl:Class ; rdfs:subClassOf :DelayMagnitudeKPI ;
+    rdfs:label "Moderate delay rate" ;
+    rdfs:comment "ModerateDelay share (31–60 min)." .
+
+:MinorDelayRate a owl:Class ; rdfs:subClassOf :DelayMagnitudeKPI ;
+    rdfs:label "Minor delay rate" ;
+    rdfs:comment "MinorDelay share (16–30 min)." .
+
+:ExtremeDelayRate a owl:Class ; rdfs:subClassOf :DelayMagnitudeKPI ;
+    rdfs:label "Extreme delay rate" ;
+    rdfs:comment "Flights with max delay > 180 minutes." .
+
+:ArrivalDelayDominantRate a owl:Class ; rdfs:subClassOf :DelayMagnitudeKPI ;
+    rdfs:label "Arrival-delay-dominant rate" ;
+    rdfs:comment "Delayed flights where arrDelay > depDelay." .
+
+:CarrierDelayShare a owl:Class ; rdfs:subClassOf :DelayAttributionKPI ;
+    rdfs:label "Carrier delay share" ;
+    rdfs:comment "SUM(carrierDelay) / total attributed delay minutes." .
+
+:WeatherDelayShare a owl:Class ; rdfs:subClassOf :DelayAttributionKPI ;
+    rdfs:label "Weather delay share" .
+
+:NASDelayShare a owl:Class ; rdfs:subClassOf :DelayAttributionKPI ;
+    rdfs:label "NAS delay share" ;
+    skos:altLabel "ATC/NAS delay share"@en .
+
+:SecurityDelayShare a owl:Class ; rdfs:subClassOf :DelayAttributionKPI ;
+    rdfs:label "Security delay share" .
+
+:LateAircraftDelayShare a owl:Class ; rdfs:subClassOf :DelayAttributionKPI ;
+    rdfs:label "Late aircraft delay share" ;
+    skos:altLabel "Vorflugverspätungsanteil"@de .
+
+:ControllableDelayShare a owl:Class ; rdfs:subClassOf :DelayAttributionKPI ;
+    rdfs:label "Controllable delay share" ;
+    rdfs:comment "Carrier + late-aircraft attributed minutes share." .
+
+:UncontrollableDelayShare a owl:Class ; rdfs:subClassOf :DelayAttributionKPI ;
+    rdfs:label "Uncontrollable delay share" ;
+    rdfs:comment "Weather + NAS + security attributed minutes share." .
+
+:AverageCarrierDelayMinutes a owl:Class ; rdfs:subClassOf :DelayAttributionKPI ;
+    rdfs:label "Average carrier-attributed delay" .
+
+:AverageWeatherDelayMinutes a owl:Class ; rdfs:subClassOf :DelayAttributionKPI ;
+    rdfs:label "Average weather-attributed delay" .
+
+:AttributedDelayCoverageRate a owl:Class ; rdfs:subClassOf :DelayAttributionKPI ;
+    rdfs:label "Attributed delay coverage rate" ;
+    rdfs:comment "Delayed flights with any DOT cause minutes > 0." .
+
+:AverageTaxiOut a owl:Class ; rdfs:subClassOf :TurnaroundKPI ;
+    rdfs:label "Average taxi-out time" ; skos:altLabel "Ø Rollzeit Abflug"@de .
+
+:AverageTaxiIn a owl:Class ; rdfs:subClassOf :TurnaroundKPI ;
+    rdfs:label "Average taxi-in time" ; skos:altLabel "Ø Rollzeit Ankunft"@de .
+
+:AverageAirTime a owl:Class ; rdfs:subClassOf :TurnaroundKPI ;
+    rdfs:label "Average air time" ; skos:altLabel "Ø Flugzeit"@de .
+
+:AverageActualElapsedTime a owl:Class ; rdfs:subClassOf :TurnaroundKPI ;
+    rdfs:label "Average actual elapsed time" ;
+    rdfs:comment "Mean actualElapsedTime (block time)." .
+
+:AverageBlockTimeVariance a owl:Class ; rdfs:subClassOf :TurnaroundKPI ;
+    rdfs:label "Average block-time variance" ;
+    rdfs:comment "Mean (actualElapsedTime - crsElapsedTime) on completed flights." .
+
+:LongTaxiOutRate a owl:Class ; rdfs:subClassOf :TurnaroundKPI ;
+    rdfs:label "Long taxi-out rate" ;
+    rdfs:comment "Share with taxiOut > 20 minutes." .
+
+:LongTaxiInRate a owl:Class ; rdfs:subClassOf :TurnaroundKPI ;
+    rdfs:label "Long taxi-in rate" ;
+    rdfs:comment "Share with taxiIn > 10 minutes." .
+
+:ExtendedBlockTimeRate a owl:Class ; rdfs:subClassOf :TurnaroundKPI ;
+    rdfs:label "Extended block-time rate" ;
+    rdfs:comment "actualElapsedTime > crsElapsedTime + 15 minutes." .
+
+:TaxiOutShareOfBlock a owl:Class ; rdfs:subClassOf :TurnaroundKPI ;
+    rdfs:label "Taxi-out share of block" ;
+    rdfs:comment "AVG(taxiOut / NULLIF(actualElapsedTime,0))." .
+
+:AvailableSeatMiles a owl:Class ; rdfs:subClassOf :NetworkCapacityKPI ;
+    rdfs:label "Available seat miles (proxy)" ; skos:altLabel "ASM"@en ;
+    rdfs:comment "SUM(distance) on completed flights — seat-mile proxy without seats column." .
+
+:AverageStageLength a owl:Class ; rdfs:subClassOf :NetworkCapacityKPI ;
+    rdfs:label "Average stage length" ; skos:altLabel "Ø Streckenlänge"@de ;
+    rdfs:comment "Mean distance (miles) per completed flight." .
+
+:LongHaulFlightShare a owl:Class ; rdfs:subClassOf :NetworkCapacityKPI ;
+    rdfs:label "Long-haul flight share" ;
+    rdfs:comment "distance >= 1500 miles." .
+
+:ShortHaulFlightShare a owl:Class ; rdfs:subClassOf :NetworkCapacityKPI ;
+    rdfs:label "Short-haul flight share" ;
+    rdfs:comment "distance < 500 miles." .
+
+:DepartureOperationCount a owl:Class ; rdfs:subClassOf :NetworkCapacityKPI ;
+    rdfs:label "Departure operation count" ;
+    rdfs:comment "COUNT(*) scheduled departures in scope." .
+
+:ArrivalOperationCount a owl:Class ; rdfs:subClassOf :NetworkCapacityKPI ;
+    rdfs:label "Arrival operation count" ;
+    rdfs:comment "COUNT(*) arrivals (dest) in scope." .
+
+:UniqueRoutePairCount a owl:Class ; rdfs:subClassOf :NetworkCapacityKPI ;
+    rdfs:label "Unique route pair count" ;
+    rdfs:comment "COUNT(DISTINCT origin||dest) in scope." .
+
+:FleetActiveTailCount a owl:Class ; rdfs:subClassOf :NetworkCapacityKPI ;
+    rdfs:label "Active fleet tail count" ;
+    rdfs:comment "COUNT(DISTINCT tailNum) in scope." .
+
+:FlightsPerAircraftTail a owl:Class ; rdfs:subClassOf :NetworkCapacityKPI ;
+    rdfs:label "Flights per aircraft tail" ;
+    rdfs:comment "Completed flights / distinct tail numbers." .
+
+:ReliabilityCompositeScore a owl:Class ; rdfs:subClassOf :CompositeReliabilityKPI ;
+    rdfs:label "Reliability composite score" ;
+    skos:altLabel "Reliability Index"@en ;
+    rdfs:comment "0.5*OTP + 0.3*(1-severeDelayRate) + 0.2*(1-cancellationRate)." .
+
+:BlockCompletionRate a owl:Class ; rdfs:subClassOf :TurnaroundKPI ;
+    rdfs:label "Block completion rate" ;
+    rdfs:comment "Flights where actualElapsedTime <= crsElapsedTime + 15 among completed." .

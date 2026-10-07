@@ -51,6 +51,8 @@ REQUIRED_CLASSES = (
     "SecurityDelayReason",
     "LateAircraftDelayReason",
     "OnTimePerformance",
+    "OTP",
+    "ServiceLevelKPI",
 )
 
 MATERIALIZED_TABLES = {

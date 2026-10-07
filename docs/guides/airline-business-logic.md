@@ -108,6 +108,36 @@ END AS time_window
 
 Threshold: **15 minutes** (`config/airline_business_rules.yaml` → `on_time_max_delay`).
 
+### OTP (On-Time Performance)
+
+| Ontology term | Meaning |
+|---|---|
+| `OTP` | Primary KPI class (equivalent to `OnTimePerformance`); user-facing alias "OTP" |
+| `OnTimeFlight` | Single flight matching FAA 15-min rule (numerator) |
+| `otpPercentage` | Datatype property on `OTP` scope (computed, not in Hive) |
+
+Definition and SQL live in `config/airline_business_rules.yaml` → `otp`:
+
+```yaml
+otp.sql.expr  # → otp_pct = 100 * OnTimeFlight / completed Flight
+```
+
+Agents resolve "OTP", "on-time performance", or "best OTP" to class **`OTP`**, call `get_business_rules`, and use `otp.sql.expr` — not an invented threshold.
+
+### Industry KPI catalog (50 KPIs)
+
+| Artifact | Role |
+|---|---|
+| `data/airline_kpi_ontology.ttl` | OWL classes: D0, A0, SevereDelayRate, ASM proxy, … |
+| `config/airline_kpi_catalog.yaml` | SQL `expr` + DE/EN labels per KPI |
+| `get_business_rules` → `kpi_catalog` | Merged at load time for agents |
+
+Categories: `PunctualityKPI`, `DelayMagnitudeKPI`, `DelayAttributionKPI`, `TurnaroundKPI`, `NetworkCapacityKPI`, `CompositeReliabilityKPI`.
+
+Example: user asks for **D0** or **cancellation rate** → `kpi_catalog.kpis.D0DepartureOTP.sql.expr` or `CancellationRate`.
+
+Python helpers: `examples/airline_business_sql.py` → `sql_kpi_expr()`, `resolve_kpi_by_alias()`.
+
 ### Severity (on `DelayedFlight`)
 
 | Class | Minutes (max of arr/dep delay) |

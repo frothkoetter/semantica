@@ -81,12 +81,21 @@ SEMANTICA_LOG_LEVEL=INFO
   "metrics": [{"name": "<kpi>", "expr": "<SQL expression>"}],
   "group_by": ["<columns>"],
   "order_by": "<column> DESC",
+  "sql_patterns": {
+    "strategy": "aggregate_fact_first | single_edge_join",
+    "avoid": ["OR in JOIN predicate", "join large fact to small dim then GROUP BY"],
+    "notes": "<why this shape was chosen>"
+  },
   "reasoning_summary": "<1-3 sentences>"
 }
 ```
 
 `display_columns` is required whenever results show human-readable labels (names, codes).
 Omit unused properties; include every column referenced in `group_by` for display.
+
+When the question spans **both sides** of a fact (e.g. origin **and** destination), set
+`sql_patterns.strategy` to `aggregate_fact_first` and list two aggregation keys in the plan
+— do **not** emit a single join with `OR`.
 
 ---
 
@@ -97,7 +106,7 @@ Omit unused properties; include every column referenced in `group_by` for displa
 | **Agent Name** | `SQL Executor` |
 | **Role** | `sql_executor` |
 | **Goal** | Execute SQL from the ontology_mapper mapping plan on the configured Hive/Iceberg database. Return query results as structured data. Never invent schema — use the mapping plan only. |
-| **Backstory** | You are the warehouse query executor for the analytics pipeline. You have iceberg-hive MCP only (`execute_query`, `get_schema`, `get_database_schema_info`). ABORT immediately if the mapping plan has `ready_for_sql != true`. Use only tables, joins, filters, metrics, and `display_columns` listed in the mapping plan. Fully qualify tables as `<database>.<table>` per `HIVE_DATABASE`. Do not run ad-hoc `SELECT * LIMIT 1` for discovery when a mapping plan is provided. Do not invent columns, tables, or join keys — never use `.name` for entity labels unless the mapping plan explicitly maps a property to that column. If the plan is incomplete, return an error instead of guessing. Use `get_schema` / `get_database_schema_info` only after a compile error, not as a substitute for a complete mapping plan. Apply business-rule predicates exactly as specified in the plan. Pass result rows and the executed SQL to the answer synthesizer. |
+| **Backstory** | You are the warehouse query executor for the analytics pipeline. You have iceberg-hive MCP only (`execute_query`, `get_schema`, `get_database_schema_info`). ABORT immediately if the mapping plan has `ready_for_sql != true`. Use only tables, joins, filters, metrics, and `display_columns` listed in the mapping plan. Fully qualify tables as `<database>.<table>` per `HIVE_DATABASE`. Do not run ad-hoc `SELECT * LIMIT 1` for discovery when a mapping plan is provided. Do not invent columns, tables, or join keys — never use `.name` for entity labels unless the mapping plan explicitly maps a property to that column. If the plan is incomplete, return an error instead of guessing. Use `get_schema` / `get_database_schema_info` only after a compile error, not as a substitute for a complete mapping plan. Apply business-rule predicates exactly as specified in the plan. **Efficient SQL on large fact tables:** filter early (partition columns first), use equality joins only, aggregate on fact keys before joining small dimension tables, never use `OR` in JOIN predicates, never wrap join keys in `CASE` inside `COUNT`. Follow `sql_patterns` in the mapping plan. Pass result rows and the executed SQL to the answer synthesizer. |
 
 ### MCP attachment
 
@@ -120,6 +129,55 @@ HIVE_HTTP_PATH=cliservice
 HIVE_USE_SSL=true
 HIVE_AUTH_MECHANISM=LDAP
 ```
+
+### Efficient SQL patterns (Hive/Iceberg)
+
+Large fact tables (millions+ rows) + small dimensions (hundreds of rows):
+
+```text
+Filter fact early → GROUP BY fact key → JOIN small aggregate to dimension
+```
+
+| Avoid | Prefer |
+|-------|--------|
+| `JOIN dim ON (fact.col_a = dim.key OR fact.col_b = dim.key)` | Two CTEs: `GROUP BY col_a`, `GROUP BY col_b`, then join results to dim |
+| `COUNT(CASE WHEN fact.col = dim.key THEN 1 END)` after an OR join | Single-key join: `JOIN dim ON fact.col = dim.key` |
+| Join fact to dimension, then `GROUP BY` dim columns | Pre-aggregate fact to ~N keys, then join ~N rows to dim |
+| `SELECT *` / missing partition filters | Filter partition columns (`year`, date) in every fact scan |
+| Both origin **and** destination when question asks origin only | One object-property edge (`originAirport` only) |
+
+**Both sides needed** (departures + arrivals): use two pre-aggregations, not OR:
+
+```sql
+WITH dep AS (
+  SELECT fact.origin AS key_col, COUNT(*) AS dep_cnt, SUM(...) AS dep_severe
+  FROM db.fact
+  WHERE <partition filters>
+  GROUP BY fact.origin
+),
+arr AS (
+  SELECT fact.dest AS key_col, COUNT(*) AS arr_cnt, SUM(...) AS arr_severe
+  FROM db.fact
+  WHERE <partition filters>
+  GROUP BY fact.dest
+)
+SELECT dim.*, COALESCE(d.dep_cnt, 0), COALESCE(a.arr_cnt, 0)
+FROM db.dimension dim
+LEFT JOIN dep d ON dim.key = d.key_col
+LEFT JOIN arr a ON dim.key = a.key_col;
+```
+
+**Single edge** (most KPI questions): one scan, one equality join:
+
+```sql
+SELECT dim.label, COUNT(*), SUM(CASE WHEN <rule> THEN 1 ELSE 0 END)
+FROM db.fact f
+JOIN db.dimension dim ON f.<fk> = dim.<pk>
+WHERE <partition filters> AND <business rules>
+GROUP BY dim.<pk>, dim.label;
+```
+
+Airline-specific examples: [`multi-agent-workflow.md`](multi-agent-workflow.md) § Efficient SQL.
 
 ---
 

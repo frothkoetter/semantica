@@ -47,6 +47,13 @@ def test_load_business_rules(rules_path):
     rules = load_business_rules(str(rules_path))
     assert rules["thresholds"]["on_time_max_delay"] == 15
     assert "MorningPeak" in rules["time_windows"]
+    otp = rules["otp"]
+    assert otp["ontology_class"] == "OTP"
+    assert "OnTimePerformance" in otp["equivalent_classes"]
+    assert otp["sql"]["alias"] == "otp_pct"
+    assert "ROUND(100.0" in otp["sql"]["expr"]
+    assert otp["threshold_minutes"] == 15
+    assert rules["kpi_catalog"]["kpi_count"] == 50
 
 
 def test_ingest_business_rules_into_graph(rules_path):

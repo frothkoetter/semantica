@@ -90,6 +90,9 @@ columns:
     flightstatus: flightStatus
     delayseverity: delaySeverity
     primarydelayreason: primaryDelayReason
+    otppct: otpPercentage
+    otp: OTP
+    otppercentage: otpPercentage
 
 foreign_keys:
   - source_table: flights_csv
