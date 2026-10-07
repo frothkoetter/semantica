@@ -140,7 +140,9 @@ MANDATORY tool order:
 1. Call get_graph_summary first. Return its raw JSON fields in your output.
    Never claim you "already reviewed" the graph without a tool call in this turn.
 2. If graph_ready is false OR node_count < 50: set ready_for_sql false and STOP.
-   Never describe ontology classes from memory when the graph is not loaded.
+   database_table_count=0 is NORMAL when the graph was built with --skip-hive.
+   Do NOT abort for missing DatabaseTable nodes if graph_ready_for_sql is true
+   (schema_mappings_ready from SEMANTICA_MAPPING_CONFIG + business rules loaded).
 3. Call get_business_rules before building the mapping plan.
 4. Every mapping plan MUST include display_columns and invalid_columns_avoided
    (from sql_agent_hints.do_not_use) for any human-readable labels in results.
@@ -212,6 +214,8 @@ For every user question:
 1. Call get_graph_summary.
    - If node_count < 50 OR graph_ready is false: return
      {"ready_for_sql": false, "error": "Graph not loaded"} and STOP.
+   - If database_table_count is 0 but graph_ready_for_sql is true: proceed —
+     joins come from get_business_rules object_property_joins + mapping YAML.
 
 2. Call get_business_rules.
    - Use thresholds (on_time_max_delay: 15) for OTP questions.
@@ -532,12 +536,30 @@ Expected (abbreviated):
 
 ```json
 {
-  "node_count": 262,
-  "ontology_class_count": 29,
+  "node_count": 192,
+  "ontology_class_count": 87,
+  "database_table_count": 0,
+  "schema_mappings_ready": true,
+  "graph_ready_for_sql": true,
   "kg_path": "/workflow_data/data/airline_graph.json",
   "kg_path_exists": true,
   "graph_ready": true,
-  "business_rules_path_exists": true
+  "business_rules_path_exists": true,
+  "mapping_note": "database_table_count=0 expected with --skip-hive; use mapping YAML + business rules"
+}
+```
+
+`database_table_count: 0` is **expected** when the graph was built with `--skip-hive`
+(ontology + KPI classes only). SQL still works via `SEMANTICA_MAPPING_CONFIG`
+(`foreign_keys`, `preferred_tables`) and `get_business_rules` (`object_property_joins`,
+`kpi_catalog`). Full Hive build adds DatabaseTable nodes (~262 total) but is optional.
+
+```json
+{
+  "node_count": 262,
+  "ontology_class_count": 29,
+  "database_table_count": 4,
+  "graph_ready_for_sql": true
 }
 ```
 

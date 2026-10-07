@@ -62,6 +62,11 @@ ORDER BY otp_pct DESC LIMIT 10;
 
 ## Demo 2 — D0 vs A0 (departure vs arrival punctuality)
 
+> **Troubleshooting:** If `get_graph_summary` shows `database_table_count: 0`, that is
+> **not an error** when `graph_ready_for_sql: true` and `schema_mappings_ready: true`.
+> The ontology_mapper must still call `get_business_rules` and emit `ready_for_sql: true`.
+> Do **not** abort only because DatabaseTable nodes are missing (`--skip-hive` build).
+
 **User prompt:**
 
 ```

@@ -419,7 +419,10 @@ def _graph_summary_envelope(stats: dict) -> dict:
     """Attach env paths, hostname, and business-rules metadata to summary stats."""
     import socket
 
+    from semantica.mcp_server.schema_mappings import summarize_mapping_config
+
     rules_path, rules_exists, rules_summary = _graph_summary_rules_meta()
+    mapping_meta = summarize_mapping_config()
     kg_path = (os.environ.get("SEMANTICA_KG_PATH") or "").strip() or None
     kg_exists = bool(kg_path and os.path.exists(kg_path))
     stats.update(
@@ -427,9 +430,10 @@ def _graph_summary_envelope(stats: dict) -> dict:
             "business_rules_path": rules_path,
             "business_rules_path_exists": rules_exists,
             "business_rules_summary": rules_summary or None,
+            **mapping_meta,
             "kg_path": kg_path,
             "kg_path_exists": kg_exists,
-            "kg_loaded": bool(_graph_loaded_from),
+            "kg_loaded": bool(_graph_loaded_from) or kg_exists,
             "hostname": socket.gethostname(),
             "cwd": os.getcwd(),
             "load_hint": (
@@ -443,6 +447,22 @@ def _graph_summary_envelope(stats: dict) -> dict:
     )
     if "graph_ready" not in stats:
         stats["graph_ready"] = bool(stats.get("node_count", 0) > 0)
+    node_count = int(stats.get("node_count") or 0)
+    db_tables = int(stats.get("database_table_count") or 0)
+    schema_ready = bool(stats.get("schema_mappings_ready"))
+    rules_ready = bool(rules_exists)
+    stats["graph_ready_for_sql"] = (
+        stats.get("graph_ready", False)
+        and node_count >= 50
+        and rules_ready
+        and (db_tables > 0 or schema_ready)
+    )
+    if db_tables == 0 and schema_ready:
+        stats["mapping_note"] = (
+            "database_table_count=0 is expected when the graph was built with "
+            "--skip-hive. Use SEMANTICA_MAPPING_CONFIG foreign_keys and "
+            "get_business_rules object_property_joins for SQL joins."
+        )
     return stats
 
 

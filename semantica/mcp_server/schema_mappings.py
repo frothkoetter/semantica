@@ -78,7 +78,41 @@ def load_mapping_config(path: Optional[str] = None) -> Dict[str, Any]:
         "tables": data.get("tables") or {},
         "columns": data.get("columns") or {},
         "foreign_keys": data.get("foreign_keys") or [],
+        "preferred_tables": data.get("preferred_tables") or {},
         "source_path": config_path,
+    }
+
+
+def summarize_mapping_config(path: Optional[str] = None) -> Dict[str, Any]:
+    """Compact mapping YAML status for get_graph_summary (no Hive required)."""
+    config_path = resolve_mapping_config_path(path)
+    if not config_path:
+        return {
+            "mapping_config_path": None,
+            "mapping_config_exists": False,
+            "foreign_key_count": 0,
+            "preferred_table_count": 0,
+            "schema_mappings_ready": False,
+        }
+    try:
+        cfg = load_mapping_config(config_path)
+    except OSError:
+        return {
+            "mapping_config_path": config_path,
+            "mapping_config_exists": False,
+            "foreign_key_count": 0,
+            "preferred_table_count": 0,
+            "schema_mappings_ready": False,
+        }
+    fks = cfg.get("foreign_keys") or []
+    preferred = cfg.get("preferred_tables") or {}
+    return {
+        "mapping_config_path": config_path,
+        "mapping_config_exists": True,
+        "foreign_key_count": len(fks),
+        "preferred_table_count": len(preferred),
+        "preferred_tables": preferred,
+        "schema_mappings_ready": bool(fks or preferred),
     }
 
 

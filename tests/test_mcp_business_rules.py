@@ -25,10 +25,14 @@ def rules_path() -> Path:
 
 @pytest.fixture
 def airline_graph_path() -> Path:
-    path = Path(__file__).resolve().parents[1] / "data" / "airline_graph.json"
-    if not path.exists():
-        pytest.skip("airline_graph.json not built")
-    return path
+    root = Path(__file__).resolve().parents[1]
+    for candidate in (
+        root / "upload" / "airlinedata" / "config" / "airline_graph.json",
+        root / "data" / "airline_graph.json",
+    ):
+        if candidate.exists():
+            return candidate
+    pytest.skip("airline_graph.json not built")
 
 
 @pytest.fixture
@@ -80,3 +84,17 @@ def test_get_graph_summary_includes_business_rules(mcp_session):
     assert summary["graph_ready"] is True
     assert summary["business_rules_path_exists"] is True
     assert summary["business_rules_summary"]["thresholds"]["on_time_max_delay"] == 15
+
+
+def test_graph_summary_skip_hive_mappings(airline_graph_path, rules_path, monkeypatch):
+    """database_table_count=0 must not block SQL when mapping YAML is present."""
+    mapping = Path(__file__).resolve().parents[1] / "config" / "airline_r2rml_db_mapping.yaml"
+    monkeypatch.setenv("SEMANTICA_KG_PATH", str(airline_graph_path))
+    monkeypatch.setenv("SEMANTICA_BUSINESS_RULES", str(rules_path))
+    monkeypatch.setenv("SEMANTICA_MAPPING_CONFIG", str(mapping))
+    mcp_mod._graph = None
+    summary = _tool_get_graph_summary({})
+    assert summary.get("database_table_count") == 0
+    assert summary.get("schema_mappings_ready") is True
+    assert summary.get("graph_ready_for_sql") is True
+    assert "mapping_note" in summary
