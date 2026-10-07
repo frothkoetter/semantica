@@ -27,9 +27,18 @@ Ensure `uv` is available on the workbench (`uvx` command).
 
 ## 1. Register Semantica (ontology + graph)
 
-**Recommended — GitHub `main`** (no local package install):
+**Recommended for multi-agent — two registrations** (2 + 7 tools instead of 18):
+
+| JSON | MCP name | Toolset | Agent |
+|------|----------|---------|-------|
+| [`semantica-mcp-ontology.json`](semantica-mcp-ontology.json) | `semantica-ontology` | `ontology_mapper` | ontology_mapper |
+| [`semantica-mcp-decisions.json`](semantica-mcp-decisions.json) | `semantica-decisions` | `decision_store` | answer_synthesizer |
+
+**Alternative — single registration** (manual tool checkboxes or `preloaded_graph` = 10 tools):
 
 Copy [`semantica-mcp.json`](semantica-mcp.json):
+
+**GitHub `main`** (no local package install):
 
 ```json
 "args": [
@@ -47,11 +56,14 @@ Copy [`semantica-mcp-local.json`](semantica-mcp-local.json) and set `--from` to 
 > placeholders. When attaching the MCP server to a **workflow**, override with `/workflow_data/...`
 > paths (§5). Agent Studio does not persist secret env values from registration.
 
-### Semantica tools exposed (15)
+### Semantica toolsets (`SEMANTICA_MCP_TOOLSET`)
 
-Ontology: `import_ontology`, `get_graph_summary`, `get_business_rules`, `map_db_schema_to_ontology` (`export_graph` only if column mappings needed)  
-Analytics: `run_reasoning`, `record_decision`, `query_decisions`, `find_precedents`  
-Graph: `add_entity`, `add_relationship`, `extract_entities`, `extract_relations`, …
+| Preset | Count | Tools |
+|--------|------:|-------|
+| `ontology_mapper` | 2 | `get_graph_summary`, `get_business_rules` |
+| `decision_store` | 7 | `record_decision`, `compare_with_history`, `query_decisions`, `get_decision_store_status`, `explain_decision_delta`, `find_precedents`, `get_causal_chain` |
+| `preloaded_graph` | 10 | Union of above + `run_reasoning` |
+| *(unset)* | 18 | All tools including NER/build |
 
 **No Hive/SQL on Semantica** — use `iceberg-hive` MCP for `execute_query` and schema introspection.
 
@@ -80,10 +92,11 @@ Key tools: `execute_query`, `get_schema`, `list_databases`, Iceberg branch tools
 **XUnternehmen KDM:** [`multi-agent-workflow-kdm.md`](multi-agent-workflow-kdm.md) · env template [`workflow-env-kdm.template`](workflow-env-kdm.template)
 
 1. Create workflow → **Manager OFF**, **Sequential**, **Conversational ON**
-2. Add agents: `ontology_mapper` (semantica only), `sql_executor` (iceberg only)
-3. Enable tools per agent (do not attach both MCPs to one agent):
-   - **ontology_mapper / semantica:** check `get_graph_summary`, `get_business_rules` only; **uncheck** `extract_entities`, `extract_relations` (ML NER hangs). Optional: `SEMANTICA_MCP_TOOLSET=preloaded_graph` in MCP env for server-side filtering.
-   - **sql_executor / iceberg-hive:** `execute_query`
+2. Add agents: `ontology_mapper`, `sql_executor`, `answer_synthesizer` (optional)
+3. Attach MCPs (one per agent — do not attach both Semantica registrations to one agent):
+   - **ontology_mapper:** `semantica-ontology` (`SEMANTICA_MCP_TOOLSET=ontology_mapper` → 2 tools)
+   - **sql_executor:** `iceberg-hive` → `execute_query` only
+   - **answer_synthesizer:** `semantica-decisions` (`SEMANTICA_MCP_TOOLSET=decision_store` → 7 tools)
 4. Paste `HIVE_*` credentials only on **iceberg-hive** workflow attach step
 
 ## 4. Suggested agent architecture

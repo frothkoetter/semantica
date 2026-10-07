@@ -100,6 +100,7 @@ Add **three agents** in order (agent 3 is optional):
 
 > **Why Manager OFF?** Crew Manager delegates without MCP tools and tends to hallucinate
 > graph content from backstory. Sequential routing sends the user message directly to agent 1.
+> See [Falsification demos](#falsification-demos-ontology-vs-hallucination) for A/B proof.
 
 ---
 
@@ -157,29 +158,31 @@ You do not have Hive credentials. Your job ends with a mapping plan the
 sql_executor can run via execute_query.
 ```
 
-### MCP attachment
+### MCP attachment (recommended: split registrations)
 
-| Setting | Value |
-|---|---|
-| MCP server | `semantica` |
-| Tools (check **only** these) | `get_graph_summary`, `get_business_rules`, `run_reasoning` |
-| Tools (optional) | `record_decision` (answer_synthesizer agent) |
-| Tools (leave **unchecked**) | `extract_entities`, `extract_relations`, `import_ontology`, `add_entity`, `add_relationship`, `export_graph` |
+Register **two** Semantica MCP servers so each agent sees only the tools it needs:
 
-In Agent Studio: edit agent → MCP → semantica → **uncheck** NER/extraction tools.
-`extract_entities` loads spaCy/ML and can hang for minutes — it is not needed when the graph
-is pre-loaded via `SEMANTICA_KG_PATH`.
+| Registration JSON | MCP name | `SEMANTICA_MCP_TOOLSET` | Tools exposed |
+|---|---|---|---|
+| [`semantica-mcp-ontology.json`](semantica-mcp-ontology.json) | `semantica-ontology` | `ontology_mapper` | **2** — `get_graph_summary`, `get_business_rules` |
+| [`semantica-mcp-decisions.json`](semantica-mcp-decisions.json) | `semantica-decisions` | `decision_store` | **7** — decision store tools |
 
-**Optional:** `SEMANTICA_MCP_TOOLSET=preloaded_graph` in MCP env hides unused tools server-side
-(useful if you prefer not to curate the checklist per agent).
+Attach **`semantica-ontology`** to agent 1 only. Do **not** attach `semantica-decisions` here.
 
-### MCP env (workflow attach)
+**Legacy (single registration):** one `semantica` MCP with UI checkboxes — check only
+`get_graph_summary`, `get_business_rules`. Or `SEMANTICA_MCP_TOOLSET=ontology_mapper`.
+
+Never enable on ontology_mapper: `extract_entities`, `extract_relations`, `import_ontology`,
+`add_entity`, `add_relationship`, `export_graph` (ML hang / not needed when graph is pre-loaded).
+
+### MCP env — `semantica-ontology` (workflow attach)
 
 ```
 ALLOW_AGENT_STUDIO_INSECURE_TOOL_EXECUTION=true
 SEMANTICA_KG_PATH=/workflow_data/data/airline_graph.json
 SEMANTICA_MAPPING_CONFIG=/workflow_data/config/airline_r2rml_db_mapping.yaml
 SEMANTICA_BUSINESS_RULES=/workflow_data/config/airline_business_rules.yaml
+SEMANTICA_MCP_TOOLSET=ontology_mapper
 SEMANTICA_LOG_LEVEL=INFO
 ```
 
@@ -317,14 +320,24 @@ result_metrics, and sql_text from the SQL step.
 
 | Setting | Value |
 |---|---|
-| MCP server | `semantica` |
-| Tools | `record_decision` (optional) |
+| MCP server | **`semantica-decisions`** (from [`semantica-mcp-decisions.json`](semantica-mcp-decisions.json)) |
+| Toolset | `decision_store` — **7 tools**, all pre-selected |
 
-Use the same `/workflow_data/...` env as ontology_mapper if you attach semantica here.
-Required for `record_decision`:
+Tools exposed: `record_decision`, `compare_with_history`, `query_decisions`,
+`get_decision_store_status`, `explain_decision_delta`, `find_precedents`, `get_causal_chain`.
 
-```bash
+Do **not** attach `semantica-ontology` here (no graph/rules tools needed for synthesis).
+
+### MCP env — `semantica-decisions` (workflow attach)
+
+```
+ALLOW_AGENT_STUDIO_INSECURE_TOOL_EXECUTION=true
+SEMANTICA_KG_PATH=/workflow_data/data/airline_graph.json
+SEMANTICA_MAPPING_CONFIG=/workflow_data/config/airline_r2rml_db_mapping.yaml
+SEMANTICA_BUSINESS_RULES=/workflow_data/config/airline_business_rules.yaml
 SEMANTICA_DECISION_STORE=/workspace/decisions
+SEMANTICA_MCP_TOOLSET=decision_store
+SEMANTICA_LOG_LEVEL=INFO
 ```
 
 > **Important:** `/workflow_data` is **read-only** in the MCP sandbox. Decisions must
@@ -529,6 +542,44 @@ ORDER BY f.year, segments DESC;
 
 ---
 
+## Falsification demos (ontology vs hallucination)
+
+Controlled **A/B tests** that disprove the claim that an LLM can reliably guess Hive
+column names and join keys. Run the **same prompt** in two sessions; compare SQL and
+`execute_query` outcomes.
+
+| Arm | Setup | Expected |
+|-----|--------|----------|
+| **A — Hallucination** | Manager **ON**, or `sql_executor` only (no `ontology_mapper`) | Wrong columns (`carrier`, `iata`, `name`), invented FKs (`airline_id`), compile errors or 0 rows |
+| **B — Deterministic ontology** | Sequential: `ontology_mapper` → `sql_executor` | `get_graph_summary` + `get_business_rules` + mapping plan; joins from `airline_r2rml_db_mapping.yaml` `foreign_keys` |
+
+### Quick falsification prompt (use in both arms)
+
+```
+Top 5 airlines by on-time performance in 2005. Join flights to airline names.
+```
+
+| Check | Arm A (guess) | Arm B (ontology) |
+|-------|---------------|------------------|
+| Join in SQL | `f.carrier = a.iata` ❌ | `f.uniquecarrier = a.code` ✅ |
+| Name column | `a.name` ❌ | `a.description` ✅ |
+| OTP rule | invented | `get_business_rules` → 15 min, arr+dep |
+| `execute_query` | error / 0 rows | 5 rows |
+| Auditable | no | optional `record_decision` + `sql_hash` |
+
+**Ground truth:** `upload/airlinedata/config/airline_r2rml_db_mapping.yaml`
+(`invalid_columns`, `foreign_keys`), `airline_business_rules.yaml`, `airline_graph.json`.
+
+Full worked pairs (airport joins, `flights_csv`, invented `flight_id`, OTP semantics):
+[`examples/airline_ontology_falsification_examples.md`](../../examples/airline_ontology_falsification_examples.md)
+
+Related demo chats:
+
+- Correct analytics: [`examples/airline_ontology_demo_chats.md`](../../examples/airline_ontology_demo_chats.md)
+- Logistics outliers + Decision Store: [`examples/airline_logistics_outlier_demo_chats.md`](../../examples/airline_logistics_outlier_demo_chats.md)
+
+---
+
 ## Demo prompt catalog (advanced KPIs)
 
 Copy-paste prompts for Agent Studio conversations. Each should trigger:
@@ -635,7 +686,8 @@ Uses `Plane`, `Flight.assignedAircraft`.
 | Request breakdowns | "by year", "by carrier", "by **TimeWindow**" |
 | Business rules only | `get_business_rules` — never ask Hive agent to read YAML |
 
-More worked examples: [`examples/airline_ontology_demo_chats.md`](../../examples/airline_ontology_demo_chats.md)
+More worked examples: [`examples/airline_ontology_demo_chats.md`](../../examples/airline_ontology_demo_chats.md) ·
+Falsification A/B: [`examples/airline_ontology_falsification_examples.md`](../../examples/airline_ontology_falsification_examples.md)
 
 ---
 
@@ -670,8 +722,13 @@ More worked examples: [`examples/airline_ontology_demo_chats.md`](../../examples
 3. Add to agent Background: `First tool: get_graph_summary. Never call extract_entities.`
 4. Restart workflow session
 
-**Optional server-side filter:** `SEMANTICA_MCP_TOOLSET=preloaded_graph` in MCP env (hides NER
-tools from `tools/list` even if left checked).
+**Toolset presets** (`SEMANTICA_MCP_TOOLSET`):
+
+| Preset | Tools | Agent |
+|--------|-------|-------|
+| `ontology_mapper` | 2 | ontology_mapper |
+| `decision_store` / `answer_synthesizer` | 7 | answer_synthesizer |
+| `preloaded_graph` | 10 | single-agent / dev (union of both + `run_reasoning`) |
 
 **Fallback:** `SEMANTICA_MCP_DISABLE_ML=true` — if the agent still calls NER tools, they fail
 fast instead of loading spaCy.
@@ -733,4 +790,7 @@ Then copy outputs into `workflow_data/` (Step 1).
 
 - MCP registration and paths: [`README.md`](README.md)
 - Demo chat transcripts: [`examples/airline_ontology_demo_chats.md`](../../examples/airline_ontology_demo_chats.md)
+- Falsification demos (ontology vs guessing): [`examples/airline_ontology_falsification_examples.md`](../../examples/airline_ontology_falsification_examples.md)
+- Logistics outlier demos: [`examples/airline_logistics_outlier_demo_chats.md`](../../examples/airline_logistics_outlier_demo_chats.md)
+- Decision Store spec: [`docs/guides/decision-store.md`](../../docs/guides/decision-store.md)
 - Workflow env template: [`workflow-env.template`](workflow-env.template)

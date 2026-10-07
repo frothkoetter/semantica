@@ -35,6 +35,42 @@ class TestMCPToolFilter(unittest.TestCase):
             mcp_mod.MCP_TOOLSETS["preloaded_graph"],
         )
 
+    def test_ontology_mapper_toolset(self):
+        with patch.dict(
+            os.environ,
+            {"SEMANTICA_MCP_TOOLSET": "ontology_mapper", "SEMANTICA_MCP_TOOLS": ""},
+            clear=False,
+        ):
+            active = mcp_mod.resolve_active_tools(mcp_mod.TOOLS)
+        names = [t["name"] for t in active]
+        self.assertEqual(names, mcp_mod.MCP_TOOLSETS["ontology_mapper"])
+        self.assertNotIn("record_decision", names)
+
+    def test_decision_store_toolset(self):
+        with patch.dict(
+            os.environ,
+            {"SEMANTICA_MCP_TOOLSET": "decision_store", "SEMANTICA_MCP_TOOLS": ""},
+            clear=False,
+        ):
+            active = mcp_mod.resolve_active_tools(mcp_mod.TOOLS)
+        names = {t["name"] for t in active}
+        self.assertIn("record_decision", names)
+        self.assertIn("compare_with_history", names)
+        self.assertNotIn("get_graph_summary", names)
+        self.assertNotIn("extract_entities", names)
+
+    def test_answer_synthesizer_alias(self):
+        with patch.dict(
+            os.environ,
+            {"SEMANTICA_MCP_TOOLSET": "answer_synthesizer"},
+            clear=False,
+        ):
+            active = mcp_mod.resolve_active_tools(mcp_mod.TOOLS)
+        self.assertEqual(
+            [t["name"] for t in active],
+            mcp_mod.MCP_TOOLSETS["decision_store"],
+        )
+
     def test_explicit_tools_list(self):
         with patch.dict(
             os.environ,

@@ -38,7 +38,7 @@ Environment variables:
     SEMANTICA_KG_PATH          — path to a persisted graph to load on start (optional)
     SEMANTICA_MAPPING_CONFIG   — default ontology↔DB mapping YAML path (optional)
     SEMANTICA_BUSINESS_RULES   — business rules YAML (thresholds, flight status, SQL) (optional)
-    SEMANTICA_MCP_TOOLSET      — expose a subset of tools (e.g. preloaded_graph for Agent Studio)
+    SEMANTICA_MCP_TOOLSET      — tool preset: ontology_mapper, decision_store, preloaded_graph, full
     SEMANTICA_MCP_TOOLS        — comma-separated tool names (overrides SEMANTICA_MCP_TOOLSET)
     SEMANTICA_MCP_DISABLE_ML   — if true, extract_entities/extract_relations fail fast (no spaCy load)
     SEMANTICA_LOG_LEVEL        — log level: DEBUG, INFO, WARNING (default: WARNING)
@@ -854,17 +854,29 @@ TOOLS = [
 ]
 
 # Optional presets when clients expose all tools or you prefer env-based filtering.
-# preloaded_graph: graph loaded via SEMANTICA_KG_PATH — query/rules/reasoning only, no NER/build.
-_PRELOADED_GRAPH_TOOLS = [
+# Agent Studio: register two MCP entries (ontology + decisions) with different toolsets.
+_ONTOLOGY_MAPPER_TOOLS = [
     "get_graph_summary",
     "get_business_rules",
-    "run_reasoning",
+]
+_DECISION_STORE_TOOLS = [
     "record_decision",
     "compare_with_history",
     "query_decisions",
     "get_decision_store_status",
+    "explain_decision_delta",
+    "find_precedents",
+    "get_causal_chain",
+]
+_PRELOADED_GRAPH_TOOLS = [
+    *_ONTOLOGY_MAPPER_TOOLS,
+    "run_reasoning",
+    *_DECISION_STORE_TOOLS,
 ]
 MCP_TOOLSETS: dict[str, list[str]] = {
+    "ontology_mapper": _ONTOLOGY_MAPPER_TOOLS,
+    "decision_store": _DECISION_STORE_TOOLS,
+    "answer_synthesizer": _DECISION_STORE_TOOLS,  # alias
     "preloaded_graph": _PRELOADED_GRAPH_TOOLS,
     "airline_analytics": _PRELOADED_GRAPH_TOOLS,  # deprecated alias
 }

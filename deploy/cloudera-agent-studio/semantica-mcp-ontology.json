@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "semantica-ontology": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/frothkoetter/semantica.git@main",
+        "semantica-mcp"
+      ],
+      "env": {
+        "ALLOW_AGENT_STUDIO_INSECURE_TOOL_EXECUTION": "true",
+        "SEMANTICA_KG_PATH": "/workflow_data/data/airline_graph.json",
+        "SEMANTICA_MAPPING_CONFIG": "/workflow_data/config/airline_r2rml_db_mapping.yaml",
+        "SEMANTICA_BUSINESS_RULES": "/workflow_data/config/airline_business_rules.yaml",
+        "SEMANTICA_MCP_TOOLSET": "ontology_mapper",
+        "SEMANTICA_LOG_LEVEL": "WARNING"
+      }
+    }
+  }
+}

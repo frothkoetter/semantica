@@ -463,7 +463,9 @@ env-based filtering instead of curating the tool checklist per agent (e.g. in Ag
 
 | Preset | Tools exposed | Use when |
 | :----- | :------------ | :------- |
-| `preloaded_graph` | `get_graph_summary`, `get_business_rules`, `run_reasoning`, `record_decision` | Graph loaded via `SEMANTICA_KG_PATH`; no NER/build tools |
+| `ontology_mapper` | `get_graph_summary`, `get_business_rules` | Agent 1 — mapping plan only (Agent Studio) |
+| `decision_store` / `answer_synthesizer` | `record_decision`, `compare_with_history`, `query_decisions`, `get_decision_store_status`, `explain_decision_delta`, `find_precedents`, `get_causal_chain` | Agent 3 — audit / history |
+| `preloaded_graph` | Union of ontology + decision + `run_reasoning` (10 tools) | Single MCP registration / dev |
 | `full` / unset | All tools | Local dev, full extraction pipeline |
 
 Override with a comma-separated list: `SEMANTICA_MCP_TOOLS=get_graph_summary,get_business_rules`.
