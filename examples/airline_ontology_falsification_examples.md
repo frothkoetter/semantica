@@ -77,7 +77,7 @@ the SQL above — execution **refutes** the answer.
     "edge": "operatedBy",
     "on": "flights.uniquecarrier = airlines.code"
   }],
-  "invalid_columns_avoided": ["flights.carrier", "airlines.iata", "airlines.name"]
+  "invalid_columns_avoided": ["flights.carrier", "airlines.iata", "airlines.name", "airports.name"]
 }
 ```
 
@@ -141,7 +141,11 @@ LIMIT 5;
     "edge": "originAirport",
     "on": "flights.origin = airports.iata"
   }],
-  "columns": {"airportName": "airports.airport"}
+  "display_columns": {
+    "Airport.iata": "airports.iata",
+    "Airport.airportName": "airports.airport"
+  },
+  "invalid_columns_avoided": ["airports.name"]
 }
 ```
 

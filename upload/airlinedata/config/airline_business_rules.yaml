@@ -13,14 +13,19 @@ sql_agent_hints:
   summary: >
     Flight.operatedBy joins flights.uniquecarrier to airlines.code.
     There is NO flights.carrier column. airlines has code + description only (no iata, no name).
+    Flight.originAirport / destinationAirport join flights.origin|dest to airports.iata.
+    airports has iata + airport only (no name column — airport maps to Airport.airportName).
   carrier_identifier_column: uniquecarrier
   carrier_identifier_property: uniqueCarrier
   airline_code_column: code
   airline_name_column: description
+  airport_code_column: iata
+  airport_name_column: airport
   do_not_use:
     - "flights.carrier — column does not exist; use uniquecarrier"
     - "airlines.iata — column does not exist on airlinedata.airlines; use code"
     - "airlines.name — column does not exist; use description"
+    - "airports.name — column does not exist; use airport (Airport.airportName)"
   delay_note: >
     carrierdelay is delay MINUTES (CarrierDelayReason), not a carrier ID.
     Do not confuse with uniquecarrier.
@@ -51,6 +56,7 @@ object_property_joins:
     to_class: Airport
     to_table: airports
     to_column: iata
+    airport_name_column: airport
     join_sql: "JOIN {database}.airports o ON f.origin = o.iata"
   destinationAirport:
     from_class: Flight
@@ -59,6 +65,7 @@ object_property_joins:
     to_class: Airport
     to_table: airports
     to_column: iata
+    airport_name_column: airport
     join_sql: "JOIN {database}.airports d ON f.dest = d.iata"
 
 # FAA / DOT thresholds (minutes)

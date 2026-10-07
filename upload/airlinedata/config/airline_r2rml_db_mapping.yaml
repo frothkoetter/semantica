@@ -22,6 +22,8 @@ invalid_columns:
   airlines:
     - iata  # use code (Airline.airlineCode)
     - name  # use description (Airline.description)
+  airports:
+    - name  # use airport (Airport.airportName)
 
 tables:
   flights: Flight

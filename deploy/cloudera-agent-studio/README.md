@@ -87,7 +87,7 @@ Key tools: `execute_query`, `get_schema`, `list_databases`, Iceberg branch tools
 
 ## 3. Workflow setup (multi-agent)
 
-**Airline demo:** [`multi-agent-workflow.md`](multi-agent-workflow.md)
+**Agent templates (generic):** [`agent-config.md`](agent-config.md) · **Airline demo:** [`multi-agent-workflow.md`](multi-agent-workflow.md)
 
 **XUnternehmen KDM:** [`multi-agent-workflow-kdm.md`](multi-agent-workflow-kdm.md) · env template [`workflow-env-kdm.template`](workflow-env-kdm.template)
 

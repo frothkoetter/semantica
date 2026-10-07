@@ -4,6 +4,25 @@
 
 ontology_namespace: "https://w3id.org/demo/airline#"
 
+database: airlinedata
+
+# Ontology class → materialized Hive table (never *_csv in Agent Studio SQL)
+preferred_tables:
+  Flight: flights
+  Airline: airlines
+  Airport: airports
+  Plane: planes
+
+# Columns agents often guess incorrectly — they do NOT exist on airlinedata
+invalid_columns:
+  flights:
+    - carrier  # use uniquecarrier (Flight.uniqueCarrier / operatedBy)
+  airlines:
+    - iata  # use code (Airline.airlineCode)
+    - name  # use description (Airline.description)
+  airports:
+    - name  # use airport (Airport.airportName)
+
 tables:
   flights: Flight
   flightscsv: Flight

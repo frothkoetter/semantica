@@ -2,6 +2,23 @@
 
 ontology_namespace: "https://w3id.org/demo/airline#"
 
+database: airlinedata
+
+preferred_tables:
+  Flight: flights
+  Airline: airlines
+  Airport: airports
+  Plane: planes
+
+invalid_columns:
+  flights:
+    - carrier
+  airlines:
+    - iata
+    - name
+  airports:
+    - name
+
 tables:
   flights: Flight
   flightscsv: Flight

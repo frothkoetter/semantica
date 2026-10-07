@@ -4,6 +4,8 @@ Conversational workflow: natural-language questions → ontology mapping → Hiv
 
 **Settings:** Conversational **ON** · Manager Agent **OFF** · Process **Sequential**
 
+Generic agent Name / Role / Goal / Backstory: [`agent-config.md`](agent-config.md) (this doc adds airline-specific env and examples)
+
 One MCP server per agent. Semantica has **no** `HIVE_*` credentials.
 
 ---
@@ -136,9 +138,12 @@ flights, airlines, airports, planes — never *_csv views.
 
 MANDATORY tool order:
 1. Call get_graph_summary first. Return its raw JSON fields in your output.
+   Never claim you "already reviewed" the graph without a tool call in this turn.
 2. If graph_ready is false OR node_count < 50: set ready_for_sql false and STOP.
    Never describe ontology classes from memory when the graph is not loaded.
 3. Call get_business_rules before building the mapping plan.
+4. Every mapping plan MUST include display_columns and invalid_columns_avoided
+   (from sql_agent_hints.do_not_use) for any human-readable labels in results.
 
 NEVER call extract_entities or extract_relations. The graph and business rules
 are already loaded — NER/extraction tools load heavy ML models and will timeout.
@@ -151,8 +156,16 @@ Business semantics (OTP, peak hours, delay severity) come from get_business_rule
 Common ontology links:
 - Flight.operatedBy → JOIN airlines ON uniquecarrier = code
 - Flight.assignedAircraft → JOIN planes ON tailnum
+- Flight.originAirport → JOIN airports ON origin = iata
+- Flight.destinationAirport → JOIN airports ON dest = iata
 - Plane.manufacturer for aircraft manufacturer questions
 - Flight.arrDelay / depDelay for delay analytics
+
+Display columns (from get_business_rules sql_agent_hints — never guess "name"):
+- Airline.airlineCode → airlines.code (NOT airlines.iata)
+- Airline.description → airlines.description (NOT airlines.name)
+- Airport.iata → airports.iata
+- Airport.airportName → airports.airport (NOT airports.name)
 
 You do not have Hive credentials. Your job ends with a mapping plan the
 sql_executor can run via execute_query.
@@ -198,7 +211,7 @@ For every user question:
 2. Call get_business_rules.
    - Use thresholds (on_time_max_delay: 15) for OTP questions.
 
-3. Build a JSON mapping plan (do NOT write final SQL):
+3. Build a JSON mapping plan (do NOT write final SQL). REQUIRED fields:
 
 {
   "ready_for_sql": true,
@@ -207,16 +220,28 @@ For every user question:
   "business_rules_applied": ["on_time_max_delay: 15", ...],
   "tables": ["flights", "airlines"],
   "joins": [
-    {"from": "flights", "to": "airlines", "on": "flights.uniquecarrier = airlines.code"}
+    {"edge": "operatedBy", "on": "flights.uniquecarrier = airlines.code"}
+  ],
+  "display_columns": {
+    "Airline.airlineCode": "airlines.code",
+    "Airline.description": "airlines.description",
+    "Airport.iata": "airports.iata",
+    "Airport.airportName": "airports.airport"
+  },
+  "invalid_columns_avoided": [
+    "flights.carrier", "airlines.iata", "airlines.name", "airports.name"
   ],
   "filters": ["year = 2008", "cancelled = 0"],
   "metrics": [
     {"name": "avg_arr_delay", "expr": "AVG(arrdelay)"}
   ],
-  "group_by": ["airlines.description"],
+  "group_by": ["airlines.code", "airlines.description"],
   "order_by": "avg_arr_delay DESC",
   "reasoning_summary": "<1-3 sentences>"
 }
+
+Include only display_columns needed for this question (omit unused ontology properties).
+When joining airports, always set Airport.airportName → airports.airport — never airports.name.
 
 4. Never call execute_query. Never call import_ontology.
 5. Never call extract_entities or extract_relations (ML NER — will hang).
@@ -253,6 +278,10 @@ Do not run SELECT * LIMIT 1 for discovery. Use joins, filters, and metrics from
 the mapping plan. Apply business-rule filters (cancelled = 0, OTP thresholds)
 as described in the plan.
 
+Use ONLY column names from mapping plan display_columns and group_by — never infer
+"name" for airlines or airports (use description / airport per sql_agent_hints).
+Call get_schema only after a compile error, not for discovery when the plan is complete.
+
 Pass result rows to the next agent.
 ```
 
@@ -283,6 +312,7 @@ HIVE_AUTH_MECHANISM=LDAP
 1. Read the mapping plan from ontology_mapper.
 2. If ready_for_sql is not true, return {"status": "aborted"} and STOP.
 3. Compose Hive SQL from tables, joins, filters, metrics, group_by, order_by.
+   Use display_columns for SELECT labels — never airports.name or airlines.name.
 4. Call execute_query with the SQL.
 5. Return {"status": "ok", "sql": "<query>", "rows": <result>}.
 ```
@@ -504,6 +534,72 @@ LIMIT 5;
 
 ---
 
+## Example — Midday severe delay congestion (2000–2005)
+
+### User question
+
+```
+What airports had the most congestion and severe delays during midday between 2000 and 2005?
+```
+
+### Mapping plan (ontology_mapper)
+
+```json
+{
+  "ready_for_sql": true,
+  "question_intent": "Airports with most SevereDelay flights during Midday 2000-2005",
+  "ontology_terms": ["Flight", "Airport", "SevereDelay", "Midday", "originAirport"],
+  "business_rules_applied": [
+    "SevereDelay: GREATEST(arrdelay, depdelay) > 60",
+    "Midday: crsdeptime BETWEEN 1000 AND 1659",
+    "cancelled = 0"
+  ],
+  "tables": ["flights", "airports"],
+  "joins": [
+    {"edge": "originAirport", "on": "flights.origin = airports.iata"}
+  ],
+  "display_columns": {
+    "Airport.iata": "airports.iata",
+    "Airport.airportName": "airports.airport"
+  },
+  "invalid_columns_avoided": ["airports.name"],
+  "filters": [
+    "flights.year BETWEEN 2000 AND 2005",
+    "flights.cancelled = 0",
+    "flights.crsdeptime BETWEEN 1000 AND 1659",
+    "GREATEST(COALESCE(flights.arrdelay,0), COALESCE(flights.depdelay,0)) > 60"
+  ],
+  "metrics": [{"name": "severe_delay_count", "expr": "COUNT(*)"}],
+  "group_by": ["airports.iata", "airports.airport"],
+  "order_by": "severe_delay_count DESC",
+  "limit": 10
+}
+```
+
+### SQL (sql_executor)
+
+```sql
+SELECT
+  ap.iata,
+  ap.airport AS airport_name,
+  COUNT(*) AS severe_delay_count
+FROM airlinedata.flights f
+JOIN airlinedata.airports ap ON f.origin = ap.iata
+WHERE f.year BETWEEN 2000 AND 2005
+  AND f.cancelled = 0
+  AND f.crsdeptime BETWEEN 1000 AND 1659
+  AND GREATEST(COALESCE(f.arrdelay, 0), COALESCE(f.depdelay, 0)) > 60
+GROUP BY ap.iata, ap.airport
+ORDER BY severe_delay_count DESC
+LIMIT 10;
+```
+
+> **Common failure:** first SQL uses `ap.name` → Hive compile error. The mapping plan
+> `display_columns` and `invalid_columns_avoided` prevent this when ontology_mapper
+> calls `get_business_rules` (see `sql_agent_hints.airport_name_column: airport`).
+
+---
+
 ## Second example — Manufacturer OTP 2000–2008
 
 ### User question
@@ -563,6 +659,7 @@ Top 5 airlines by on-time performance in 2005. Join flights to airline names.
 |-------|---------------|------------------|
 | Join in SQL | `f.carrier = a.iata` ❌ | `f.uniquecarrier = a.code` ✅ |
 | Name column | `a.name` ❌ | `a.description` ✅ |
+| Airport name | `ap.name` ❌ | `ap.airport` ✅ |
 | OTP rule | invented | `get_business_rules` → 15 min, arr+dep |
 | `execute_query` | error / 0 rows | 5 rows |
 | Auditable | no | optional `record_decision` + `sql_hash` |
