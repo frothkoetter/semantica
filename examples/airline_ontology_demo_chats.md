@@ -26,6 +26,9 @@ Runnable script (same logic as below): `python examples/airline_ontology_analyti
 Agent Studio workflow: 31 advanced KPI prompts in
 [`deploy/cloudera-agent-studio/multi-agent-workflow.md`](../deploy/cloudera-agent-studio/multi-agent-workflow.md#demo-prompt-catalog-advanced-kpis).
 
+**10 KPI catalog demos** (OTP, D0/A0, SevereDelayRate, ReliabilityCompositeScore, …):
+[`examples/airline_kpi_demo_chats.md`](airline_kpi_demo_chats.md).
+
 ---
 
 ## Demo Chat 1 — Carrier delay ranking

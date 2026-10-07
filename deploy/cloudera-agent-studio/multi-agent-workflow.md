@@ -928,6 +928,7 @@ Uses `Plane`, `Flight.assignedAircraft`.
 | Business rules only | `get_business_rules` — never ask Hive agent to read YAML |
 
 More worked examples: [`examples/airline_ontology_demo_chats.md`](../../examples/airline_ontology_demo_chats.md) ·
+**KPI catalog (10 demos):** [`examples/airline_kpi_demo_chats.md`](../../examples/airline_kpi_demo_chats.md) ·
 Falsification A/B: [`examples/airline_ontology_falsification_examples.md`](../../examples/airline_ontology_falsification_examples.md)
 
 ---
