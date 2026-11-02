@@ -541,9 +541,19 @@ def handle_map_db_schema_to_ontology(args: dict, get_graph) -> dict:
             suggestions = heuristic
             used_mapping_config = False
 
-        applied_stats = {"tables": 0, "columns": 0, "foreign_keys": 0}
+        applied_stats = {"tables": 0, "columns": 0, "foreign_keys": 0, "views": 0}
         if apply_mappings:
             applied_stats = _apply_mappings_to_graph(graph, suggestions)
+            if config_path:
+                from semantica.mcp_server.schema_mappings import (
+                    load_mapping_config,
+                    materialize_mapping_views_in_graph,
+                )
+
+                view_stats = materialize_mapping_views_in_graph(
+                    graph, load_mapping_config(config_path)
+                )
+                applied_stats["views"] = view_stats.get("views", 0)
 
         return {
             "status": "ok",

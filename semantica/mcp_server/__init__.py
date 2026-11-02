@@ -463,6 +463,21 @@ def _graph_summary_envelope(stats: dict) -> dict:
             "--skip-hive. Use SEMANTICA_MAPPING_CONFIG foreign_keys and "
             "get_business_rules object_property_joins for SQL joins."
         )
+
+    mapping_views = mapping_meta.get("mapping_views") or {}
+    if mapping_views:
+        view_names = list(mapping_views.keys())
+        stats["database_views"] = view_names
+        stats["database_view_count"] = len(view_names)
+        base_tables = list(stats.get("database_tables") or [])
+        stats["database_objects"] = list(dict.fromkeys(base_tables + view_names))
+        if stats.get("mapping_note") is None and not any(
+            v in base_tables for v in view_names
+        ):
+            stats["mapping_note"] = (
+                "Logical DB views are listed in mapping_views / database_views "
+                "(from SEMANTICA_MAPPING_CONFIG). Use mapping_join_hints for example SQL."
+            )
     return stats
 
 
@@ -536,6 +551,14 @@ def _tool_get_business_rules(args: dict) -> dict:
         return build_business_rules_payload({}, rules_path=rules_path)
 
     payload = build_business_rules_payload(rules, rules_path=rules_path)
+    from semantica.mcp_server.schema_mappings import summarize_mapping_config
+
+    mapping_meta = summarize_mapping_config()
+    if mapping_meta.get("mapping_views"):
+        payload["mapping_views"] = mapping_meta["mapping_views"]
+        payload["mapping_view_count"] = mapping_meta.get("mapping_view_count", 0)
+    if mapping_meta.get("mapping_join_hints"):
+        payload["mapping_join_hints"] = mapping_meta["mapping_join_hints"]
 
     # Fast path: count BusinessRule nodes from KG file without loading ContextGraph.
     if _graph is None:

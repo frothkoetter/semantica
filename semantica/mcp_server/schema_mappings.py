@@ -75,10 +75,13 @@ def load_mapping_config(path: Optional[str] = None) -> Dict[str, Any]:
 
     return {
         "ontology_namespace": data.get("ontology_namespace", ""),
+        "database": data.get("database") or "",
         "tables": data.get("tables") or {},
+        "views": data.get("views") or {},
         "columns": data.get("columns") or {},
         "foreign_keys": data.get("foreign_keys") or [],
         "preferred_tables": data.get("preferred_tables") or {},
+        "join_hints": data.get("join_hints") or [],
         "source_path": config_path,
     }
 
@@ -106,14 +109,89 @@ def summarize_mapping_config(path: Optional[str] = None) -> Dict[str, Any]:
         }
     fks = cfg.get("foreign_keys") or []
     preferred = cfg.get("preferred_tables") or {}
+    views = cfg.get("views") or {}
+    join_hints = cfg.get("join_hints") or []
     return {
         "mapping_config_path": config_path,
         "mapping_config_exists": True,
+        "mapping_database": cfg.get("database") or None,
         "foreign_key_count": len(fks),
         "preferred_table_count": len(preferred),
         "preferred_tables": preferred,
-        "schema_mappings_ready": bool(fks or preferred),
+        "mapping_view_count": len(views),
+        "mapping_views": views,
+        "mapping_join_hints": join_hints,
+        "schema_mappings_ready": bool(fks or preferred or views),
     }
+
+
+def resolve_view_class(
+    view_name: str,
+    mapping_config: Dict[str, Any],
+) -> Optional[Tuple[str, str, float]]:
+    """Resolve a logical DB view name → ontology class using mapping YAML ``views``."""
+    views: Dict[str, Any] = mapping_config.get("views") or {}
+    if not views:
+        return None
+    class_local = views.get(view_name)
+    if not class_local:
+        token = normalize_db_token(view_name)
+        for key, value in views.items():
+            if normalize_db_token(str(key)) == token:
+                class_local = value
+                break
+    if not class_local:
+        return None
+    ns = mapping_config.get("ontology_namespace", "")
+    if not ns:
+        return None
+    return ontology_uri(str(class_local), ns), str(class_local), 1.0
+
+
+def materialize_mapping_views_in_graph(graph: Any, mapping_config: Dict[str, Any]) -> Dict[str, int]:
+    """
+    Add DatabaseTable nodes for mapping YAML ``views`` (read-only logical objects).
+
+    Idempotent: skips views whose ``db:view:<name>`` node already exists.
+    """
+    stats = {"views": 0, "skipped": 0}
+    views: Dict[str, Any] = mapping_config.get("views") or {}
+    if not views:
+        return stats
+
+    for view_name, class_local in views.items():
+        view_name = str(view_name)
+        node_id = f"db:view:{view_name}"
+        if getattr(graph, "nodes", None) and node_id in graph.nodes:
+            stats["skipped"] += 1
+            continue
+
+        resolved = resolve_view_class(view_name, mapping_config)
+        if not resolved:
+            class_uri = ontology_uri(str(class_local), mapping_config.get("ontology_namespace", ""))
+        else:
+            class_uri, _, _ = resolved
+
+        graph.add_node(
+            node_id,
+            node_type="DatabaseTable",
+            content=view_name,
+            table_name=view_name,
+            object_kind="view",
+            source="mapping_yaml_views",
+        )
+        if class_uri:
+            graph.add_edge(
+                node_id,
+                class_uri,
+                edge_type="mapsToClass",
+                confidence=1.0,
+                mapping_source="mapping_yaml_views",
+                source="mapping_yaml_views",
+            )
+        stats["views"] += 1
+
+    return stats
 
 
 def resolve_table_class(
